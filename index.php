@@ -2,48 +2,36 @@
 		<!-- === BEGIN CONTENT === -->
 		<div class="body home">
 			<div>
-				<div class="row margin-top-10">
-				<!-- Carousel Slideshow -->
-				<div id="carousel-example" class="carousel slide" data-ride="carousel">
-					<!-- Carousel Indicators -->
-					<ol class="carousel-indicators">
-						<li data-target="#carousel-example" data-slide-to="0" class="active"></li>
-						<li data-target="#carousel-example" data-slide-to="1"></li>
-						<li data-target="#carousel-example" data-slide-to="2"></li>
-						<li data-target="#carousel-example" data-slide-to="3"></li>
-						<li data-target="#carousel-example" data-slide-to="4"></li>
-					</ol>
-					<!-- End Carousel Indicators -->
-					<!-- Carousel Images -->
-					<div class="carousel-inner">
-						<div class="item active">
-							<img src="images/carousel/galas1.jpg">
-						</div>
-						<div class="item">
-							<img src="images/carousel/galas2.jpg">
-						</div>
-						<div class="item">
-							<img src="images/carousel/galas3.jpg">
-						</div>
-						<div class="item">
-							<img src="images/carousel/galas4.jpg">
-						</div>
-						<div class="item">
-							<img src="images/carousel/galas5.jpg">
+				<div class="featured">
+				<img src="images/carousel/filler2.jpg" alt="">
+						<div>
+							<div class="top">
+					<div class="top_top"></div>
+					<div class="top_img">
+		
+							<div id="slider-wrapper">        
+							<div id="slider" class="nivoSlider">
+								<img src="images/carousel/galas1.jpg" alt="" />
+								<img src="images/carousel/galas2.jpg" alt=""/>
+								<img src="images/carousel/galas3.jpg" alt="" />
+								<img src="images/carousel/galas4.jpg" alt="" />
+								<img src="images/carousel/galas5.jpg" alt="" />
+							</div>        
+							</div>
+
+	<script type="text/javascript" src="jquery/jquery-1.4.3.min.js"></script>
+    <script type="text/javascript" src="jquery/jquery.nivo.slider.pack.js"></script>
+    <script type="text/javascript">
+    $(window).load(function() {
+        $('#slider').nivoSlider();
+    });
+    </script>
+		
+					</div>
+					<div class="top_bot"></div>
+				</div>
 						</div>
 					</div>
-					<!-- End Carousel Images -->
-					<!-- Carousel Controls -->
-					<a class="left carousel-control" href="#carousel-example" data-slide="prev">
-						<span class="glyphicon glyphicon-chevron-left"></span>
-					</a>
-					<a class="right carousel-control" href="#carousel-example" data-slide="next">
-						<span class="glyphicon glyphicon-chevron-right"></span>
-					</a>
-					<!-- End Carousel Controls -->
-				</div>
-				<!-- End Carousel Slideshow -->
-			</div>
 					<div>
 						<div>
 							<h3>Mission</h3>
@@ -99,7 +87,7 @@
 							</ul>
 						</div>
 					</div>
-				</div> <br> <br> <br> <br>  <br> <br> <br> <br>  <br> <br> <br> <br>  <br> <br> <br> <br> <br> <br> <br>
+				</div> <br> <br> <br> <br>  <br> <br> <br> <br>  <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
 				<div class="sidebar">
 					<div class="news">
 						<span>Latest News</span>
@@ -156,21 +144,3 @@
 				</div>
 			</div>
 <?php include("footer1.php");?>
-<!-- JS -->
-<script type="text/javascript" src="js1/jquery.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="js1/bootstrap.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="js1/scripts.js"></script>
-<!-- Isotope - Portfolio Sorting -->
-<script type="text/javascript" src="js1/jquery.isotope.js" type="text/javascript"></script>
-<!-- Mobile Menu - Slicknav -->
-<script type="text/javascript" src="js1/jquery.slicknav.js" type="text/javascript"></script>
-<!-- Animate on Scroll-->
-<script type="text/javascript" src="js1/jquery.visible.js" charset="utf-8"></script>
-<!-- Slimbox2-->
-<script type="text/javascript" src="js1/slimbox2.js" charset="utf-8"></script>
-<!-- Modernizr -->
-<script src="js1/modernizr.custom.js" type="text/javascript"></script>
-<!-- End JS -->
-</body>
-</html>
-<!-- === END FOOTER === -->

@@ -1,29 +1,20 @@
 <!-- === BEGIN HEADER === -->
 <!DOCTYPE html>
 <!-- Website template by freewebsitetemplates.com -->
-<html>
 <head>
 	<meta charset="UTF-8">
 	<title>Barangay San Isidro Galas, Quezon City</title>
 	<link rel="stylesheet" href="css/style.css" type="text/css">
 	
-	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<meta name="description" content="">
-	<meta name="author" content="">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-	<!-- Favicon -->
-	<link href="favicon.html" rel="shortcut icon">
-	<!-- Bootstrap Core CSS -->
-	<link rel="stylesheet" href="css/bootstrap.css" rel="stylesheet">
-	<!-- Template CSS -->
-	<link rel="stylesheet" href="css/animate.css" rel="stylesheet">
-	<link rel="stylesheet" href="css/font-awesome.css" rel="stylesheet">
-	<link rel="stylesheet" href="css/nexus.css" rel="stylesheet">
-	<link rel="stylesheet" href="css/responsive.css" rel="stylesheet">
-	<link rel="stylesheet" href="css/custom.css" rel="stylesheet">
-	<!-- Google Fonts-->
-	<link href="http://fonts.googleapis.com/css?family=Lato:400,300" rel="stylesheet" type="text/css">
-	<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<script type="text/javascript" src="jquery/cufon-yui.js"></script>
+    <script type="text/javascript" src="jquery/Book_Antiqua_400.font.js"></script>
+    <script type="text/javascript">
+        Cufon.replace ('h1')('h2')('h3')('h4')('#logo a')('#buttons a');
+    </script>
+<link href="styles.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="nivo-slider.css" type="text/css" media="screen" />
 	
 </head>
 <body>
