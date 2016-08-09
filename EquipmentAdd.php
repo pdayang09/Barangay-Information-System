@@ -14,11 +14,11 @@
 		
 		<form method = POST>
 						
-
+<div class = "showback">
 		<p><font face = "cambria" size = 5 color = "grey"> Equipment Name </font></p>
 		<div class = "form-group">
 			<div class="col-sm-5">
-				<input id="controlno" name = "controlno" class="form-control input-group-lg reg_name" type="text" maxlength = 10 required>			 
+				<input id="controlno" name = "controlno" class="form-control input-group-lg reg_name" type="text"  required>			 
            </div>
 		</div><br><br><br>
 		
@@ -28,13 +28,13 @@
                 <option>Select Category</option>
 				<?php
 							require('connection.php');
-								$sql = "select * from tblcategory where strCategoryDesc = 'Equipment' ";
+								$sql = "select * from tblcategory where strCategoryType = 'Equipment' ";
 								$query = mysqli_query($con, $sql);
 					
 								if(mysqli_num_rows($query) > 0){
 									$i = 1;
 									while($row = mysqli_fetch_object($query)){?>
-										<option value=<?php echo $row->strCategoryCode ?>><?php echo $row->strCategoryType ?></option>
+										<option value=<?php echo $row->strCategoryCode ?>><?php echo $row->strCategoryDesc ?></option>
 										<?php }} ?>
 			</select>
 			</div>
@@ -43,23 +43,30 @@
 		<font face = "cambria" size = 5 color = "grey"> Fee </font><br>
 		<div class = "form-group">
 			<div class="col-sm-5">
-				<input id="controlno1" name = "fee"  value="" class="form-control input-group-lg reg_name" type="number" min="1" value = <?php if(isset($_SESSION['dblEquipFee'])){echo $_SESSION['dblEquipFee']; } ?> required>			 
+				<input id="controlno1" name = "fee"  value="" class="form-control input-group-lg reg_name" type="number" step = any min= 0 value = "0"  required>			 
 			</div>
 		</div><br><br><br>	
 		
 		<font face = "cambria" size = 5 color = "grey"> Quantity </font><br>
 		<div class = "form-group">
 			<div class="col-sm-5">
-				<input id="controlno1" name = "quantity"  value="" class="form-control input-group-lg reg_name" type="number" min="1" value = <?php if(isset($_SESSION['stat'])){echo $_SESSION['stat']; } ?> required>			 
+				<input id="controlno1" name = "quantity"  value="" class="form-control input-group-lg reg_name" type="number" min="1" value = "0" required>			 
+			</div>
+		</div><br><br><br>	
+  <font face = "cambria" size = 5 color = "grey"> Discount </font><br>
+		<div class = "form-group">
+			<div class="col-sm-5">
+				<input id="controlno1" name = "disc"  value="" class="form-control input-group-lg reg_name" type="number" min="0" value = "0" required>			 
 			</div>
 		</div><br><br><br>	
   
 		<center> <input type="submit" class="btn btn-info" name = "btnAdd" id = "btnAdd"  value = "Save Record"  > 
-		<br><br></center>
+		<br><br></center></div>
 		
 		<?php
 		 if (isset($_POST['btnAdd'])){
 			 $strcont = $_POST['controlno'];
+			 $intDisc = $_POST['disc'];
 			 $strcategory = $_POST['equip'];
 			 $intquantity = $_POST['quantity'];
 			 $fee = $_POST['fee'];
@@ -69,16 +76,10 @@
 			 }
 			 else{
 				 require('connection.php');
-				$query = mysqli_query($con,"Select * from tblCategory where strCategoryCode = '$strcategory'");
 			
-				if(mysqli_num_rows($query) > 0){
-					while($row1 = mysqli_fetch_object($query)){
-						$categ = $row1->strCategoryType;
-					}
-				}
-			
-				mysqli_query($con,"INSERT INTO `tblequipment`(`strEquipName`, `strEquipCategoryCode`, `intEquipQuantity`, `dblEquipFee`) VALUES ('$strcont','$strcategory','$intquantity','$fee');");
-					 echo "<script>alert('Success');</script>";
+				mysqli_query($con,"INSERT INTO `tblequipment`(`strEquipName`, `strEquipCategory`, `intEquipQuantity`, `dblEquipFee`,`dblEquipDiscount`) VALUES ('$strcont','$strcategory',$intquantity,$fee,$intDisc);");
+					 echo "<script>alert('Success');
+					 window.location = 'EquipmentMaintenance.php'</script>";
 			 }
 		}
 		?>

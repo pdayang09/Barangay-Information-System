@@ -5,67 +5,13 @@
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
-      <!--main content start-->  <!-- Modal Start-->
-				<div id="myModala" class="modal fade" role="dialog" >
-  <div class="modal-dialog" style = "width:900px ">
-  <div class = "modal-content" style = "width:900px padding-left:20px">
-<!-- Modal content-->
-					
-		<div class='modal-body'>			
-		<legend ><font face = "cambria" size = 8 color = "grey"> Add Facility/Equipment Category </font><font  size = 5 color = "Red"> * </font></legend>
-<form method = POST>
-<div class = 'modal-body'>						
-
-	 	
-	<p><font face = "cambria" size = 5 color = "grey"> Item Description </font><font  size = 5 color = "Red"> * </font></p>
-	<div class = "form-group">
-		   <div class="col-md-5">
-		   
-	<input id="PDESC1" name="PDESC1" class="form-control input-group-lg reg_name" type="text" name="facName" title="Enter Facility name" >	
-           </div>
-	</div><br><br><br>
-	
-		<p><font face = "cambria" size = 5 color = "grey"> Item Type </font><font  size = 5 color = "Red"> * </font></p>
-	<div class = "form-group">
-		   <div class="col-md-5">
-		   
-	<select name = "type">
-	<option> Facility</option>
-	<option> Equipment</option>
-	</select>
-           </div>
-	</div><br><br><br>
-  
-  	<center> <input type="submit" class="btn btn-outline btn-success" name = "btnAdd" id = "btnAdd"  value = "Save"  > 
-			 <input type="submit" class="btn btn-outline btn-success" name = "btnCancel" id = "btnCancel"  value = "Cancel" >
-			 
-		<br><br>
-			 <?php
-			 if (isset($_POST['btnAdd'])){
-				 $strPD = $_POST['PDESC1'];
-				  $strtype = $_POST['type'];
-				
-				 if($strPD == NULL ){
-					 echo "<script>alert('Please Complete the form');</script>";
-				 }
-				 else{
-					 require('connection.php');
-					 mysqli_query($con,"INSERT INTO `tblcategory`(`strCategoryDesc`, `strCategoryType`) VALUES ('$strtype','$strPD');");
-					 echo "<script>alert('Success');</script>";
-			 }}
-				 ?>
-    </center>
-	</form>
-</div><br><br>
-</div><br><br>
-</div>
-</div></div> 
+      <!--main content start-->  
       <section id="main-content">
           <section class="wrapper site-min-height">		<form method = POST>
 <legend ><font face = "cambria" size = 8 color = "grey"> Facility/Equipment Category Maintenance </font></legend>
                      
                                <form method = POST>
-	 <input type="button" class="btn btn-info" name = "btnEdit1" id = "btnEdit1" value = "Add Category" data-toggle="modal" data-target="#myModala">
+	 <input type="button" class="btn btn-info" name = "btnEdit1" id = "btnEdit1" value = "Add Category" onclick = "window.location='EquipmentCateAdd.php'">
                            
                                
 <center>

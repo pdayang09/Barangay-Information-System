@@ -50,7 +50,7 @@
 						$hno = $_POST['no'];
 						$memb = $_SESSION['Memb'];
 						$relate = $_POST['relation'];
-						$sql = "UPDATE `tblhousemember` SET `ForeignHouseholdNo`= '$hno',`Status`= '$relate' WHERE  Memberno = '$memb' ";
+						$sql = "UPDATE `tblhousemember` SET `intForeignHouseholdNo`= '$hno',`Status`= '$relate' WHERE intMemberNo = '$memb' ";
 						mysqli_query($con,$sql);
 						echo "<script> window.location = 'Hholdview.php'</script>";}?>
 						      </div>
@@ -71,7 +71,7 @@
 $memb = $_SESSION['Memb'];
 $a = $_SESSION['Last'];
           require('connection.php');
-        $sql = "SELECT concat(b.LastName,', ',b.FirstName) as 'Name' , concat(a.BuildingNo,' ',a.Street,', ',a.Purok) as 'Address', a.Householdno as 'No'  from tblhousehold as a inner join tblhousemember as b on a.Householdno = b.ForeignHouseholdNo where b.Status = 'Head' AND b.LastName = '$a'";
+        $sql = "SELECT concat(b.strLastName,', ',b.strFirstName) as 'Name' , concat(a.strBuildingNo,' ',a.strStreet,', ',a.strPurok) as 'Address', a.intHouseholdNo as 'No'  from tblhousehold as a inner join tblhousemember as b on a.intHouseholdNo = b.intForeignHouseholdNo where b.strStatus = 'Head' AND b.strLastName = '$a'";
         $query = mysqli_query($con, $sql);
         if(mysqli_num_rows($query) > 0){
       

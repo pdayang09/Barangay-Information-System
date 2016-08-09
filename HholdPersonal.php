@@ -23,45 +23,45 @@
 <?php
 require('connection.php');
 $Hno = $_SESSION['Hno'];
-$sql = "SELECT * from tblhousemember where ForeignHouseholdNo = '$Hno' AND Status = 'Head'";
+$sql = "SELECT * from tblhousemember where intForeignHouseholdNo = '$Hno' AND strStatus = 'Head'";
 $query = mysqli_query($con, $sql);
 $row = mysqli_fetch_object($query);
 $Gend = "";
 $Mid = "";
 $Ext = "";
 
-if($row->Gender == "M"){
+if($row->charGender == "M"){
 	$Gend = "Male";
 }
 else{
 	$Gend = "Female";
 }
-if($row->MiddleName == NULL){
+if($row->strMiddleName == NULL){
 	
 }
 else{
-	$Mid = $row->MiddleName;
+	$Mid = $row->strMiddleName;
 }
 
-if($row->NameExtension == NULL){
+if($row->strNameExtension == NULL){
 	
 }
 else{
-	$Ext = $row->NameExtension;
+	$Ext = $row->strNameExtension;
 }
 
-echo "Head of Household: ".$row->LastName.",".$row->FirstName." ".$Mid." ".$Ext?><button type = submit  class="btn btn-info"  style="float: right; margin-right: 5cm;" value = <?php echo $row->Memberno?> name = 'Edit' >Edit Head Detail</button><br><?php
+echo "Head of Household: ".$row->strLastName.",".$row->strFirstName." ".$Mid." ".$Ext?><button type = submit  class="btn btn-info"  style="float: right; margin-right: 5cm;" value = <?php echo $row->intMemberNo?> name = 'Edit' >Edit Head Detail</button><br><?php
 echo "Gender: ".$Gend."<br>";
-echo "Date of Birth: ".$row->Birthdate."<br>";
-echo "Contact Number: ".$row->ContactNo."<br>";
-echo "Occupation: ".$row->Occupation."<br>";
-echo "SSS Number: ".$row->SSSNo."<br>";
-echo "TIN Number: ".$row->TINNo."<br>";
+echo "Date of Birth: ".$row->dtBirthdate."<br>";
+echo "Contact Number: ".$row->strContactNo."<br>";
+echo "Occupation: ".$row->strOccupation."<br>";
+echo "SSS Number: ".$row->strSSSNo."<br>";
+echo "TIN Number: ".$row->strTINNo."<br>";
 
 ?>
 <br><br>
 <a class="btn btn-info btn-sm" href = 'AddSpouse.php' <?php
-$sql = "Select * from tblhousemember where ForeignHouseholdNo = '$Hno' AND Status = 'spouse' AND LifeStatus = 'Alive' Order by Memberno desc";
+$sql = "Select * from tblhousemember where intForeignHouseholdNo = '$Hno' AND strStatus = 'spouse' AND strLifeStatus = 'Alive' Order by intMemberNo desc";
 $query = mysqli_query($con,$sql);
 $row = mysqli_fetch_array($query);
 if($row>0){echo "disabled";}
@@ -69,7 +69,6 @@ else{}
 ?>>Add Spouse</a>
 <a class="btn btn-info btn-sm" data-toggle="tooltip" title="Hooray!" href = 'AddChildren.php'>Add Children</a>
 <a class="btn btn-info btn-sm" href = 'AddOther.php'>Add Other Member of the Household</a>
-<a class="btn btn-info btn-sm" href = 'ReturnMember.php'>Returning Member</a>
 </div>
 <br>
   <script>
@@ -89,13 +88,13 @@ $(document).ready(function(){
 </tr>
 <?php
 					require('connection.php');
-				$sql = "SELECT concat(Lastname,',',Firstname,' ',MiddleName,' ',NameExtension) as 'Name',Gender,Status,Memberno FROM `tblhousemember` where ForeignHouseholdNo = '$Hno' AND (LifeStatus  NOT LIKE 'Moved' AND LifeStatus NOT LIKE 'Dead') AND (Status LIKE 'Spouse' OR Status LIKE 'Children')";
+				$sql = "SELECT concat(strLastname,',',strFirstname,' ',strMiddleName,' ',strNameExtension) as 'Name',charGender,strStatus,intMemberNo FROM `tblhousemember` where intForeignHouseholdNo = '$Hno' AND (strLifeStatus  NOT LIKE 'Moved' AND strLifeStatus NOT LIKE 'Dead') AND (strStatus LIKE 'Spouse' OR strStatus LIKE 'Children')";
 				$query = mysqli_query($con, $sql);
 				if(mysqli_num_rows($query) > 0){
 			
 					while($row = mysqli_fetch_object($query)){
 						$Gend = "";
-						if($row->Gender == 'F'){
+						if($row->charGender == 'F'){
 							$Gend = "Female";
 						}
 						else{
@@ -103,25 +102,25 @@ $(document).ready(function(){
 						}?>
 					<tr> <td><?php echo $row->Name?></td>
 					<td><?php echo $Gend?></td>
-					<td><?php echo $row->Status?></td>
+					<td><?php echo $row->strStatus?></td>
 					
 					<td>
 					<div class="btn-group " role="group" aria-label="..." >	
 					<div class="btn-group" role="group"> 
-					<button class="btn btn-primary btn-sm" type = submit  value = <?php echo $row->Memberno?>  name = 'View' >View</button>
+					<button class="btn btn-primary btn-sm" type = submit  value = <?php echo $row->intMemberNo?>  name = 'View' >View</button>
 					</div>	
 					<div class="btn-group" role="group"> 
-					<button class="btn btn-success btn-sm" type = submit value = <?php echo $row->Memberno?> onClick="return confirm(
-  'Do you really want to perform this action?');" name = 'Move' >Move Out</button>
+					<button class="btn btn-success btn-sm" type = submit value = <?php echo $row->intMemberNo?> onClick="return confirm(
+  'Do you really want to perform this action?');" name = 'Move' >Remove</button>
 					</div>	
 					<div class="btn-group" role="group">
-					<button class="btn btn-success btn-sm" type = submit  value = <?php echo $row->Memberno?> name = 'Transfer' >Transfer</button>
+					<button class="btn btn-success btn-sm" type = submit  value = <?php echo $row->intMemberNo?> name = 'Transfer' >Transfer</button>
 					</div>	
 					<div class="btn-group" role="group">
-					<button class="btn btn-success btn-sm" type = submit value = <?php echo $row->Memberno?> name = 'Deceased' >Deceased</button>
+					<button class="btn btn-success btn-sm" type = submit value = <?php echo $row->intMemberNo?> name = 'Deceased' >Deceased</button>
 					</div>
 					<div class="btn-group" role="group">
-					<button  class="btn btn-success btn-sm"type = submit value = <?php echo $row->Memberno?> onClick="return confirm(
+					<button  class="btn btn-success btn-sm"type = submit value = <?php echo $row->intMemberNo?> onClick="return confirm(
   'Do you really want to perform this action?');" name = 'Edit' >Edit</button>
 					</div></div></td>
 					
@@ -143,13 +142,13 @@ $(document).ready(function(){
 </tr>
 <?php
 					require('connection.php');
-				$sql = "SELECT concat(Lastname,',',Firstname,' ',MiddleName,' ',NameExtension) as 'Name',Gender,Status,Memberno FROM `tblhousemember` where ForeignHouseholdNo = '$Hno' AND LifeStatus  NOT LIKE 'Moved' AND Status NOT LIKE 'Head' AND (Status NOT LIKE 'Spouse' AND Status NOT LIKE 'Children')";
+				$sql = "SELECT concat(strLastname,',',strFirstname,' ',strMiddleName,' ',strNameExtension) as 'Name',charGender,strStatus,intMemberNo FROM `tblhousemember` where intForeignHouseholdNo = '$Hno' AND strLifeStatus  NOT LIKE 'Moved' AND strStatus NOT LIKE 'Head' AND (strStatus NOT LIKE 'Spouse' AND strStatus NOT LIKE 'Children')";
 				$query = mysqli_query($con, $sql);
 				if(mysqli_num_rows($query) > 0){
 			
 					while($row = mysqli_fetch_object($query)){
 						$Gend = "";
-						if($row->Gender == 'F'){
+						if($row->charGender == 'F'){
 							$Gend = "Female";
 						}
 						else{
@@ -157,24 +156,24 @@ $(document).ready(function(){
 						}?>
 					<tr> <td><?php echo $row->Name?></td>
 					<td><?php echo $Gend?></td>
-					<td><?php echo $row->Status?></td>
+					<td><?php echo $row->strStatus?></td>
 					<td><div class="btn-group " role="group" aria-label="..." >	
 					<div class="btn-group" role="group"> 
-					<button class="btn btn-primary btn-sm" type = submit value = <?php echo $row->Memberno?> name = 'View' >View</button>
+					<button class="btn btn-primary btn-sm" type = submit value = <?php echo $row->intMemberNo?> name = 'View' >View</button>
 					</div>	
 					<div class="btn-group" role="group"> 
-					<button class="btn btn-success btn-sm" type = submit value = <?php echo $row->Memberno?> onClick="return confirm(
-  'Do you really want to perform this action?');" name = 'Move' >Move Out</button>
+					<button class="btn btn-success btn-sm" type = submit value = <?php echo $row->intMemberNo?> onClick="return confirm(
+  'Do you really want to perform this action?');" name = 'Move' >Remove</button>
 					</div>	
 					<div class="btn-group" role="group">
-					<button class="btn btn-success btn-sm" type = submit  value = <?php echo $row->Memberno?> name = 'Transfer' >Transfer</button>
+					<button class="btn btn-success btn-sm" type = submit  value = <?php echo $row->intMemberNo?> name = 'Transfer' >Transfer</button>
 					</div>	
 					<div class="btn-group" role="group">
-					<button class="btn btn-success btn-sm" type = submit value = <?php echo $row->Memberno?> onClick="return confirm(
+					<button class="btn btn-success btn-sm" type = submit value = <?php echo $row->intMemberNo?> onClick="return confirm(
   'Do you really want to perform this action?');" name = 'Deceased' >Deceased</button>
 					</div>
 					<div class="btn-group" role="group">
-					<button  class="btn btn-success btn-sm" type = submit value = <?php echo $row->Memberno?> name = 'Edit' >Edit</button>
+					<button  class="btn btn-success btn-sm" type = submit value = <?php echo $row->intMemberNo?> name = 'Edit' >Edit</button>
 					</div></div></td>
 
 					</tr>
@@ -186,13 +185,13 @@ $(document).ready(function(){
 				}
 				if(isset($_POST['Deceased'])){
 					$m = $_POST['Deceased'];
-					mysqli_query($con,"UPDATE `tblhousemember` SET `LifeStatus`= 'Dead' WHERE `Memberno` = $m");
+					mysqli_query($con,"UPDATE `tblhousemember` SET `strLifeStatus`= 'Dead' WHERE `intMemberNo` = $m");
 					echo "<script>window.location = 'HholdPersonal.php'</script>";
 					
 				}
 				if(isset($_POST['Move'])){
 					$m = $_POST['Move'];
-					mysqli_query($con,"UPDATE `tblhousemember` SET `LifeStatus`= 'Moved' WHERE `Memberno` = $m");
+					mysqli_query($con,"Delete from tblhousemember where `intMemberNo` = $m");
 					echo "<script>window.location = 'HholdPersonal.php'</script>";
 					
 				}

@@ -21,10 +21,10 @@
 
 						
 
-			<p><font face = "cambria" size = 5 color = "grey"> Equipment Control No. </font></p>
+		<div class = "showback">	<p><font face = "cambria" size = 5 color = "grey"> Equipment Name </font></p>
 			<div class = "form-group">
 				<div class="col-sm-5">
-					<input name = "controlno1"   class="form-control input-group-lg reg_name" type="text" readonly = true <?php  if(isset($_SESSION['contno'])){ echo "value = '".$_SESSION['contno']."'"; }?>>			 
+					<input name = "controlno1"   class="form-control input-group-lg reg_name" type="text" readonly = true <?php  if(isset($_SESSION['Name'])){ echo "value = '".$_SESSION['Name']."'"; }?>>			 
 				</div>
 			</div><br><br><br>
 	
@@ -40,22 +40,35 @@
 				<div class="col-sm-5">
 					<input id="controlno1" name = "quantity" class="form-control input-group-lg reg_name" type="number" min="1" value = <?php if(isset($_SESSION['stat'])){echo $_SESSION['stat']; } ?> required>			 
 				</div>
+			</div><br><br><br>
+			<p><font face = "cambria" size = 5 color = "grey"> Price </font></p>
+			<div class = "form-group">
+				<div class="col-sm-5">
+					<input id="controlno1" name = "price" class="form-control input-group-lg reg_name" type="number" min="1" step = any value = <?php if(isset($_SESSION['dblEquipFee'])){echo $_SESSION['dblEquipFee']; } ?> required>			 
+				</div>
+			</div><br><br><br>
+			<p><font face = "cambria" size = 5 color = "grey"> Discount</font></p>
+			<div class = "form-group">
+				<div class="col-sm-5">
+					<input id="controlno1" name = "discount" class="form-control input-group-lg reg_name" type="number" min="1" value = <?php if(isset($_SESSION['discount'])){echo $_SESSION['discount']; } ?> required>			 
+				</div>
 			</div><br><br><br><br><br>
 		   
 		   <?php
 				echo '<script> a(); </script>';
 			?>
 	
-			<center> <input type="submit" class="btn btn-info" name = "btnEdit" id = "btnEdit"  value = "Save Record"  > 
+			<center> <button type="submit" class="btn btn-info" name = "btnEdit" id = "btnEdit"  value = <?php if(isset($_SESSION['contno'])){echo $_SESSION['contno']; } ?>   > Save Record</button>
 		<br><br>
 			
 			<?php
 			 if (isset($_POST['btnEdit'])){
-				 $strcont = $_POST['controlno1'];		
+				 $strcont = $_POST['btnEdit'];		
 				 $intquantity = $_POST['quantity'];
-				 
+				  $Price = $_POST['price'];
+				   $discount= $_POST['discount'];
 				require('connection.php');
-				 $g = mysqli_query($con,"UPDATE tblequipment SET intEquipQuantity = '$intquantity' WHERE strEquipNo = '$strcont'");
+				 $g = mysqli_query($con,"UPDATE tblequipment SET intEquipQuantity = '$intquantity', dblEquipFee = $Price , dblEquipDiscount = $discount WHERE strEquipNo = '$strcont'");
 				
 				if($g == true){
 					 echo "<script>alert('Success');</script>";
@@ -66,7 +79,7 @@
 			}
 				
 			 
-			?> </form>
+			?> </form></div>
                                <!-- /#page-content-wrapper -->
 
 			

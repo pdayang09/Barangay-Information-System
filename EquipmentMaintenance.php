@@ -9,14 +9,6 @@
       <section id="main-content">
           <section class="wrapper site-min-height">		<form method = POST>
 <legend ><font face = "cambria" size = 8 color = "grey"> Equipment Maintenance </font></legend>
-<br>
-<div class="input-append">
-       <input name="search" id="search" placeholder = "Input Equipment Name"/>
-    <button class="btn btn-info" name = "s1">Search</button></form>
-</div><br>
-<?php if(isset($_POST['s1'])){
-$_SESSION['s'] = $_POST['search'];
-	echo "<script>window.location = 'EquipmentMaintenance2.php'; </script>";}?>
 	<button  class="btn btn-info" onclick = "window.location.href='EquipmentAdd.php'">Add New Equipment</button><br>
                             <center><br>				
 				<div class = "showback">
@@ -25,13 +17,14 @@ $_SESSION['s'] = $_POST['search'];
 					<thead><tr>
 						<th> Equipment </th>
 						<th> Category </th>
+						<th> Price</th>
 						<th> Quantity </th>
-						<th> EDIT </th>
+						<th> Action</th>
 					</tr></thead>
 					
 					<tbody><?php
 					require('connection.php');
-						$sql = "select * from tblequipment";
+						$sql = "select * from tblequipment where strStatus = 'Enabled'";
 						$query = mysqli_query($con, $sql);
 				
 						if(mysqli_num_rows($query) > 0){
@@ -41,18 +34,26 @@ $_SESSION['s'] = $_POST['search'];
 								<tr> <td><?php echo $row->strEquipName?></td>
 									<td><?php 
 					
-								$query2 = mysqli_query($con,"Select * from tblCategory where strcategorycode = '$row->strEquipCategoryCode'");
+								$query2 = mysqli_query($con,"Select * from tblCategory where strcategorycode = '$row->strEquipCategory'");
 							
 								if(mysqli_num_rows($query2) > 0){
 							
 									while($row1 = mysqli_fetch_object($query2)){
-										echo  $row1->strCategoryType;
+										echo  $row1->strCategoryDesc;
 
 									}
 								}
 					?>				</td>
+									<td><?php echo $row->dblEquipFee?></td>
 									<td><?php echo $row->intEquipQuantity?></td>
-									<td><button  class="btn btn-success" type = submit name = "btnEdit" value = <?php echo $row->strEquipNo; ?> >EDIT</button></td>
+									<td><div class="btn-group " role="group" aria-label="..." >	
+									<div class="btn-group " role="group">	
+									<button  class="btn btn-info btn-round" type = submit name = "btnEdit" value = <?php echo $row->strEquipNo; ?> >Edit</button>
+									</div>
+									<div class="btn-group " role="group" >	
+									<button  class="btn btn-success btn-round" type = submit name = "btnDelete" onclick = "return confirm('Do you really want to continue?');" value = <?php echo $row->strEquipNo; ?> >Disable</button>
+									</div>
+									</div></td>
 								</tr>
 		<?php }} ?></tbody>
 				</table>
@@ -63,15 +64,23 @@ $_SESSION['s'] = $_POST['search'];
 						$query = mysqli_query($con,"Select * from tblEquipment where strEquipNo = '$equipcode'");
 							$row = mysqli_fetch_object($query);
 							$_SESSION['contno'] = $row->strEquipNo;
+							$_SESSION['Name'] = $row->strEquipName;
 							$_SESSION['stat'] = $row->intEquipQuantity;
 							$_SESSION['dblEquipFee'] = $row->dblEquipFee;;
-							
-							$query2 = mysqli_query($con,"Select * from tblCategory where strCategoryCode = '$row->strEquipCategoryCode'");
+							$_SESSION['discount'] = $row->dblEquipDiscount;;
+							$query2 = mysqli_query($con,"Select * from tblCategory where strCategoryCode = '$row->strEquipCategory'");
 							$row2 = mysqli_fetch_object($query2);
 							$_SESSION['cat'] = $row2->strCategoryDesc;	
 							
 							echo "<script> window.location = 'EquipmentEdit.php';</script>";						
-					}?>
+					}
+					
+					if(isset($_POST['btnDelete'])){
+						$a = $_POST['btnDelete'];
+					mysqli_query($con,"Update tblEquipment set strStatus = 'Disabled' where strEquipNo = '$a'");
+				echo "<script>
+					window.location ='EquipmentMaintenance.php';</script>";
+				}			?>
                     </form>             
                   </center>
 			
