@@ -29,6 +29,7 @@
 		$resfee = $_SESSION['resfee'];
 		//$dayresfee = $_SESSION['dayresfee'];
 		//$nightresfee = $_SESSION['nightresfee'];
+		//$discount = $_SESSION['discount'];
 		
 		//Equipment
 		$equipment = $_SESSION['equipment'];

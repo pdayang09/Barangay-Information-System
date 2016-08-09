@@ -35,7 +35,6 @@
 	$unreturned =0;
 ?>
 
-	<form method="POST">
     <div id="wrapper">
     <!--?php include('Nav.php')?>
 
@@ -54,62 +53,38 @@
 		<!-- Search Section-->
 		<div class="form-group">
 			<div class="col-sm-3">
-				<input id="search" name="search" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value= "" placeholder="Search Last Name">					
+				<input id="searchr" name="search" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value= "" placeholder="Search Reservation ID">					
 			</div>				
 			<div class="col-sm-2">
-				<input type="submit" class="btn btn-outline btn-success" name = "btnSearch" id = "btnSearch" value = "Search">
-			</div>			
+				<button class="btn btn-info btn-round btn-xs  " id = "searchst" name = "btnSearch" value = 2 onclick = "search(this.value)"><i class = "glyphicon glyphicon-search"></i></button>
+			</div> <!-- 1 = FacilityEquipmentL -->
 		</div><br><br><br><br>
 		
 		<!-- Filters Resident / Applicant -->	
 		<div class="col-sm-6">
 		<div class="btn-group btn-group-justified" role="group" aria-label="...">
 			<div class="btn-group" role="group">
-				<input type = "submit" name="ftrApproval" id="ftrApproval" class="btn btn-warning" value="For Approval">
+				<button class="btn btn-warning" id = "searcht" name = "btnSearch" value = 2 onclick = "select(this.value)">For Approval</button>
 			</div>
 			<div class="btn-group" role="group">
-				<input type = "submit" name="ftrApproved" id="ftrApproved" class="btn btn-success" value="Approved">
+				<button class="btn btn-success" id = "searcht" name = "btnSearch" value = 3 onclick = "select(this.value)">Approved</button>
 			</div>
 			<div class="btn-group" role="group">
-				<input type = "submit" name="ftrPaid" id="ftrPaid" class="btn btn-primary" value="Paid">
+				<button class="btn btn-primary" id = "searcht" name = "btnSearch" value = 4 onclick = "select(this.value)">Paid</button>
 			</div>
 		</div>
 		</div><br><br><br>
-		
+
+<form method="POST">		
 		<?php
-			if(isset($_POST['btnSearch'])){
-				$search = $_POST['search'];
-				
-				if(!empty($search)){ 
-					$statement = "SELECT r.strreservationid, r.strrrapplicantid, CONCAT(a.strapplicantlname,' ', a.strapplicantfname, ', ', a.strapplicantmname) AS 'Name', a.strapplicantcontactno, r.strrrpurpose, r.datrreserveddate, r.strrrapprovalstatus, p.intrequestorno FROM tblreservationrequest r INNER JOIN tblpaymentdetail p ON p.strrequestid = r.strreservationid INNER JOIN tblapplicant a ON a.strapplicantid = r.strrrapplicantid HAVING Name LIKE ('%$search%');";
-				}else if(empty($search)){ //Notifies User if Search is empty
-					echo"<script> alert('Pls Input Last Name or Reservation ID')</script>";
-					$statement = "SELECT r.strreservationid, r.strrrapplicantid, CONCAT(a.strapplicantlname,' ', a.strapplicantfname, ', ', a.strapplicantmname) AS 'Name', a.strapplicantcontactno, r.strrrpurpose, r.datrreserveddate, r.strrrapprovalstatus, p.intrequestorno FROM tblreservationrequest r INNER JOIN tblpaymentdetail p ON p.strrequestid = r.strreservationid INNER JOIN tblapplicant a ON a.strapplicantid = r.strrrapplicantid";
-				}
-				
-			}else if(isset($_POST['ftrApproval'])){
-				
-				$statement = "SELECT r.strreservationid, r.strrrapplicantid, CONCAT(a.strapplicantlname,' ', a.strapplicantfname, ', ', a.strapplicantmname) AS 'Name', a.strapplicantcontactno, r.strrrpurpose, r.datrreserveddate, r.strrrapprovalstatus, p.intrequestorno FROM tblreservationrequest r INNER JOIN tblpaymentdetail p ON p.strrequestid = r.strreservationid INNER JOIN tblapplicant a ON a.strapplicantid = r.strrrapplicantid WHERE r.strrrapprovalstatus = 'For Approval'";
-				
-			}else if(isset($_POST['ftrApproved'])){
-				
-				$statement = "SELECT r.strreservationid, r.strrrapplicantid, CONCAT(a.strapplicantlname,' ', a.strapplicantfname, ', ', a.strapplicantmname) AS 'Name', a.strapplicantcontactno, r.strrrpurpose, r.datrreserveddate, r.strrrapprovalstatus, p.intrequestorno FROM tblreservationrequest r INNER JOIN tblpaymentdetail p ON p.strrequestid = r.strreservationid INNER JOIN tblapplicant a ON a.strapplicantid = r.strrrapplicantid WHERE r.strrrapprovalstatus = 'Approved'";
-				
-			}else if(isset($_POST['ftrPaid'])){
-				
-				$statement = "SELECT r.strreservationid, r.strrrapplicantid, CONCAT(a.strapplicantlname,' ', a.strapplicantfname, ', ', a.strapplicantmname) AS 'Name', a.strapplicantcontactno, r.strrrpurpose, r.datrreserveddate, r.strrrapprovalstatus, p.intrequestorno FROM tblreservationrequest r INNER JOIN tblpaymentdetail p ON p.strrequestid = r.strreservationid INNER JOIN tblapplicant a ON a.strapplicantid = r.strrrapplicantid WHERE r.strrrapprovalstatus = 'Paid'";
-				
-			}else{
-				$statement = "SELECT r.strreservationid, r.strrrapplicantid, CONCAT(a.strapplicantlname,' ', a.strapplicantfname, ', ', a.strapplicantmname) AS 'Name', a.strapplicantcontactno, r.strrrpurpose, r.datrreserveddate, r.strrrapprovalstatus, p.intrequestorno FROM tblreservationrequest r INNER JOIN tblpaymentdetail p ON p.strrequestid = r.strreservationid INNER JOIN tblapplicant a ON a.strapplicantid = r.strrrapplicantid WHERE r.strrrapprovalstatus = 'For Approval'";
-			}
+				$statement = "SELECT r.`strReservationID`, r.`strRSapplicantId`, r.`strRSPurpose`, r.`datRSReserved`, r.`strRSapprovalStatus`, p.`intRequestORNo` FROM tblreservationrequest r INNER JOIN tblpaymentdetail p ON p.strrequestid = r.`strReservationID` WHERE r.`strRSapprovalStatus` = 'For Approval'";			
 		?>
 		
 		<center>
-		<div class="panel panel-default"><!-- Default panel contents -->	
-			<table class="table table-hover" style="height: 40%; overflow: scroll; ">
+		<div class = "showback" id = "tablestreet">	
+			<table class="table table-striped table-bordered table-hover"  border = '3' style = 'width:95%'>
 				<thead><tr>
-					<th>Full Name</th>					
-					<th>Contact No</th>
+					<th>Reservation ID</th>	
 					<th>Purpose</th>
 					<th>Reservation Date</th>
 					<th>Status</th>
@@ -124,13 +99,12 @@
 			$query = mysqli_query($con,$statement);
 			while($row = mysqli_fetch_array($query)){?>
 				<tr>
+				<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[0]; ?></td>
 				<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[2]; ?></td>
-				<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[3]; ?></td>
-				<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[4]; ?></td>
-				<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><?php echo $row[5];?></td>
-				<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><?php echo $row[6];?></td>
+				<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><?php echo $row[3];?></td>
+				<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><?php echo $row[4];?></td>
 				<?php
-					if($row[6] == "For Approval"){ 	//Personnel and Action if Status = For Approval, Approve ?>	
+					if($row[4] == "For Approval"){ 	//Personnel and Action if Status = For Approval, Approve ?>	
 						      <td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'>
 							  <div class="switch switch-square" 
                                  data-on-label="<i class=' fa fa-check'></i>"
@@ -138,7 +112,7 @@
 				<?php echo"<input type='checkbox' name=approve[] value='$row[0]'/>"; ?>
                               </div></td>
 				<?php		
-					}else if($row[6] == "Approved"){  //Personnel and Action if Status = Approved, Collect ?>
+					}else if($row[4] == "Approved"){  //Personnel and Action if Status = Approved, Collect ?>
 							  <td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'>
 							  <div class="switch switch-square" 
                                  data-on-label="<i class=' fa fa-check'></i>"
@@ -146,7 +120,7 @@
 				<?php echo"<input type='checkbox' name=disapprove[] value='$row[0]' />"; ?>
                               </div></td>
 				<?php		
-					}else if($row[6] == "Paid"){  //Personnel and Action if Status = Paid, Confirm		
+					}else if($row[4] == "Paid"){  //Personnel and Action if Status = Paid, Confirm		
 						//echo"<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><button type = 'submit' name='btnView' value = '$row[0]' class='btn btn-primary btn-xs'><i class='fa fa-check'></i></button>";
 					}
 				
@@ -347,5 +321,47 @@
 		
 		</section><! --/wrapper -->
       </section><!-- /MAIN CONTENT -->
+	  
+	<script>
+      //custom select box
+function search(val){
+	var a = document.getElementById('searchr').value;
+
+	$.ajax({
+		type: "POST",
+		url: "gettable1.php",
+		data: 'sid=' + a +'&bid='+val,
+		success: function(data){
+			//alert(data);
+			$("#tablestreet").html(data);
+		}		
+	});
+}
+      $(function(){
+          $('select.styled').customSelect();
+      });
+
+  </script>
+  
+ 	<script>
+      //custom select box
+function select(val){
+	var a = document.getElementById('searchr').value;
+
+	$.ajax({
+		type: "POST",
+		url: "getKapitan.php",
+		data: 'sid=' + a +'&bid='+val,
+		success: function(data){
+			//alert(data);
+			$("#tablestreet").html(data);
+		}		
+	});
+}
+      $(function(){
+          $('select.styled').customSelect();
+      });
+
+  </script>
 	  
 <?php require("footer.php"); ?>
