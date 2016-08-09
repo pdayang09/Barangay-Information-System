@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 05, 2016 at 08:31 AM
+-- Generation Time: Aug 09, 2016 at 03:23 PM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.5.30
 
@@ -127,16 +127,19 @@ CREATE TABLE `tblbusiness` (
 CREATE TABLE `tblbusinesscate` (
   `strBusCatergory` int(25) NOT NULL,
   `strBusCateName` varchar(45) NOT NULL,
-  `dblAmount` double NOT NULL
+  `dblAmount` double NOT NULL,
+  `strStatus` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tblbusinesscate`
 --
 
-INSERT INTO `tblbusinesscate` (`strBusCatergory`, `strBusCateName`, `dblAmount`) VALUES
-(1, 'Hardware', 1000),
-(3, 'Pet Shop', 1000);
+INSERT INTO `tblbusinesscate` (`strBusCatergory`, `strBusCateName`, `dblAmount`, `strStatus`) VALUES
+(1, 'Hardware', 1000, 'Enabled'),
+(3, 'Pet Shop', 1000, 'Enabled'),
+(4, 'Restaurant', 390.5, 'Enabled'),
+(5, 'Clean', 800.05, 'Enabled');
 
 -- --------------------------------------------------------
 
@@ -259,21 +262,23 @@ CREATE TABLE `tblequipment` (
   `strEquipCategory` varchar(25) NOT NULL,
   `intEquipQuantity` int(11) NOT NULL,
   `dblEquipFee` double NOT NULL,
-  `dblEquipDiscount` double NOT NULL
+  `dblEquipDiscount` double NOT NULL,
+  `strStatus` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tblequipment`
 --
 
-INSERT INTO `tblequipment` (`strEquipNo`, `strEquipName`, `strEquipCategory`, `intEquipQuantity`, `dblEquipFee`, `dblEquipDiscount`) VALUES
-(1, 'Basketball', '8', 10, 50, 0),
-(2, 'Volleyball', '8', 10, 50, 0),
-(3, 'Tennis Ball', '8', 10, 50, 0),
-(4, 'Shuttlecock', '8', 10, 50, 0),
-(5, 'Volleyball Net', '4', 10, 0, 0),
-(6, 'Tennis Net', '4', 3, 0, 0),
-(7, 'Digital Scoreboard', '6', 5, 250, 0);
+INSERT INTO `tblequipment` (`strEquipNo`, `strEquipName`, `strEquipCategory`, `intEquipQuantity`, `dblEquipFee`, `dblEquipDiscount`, `strStatus`) VALUES
+(1, 'Basketball', '8', 13, 50.51, 10, 'Enabled'),
+(2, 'Volleyball', '8', 10, 50, 0, 'Enabled'),
+(3, 'Tennis Ball', '8', 10, 50, 0, 'Enabled'),
+(4, 'Shuttlecock', '8', 10, 50, 0, 'Enabled'),
+(5, 'Volleyball Net', '4', 10, 0, 0, 'Enabled'),
+(6, 'Tennis Net', '4', 3, 0, 0, 'Disabled'),
+(7, 'Digital Scoreboard', '6', 5, 250, 0, 'Enabled'),
+(8, 'Tennis', '5', 90, 20.6, 0, 'Enabled');
 
 -- --------------------------------------------------------
 
@@ -863,7 +868,7 @@ ALTER TABLE `tblzone`
 -- AUTO_INCREMENT for table `tblbusinesscate`
 --
 ALTER TABLE `tblbusinesscate`
-  MODIFY `strBusCatergory` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `strBusCatergory` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `tblcategory`
 --
@@ -878,7 +883,7 @@ ALTER TABLE `tbldocument`
 -- AUTO_INCREMENT for table `tblequipment`
 --
 ALTER TABLE `tblequipment`
-  MODIFY `strEquipNo` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `strEquipNo` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `tblfacility`
 --
