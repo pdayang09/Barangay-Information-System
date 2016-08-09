@@ -10,7 +10,7 @@
           <section class="wrapper site-min-height">
 <legend ><font face = "cambria" size = 8 color = "grey"> Document Maintenance </font></legend>
 
-	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <button  class="btn btn-info" onclick="window.location.href='DocumentAdd.php'">Add New Document</button><br>
+	&nbsp; &nbsp; &nbsp; &nbsp; <button  class="btn btn-info" onclick="window.location.href='DocumentAdd.php'">Add New Document</button><br>
 
 								<form method = POST>
 							
@@ -46,11 +46,11 @@
 								
 								<div class="btn-group " role="group" aria-label="..." >	
 					<div class="btn-group" role="group"> 
-					<button type = submit class = "btn btn-info btn-sm" name ='btnEdit' value = <?php echo $row->strDocCode?>>Edit</button>
+					<button type = submit class = "btn btn-info btn-sm" name ='btnEdit' value = <?php echo $row->intDocCode?>>Edit</button>
 					</div>	
 					<div class="btn-group" role="group"> 
-					<?php if($row->strStatus == 'Enable'){echo "<button class = 'btn btn-success btn-sm' type = submit name = 'btnDbl' value = ".$row->strDocCode.">Disable</button>";}
-								else  if($row->strStatus == 'Disable'){echo "<button class = 'btn btn-success btn-sm'  type = submit name = 'btnAbl' value = ".$row->strDocCode.">Enable</button>";}				}}	?>
+					<?php if($row->strStatus == 'Enabled'){echo "<button class = 'btn btn-success btn-sm' type = submit name = 'btnDbl' value = ".$row->intDocCode.">Disable</button>";}
+								else  if($row->strStatus == 'Disabled'){echo "<button class = 'btn btn-success btn-sm'  type = submit name = 'btnAbl' value = ".$row->intDocCode.">Enable</button>";}				}}	?>
 								
 					</div>	
 					</div></td>
@@ -60,25 +60,26 @@
 							
 							if(isset($_POST['btnEdit'])){
 								$search = $_POST['btnEdit'];
-								$query= mysqli_query($con,"Select * from tbldocument where strDocCode = '$search'");
+								$query= mysqli_query($con,"Select * from tbldocument where intDocCode = '$search'");
 								if(mysqli_num_rows($query)>0)
 									$row = mysqli_fetch_object($query);
-									$_SESSION['id'] = $row->strDocCode;
+									$_SESSION['id'] = $row->intDocCode;
 									$_SESSION['name'] = $row->strDocName;
 									$_SESSION['price'] = $row->strDocFee;
+									//echo "<script>alert('". $row->strDocName."');</script>";
 									echo "<script> window.location= 'DocumentEdit.php';</script>";
 							}
 							
 							if(isset($_POST['btnDbl'])){
 								$search = $_POST['btnDbl'];
-								 mysqli_query($con,"Update tbldocument SET strStatus = 'Disable' where strDocCode = '$search'");
+								 mysqli_query($con,"Update tbldocument SET strStatus = 'Disabled' where intDocCode = '$search'");
 								 
 									echo "<script>alert('Succesfully Updated'); 
 									window.location= 'DocumentMaintenance.php';</script>";
 							}
 							if(isset($_POST['btnAbl'])){
 								$search = $_POST['btnAbl'];
-								 mysqli_query($con,"Update tbldocument SET strStatus = 'Enable' where strDocCode = '$search'");
+								 mysqli_query($con,"Update tbldocument SET strStatus = 'Enabled' where intDocCode = '$search'");
 								 
 									echo "<script>alert('Succesfully Updated'); 
 									window.location= 'DocumentMaintenance.php';</script>";

@@ -15,6 +15,17 @@
 			//Gets Today's Date
 			$today = date("Y-m-d"); // displays date today
 			$doc = $_SESSION['document'];//Type of document
+			require('connection.php');
+			//Retrieval of Personal Data (Session Mode)
+		  $add = $_SESSION['place'];
+		  $resId = $_SESSION['resId'];
+		  $appId = $_SESSION['appId'];
+		  $place = $_SESSION['place'];
+		  $name = $_SESSION['name'];
+		  
+		  //for Retrieving Business Category in DB
+		  $BusCateSQL = "SELECT strBusCatergory, strBusCateName FROM tblbusinesscate";
+		  $BusCateResult = mysqli_query($con, $BusCateSQL);
 		?>
 
 	
@@ -70,7 +81,7 @@
 					</div>
 				</div>
 			<br>
-			<div class="panel panel-primary">
+			<!--<div class="panel panel-primary">
 				<div class="panel-heading"><font face="cambria" size=5 color="white"><center><b>REQUIREMENTS</b></center></font></div>
 					<div class="panel-body">
 						<form method="POST">
@@ -94,7 +105,7 @@
 						</form>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			<br>
 			<div class="panel panel-primary">
 				<div class="panel-heading"><font face="cambria" size=5 color="white"><center><b>BUSINESS DETAILS</b></center></font></div>

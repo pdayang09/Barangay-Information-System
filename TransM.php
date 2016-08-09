@@ -7,51 +7,32 @@
       *********************************************************************************************************************************************************** -->
       <!--main content start-->
       <section id="main-content">
-          <section class="wrapper site-min-height">		<form method = POST>
+          <section class="wrapper site-min-height">		
 <legend ><font face = "cambria" size = 8 color = "grey"> Resident Module </font></legend>
-<br>
-
+<button  class="btn btn-info" onclick="window.location.href='Hholdpersonal.php'">  <i class="glyphicon glyphicon-hand-left" aria-hidden="true"></i>&nbsp;Back to the Previous Page</button>
+	<br>
+	<br><form method = POST>
+<legend ><p><font face = "cambria" size = 5 color = "grey"> Transfer A Household Member</font></p></legend >
 
 	<form method = POST>
-<?php
-require('connection.php');
-$Hno = $_SESSION['Memb'];
-$sql = "SELECT * from tblhousemember where intMemberNo = '$Hno'";
-$query = mysqli_query($con, $sql);
-$row = mysqli_fetch_object($query);
-$Gend = "";
-$Mid = "";
-$Ext = "";
 
-if($row->charGender == "M"){
-	$Gend = "Male";
-}
-else{
-	$Gend = "Female";
-}
-if($row->strMiddleName == NULL){
-	
-}
-else{
-	$Mid = $row->strMiddleName;
-}
-
-if($row->strNameExtension == NULL){
-	
-}
-else{
-	$Ext = $row->strNameExtension;
-}
-
-echo "Head of Household: ".$row->strLastName.",".$row->strFirstName." ".$Mid." ".$Ext."<br>";
-echo "charGender: ".$Gend."<br>";
-echo "Date of Birth: ".$row->dtBirthdate."<br>";
-echo "Contact Number: ".$row->strContactNo."<br>";
-echo "strOccupation: ".$row->strOccupation."<br>";
-echo "SSS Number: ".$row->strSSSNo."<br>";
-echo "TIN Number: ".$row->strTINNo."<br>";
-
-?>
+      <button = submit name = "Exist" class="btn btn-default">Existing Household</button>
+							   <button type = "button" Onclick="window.location.href='TransferHMember2.php'" class="btn btn-default" <?php
+							   require('connection.php');
+				$u = $_SESSION['Memb'];
+				 $sql = "Select dtBirthdate From tblhousemember where intMemberNo = '$u'";
+							   $query = mysqli_query($con,$sql);
+							   $row = mysqli_fetch_object($query);
+							   $bday = $row->dtBirthdate;
+							   if((date("Y-m-d") - $bday)<18){
+								   echo "disabled";
+							   }
+							   else{}?>>New Household</button>		  
+							   <?php
+								if(isset($_POST['Exist'])){
+									$_SESSION['no'] = $_POST['Exist'];
+									echo "<script> window.location = 'SearchMember.php';</script>";
+								}?>
 </form>
                  </center>      
                     </div>

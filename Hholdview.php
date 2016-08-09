@@ -7,34 +7,25 @@
       *********************************************************************************************************************************************************** -->
       <!--main content start-->
       <section id="main-content">
-          <section class="wrapper site-min-height">		<form method = POST>
+          <section class="wrapper site-min-height">		
 <legend ><font face = "cambria" size = 8 color = "grey"> Resident Module </font></legend>
 <div class="input-append"><div class="form-group">				
            <div class="col-sm-3">
 
-        <input class="form-control input-group-lg reg_name" name="search" id="search" placeholder = "Input Last Name"/></div><button class="btn btn-info" name = "s1">Search</button>
-</div></div><br></form>
-<div class="btn-group " role="group" aria-label="..." >	
+        <input class="form-control input-group-lg reg_name" name="search" id="search" placeholder = "Input Last Name"/></div><button class="btn btn-info" onclick = "Search();" name = "s1">Search</button>
+</div></div><br>
+
 					<div class="btn-group" role="group">
 					<button  class="btn btn-info" onclick = "window.location.href='AddHhold.php'">Create New Household</button>
 					
 					</div>	
-					<div class="btn-group" role="group"> 
-					<button  class="btn btn-warning" onclick = "window.location.href='ReturnHousehold.php'">Return Household</button><br>
-			
-					</div>	
-		
-					</div>
 					<br>
-<?php if(isset($_POST['s1'])){
-$_SESSION['s'] = $_POST['search'];
-	echo "<script>window.location = 'Hholdview2.php'; </script>";}?>
-	
+
 	
 <br>
 
 	<form method = POST><center>
-	<div class = "showback">
+	<div class = "showback" id = "tableHousehold">
 <table  class="table table-striped table-bordered table-hover"  border = '2' style = 'width:95%'>
 <tr>
 <th>Household Name</th>
@@ -44,27 +35,27 @@ $_SESSION['s'] = $_POST['search'];
 </tr>
 <?php
 					require('connection.php');
-				$sql = "SELECT HouseholdLname, concat(BuildingNo,' ',Street,', Purok ',Purok) as 'Address',Residence , Householdno FROM `tblhousehold` where !(Status = 'Disabled')  ";
+				$sql = "SELECT strHouseholdLname, concat(strBuildingNo,' ',strStreetName,',Purok ',strZoneName) as 'Address',strResidence , intHouseholdNo FROM `tblhousehold` inner join `tblstreet` on intStreetId = intForeignStreetId inner join tblzone on intZoneId = intForeignZoneId where !(strStatus = 'Disabled')  ";
 				$query = mysqli_query($con, $sql);
 				if(mysqli_num_rows($query) > 0){
 			
 					while($row = mysqli_fetch_object($query)){?>
-					<tr> <td><?php echo $row->HouseholdLname?></td>
+					<tr> <td><?php echo $row->strHouseholdLname?></td>
 					<td><?php echo $row->Address?></td>
-				<td><?php echo $row->Residence?></td>
+				<td><?php echo $row->strResidence?></td>
 					<td><div class="btn-group " role="group" aria-label="..." >	
 					<div class="btn-group" role="group"> 
-					<button class="btn btn-primary btn-circle view" type = submit value = <?php echo $row->Householdno?> name = 'Edit' >View</button>
+					<button class="btn btn-primary btn-round btn-xs" type = submit value = <?php echo $row->intHouseholdNo?> name = 'Edit' >View</button>
 					
 					</div>	
 					<div class="btn-group" role="group"> 
-					 <button  class="btn btn-success" type = submit value = <?php echo $row->Householdno?> onClick="return confirm(
-  'Do you really want to perform this action?');" name = 'Move' >Move Out</button>
+					 <button  class="btn btn-success btn-xs" type = submit value = <?php echo $row->intHouseholdNo?> onClick="return confirm(
+  'Do you really want to perform this action?');" name = 'Move' >Remove</button>
 			
 					</div>	
 					<div class="btn-group" role="group">
 				
-					 <button class="btn btn-success" type = submit value = <?php echo $row->Householdno?> name = 'transfer' >Transfer</button></td>
+					 <button class="btn btn-success btn-round btn-xs" type = submit value = <?php echo $row->intHouseholdNo?> name = 'transfer' >Transfer</button></td>
 					</div>	
 					</div>
 			
@@ -78,7 +69,7 @@ $_SESSION['s'] = $_POST['search'];
 				if(isset($_POST['Move'])){
 					$A = $_POST['Move'];
 					require('connection.php');
-					mysqli_query($con,"UPDATE `tblhousehold` SET `Status` = 'Disabled' WHERE Householdno = '$A' ");
+					mysqli_query($con,"UPDATE `tblhousehold` SET `Status` = 'Disabled' WHERE intHouseholdNo = '$A' ");
 					echo "<script>window.location = 'Hholdview.php'</script>";
 				}
 				
@@ -118,7 +109,19 @@ $_SESSION['s'] = $_POST['search'];
     
   <script>
       //custom select box
-
+	function Search(){
+		var b = document.getElementById('search').value;
+		//alert(b);
+		$.ajax({
+		type: "POST",
+		url: "gettable2.php",
+		data: 'sid=' + b,
+		success: function(data){
+			//alert(data);
+			$("#tableHousehold").html(data);
+		}
+		});
+	}
       $(function(){
           $('select.styled').customSelect();
       });

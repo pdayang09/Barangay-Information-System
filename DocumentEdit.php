@@ -1,5 +1,7 @@
 <!DOCTYPE html>
           <?php session_start();
+		 //echo "<script>alert('". $_SESSION['name']	."');</script>";
+		 $a = $_SESSION['name'];
 		  require('header.php');?>
     <?php require('sidebar.php');?>
       <!-- **********************************************************************************************************************************************************
@@ -13,20 +15,16 @@
  <button class="btn btn-theme" onclick="window.location.href='DocumentMaintenance.php'">Back to the Previous Page</button>
  	                    <form method = POST>
                        <legend ><font face = "cambria" size = 8 color = "grey"> Edit Document Details</font></legend>		
-				<p><font face = "cambria" size = 5 color = "grey"> Document Code </font></font></p>
-	
-			<div class = "form-group">
-				<div class="col-sm-5">
-				<input id="DocumentC" name ="DocumentC" class="form-control input-group-lg reg_name" type="text" <?php if(isset($_SESSION['id'])) {echo "value =  ".$_SESSION['id'];}?>  placeholder =" 000 DOC 123" readonly>
+				<div class = "showback">
+				<input id="DocumentC" name ="DocumentC" class="form-control input-group-lg reg_name" type="hidden" <?php if(isset($_SESSION['id'])) {echo "value =  ".$_SESSION['id'];}?>  placeholder =" 000 DOC 123" readonly>
 			 
-				</div>
-			</div><br><br><br>
+				
 	
 				<p><font face = "cambria" size = 5 color = "grey"> Document Name </font></p>
 			
 			<div class = "form-group">
 				<div class="col-sm-5">		   
-				<input id="DocumentN"  name="DocumentN" class="form-control input-group-lg reg_name" <?php if(isset($_SESSION['id'])) {echo "value =  ".$_SESSION['name'];}?> type="text" title="Enter Document name" required>
+				<input id="DocumentN"  name="DocumentN" class="form-control input-group-lg reg_name" type="text" title="Enter Document name" required <?php if(isset($_SESSION['id'])) {echo "value =  '".$a."'";}?>>
 			 
 				</div><br><br><br>
 				<p><font face = "cambria" size = 5 color = "grey">Price </font></p>
@@ -35,12 +33,12 @@
 				<input id="DocumentN1"  name="Price" class="form-control input-group-lg reg_name" type= number step = any title="Enter Document name"  <?php if(isset($_SESSION['id'])) {echo "value =  ".$_SESSION['price'];}?> required >
 			 
 				</div>
-			</div><br><br><br><br><br>					
+			</div><br><br><br>				
   
-			</div><br><br><br><br><br>
-			<center>
+			</div><center>
   
-				<input type="submit" class="btn btn-info" name = "btnEdit" id = "btnEdit" value = "Edit Record" >
+				<input type="submit" class="btn btn-info" name = "btnEdit" id = "btnEdit" value = "Edit Record" ></div>
+			
 	
 				
 	
@@ -53,7 +51,7 @@
 					}
 					else{
 						require('connection.php');
-						$g = mysqli_query($con,"UPDATE tbldocument SET strDocName ='$strDocN',strDocFee ='$strPrice' where strDocCode = '$strDocC'");
+						$g = mysqli_query($con,"UPDATE tbldocument SET strDocName ='$strDocN',strDocFee ='$strPrice' where intDocCode = '$strDocC'");
 						if($g==true){
 						session_destroy();
 						echo "<script>alert('Success');</script>";

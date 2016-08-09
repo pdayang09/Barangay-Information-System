@@ -42,29 +42,47 @@
 					
 							<div class = "bodybody">	
 								<div class="panel-body">
+		
 		<form method = "POST">
-		<legend ><font face = "cambria" size = 10 color = "grey"> Select Document</font></legend><br><br><br>
+		<legend><font face = "cambria" size = 10 color = "grey"> Select Document</font></legend><br><br><br>
+
+		    <!-- button type='submit' class='showback col-lg-5' name='btnBrgyCertification'>
+			
+			 <table class="table table-bordered table-striped table-condensed">
+                              <thead>
+                              <tr>
+                                  <th style="background-color:rgb(255,204,0);"><center><span class="glyphicon glyphicon-file" 
+								  style="color:black; font-size:2.5em"></span></center></th>
+								  <th><font face='cambria' size=5 color='black'><center><b><! ?php echo"$certi";?></b></center>
+								  </font><span class='glyphicon glyphicon-chevron-right pull-right'></span>
+								  </th>
+                              </tr>
+                              </thead>
+				</table>
+			</button -->
+			<button type='submit' class='showback col-xs-5' name='btnBrgyCertification'>
+			<img src="images/docicon.ico" style="height:60px;" class="pull-left">
+			<font face='cambria' size=5 color='black'><b><?php echo"$certi";?></b></font>	
+			<span class='glyphicon glyphicon-chevron-right pull-right'></span></button>
 		
-		    <button type='submit' class='btn btn-info btn-lg btn-block' name='btnBrgyCertification'>
-			<font face='cambria' size=5 color='white'><b><?php echo"$certi";?></b></font>
-			<span class='glyphicon glyphicon-chevron-right pull-right'></span></button><br>
-		
+			<div class="col-xs-1"></div>
 		<?php
 				if(isset($_POST['btnBrgyCertification']))    
 				{
 					$_SESSION['document'] = $certi;
-					$_SESSION['resId'] = $resId;
+					$_SESSION['clientID'] = $resId;
 					$_SESSION['appId'] = $appId;
 					$_SESSION['name'] = $name;
 					$_SESSION['contactno'] = $contactno;
-					$_SESSION['place'] = $place;
+					$_SESSION['place'] = $add;
 					
 					echo "<script> window.location = 'DRformCertification.php';</script>";
 				}
 		?>
-		
-			<button type='submit' class='btn btn-danger btn-lg btn-block' name='btnBusClearance'>
-			<font face='cambria' size=5 color='white'><b><?php echo"$busClear";?></b></font>	
+
+			<button type='submit' class='showback col-xs-5' name='btnBusClearance'>
+			<img src="images/docicon.ico" style="height:60px;" class="pull-left">
+			<font face='cambria' size=5 color='black'><b><?php echo"$busClear";?></b></font>	
 			<span class='glyphicon glyphicon-chevron-right pull-right'></span></button><br>
 
 		<?php
@@ -80,9 +98,12 @@
 					echo "<script> window.location = 'DRformBusClearanceNEW.php';</script>";
 				} 
 		?>
-			<button type='submit' class='btn btn-success btn-lg btn-block' name='btnCTC'>
-			<font face='cambria' size=5 color='white'><b><?php echo"$CTC";?></b></font>	
-			<span class='glyphicon glyphicon-chevron-right pull-right'></span></button><br>
+			<button type='submit' class='showback col-sm-5' name='btnCTC'>
+			<img src="images/docicon.ico" style="height:60px;" class="pull-left">
+			<font face='cambria' size=5 color='black'><b><?php echo"$CTC";?></b></font>	
+			<span class='glyphicon glyphicon-chevron-right pull-right'></span></button>
+			
+			<div class="col-xs-1"></div>
 			
 		<?php		if(isset($_POST['btnCTC']))
 				{
@@ -95,8 +116,9 @@
 					echo "<script> window.location = 'DRformCTC.php';</script>";
 				} 
 		?>
-			<button type='submit' class='btn btn-warning btn-lg btn-block' name='btnExcavation'>
-			<font face='cambria' size=5 color='white'><b><?php echo"$excav";?></b></font>	
+			<button type='submit' class='showback col-sm-5' name='btnExcavation'>
+			<img src="images/docicon.ico" style="height:60px;" class="pull-left">
+			<font face='cambria' size=5 color='black'><b><?php echo"$excav";?></b></font>	
 			<span class='glyphicon glyphicon-chevron-right pull-right'></span></button><br>
 			
 		<?php		if(isset($_POST['btnExcavation']))
@@ -111,9 +133,12 @@
 				} 
 		?>
 		
-			<button type='submit' class='btn btn-primary btn-lg btn-block'name='btnIndigency'>
-			<font face='submit' size=5 color='white'><b><?php echo"$indig";?></b></font>	
-			<span class='glyphicon glyphicon-chevron-right pull-right'></span></button><br>
+			<button type='submit' class='showback col-sm-5'name='btnIndigency'>
+			<img src="images/docicon.ico" style="height:60px;" class="pull-left">
+			<font face='submit' size=5 color='black'><b><?php echo"$indig";?></b></font>	
+			<span class='glyphicon glyphicon-chevron-right pull-right'></span></button>
+			
+			<div class="col-xs-1"></div>
 			
 		<?php		if(isset($_POST['btnIndigency']))
 				{
@@ -127,8 +152,9 @@
 				} 
 			?>
 		
-			<button type='submit' class='btn btn-danger btn-lg btn-block'name='btnStreetPermit'>
-			<font face='cambria' size=5 color='white'><b><?php echo"$streetPer";?></b></font>	
+			<button type='submit' class='showback col-sm-5'name='btnStreetPermit'>
+			<img src="images/docicon.ico" style="height:60px;" class="pull-left">
+			<font face='cambria' size=5 color='black'><b><?php echo"$streetPer";?></b></font>	
 			<span class='glyphicon glyphicon-chevron-right pull-right'></span></button><br>
 			
 		<?php	if(isset($_POST['btnStreetPermit']))
@@ -143,9 +169,12 @@
 			} 
 		
 		?>
-			<button type='submit' class='btn btn-info btn-lg btn-block' name='btnVehicle'>
-			<font face='cambria' size=5 color='white'><b> <?php echo"Vehicle Clearance";?> </b></font>	
-			<span class='glyphicon glyphicon-chevron-right pull-right'></span></button><br>";
+			<button type='submit' class='showback col-sm-5' name='btnVehicle'>
+			<img src="images/docicon.ico" style="height:60px;" class="pull-left">
+			<font face='cambria' size=5 color='black'><b> <?php echo"Vehicle Clearance";?> </b></font>	
+			<span class='glyphicon glyphicon-chevron-right pull-right'></span></button>
+			
+			<div class="col-xs-1"></div>
 			
 		<?php		if(isset($_POST['btnVehicle']))
 				{

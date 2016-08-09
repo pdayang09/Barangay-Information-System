@@ -10,9 +10,10 @@
           <section class="wrapper site-min-height">
  <button  class="btn btn-info" onclick="window.location.href='DocumentMaintenance.php'">  <i class="glyphicon glyphicon-hand-left" aria-hidden="true"></i>&nbsp;Back to the Previous Page</button>
 <legend ><font size = 8 color = "grey"> Add Document Details </font></legend>
+<div class = "showback">
 <form method = POST>
 					
-			</div><br>
+			
 	
 				<p><font face = "cambria" size = 5 color = "grey"> Document Name </font></p>
 			<div class = "form-group">
@@ -31,7 +32,7 @@
   
 				<center> <input type="submit" class="btn btn-info" name = "btnAdd" id = "btnAdd"  value = "Save Record"  > 
 
-			
+			</div>
 			<?php
 				if (isset($_POST['btnAdd'])){
 				 $strDocN = $_POST['DocumentN1'];
