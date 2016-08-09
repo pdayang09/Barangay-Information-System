@@ -20,8 +20,7 @@
 </div><br>
 	<button  class="btn btn-info btn-round" onclick = "window.location.href='AddStreet.php'">Add New Street</button><br>
 <center><br>		            <form method = POST>                		
-				<div class = "showback" id = "tablestreet">
-	
+			<div class = "showback" id = "tablestreet">	
 				<table class="table table-striped table-bordered table-hover"  border = '3' style = 'width:95%'><!-- Table -->
 					<thead><tr>
 						<th> Street ID </th>

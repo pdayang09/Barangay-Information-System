@@ -1,8 +1,7 @@
  <?php session_start();?>
 <!DOCTYPE html>
     <?php require('header.php');?>
-    <?php require('sidebar.php');?>-->
-      
+    <?php require('sidebar.php');?>
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
@@ -15,12 +14,77 @@
 	
 		//Personal Details
 		$resId = $_SESSION['resId'];
-		$payment = $_SESSION['payment'];
-		$balance = $payment;
-			
-		//Gets Today's Date
-		$today = date("Y-m-d"); // displays date today
+		$clientID = $_SESSION['clientID'];
+		$name = $_SESSION['name'];
+		$contactno = $_SESSION['contactno'];
+		$address =  $_SESSION['address'];
 		
+		//Purpose
+		$resPurpose = $_SESSION['resPurpose'];
+		
+		//Facility		
+		$resFacility = $_SESSION['resFacility'];
+		$resFrom = $_SESSION['resfrom'];
+		$resTo = $_SESSION['resto'];
+		$resfee = $_SESSION['resfee'];
+		//$dayresfee = $_SESSION['dayresfee'];
+		//$nightresfee = $_SESSION['nightresfee'];
+		//$discount = $_SESSION['discount'];
+		
+		//Equipment
+		$equipment = $_SESSION['equipment'];
+		$quantity = $_SESSION['quantity'];		
+		$quantity1[] = array(); //Temporary storage for quantity array	
+		$equipfee1[] = array(); //Temporary storage for quantity array
+		
+		$equipmentF = 0;
+		if(!empty($equipment)){
+			
+			$intCtr =0;
+			foreach($equipment as $a){
+				if(!empty($a)){
+					
+					require("connection.php");
+					$query = mysqli_query($con, "select dblequipfee from tblequipment where strequipname = '$a'");
+					
+					while($row = mysqli_fetch_row($query)){
+						$equipfee1[$intCtr] = $row[0];
+					}
+					
+					$intCtr++;
+					//echo $i;
+				}					
+			}
+			
+			$intCtr =0;
+			foreach($quantity as $i){
+				if(!empty($i)){
+					$quantity1[$intCtr] = $i;
+					$intCtr++;
+					//echo $i;
+				}					
+			}
+			$equipmentF = 1;
+			
+		}else{
+			$equipmentF = 0; //EquipmentF tells whether array $equipment is empty or not
+		}
+		
+		//Conversion of Time
+		$time1 = StrToTime ($resFrom);
+		$time2 = StrToTime ($resTo);
+		$diff = $time1 - $time2;
+		$hours = $diff / ( 60 * 60 );
+		$hours = -1 * $hours;
+		
+		//Gets Today's Date
+		$today = date("F j, Y, g:i a"); // displays date today
+		
+		//Payment
+		$total =0;
+		$amountR =0;
+		$balance =0;
+		$change =0;
 	?>
 	
 	<form method = "POST">
@@ -32,7 +96,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                    <legend ><font face = "cambria" size = 8 color = "grey"> Summary of Payment </font></legend>
+                    <legend ><font face = "cambria" size = 8 color = "grey"> Payment Summary </font></legend>
 					   	
 						<div class = "bodybody">	
 								<div class="panel-body">
@@ -45,88 +109,116 @@
 
 										<div class="col-sm-4">
 											<font face = "cambria" size = 5 color = "grey"> OR No
-											<input id="payOR" name="payOR" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" ></font>											
-										</div><br><br>										
-										</div> 
-									</div> <!-- /#form-group -->
-										
-									<div class="col-sm-4">
-									<font face = "cambria" size = 5 color = "grey"> Request ID
-										<input id="payor" name="payor" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value = "<?php echo" $resId"; ?>"></font>	
-									</div><br><br><br><br><br><br>
-															
-									<div class="form-group"> <!-- /Payment Details -->								
-										<font face = "cambria" size = 5 color = "grey"> Payment Details</font>
-									<br><br><br>
-									
-										<div class="col-sm-4">
-											<font face = "cambria" size = 5 color = "grey"> Total Amount Due :
-											<input id="total" name="total" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value= " <?php echo"$payment";?>"disabled></font>											
-										</div>
+											<input id="payOR" name="payOR" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" disabled></font>											
+										</div>	
+									</div><br><br><br><br> <!-- /#form-group -->
 								
-										<div class="col-sm-4">
-											<font face = "cambria" size = 5 color = "grey"> Payment Status </font>
-											<select name="cmbPayment" class="form-control input-group-lg reg_name" >
-											<option value="Full"> Full </option>
-											<option value="Partial"> Partial </option>
-											</select>
-										</div><br><br><br><br>
+								
+									<div class="form-group">
 										
 										<div class="col-sm-4">
-											<font face = "cambria" size = 5 color = "grey"> Amount Rendered :
-											<input id="amountR" name="amountR" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value= " <?php ?>"></font>
+											<font face = "cambria" size = 5 color = "grey"> Payor
+											<input id="payor" name="payor" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value = "<?php echo" $name"; ?>"></font>		
 										</div>
 									
-										<fieldset disabled>
-                                            <div class="col-sm-6">
-												<font face = "cambria" size = 5 color = "grey"> Balance :
-												<input id="balance" name="balance" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value= " <?php echo"$payment";?>"></font>												
-											</div>
-										</fieldset><br> <!-- /#fieldset -->
-										
-										<input type="submit" class="btn btn-outline btn-success" name = "btnAssess" id = "btnAssess" value = "ASSESS">
-									</div> <!-- /#form-group -->
+										<div class="col-sm-4">
+											<font face = "cambria" size = 5 color = "grey"> Contact Number
+											<input id="busId" name="payName" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value = "<?php echo" $contactno"; ?>"></font>	
+										</div><br><br>
 									
-									<?php
-									if(isset($_POST['btnAssess'])){
-										$payOR = $_POST['payOR'];
-										$amountR = $_POST['amountR'];
+									</div>
+								</div><br><br>
+									
+								<div class="form-group">
+								<div class="col-sm-10">
+									<div class="form-group"> <!-- /Reservation Details Facility-->
+										<font face = "cambria" size = 5 color = "grey"> Reservation Details</font><br><br><br>
 										
-										if(isset($_POST['cmbPayment'])){
-											$paymentm = $_POST['cmbPayment'];
-													
-										if($payment == "Full"){
-											$payment = $payment;
-											$balance = 0.00;
-														
-										}else if($paymentm == "Partial"){
-											$payment = $payment/2;
-											$balance = $payment;
-											}
-										}else{
-											$payment = $payment;
-											$balance = 0.00;
-										}
+										<div class="col-sm-10">
+										<div class="panel panel-default"><!-- Default panel contents -->
+											<table class="table"'><!-- Table -->
+												<thead>
+												<tr><th> Faclity Name </th>
+													<th> Per Hour </th>
+													<th> Duration (Hours) </th>
+												</tr>
+												</thead>
+											<tbody>
+												<tr><td> <?php echo" $resFacility";?> </td>
+													<td> <?php echo" $resfee";?> </td>
+													<td> <?php echo" $hours";?></td>
+												</tr>
+											</tbody>
+										</table>										
 										
-										if($amountR >= $payment){ //Receipt Details
-											$change = $amountR - $payment;											
-																				
-											mysqli_query($con, "INSERT INTO `tblpaymenttrans`(`intORNo`, `dtmPaymentDate`, `dblPaymentAmount`, `dblPaidAmount`, `dblRemaining`) VALUES ('$payOR', NOW(), '$payment', '$amountR', '$balance')");
+										</div> <!-- /#panel panel-default --> 
+										</div><br><br><br><br><br> <!--col-sm-6-->
+									
+										<!-- /Reservation Details Equipment-->	
+										<div class="col-sm-10">
+										<div class="panel panel-default"><!-- Default panel contents -->
+											<table class="table"><!-- Table -->
+												<thead>
+												<tr><th> Equipment Name </th>
+													<th> Quantity </th>
+													<th> Per Hour</th>
+												</tr>
+												</thead>
+											<tbody>											
+												<?php 
+												if($equipmentF == 1){
+												
+												for($intCtr = 0; $intCtr < sizeof($equipment); $intCtr++){ ?>		
+												<tr>
+													<td> <?php echo" $equipment[$intCtr]";?> </td>
+													<td> <?php echo" $quantity1[$intCtr]";?> </td>
+													<td> <?php echo" $equipfee1[$intCtr]";?></td>
+												</tr>
+												<?php 
+													$total = $total + $quantity1[$intCtr] * $equipfee1[$intCtr];
+													} 
 											
-											mysqli_query($con, "UPDATE `tblpaymentdetail` SET `intRequestORNo`= '$payOR' WHERE strRequestID = '$resId'");
-											
-											mysqli_query($con, "UPDATE `tblreservationrequest` SET `strrrapprovalstatus`= 'Paid' WHERE strreservatonid = '$resId'");
-											
-											mysqli_query($con, "UPDATE `documentrequest` SET `strdrapprovedby`= '2' WHERE strdocrequestid = '$resId'");
-											
-											
-											echo" <script> alert(' Successfully rendered Payment! Balance: $balance');</script>";
-										}else if($amountR < $total){ //Invalid Amount Rendered
-											echo" <script> alert(' You render invalid amount! $balance');</script>";
-										}								
+												}else{
+												}?>											
+											</tbody>
+											</table>										
 										
-									}
-								?>
+										</div> <!-- /#table-responsive -->
+										</div>
+									</div>
+								</div><br><br>
+									
+									<?php 
+										$total = $total + $resfee * $hours;
+									?>
+																		
+								<div class="col-sm-10">
+									<!-- /Payment Details -->								
+									<font face = "cambria" size = 5 color = "grey"> Payment Details</font>
+									<br><br><br>
+								</div>
+								
+								<div class="col-sm-4">
+									<font face = "cambria" size = 5 color = "grey"> Total Amount Due :
+										<input id="total" name="total" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value= " <?php echo" $total";?>"disabled></font><br><br>
+
+									<a href="FacilityEquipmentT.php"><input type="button" class="btn btn-outline btn-success" name = "btnGoBack" value = "Go Back"></a>
+									<input type="submit" class="btn btn-outline btn-success" name = "btnNote" value = "Note Reservation">
+								</div>														
+								
+								</div>
+								
+								<?php
+								if(isset($_POST['btnNote'])){
+									include("saveReservation1.php");
+								}?>
+							
+			<button type="submit" name="btnProceed">Facility Equipment List</button>
+	
+			<?php if(isset($_POST['btnProceed'])){
+					session_destroy();
+					echo"<script> window.location = 'FacilityEquipmentL.php'</script>";
+			}?>
 								
 						</form> <!-- /#form method -->									
 									
@@ -138,24 +230,8 @@
 			
 		</div><br><br> <!-- /#page-content-wrapper -->
     </div> <!-- /#wrapper -->
-					
-								
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
-    <!-- Menu Toggle Script -->
-    <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-    </script>
-		
-		
+				
 		</section><! --/wrapper -->
       </section><!-- /MAIN CONTENT -->
-	  
-<?php require("footer.php"); ?>
+
+<?php require("footer.php");?>

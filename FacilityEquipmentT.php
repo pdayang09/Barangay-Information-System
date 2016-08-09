@@ -343,8 +343,9 @@
 								
 					while($row = mysqli_fetch_row($query)){
 						$_SESSION['resfee'] = $row[0];
-						$_SESSION['dayresfee'] = $row[1];
-						$_SESSION['nightresfee'] = $row[2];
+						$_SESSION['dayresfee'] = $row[0];
+						$_SESSION['nightresfee'] = $row[1];
+						$_SESSION['discount'] = $row[2];
 						$_SESSION['resFacility'] = $row[3];
 					}
 																
