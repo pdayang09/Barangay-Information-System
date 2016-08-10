@@ -69,7 +69,8 @@
 				if(isset($_POST['Move'])){
 					$A = $_POST['Move'];
 					require('connection.php');
-					mysqli_query($con,"UPDATE `tblhousehold` SET `Status` = 'Disabled' WHERE intHouseholdNo = '$A' ");
+					mysqli_query($con,"Delete from tblhousemember WHERE intForeignHouseholdNo = '$A' ");
+					mysqli_query($con,"Delete from tblhousehold WHERE intHouseholdNo = '$A' ");
 					echo "<script>window.location = 'Hholdview.php'</script>";
 				}
 				

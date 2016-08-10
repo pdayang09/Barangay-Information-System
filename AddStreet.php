@@ -14,16 +14,17 @@
 		
 		<form method = POST>
 						
-
+<div class="col-sm-9 col-md-6 col-lg-6">
+<div class = "showback">
 		<p><font face = "cambria" size = 5 color = "grey"> Street Name </font></p>
 		<div class = "form-group">
-			<div class="col-sm-5">
+			<div class="col-sm-12">
 				<input id="controlno" name = "StreetName" class="form-control input-group-lg reg_name" type="text"  required>			 
            </div>
 		</div><br><br><br>
 		
 		<div class="split-para"><font face = "cambria" size = 5 color = "grey"> Purok Name</font></p>
-			<div class="col-sm-5">		
+			<div class="col-sm-10">		
 			<select class="form-control input-group-lg reg_name" id = "Purok" name = "Purok">
                 
 				<?php
@@ -41,9 +42,36 @@
 		</div><a class="btn btn-info btn-success btn-xs" href="EquipmentCat.php"><label>Add Purok</label></a><br><br><br>
 	<br><br><br>	
   
-		<center> <input type="submit" class="btn btn-info" name = "btnAdd" id = "btnAdd"  value = "Save Record"  > 
-		<br><br></center>
+		<center> <input type="submit" class="btn btn-info" name = "btnAdd" id = "btnAdd"  value = "Save Record"  > </div>
+		<br><br></center></div>
+			<!-- DIV FOR TABLE -->
+		<div class="col-sm-3 col-md-6 col-lg-6">
+		<div class = "showback">
+		<table  class="table table-striped table-bordered table-hover" >
+		<thead>
+		<th>Street Name</th>
+		<th>Purok Name</th>
 		
+		</thead>
+		<tbody>
+							<?php
+					require('connection.php');
+						$sql = "select intStreetId , strStreetName, strZoneName from tblStreet inner join tblZone on intForeignZoneId = intZoneId order by intForeignZoneId , intStreetId desc";
+						$query = mysqli_query($con, $sql);
+				
+						if(mysqli_num_rows($query) > 0){
+							$i = 1;
+					
+							while($row = mysqli_fetch_object($query)){?>
+								<tr>
+									<td><?php echo $row->strStreetName?>				</td>
+									<td><?php echo $row->strZoneName?></td>
+									
+								</tr>
+		<?php }} ?></tbody>
+				</table></div>
+		</div>
+<!-- DIV END-->
 		<?php
 		 if (isset($_POST['btnAdd'])){
 			 $strStreet = $_POST['StreetName'];

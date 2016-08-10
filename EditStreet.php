@@ -34,7 +34,7 @@ if(selectobject.options[i].value == zone){
 		
 		<form method = POST>
 						
-
+<div class ="showback">
 		<p><font face = "cambria" size = 5 color = "grey"> Street Name </font></p>
 		<div class = "form-group">
 			<div class="col-sm-5">
@@ -60,7 +60,7 @@ if(selectobject.options[i].value == zone){
 			</div>
 		</div>
 	<br><br><br>	
-		<center> <input type="submit" class="btn btn-info" name = "btnAdd" id = "btnAdd"  value = "Save Record"  > 
+		<center> <input type="submit" class="btn btn-info" name = "btnAdd" id = "btnAdd"  value = "Save Record"  > </div>
 		<br><br></center>
 		<?php
 if(isset($_SESSION['street'])){		
