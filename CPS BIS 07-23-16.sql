@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 09, 2016 at 03:23 PM
+-- Generation Time: Aug 10, 2016 at 11:50 PM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.5.30
 
@@ -69,16 +69,7 @@ CREATE TABLE `tblapplicant` (
 INSERT INTO `tblapplicant` (`strApplicantID`, `strResidentId`, `strApplicantFName`, `strApplicantMName`, `strApplicantLName`, `strNameExtension`, `strApplicantAddress_street`, `strApplicantAddress_brgy`, `strApplicantAddress_city`, `strApplicantContactNo`) VALUES
 (' app001', 0, ' Juana', ' Senora', ' Lavarez', ' ', ' Samapaguita', ' San Isidro', ' Paranaque', ' 09089529546'),
 (' app002', 0, ' Juanito', '', ' Hiro', ' ', 'Camia', ' San Isidro', ' Paranaque', ' 09089529546'),
-(' app003', 0, 'Gino', ' ', 'Gutierrez', ' ', ' ', 'San Isidro', ' ', '09119938211'),
-('1', 1, 'Paul', 'Aquino', 'Dayang', '', 'Mayfair Street', '233 Maalikaya Street, Purok 21, Building No 1', ' ', ''),
-('10', 10, 'Jenny', 'Alexander', 'Wu', '', 'Hany Street', '891 Maa', ' ', ''),
-('11', 11, 'Ryan Benjamin', 'Saludo', 'Tedder', '', 'New Yorkshire Street', '672 jads aada', ' ', ''),
-('2', 2, 'Pingris', 'Santos', 'Daya', 'Jr', 'J Street', 'New New City', ' ', ''),
-('3', 3, 'Matteo', 'Ting', 'Perez', 'Jr', 'J Street', 'New New City', ' ', ''),
-('5', 5, 'Gema', 'Peng', 'Gutierez', '', 'J Street', 'New New City', ' ', ''),
-('7', 7, 'Lola', 'Ting', 'Dayang', '', 'Mayfair Street', '233 Maalikaya Street, Purok 21, Building No 1', ' ', ''),
-('8', 8, 'Jenna', 'Alie', 'Dayang', '', 'Mayfair Street', '233 Maalikaya Street, Purok 21, Building No 1', ' ', ''),
-('9', 9, 'Paulo', 'Ting', 'Perez', 'Jr', 'Mayfair Street', '911 Jan Street, Brgy. Sta ana, Malate, Manila', ' ', '');
+(' app003', 0, 'Gino', ' ', 'Gutierrez', ' ', ' ', 'San Isidro', ' ', '09119938211');
 
 -- --------------------------------------------------------
 
@@ -110,12 +101,14 @@ CREATE TABLE `tblbrgyposition` (
 --
 
 CREATE TABLE `tblbusiness` (
-  `strBusinessID` varchar(25) NOT NULL,
+  `strBusinessID` int(11) NOT NULL,
   `strBusinessName` varchar(45) NOT NULL,
   `strBusinessCateID` varchar(25) NOT NULL,
   `strBusinessDesc` varchar(45) NOT NULL,
   `strBusinessLocation` varchar(45) NOT NULL,
-  `strBusinessContactPerson` varchar(45) NOT NULL
+  `strBusinessContactPerson` varchar(45) NOT NULL,
+  `strSignageStat` int(1) NOT NULL,
+  `strSignageType` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -214,18 +207,31 @@ CREATE TABLE `tbldocument` (
   `intDocCode` int(11) NOT NULL,
   `strDocName` varchar(45) NOT NULL,
   `strDocFee` double NOT NULL,
-  `strStatus` varchar(45) NOT NULL
+  `strStatus` varchar(45) NOT NULL,
+  `ForNonResident` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tbldocument`
 --
 
-INSERT INTO `tbldocument` (`intDocCode`, `strDocName`, `strDocFee`, `strStatus`) VALUES
-(1, 'Certificate o', 25, 'Enable'),
-(2, 'Certification', 10, 'Enable'),
-(3, 'Business Clearance', 100, 'Enable'),
-(4, 'Indigency', 95.95, 'Enable');
+INSERT INTO `tbldocument` (`intDocCode`, `strDocName`, `strDocFee`, `strStatus`, `ForNonResident`) VALUES
+(1, 'Certificate o', 25, 'Enable', 0),
+(2, 'Certification', 10, 'Enable', 0),
+(3, 'Business Clearance', 100, 'Enable', 0),
+(4, 'Indigency', 95.95, 'Enable', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbldocumentpurpose`
+--
+
+CREATE TABLE `tbldocumentpurpose` (
+  `strDocPurposeID` int(11) NOT NULL,
+  `strPurposeName` varchar(45) NOT NULL,
+  `dblPrice` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -301,11 +307,11 @@ CREATE TABLE `tblfacility` (
 --
 
 INSERT INTO `tblfacility` (`strFaciNo`, `strFaciName`, `strFaciCategory`, `strFaciStatus`, `dblFaciDayCharge`, `dblFaciNightCharge`, `dblFaciDiscount`) VALUES
-(1, 'Basketball Court', '1', 'Good Condition', 155, 150, 150),
-(2, 'Badminton Court', '1', 'Good Condition', 150, 150, 150),
-(3, 'Tennis Court', '1', 'Good Condition', 150, 150, 150),
-(4, 'Wake Chapel', '3', 'Good Condition', 1, 0, 0),
-(5, 'Multi Purpose Hall', '3', 'Good Condition', 150, 150, 150);
+(1, 'Basketball Court', '1', 'Good Condition', 250, 300, 500),
+(2, 'Badminton Court', '1', 'Good Condition', 250, 300, 500),
+(3, 'Tennis Court', '1', 'Good Condition', 250, 300, 500),
+(4, 'Wake Chapel', '3', 'Good Condition', 0, 0, 0),
+(5, 'Multi Purpose Hall', '3', 'Good Condition', 250, 300, 500);
 
 -- --------------------------------------------------------
 
@@ -366,7 +372,6 @@ CREATE TABLE `tblhousemember` (
 --
 
 INSERT INTO `tblhousemember` (`intMemberNo`, `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`, `charLiterate`, `charDisable`) VALUES
-(0, 'Paul', '', 'Daya', '', 'M', '1990-07-07', '', '', '', '', 2, 'Single', 'Children', 'Dead', 'Y', 'N'),
 (1, 'Paul', 'Aquino', 'Dayang', '', 'M', '1996-05-12', '0920947581', 'Company Driver', '00010101', '', 1, '', 'Head', 'Alive', 'Y', 'N'),
 (2, 'Pingris', 'Santos', 'Daya', 'Jr', 'M', '1996-05-19', '09132321321', 'Dancer', '', 'ads', 2, 'Married', 'Head', 'Alive', 'Y', 'N'),
 (3, 'Matteo', 'Ting', 'Perez', 'Jr', 'M', '1980-05-21', '09123321243', 'Sales', '6543213', '331231', 2, 'Single', 'Spouse', 'Dead', 'Y', 'N'),
@@ -411,17 +416,17 @@ CREATE TABLE `tblpaymentdetail` (
 --
 
 INSERT INTO `tblpaymentdetail` (`intNum`, `strRequestID`, `dblReqPayment`, `intRequestORNo`) VALUES
-(1, '001', 450, 2),
-(2, '002', 625, 1),
-(3, '003', 200, 0),
-(4, '006', 0, 0),
-(5, '007', 150, 0),
-(6, '008', 225, 0),
-(7, '009', 450, 0),
-(8, '010', 300, 0),
-(10, '001D', 250, 0),
-(11, '002D', 250, 0),
-(12, '003D', 250, 0);
+(1, '001', 250, 0),
+(2, '002', 100, 0),
+(3, '003', 600, 0),
+(4, '004', 566.02, 0),
+(5, '005', 1500, 0),
+(6, '006', 625, 0),
+(7, '007', 1650, 0),
+(8, '008', 600, 0),
+(9, '009', 1200, 0),
+(10, '010', 1500, 0),
+(11, '010', 1250, 0);
 
 -- --------------------------------------------------------
 
@@ -480,16 +485,16 @@ CREATE TABLE `tblreservationrequest` (
 --
 
 INSERT INTO `tblreservationrequest` (`strReservationID`, `strRSresidentId`, `strRSapplicantId`, `datRSIssued`, `datRSReserved`, `dtmFrom`, `dtmTo`, `strRSapprovalStatus`, `strRSPurpose`) VALUES
-(' 0001', '', '5', '2016-07-21', '2016-07-27', 1469628000000, 1469638800000, 'For Approval', ' Dance Practice'),
-(' 002', '', '5', '2016-07-21', '2016-07-25', 1469476800000, 1469484000000, 'For Approval', ' Tennis Play'),
-('001', '', '1', '2016-07-22', '2016-07-30', 1469887200000, 1469898000000, 'Approved', 'Dance Practice'),
-('002', '', '1', '2016-07-22', '2016-07-30', 1469894400000, 1469907000000, 'Approved', 'Tennis Practice'),
-('003', '', '3', '2016-07-22', '2016-07-30', 1469910600000, 1469916000000, 'Approved', 'Dance Practice 2.0'),
-('006', '', '10', '2016-07-22', '2016-07-31', 1469973600000, 1469980800000, 'Approved', 'Pabasa'),
-('007', '', '10', '2016-07-22', '2016-07-26', 1469548800000, 1469556000000, 'Paid', 'Laro'),
-('008', '', '9', '2016-07-22', '2016-07-28', 1469719800000, 1469725200000, 'For Approval', 'Dance 3.0'),
-('009', '', '7', '2016-07-22', '2016-07-26', 1469545200000, 1469556000000, 'For Approval', 'Dance 4.0'),
-('010', '', '10', '2016-07-22', '2016-07-30', 1469905200000, 1469912400000, 'For Approval', 'Zumba');
+('001', '', ' app002', '2016-08-10', '2016-08-19', 1471622400000, 1471626000000, 'Approved', 'Practice 1.0'),
+('002', '', '10', '2016-08-10', '2016-08-13', 1471111200000, 1471127400000, 'Paid', 'Practice 2.0'),
+('003', '', '11', '2016-08-10', '2016-08-13', 1471105800000, 1471120200000, 'For Approval', 'Party'),
+('004', '', ' app003', '2016-08-10', '2016-08-15', 1471269600000, 1471280400000, 'For Approval', 'Practice 3.0'),
+('005', '', ' app001', '2016-08-10', '2016-08-25', 1472148000000, 1472158800000, 'For Approval', 'Party 2.0'),
+('006', '', '8', '2016-08-10', '2016-08-15', 1471289400000, 1471298400000, 'For Approval', 'Pa party'),
+('007', '', ' app001', '2016-08-10', '2016-08-23', 1471995000000, 1472005800000, 'For Approval', 'Debut'),
+('008', '', '7', '2016-08-10', '2016-08-30', 1472565600000, 1472572800000, 'For Approval', 'Badminton Tourn'),
+('009', '', ' app002', '2016-08-10', '2016-08-24', 1472065200000, 1472072400000, 'For Approval', 'Tennis Play 1.0'),
+('010', '', '10', '2016-08-10', '2016-08-30', 1472596200000, 1472614200000, 'For Approval', 'Pageant Night');
 
 -- --------------------------------------------------------
 
@@ -511,10 +516,12 @@ CREATE TABLE `tblreserveequip` (
 --
 
 INSERT INTO `tblreserveequip` (`strReserveEquipNo`, `strReservationID`, `strREEquipCode`, `dtmREFrom`, `dtmRETo`, `intREQuantity`) VALUES
-(1, '002', 'Tennis Ball', '2016-07-30 09:00:00', '2016-07-30 12:30:00', 2),
-(2, '003', 'Tennis Ball', '2016-07-30 13:30:00', '2016-07-30 15:00:00', 2),
-(3, '007', 'Basketball', '2016-07-26 09:00:00', '2016-07-26 11:00:00', 3),
-(4, '008', 'Tennis Net', '2016-07-28 08:30:00', '2016-07-28 10:00:00', 2);
+(1, '001', 'Tennis Ball', '2016-08-19 09:00:00', '2016-08-19 10:00:00', 0),
+(2, '001', 'Tennis Net', '2016-08-19 09:00:00', '2016-08-19 10:00:00', 0),
+(3, '002', 'Tennis Ball', '2016-08-13 11:00:00', '2016-08-13 15:30:00', 0),
+(4, '002', 'Tennis Net', '2016-08-13 11:00:00', '2016-08-13 15:30:00', 0),
+(5, '004', 'Basketball', '2016-08-15 07:00:00', '2016-08-15 10:00:00', 2),
+(6, '009', 'Tennis Ball', '2016-08-24 12:00:00', '2016-08-24 14:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -535,12 +542,10 @@ CREATE TABLE `tblreservefaci` (
 --
 
 INSERT INTO `tblreservefaci` (`strReserveFaciNo`, `strReservationID`, `strREFaciCode`, `dtmREFrom`, `dtmRETo`) VALUES
-(1, '001', '5', '2016-07-30 07:00:00', '2016-07-30 10:00:00'),
-(2, '002', '3', '2016-07-30 09:00:00', '2016-07-30 12:30:00'),
-(3, '006', '4', '2016-07-31 07:00:00', '2016-07-31 09:00:00'),
-(4, '008', '5', '2016-07-28 08:30:00', '2016-07-28 10:00:00'),
-(5, '009', '5', '2016-07-26 08:00:00', '2016-07-26 11:00:00'),
-(6, '010', '5', '2016-07-30 12:00:00', '2016-07-30 14:00:00');
+(1, '004', '', '2016-08-15 07:00:00', '2016-08-15 10:00:00'),
+(2, '008', '', '2016-08-30 07:00:00', '2016-08-30 09:00:00'),
+(3, '001', '', '2016-08-19 09:00:00', '2016-08-19 10:00:00'),
+(5, '003', '', '2016-08-13 09:30:00', '2016-08-13 13:30:00');
 
 -- --------------------------------------------------------
 
@@ -562,10 +567,12 @@ CREATE TABLE `tblreturnequip` (
 --
 
 INSERT INTO `tblreturnequip` (`strReturnEquipNo`, `strReservationID`, `strRTEquipCode`, `datRTDate`, `intReturned`, `intUnreturned`) VALUES
-(1, '002', 'Tennis Ball', '2016-07-30', 0, 2),
-(2, '003', 'Tennis Ball', '2016-07-30', 2, 0),
-(3, '007', 'Basketball', '2016-07-26', 0, 3),
-(4, '008', 'Tennis Net', '2016-07-28', 2, 0);
+(1, '001', 'Tennis Ball', '2016-08-19', 0, 2),
+(2, '001', 'Tennis Net', '2016-08-19', 0, 1),
+(3, '002', 'Tennis Ball', '2016-08-13', 0, 2),
+(4, '002', 'Tennis Net', '2016-08-13', 0, 1),
+(5, '004', 'Basketball', '2016-08-15', 0, 2),
+(6, '009', 'Tennis Ball', '2016-08-24', 0, 2);
 
 -- --------------------------------------------------------
 
@@ -865,6 +872,11 @@ ALTER TABLE `tblzone`
 --
 
 --
+-- AUTO_INCREMENT for table `tblbusiness`
+--
+ALTER TABLE `tblbusiness`
+  MODIFY `strBusinessID` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `tblbusinesscate`
 --
 ALTER TABLE `tblbusinesscate`
@@ -903,7 +915,7 @@ ALTER TABLE `tblhousemember`
 -- AUTO_INCREMENT for table `tblpaymentdetail`
 --
 ALTER TABLE `tblpaymentdetail`
-  MODIFY `intNum` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `intNum` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `tblrequirements`
 --
@@ -913,17 +925,17 @@ ALTER TABLE `tblrequirements`
 -- AUTO_INCREMENT for table `tblreserveequip`
 --
 ALTER TABLE `tblreserveequip`
-  MODIFY `strReserveEquipNo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `strReserveEquipNo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `tblreservefaci`
 --
 ALTER TABLE `tblreservefaci`
-  MODIFY `strReserveFaciNo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `strReserveFaciNo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `tblreturnequip`
 --
 ALTER TABLE `tblreturnequip`
-  MODIFY `strReturnEquipNo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `strReturnEquipNo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `tblstreet`
 --
@@ -943,12 +955,6 @@ ALTER TABLE `tblzone`
 --
 ALTER TABLE `tblbrgyofficial`
   ADD CONSTRAINT `strbrgyofficial` FOREIGN KEY (`strOfficerID`) REFERENCES `tblaccount` (`strOfficerID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `tblbusinessstat`
---
-ALTER TABLE `tblbusinessstat`
-  ADD CONSTRAINT `strBSBusinessID` FOREIGN KEY (`strBSbusinessID`) REFERENCES `tblbusiness` (`strBusinessID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `tblctc`
