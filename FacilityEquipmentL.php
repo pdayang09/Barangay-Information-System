@@ -82,7 +82,7 @@
 		
 		<center>
 		<div class = "showback" id = "tablestreet">	
-			<table class="table table-striped table-bordered table-hover"  border = '3' style = 'width:95%'>
+			<table class="table table-hover" style="height: 40%; overflow: scroll; "'>
 				<thead><tr>
 					<th>Full Name</th>					
 					<th>Contact No</th>

@@ -13,6 +13,7 @@
 	<?php 
 	
 		//Personal Details
+		$residency = $_SESSION['residency'];
 		$resId = $_SESSION['resId'];
 		$clientID = $_SESSION['clientID'];
 		$name = $_SESSION['name'];
@@ -23,19 +24,20 @@
 		$resPurpose = $_SESSION['resPurpose'];
 		
 		//Facility		
-		$resFacility = $_SESSION['resFacility'];
+		$resFacName = $_SESSION['resFacName'];
+		$resFacility = $_SESSION['resFacility'];		
 		$resFrom = $_SESSION['resfrom'];
 		$resTo = $_SESSION['resto'];
 		$resfee = $_SESSION['resfee'];
-		//$dayresfee = $_SESSION['dayresfee'];
-		//$nightresfee = $_SESSION['nightresfee'];
-		//$discount = $_SESSION['discount'];
+		$dayresfee = $_SESSION['resfee'];
+		$nightresfee = $_SESSION['nightresfee'];
+		$discount = $_SESSION['discount'];
 		
 		//Equipment
 		$equipment = $_SESSION['equipment'];
 		$quantity = $_SESSION['quantity'];		
 		$quantity1[] = array(); //Temporary storage for quantity array	
-		$equipfee1[] = array(); //Temporary storage for quantity array
+		$equipfee1[] = array(); //Equipment Fee
 		
 		$equipmentF = 0;
 		if(!empty($equipment)){
@@ -85,6 +87,8 @@
 		$amountR =0;
 		$balance =0;
 		$change =0;
+		
+		include("paymentconfig.php");
 	?>
 	
 	<form method = "POST">
@@ -144,7 +148,7 @@
 												</tr>
 												</thead>
 											<tbody>
-												<tr><td> <?php echo" $resFacility";?> </td>
+												<tr><td> <?php echo" $resFacName";?> </td>
 													<td> <?php echo" $resfee";?> </td>
 													<td> <?php echo" $hours";?></td>
 												</tr>
