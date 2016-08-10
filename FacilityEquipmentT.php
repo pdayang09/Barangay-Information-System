@@ -208,6 +208,7 @@
 		
 	<!-- Retrieve Personal Data -->
 	<?php 
+		$residency = $_SESSION['residency'];
 		$clientID = $_SESSION['clientID'];
 		$name = $_SESSION['name'];
 		$_POST['name'] = $name;
@@ -220,8 +221,8 @@
 		$fromtemp = "";
 		$totemp = "";
 		
-		 $_SESSION['resfrom'] = "";
-		  $_SESSION['resto'] = "";
+		$_SESSION['resfrom'] = "";
+		$_SESSION['resto'] = "";
 		
 		$resfrom = "";
 		$resto = "";
@@ -339,14 +340,16 @@
 				//Facility 
 				if(!empty($resFacility)){
 					require("connection.php");
-						$query = mysqli_query($con, "select `dblFaciDayCharge`, `dblFaciNightCharge`, `dblFaciDiscount`, `strFaciNo` from tblFacility where `strFaciName` = '$resFacility'");
-								
+						$query = mysqli_query($con, "select `dblFaciDayCharge`, `dblFaciNightCharge`, `dblFaciDiscount`, `strFaciNo`, `strFaciName` from tblFacility where `strFaciName` = '$resFacility'");
+						
 					while($row = mysqli_fetch_row($query)){
+						$_SESSION['resFacName'] = $resFacility;
 						$_SESSION['resfee'] = $row[0];
 						$_SESSION['dayresfee'] = $row[0];
 						$_SESSION['nightresfee'] = $row[1];
 						$_SESSION['discount'] = $row[2];
 						$_SESSION['resFacility'] = $row[3];
+						
 					}
 																
 				//$_SESSION['resFacility'] = $resFacility;
