@@ -1,10 +1,10 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
+-- version 4.5.0.2
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 09, 2016 at 03:23 PM
--- Server version: 10.1.8-MariaDB
+-- Generation Time: Aug 10, 2016 at 07:38 AM
+-- Server version: 10.0.17-MariaDB
 -- PHP Version: 5.5.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -127,19 +127,16 @@ CREATE TABLE `tblbusiness` (
 CREATE TABLE `tblbusinesscate` (
   `strBusCatergory` int(25) NOT NULL,
   `strBusCateName` varchar(45) NOT NULL,
-  `dblAmount` double NOT NULL,
-  `strStatus` varchar(20) NOT NULL
+  `dblAmount` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tblbusinesscate`
 --
 
-INSERT INTO `tblbusinesscate` (`strBusCatergory`, `strBusCateName`, `dblAmount`, `strStatus`) VALUES
-(1, 'Hardware', 1000, 'Enabled'),
-(3, 'Pet Shop', 1000, 'Enabled'),
-(4, 'Restaurant', 390.5, 'Enabled'),
-(5, 'Clean', 800.05, 'Enabled');
+INSERT INTO `tblbusinesscate` (`strBusCatergory`, `strBusCateName`, `dblAmount`) VALUES
+(1, 'Hardware', 1000),
+(3, 'Pet Shop', 1000);
 
 -- --------------------------------------------------------
 
@@ -204,6 +201,16 @@ CREATE TABLE `tbldocrequirements` (
   `strReqID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `tbldocrequirements`
+--
+
+INSERT INTO `tbldocrequirements` (`strDocID`, `strReqID`) VALUES
+(3, 1),
+(3, 2),
+(4, 5),
+(4, 6);
+
 -- --------------------------------------------------------
 
 --
@@ -224,8 +231,30 @@ CREATE TABLE `tbldocument` (
 INSERT INTO `tbldocument` (`intDocCode`, `strDocName`, `strDocFee`, `strStatus`) VALUES
 (1, 'Certificate o', 25, 'Enable'),
 (2, 'Certification', 10, 'Enable'),
-(3, 'Business Clearance', 100, 'Enable'),
+(3, 'Business Clearance New', 100, 'Enable'),
 (4, 'Indigency', 95.95, 'Enable');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbldocumentpurpose`
+--
+
+CREATE TABLE `tbldocumentpurpose` (
+  `strDocPurposeID` int(11) NOT NULL,
+  `strPurposeName` varchar(30) NOT NULL,
+  `dblPrice` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbldocumentpurpose`
+--
+
+INSERT INTO `tbldocumentpurpose` (`strDocPurposeID`, `strPurposeName`, `dblPrice`) VALUES
+(1, 'Funeral', 0),
+(2, 'Local Employment', 50),
+(3, 'Scholarship', 0),
+(4, 'PAO', 150);
 
 -- --------------------------------------------------------
 
@@ -234,21 +263,34 @@ INSERT INTO `tbldocument` (`intDocCode`, `strDocName`, `strDocFee`, `strStatus`)
 --
 
 CREATE TABLE `tbldocumentrequest` (
-  `strDocRequestID` varchar(25) NOT NULL,
+  `strDocRequestID` int(25) NOT NULL,
   `strDRdocCode` varchar(25) NOT NULL,
   `strDRapplicantID` varchar(25) NOT NULL,
   `strDRapprovedBy` varchar(25) NOT NULL,
-  `datDRdateRequested` date NOT NULL
+  `datDRdateRequested` date NOT NULL,
+  `strPurpose` varchar(40) NOT NULL,
+  `strRequestOf` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tbldocumentrequest`
 --
 
-INSERT INTO `tbldocumentrequest` (`strDocRequestID`, `strDRdocCode`, `strDRapplicantID`, `strDRapprovedBy`, `datDRdateRequested`) VALUES
-('001D', '1', '11', '3', '2016-07-23'),
-('002D', '1', '4', '1', '2016-07-23'),
-('003D', '1', '2', '1', '2016-07-23');
+INSERT INTO `tbldocumentrequest` (`strDocRequestID`, `strDRdocCode`, `strDRapplicantID`, `strDRapprovedBy`, `datDRdateRequested`, `strPurpose`, `strRequestOf`) VALUES
+(1, '1', '11', '3', '2016-07-23', '', ''),
+(2, '1', '4', '1', '2016-07-23', '', ''),
+(3, '1', '2', '1', '2016-07-23', '', ''),
+(4, '2', '1', '1', '2016-08-10', 'Local Employment', ''),
+(5, '2', '1', '1', '2016-08-10', 'Local Employment', ''),
+(6, '2', '1', '1', '2016-08-10', '', ''),
+(7, '2', '1', '1', '2016-08-10', 'Local Employment', 'Ala'),
+(8, '2', '1', '1', '2016-08-10', 'Funeral', 'Ala'),
+(9, '2', '1', '1', '2016-08-10', 'Funeral', 'Ala'),
+(10, '2', '1', '1', '2016-08-10', 'PAO', 'Ala'),
+(11, '2', '1', '1', '2016-08-10', 'PAO', 'Ala'),
+(12, '2', '1', '1', '2016-08-10', 'PAO', 'Ala'),
+(13, '2', '1', '1', '2016-08-10', 'PAO', 'Ala'),
+(14, '', '1', '1', '2016-08-10', '', '');
 
 -- --------------------------------------------------------
 
@@ -262,23 +304,21 @@ CREATE TABLE `tblequipment` (
   `strEquipCategory` varchar(25) NOT NULL,
   `intEquipQuantity` int(11) NOT NULL,
   `dblEquipFee` double NOT NULL,
-  `dblEquipDiscount` double NOT NULL,
-  `strStatus` varchar(10) NOT NULL
+  `dblEquipDiscount` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tblequipment`
 --
 
-INSERT INTO `tblequipment` (`strEquipNo`, `strEquipName`, `strEquipCategory`, `intEquipQuantity`, `dblEquipFee`, `dblEquipDiscount`, `strStatus`) VALUES
-(1, 'Basketball', '8', 13, 50.51, 10, 'Enabled'),
-(2, 'Volleyball', '8', 10, 50, 0, 'Enabled'),
-(3, 'Tennis Ball', '8', 10, 50, 0, 'Enabled'),
-(4, 'Shuttlecock', '8', 10, 50, 0, 'Enabled'),
-(5, 'Volleyball Net', '4', 10, 0, 0, 'Enabled'),
-(6, 'Tennis Net', '4', 3, 0, 0, 'Disabled'),
-(7, 'Digital Scoreboard', '6', 5, 250, 0, 'Enabled'),
-(8, 'Tennis', '5', 90, 20.6, 0, 'Enabled');
+INSERT INTO `tblequipment` (`strEquipNo`, `strEquipName`, `strEquipCategory`, `intEquipQuantity`, `dblEquipFee`, `dblEquipDiscount`) VALUES
+(1, 'Basketball', '8', 10, 50, 0),
+(2, 'Volleyball', '8', 10, 50, 0),
+(3, 'Tennis Ball', '8', 10, 50, 0),
+(4, 'Shuttlecock', '8', 10, 50, 0),
+(5, 'Volleyball Net', '4', 10, 0, 0),
+(6, 'Tennis Net', '4', 3, 0, 0),
+(7, 'Digital Scoreboard', '6', 5, 250, 0);
 
 -- --------------------------------------------------------
 
@@ -421,7 +461,11 @@ INSERT INTO `tblpaymentdetail` (`intNum`, `strRequestID`, `dblReqPayment`, `intR
 (8, '010', 300, 0),
 (10, '001D', 250, 0),
 (11, '002D', 250, 0),
-(12, '003D', 250, 0);
+(12, '003D', 250, 0),
+(20, '0', 150, 0),
+(21, '0', 150, 0),
+(22, '', 150, 0),
+(23, '12', 150, 0);
 
 -- --------------------------------------------------------
 
@@ -456,6 +500,18 @@ CREATE TABLE `tblrequirements` (
   `intReqID` int(11) NOT NULL,
   `strRequirementName` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tblrequirements`
+--
+
+INSERT INTO `tblrequirements` (`intReqID`, `strRequirementName`) VALUES
+(1, 'DTI/SEC Registration'),
+(2, 'Lease of Contract'),
+(3, 'Land Title'),
+(4, 'Certification from TODA ED'),
+(5, 'Valid ID'),
+(6, 'No existing case');
 
 -- --------------------------------------------------------
 
@@ -734,6 +790,12 @@ ALTER TABLE `tbldocument`
   ADD PRIMARY KEY (`intDocCode`);
 
 --
+-- Indexes for table `tbldocumentpurpose`
+--
+ALTER TABLE `tbldocumentpurpose`
+  ADD PRIMARY KEY (`strDocPurposeID`);
+
+--
 -- Indexes for table `tbldocumentrequest`
 --
 ALTER TABLE `tbldocumentrequest`
@@ -868,7 +930,7 @@ ALTER TABLE `tblzone`
 -- AUTO_INCREMENT for table `tblbusinesscate`
 --
 ALTER TABLE `tblbusinesscate`
-  MODIFY `strBusCatergory` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `strBusCatergory` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `tblcategory`
 --
@@ -880,10 +942,20 @@ ALTER TABLE `tblcategory`
 ALTER TABLE `tbldocument`
   MODIFY `intDocCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
+-- AUTO_INCREMENT for table `tbldocumentpurpose`
+--
+ALTER TABLE `tbldocumentpurpose`
+  MODIFY `strDocPurposeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `tbldocumentrequest`
+--
+ALTER TABLE `tbldocumentrequest`
+  MODIFY `strDocRequestID` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+--
 -- AUTO_INCREMENT for table `tblequipment`
 --
 ALTER TABLE `tblequipment`
-  MODIFY `strEquipNo` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `strEquipNo` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `tblfacility`
 --
@@ -903,12 +975,12 @@ ALTER TABLE `tblhousemember`
 -- AUTO_INCREMENT for table `tblpaymentdetail`
 --
 ALTER TABLE `tblpaymentdetail`
-  MODIFY `intNum` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `intNum` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT for table `tblrequirements`
 --
 ALTER TABLE `tblrequirements`
-  MODIFY `intReqID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `intReqID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `tblreserveequip`
 --
@@ -949,12 +1021,6 @@ ALTER TABLE `tblbrgyofficial`
 --
 ALTER TABLE `tblbusinessstat`
   ADD CONSTRAINT `strBSBusinessID` FOREIGN KEY (`strBSbusinessID`) REFERENCES `tblbusiness` (`strBusinessID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `tblctc`
---
-ALTER TABLE `tblctc`
-  ADD CONSTRAINT `strDocRequestID` FOREIGN KEY (`strDocRequestID`) REFERENCES `tbldocumentrequest` (`strDocRequestID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
