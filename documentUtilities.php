@@ -5,30 +5,17 @@
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
-      <!--main content start-->  <!-- Modal Start-->
-	<div id="myModala" class="modal fade" role="dialog" >
-	<div class="modal-dialog" style = "width:900px ">
-	<div class = "modal-content" style = "width:900px padding-left:20px">
-<!-- Modal content-->
-					
-	
-</div>
-</div></div> 
-
+<!--main content start-->
 <!--MAIN CONTENT-->
 
       <section id="main-content">
          <section class="wrapper site-min-height">		
-		  <form method = POST>
-			<legend ><font face = "cambria" size = 8 color = "grey"> Business Maintenance </font></legend>
-                     
-<form method = POST>
-	 <!-- input type="button" class="btn btn-info" name = "btnAdd" id = "btnAdd" value = "Add Requirement" data-toggle="modal" data-target="#myModala"> <!--MODAL BUTTON -->
-       
+			<legend ><font face = "cambria" size = 8 color = "grey"> Business Maintenance </font></legend>   
+
 <p><font face = "cambria" size = 5 color = "grey"> Maintenance -> Requirement Utility </font><font  size = 5 color = "Red"> </font></p>	   
-                               
-<center>
-<br><div class = "showback">
+<form method = POST>                              
+<div class="col-sm-9 col-md-6 col-lg-6">
+<div class = "showback">
 		<select name = "document" id = "document">
 			<option value = ""> Select Document </option>
 			<?php
@@ -40,13 +27,10 @@
 				$i = 1;
 				while($row = mysqli_fetch_object($query)){?>
 				<option value=<?php echo $row->intDocCode ?>> <?php echo $row->strDocName ?></option>
-				
 				<?php }} ?>	
 		</select>
-<br><br>
-	<!-- select name -->
-
-		<div class = "checkbox">	
+<!-- select name -->		
+		<div >	
 			<?php
 				$docCheckBox[] = array();
 				require('connection.php');
@@ -57,15 +41,20 @@
 				$i = 1;
 				while($row = mysqli_fetch_object($query)){ ?> 
 				<br><br>
-				<input type = "checkbox" id = "docCheckBox" name = docCheckBox[]  value=<?php echo $row->intReqID ?>> <?php echo $row->strRequirementName?></input>
-				
+				<input type = "checkbox" id = "docCheckBox" name = docCheckBox[]  value=<?php echo $row->intReqID ?>> <?php echo $row->strRequirementName?></input>				
 				<?php } } ?>
 		</div>
-		
-		
+		<br><br>
 		<input type="submit" class="btn btn-outline btn-success" name = "btnAddRequirement" id = "btnAdd1"  value = "Save"  >			
 		<input type="submit" class="btn btn-outline btn-success" name = "btnCancelRequirement" id = "btnCancel"  value = "Back"  >		
-
+			
+				<?php 
+				 if (isset($_POST['btnCancelRequirement'])){ 
+					echo "<script>
+					window.location ='requirementMaintenance.php';</script>";
+				 }
+				 ?>
+								
 				<?php
 			 if (isset($_POST['btnAddRequirement'])){
 				 $strDocument = $_POST['document'];
@@ -97,13 +86,54 @@
 					//	mysqli_query($con,"INSERT INTO `tbldocrequirements`(`strDocID`,'strReqID') VALUES ('$sql1',".$_POST['docCheckBox'].");");						
 					}								 
 				 ?>		
-</center>
+
+ </div>	
 </form> <!--FORM METHOD -->
-    </div> <!--CLASS SHOWBACK -->	
+</div> <!--CLASS SHOWBACK -->	
+
+<!--DIVISION FOR TABLE-->
+	<form method = POST>	
+	<div class="col-sm-3 col-md-6 col-lg-6">
+	<div class = "showback">
+					 <table   class="table table-striped table-bordered table-hover"  border = '2' style = 'width:95%'>
+					<thead>
+					<tr>
+					<th>Document Name</th>
+					<th>Requirements</th>
+					</tr>
+					</thead>
+					<tbody>
+				<?php
+					require('connection.php');
+					$sql = "SELECT d.strDocName, r.strRequirementName FROM tbldocrequirements s INNER JOIN tbldocument d ON s.strDocID = d.intDocCode INNER JOIN tblrequirements r ON s.strReqID = r.intReqID";
+					$query = mysqli_query($con, $sql);
+					if(mysqli_num_rows($query) > 0){
+						$i = 1;
+						while($row = mysqli_fetch_object($query)){?>
+						<tr> 
+						<td><?php echo $row->strDocName;?></td>
+							
+							
+							
+					<td><?php echo $row->strRequirementName?></td>
+					</tr>
+					<?php }} ?>
+				<!-- if(isset($_POST['del'])){
+					$a = $_POST['del'];
+					mysqli_query($con,"Delete From tblRequirements where `intReqID` = '$a'");
+					echo "<script>alert('Successful!');
+					window.location ='requirementMaintenance.php';</script>";
+				}				--></tbody>
+				</table></div>
+   </div>
+   </form>
+<!--END OF DIVISON TABLE-->
+
+
 	</section> <!--/wrapper -->
     </section><!-- /MAIN CONTENT -->	  
       <!--main content end-->     
-  </section> <!--<section class="wrapper site-min-height">-->
+
   
     <!-- js placed at the end of the document so the pages load faster -->
     <script src="assets/js/jquery.js"></script>
