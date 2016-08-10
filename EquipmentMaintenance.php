@@ -7,7 +7,7 @@
       *********************************************************************************************************************************************************** -->
       <!--main content start-->
       <section id="main-content">
-          <section class="wrapper site-min-height">		<form method = POST>
+          <section class="wrapper site-min-height">		
 <legend ><font face = "cambria" size = 8 color = "grey"> Equipment Maintenance </font></legend>
 	<button  class="btn btn-info" onclick = "window.location.href='EquipmentAdd.php'">Add New Equipment</button><br>
                             <center><br>				

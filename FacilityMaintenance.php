@@ -27,7 +27,8 @@ $_SESSION['s'] = $_POST['search'];
 								
 								<th>Name</th>
 								<th>Category</th>
-								<th>Price</th>
+								<th>Day Charge</th>
+								<th>Night Charge</th>
 								<th>Status</th>
 								<th>Action</th>
 							</tr>
@@ -47,31 +48,34 @@ $_SESSION['s'] = $_POST['search'];
 									<td><?php echo $row->strFaciName?> </td>
 									<td><?php
 								
-							$query2 = mysqli_query($con,"Select * from tblcategory where strcategorycode = '".$row->strFaciCategoryCode."'");
+							$query2 = mysqli_query($con,"Select * from tblcategory where strCategoryCode = '".$row->strFaciCategory."'");
 					
 							if(mysqli_num_rows($query2) > 0){
 								$row2 = mysqli_fetch_object($query2);
-								echo $row2->strCategoryType;
+								echo $row2->strCategoryDesc;
 					}?>
 					
 									</td>
-									<td><?php echo $row->dblFaciFixedChargePerHour?></td>
+									<td><?php echo $row->dblFaciDayCharge?></td>
+										<td><?php echo $row->dblFaciNightCharge?></td>
 									<td><?php echo $row->strFaciStatus?></td>
-									<td><button type = submit  class="btn btn-success" name = 'btnedit' value = <?php echo $row->strFaciControlNo ?> > EDIT </button></td>
+									<td><button type = submit  class="btn btn-success" name = 'btnedit' value = <?php echo $row->strFaciNo ?> > EDIT </button></td>
 								</tr>		 </form>  
 					<?php 		}
 							}
 				
 							if(isset($_POST['btnedit'])){ //Sets Faciltiy Details in Edit Mode
 								$search = $_POST['btnedit'];
-								$query = mysqli_query($con,"Select * from tblfacility where strFaciControlNo = '$search'");
+								$query = mysqli_query($con,"Select * from tblfacility where strFaciNo = '$search'");
 					
 							if(mysqli_num_rows($query)>0){
 								$row = mysqli_fetch_object($query);
 								$_SESSION['fcode'] = $row->strFaciName;
 								$_SESSION['stat'] = $row->strFaciStatus;
-								$_SESSION['price'] = $row->dblFaciFixedChargePerHour;
-								$a = $row->strFaciCategoryCode;
+								$_SESSION['dayprice'] = $row->dblFaciDayCharge;
+								$_SESSION['nightprice'] = $row->dblFaciNightCharge;
+								$_SESSION['residentprice'] = $row->dblFaciDiscount;
+								$a = $row->strFaciCategory;
 					
 								$query2 = mysqli_query($con,"Select * from tblcategory where strcategorycode = '$a'");
 								$row2 = mysqli_fetch_object($query2);

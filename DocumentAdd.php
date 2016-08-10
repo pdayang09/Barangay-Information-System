@@ -10,6 +10,7 @@
           <section class="wrapper site-min-height">
  <button  class="btn btn-info" onclick="window.location.href='DocumentMaintenance.php'">  <i class="glyphicon glyphicon-hand-left" aria-hidden="true"></i>&nbsp;Back to the Previous Page</button>
 <legend ><font size = 8 color = "grey"> Add Document Details </font></legend>
+		<div class="col-sm-9 col-md-6 col-lg-6">
 <div class = "showback">
 <form method = POST>
 					
@@ -17,14 +18,14 @@
 	
 				<p><font face = "cambria" size = 5 color = "grey"> Document Name </font></p>
 			<div class = "form-group">
-				<div class="col-sm-5">		   
+				<div class="col-sm-12">		   
 				<input id="DocumentN1"  name="DocumentN1" class="form-control input-group-lg reg_name" type="text" title="Enter Document name" maxlength = 40 required>
 			 
 				</div>
 			</div><br><br>		
 <p><font face = "cambria" size = 5 color = "grey">Price </font></p>
 			<div class = "form-group">
-				<div class="col-sm-5">		   
+				<div class="col-sm-12">		   
 				<input id="DocumentN1"  name="Price" class="form-control input-group-lg reg_name" type= number step = any title="Enter Document name" value = '0'min = 0 required>
 			 
 				</div>
@@ -45,13 +46,39 @@
 				 }
 				 else{
 					 require('connection.php');
-					 mysqli_query($con,"insert into tblDocument	(`strDocName`, `strDocFee`, `strStatus`) values ('$strDocN',$strPrice,'Enable');");
-					 echo "<script>alert('Success');</script>";
+					 mysqli_query($con,"insert into tblDocument	(`strDocName`, `strDocFee`, `strStatus`) values ('$strDocN',$strPrice,'Enabled');");
+					 echo "<script>alert('Success');
+					 window.location = 'DocumentMaintenance.php'</script>";
 			 }}
 			?>
 				</center>
 			</form>
-                    </div>
+                    </div></div>
+					<!-- DIV FOR TABLE -->
+		<div class="col-sm-3 col-md-6 col-lg-6">
+		<div class = "showback">
+		<table  class="table table-striped table-bordered table-hover" >
+		<thead>
+		<th>Category Name</th>
+		<th>Price</th>
+		</thead>
+		<tbody>
+							<?php
+					require('connection.php');
+				$sql = "select * from tbldocument ";
+				$query = mysqli_query($con, $sql);
+				if(mysqli_num_rows($query) > 0){
+					$i = 1;
+					while($row = mysqli_fetch_object($query)){?>
+					<tr> 
+					<td><?php echo $row->strDocName?></td>
+					<td><?php echo $row->strDocFee?></td>
+					
+				<?php }}?>
+		</tbody>
+		</table></div>
+		</div>
+<!-- DIV END-->
 			
 		</section><! --/wrapper -->
       </section><!-- /MAIN CONTENT -->

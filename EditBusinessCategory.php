@@ -1,6 +1,12 @@
 <!DOCTYPE html>
-          <?php require('header.php');?>
-    <?php require('sidebar.php');?>
+          <?php session_start();
+		  require('header.php');?>
+    <?php require('sidebar.php');
+	require('connection.php');
+	$a = $_SESSION['cate'];
+	$query = "Select * from tblBusinessCate where strBusCatergory = '$a'" ;
+	$sql = mysqli_query($con,$query);
+	$row = mysqli_fetch_object($sql);	?>
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
@@ -15,29 +21,28 @@
 <form method = POST>
 					
 <!-- DIV FOR FORM -->
-		<div class="col-sm-9 col-md-6 col-lg-6">
+		
 	
   	<div class = 'showback'>	
 	<p><font face = "cambria" size = 5 color = "grey"> Business Category Name </font>  </font></p>
 	<div class = "form-group">
-		   <div class="col-md-12">
+		   <div class="col-md-5">
 		   
-	<input id="PDESC1" name="PDESC1" class="form-control input-group-lg reg_name" type="text" name="facName" title="Enter Facility name" required >	
+	<input id="PDESC1" name="PDESC1" class="form-control input-group-lg reg_name" type="text" name="facName" title="Enter Facility name" <?php echo "value='".$row->strBusCateName."'";?>>	
            </div>
 	</div><br><br><br>
 	
 
 	<p><font face = "cambria" size = 5 color = "grey"> Amount </font></p>
 	<div class = "form-group">
-		   <div class="col-md-12">
+		   <div class="col-md-5">
 		   
-	<input id="PDESC1" name="Amount" class="form-control input-group-lg reg_name" type=number step = any   min = 0 value = 0 name="facName" title="Enter Facility name" required>	
+	<input id="PDESC1" name="Amount" class="form-control input-group-lg reg_name" type=number step = any   min = 0 name="facName" title="Enter Facility name"  <?php echo "value= ".$row->dblAmount."";?>>	
            </div>
 	</div><br><br><br>
 	
 
-  	<center> <input type="submit" class="btn btn-round btn-outline btn-success" name = "btnAdd" id = "btnAdd"  value = "Save Record"  > 	</div>
-		
+  	<center> <input type="submit" class="btn btn-round btn-outline btn-success" name = "btnAdd" id = "btnAdd"  value = "Save Record"  > 
 			 <?php
 			 if (isset($_POST['btnAdd'])){
 				 $strPD = $_POST['PDESC1'];
@@ -48,7 +53,7 @@
 				 }
 				 else{
 					 require('connection.php');
-					 mysqli_query($con,"INSERT INTO `tblBusinessCate`( `strBusCateName`, `dblAmount`,`strStatus`) VALUES ('$strPD','$strtype','Enabled');");
+					 mysqli_query($con,"update tblBusinessCate set strBusCateName = '$strPD', dblAmount = $strtype where strBusCatergory= '$a'");
 					 echo "<script>alert('Success');
 					 window.location = 'BusinessCat.php'</script>";
 			 }}
@@ -56,31 +61,7 @@
     </center>
 	</form>
 </div><!--DIV END -->
-<!-- DIV FOR TABLE -->
-		<div class="col-sm-3 col-md-6 col-lg-6">
-		<div class = "showback">
-		<table  class="table table-striped table-bordered table-hover" >
-		<thead>
-		<th>Category Name</th>
-		<th>Price</th>
-		</thead>
-		<tbody>
-							<?php
-					require('connection.php');
-				$sql = "select * from tblbusinesscate ";
-				$query = mysqli_query($con, $sql);
-				if(mysqli_num_rows($query) > 0){
-					$i = 1;
-					while($row = mysqli_fetch_object($query)){?>
-					<tr> 
-					<td><?php echo $row->strBusCateName?></td>
-					<td><?php echo $row->dblAmount?></td>
-					
-				<?php }}?>
-		</tbody>
-		</table></div>
-		</div>
-<!-- DIV END-->
+
 		</section><! --/wrapper -->
       </section><!-- /MAIN CONTENT -->
 

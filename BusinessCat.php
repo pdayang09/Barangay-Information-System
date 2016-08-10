@@ -44,6 +44,12 @@
 									</div>
 									</div></td>
 				<?php }}
+				if(isset($_POST['btnEdit'])){
+					$_SESSION['cate'] = $_POST['btnEdit'];
+					
+				echo "<script>
+					window.location ='EditBusinessCategory.php';</script>";
+				}				
 				if(isset($_POST['btnDelete'])){
 					$a = $_POST['btnDelete'];
 					mysqli_query($con,"Update tblBusinessCate set strStatus = 'Disabled' where strBusCatergory = '$a'");
