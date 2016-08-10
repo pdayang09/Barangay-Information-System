@@ -13,17 +13,17 @@
 <legend ><font face = "cambria" size = 8 color = "grey"> Add new Equipment</font></legend>
 		
 		<form method = POST>
-						
+							<div class="col-sm-9 col-md-6 col-lg-6">
 <div class = "showback">
 		<p><font face = "cambria" size = 5 color = "grey"> Equipment Name </font></p>
 		<div class = "form-group">
-			<div class="col-sm-5">
+			<div class="col-sm-12">
 				<input id="controlno" name = "controlno" class="form-control input-group-lg reg_name" type="text"  required>			 
            </div>
 		</div><br><br><br>
 		
 		<div class="split-para"><font face = "cambria" size = 5 color = "grey"> Equipment Category</font></p>
-			<div class="col-sm-5">		
+			<div class="col-sm-12">		
 			<select class="form-control input-group-lg reg_name" id = "equip" name = "equip">
                 <option>Select Category</option>
 				<?php
@@ -38,31 +38,57 @@
 										<?php }} ?>
 			</select>
 			</div>
-		</div><a class="btn btn-info btn-success btn-xs" href="EquipmentCat.php"><label>Add Category</label></a><br><br><br>
+		</div><br><br><br>	
 	
 		<font face = "cambria" size = 5 color = "grey"> Fee </font><br>
 		<div class = "form-group">
-			<div class="col-sm-5">
+			<div class="col-sm-12">
 				<input id="controlno1" name = "fee"  value="" class="form-control input-group-lg reg_name" type="number" step = any min= 0 value = "0"  required>			 
 			</div>
 		</div><br><br><br>	
 		
 		<font face = "cambria" size = 5 color = "grey"> Quantity </font><br>
 		<div class = "form-group">
-			<div class="col-sm-5">
+			<div class="col-sm-12">
 				<input id="controlno1" name = "quantity"  value="" class="form-control input-group-lg reg_name" type="number" min="1" value = "0" required>			 
 			</div>
 		</div><br><br><br>	
   <font face = "cambria" size = 5 color = "grey"> Discount </font><br>
 		<div class = "form-group">
-			<div class="col-sm-5">
+			<div class="col-sm-12">
 				<input id="controlno1" name = "disc"  value="" class="form-control input-group-lg reg_name" type="number" min="0" value = "0" required>			 
 			</div>
 		</div><br><br><br>	
   
 		<center> <input type="submit" class="btn btn-info" name = "btnAdd" id = "btnAdd"  value = "Save Record"  > 
-		<br><br></center></div>
-		
+		<br><br></center></div></div>
+		<!-- DIV FOR TABLE -->
+		<div class="col-sm-3 col-md-6 col-lg-6">
+		<div class = "showback">
+		<table  class="table table-striped table-bordered table-hover" >
+		<thead>
+		<th>Category Name</th>
+		<th>Quantity</th>
+		<th>Price</th>
+	
+		</thead>
+		<tbody>
+							<?php
+					require('connection.php');
+				$sql = "select * from tblequipment ";
+				$query = mysqli_query($con, $sql);
+				if(mysqli_num_rows($query) > 0){
+					$i = 1;
+					while($row = mysqli_fetch_object($query)){?>
+					<tr> 
+					<td><?php echo $row->strEquipName?></td>
+					<td><?php echo $row->intEquipQuantity?></td>
+					<td><?php echo $row->dblEquipFee?></td>
+				<?php }}?>
+		</tbody>
+		</table></div>
+		</div>
+<!-- DIV END-->
 		<?php
 		 if (isset($_POST['btnAdd'])){
 			 $strcont = $_POST['controlno'];

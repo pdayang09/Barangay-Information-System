@@ -3,7 +3,7 @@
           <?php require('header.php');?>
     <?php require('sidebar.php');require('connection.php');
 	$memb = $_SESSION['Memb'];
-	$sql  = "Select * From tblhousemember where Memberno = '$memb'";
+	$sql  = "Select * From tblhousemember where intMemberNo = '$memb'";
 	$query = mysqli_query($con,$sql);
 	$row = mysqli_fetch_object($query);?>
 <script>
@@ -74,8 +74,8 @@
 	
 
 	function a(){
-	var strGender = '<?php echo $row->Gender;?>'
-	var strtype = '<?php echo $row->CivilStatus;?>'
+	var strGender = '<?php echo $row->charGender;?>';
+	var strtype = '<?php echo $row->strCivilStatus;?>';
 	if(strGender == 'M'){
 			  document.getElementById('RGender1').checked = true;
 			   document.getElementById('RGender2').disabled = true;
@@ -114,7 +114,7 @@ else{}}
 	<div class="form-group">				
            <div class="col-sm-3">
 	<div class="form-group" id = "fname-div">
-             <input id="FName" class="form-control input-group-lg reg_name" type="text" name="Fname" title="Enter first name" placeholder="First name" onblur= fnFirstn(this,"fname-div","Fname") required <?php echo "value =".$row->FirstName; ?>>
+             <input id="FName" class="form-control input-group-lg reg_name" type="text" name="Fname" title="Enter first name" placeholder="First name" onblur= fnFirstn(this,"fname-div","Fname") required <?php echo "value =".$row->strFirstName; ?>>
            </div>
 		   </div> 
 		   <div class="col-sm-3">

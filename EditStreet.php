@@ -8,20 +8,18 @@
 	$row = mysqli_fetch_object($sql);
 	$StreetName = $row->strStreetName;
 	$zoneid = $row->intForeignZoneId;
-	$query = "Select * from tblZone where intZoneId = '$zoneid'";
-	$sql = mysqli_query($con,$query);
-	$row = mysqli_fetch_object($sql);
-	$ZoneName = $row->strZoneName;
+	
+
 	?>
 	<script>
-	function a(){
-		var zone = <?php echo $ZoneName;?>;
-		  var selectobject = document.getElementById("Purok");
+	function search(){
+		var zone = '<?php echo $zoneid;?>';
+		  var selectobject = document.getElementById("PurokN");
 			 for (var i=0; i<selectobject.length; i++){
 if(selectobject.options[i].value == zone){
 	
-	document.getElementById("Purok").value = selectobject.options[i].value;}
-	}
+	document.getElementById("PurokN").value = selectobject.options[i].value;}
+	}}
 	</script>
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
@@ -46,7 +44,7 @@ if(selectobject.options[i].value == zone){
 		
 		<div class="split-para"><font face = "cambria" size = 5 color = "grey"> Purok Name</font></p>
 			<div class="col-sm-5">		
-			<select class="form-control input-group-lg reg_name" id = "Purok" name = "Purok">
+			<select class="form-control input-group-lg reg_name" id = "PurokN" name = "Purok">
                 
 				<?php
 							require('connection.php');
@@ -62,11 +60,13 @@ if(selectobject.options[i].value == zone){
 			</div>
 		</div>
 	<br><br><br>	
-  
 		<center> <input type="submit" class="btn btn-info" name = "btnAdd" id = "btnAdd"  value = "Save Record"  > 
 		<br><br></center>
-		
 		<?php
+if(isset($_SESSION['street'])){		
+echo "<script> search(); </script>";}?>
+		<?php
+
 		 if (isset($_POST['btnAdd'])){
 
 			 $strStreet = $_POST['StreetName'];

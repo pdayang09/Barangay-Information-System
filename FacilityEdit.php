@@ -28,16 +28,14 @@ function a(){
           <section class="wrapper site-min-height">
  <button class="btn btn-theme" onclick= "window.location.href='FacilityMaintenance.php'">Back to the Previous Page</button>
  	                           <form method = POST>
-    <div id="wrapper">
+
+    
     
         <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                    
+   
 			<legend ><font face = "cambria" size = 8 color = "grey"> Edit Facility </font></legend>
-			<p><font face = "cambria" size = 5 color = "grey"> Facility Name </font><font  size = 5 color = "Red"> * </font></p>
+<div class = "showback">
+			<p><font face = "cambria" size = 5 color = "grey"> Facility Name </font></p>
 	
 			<div class = "form-group">
 				<div class="col-sm-5">
@@ -46,7 +44,7 @@ function a(){
 				</div>
 			</div><br><br><br>
 	
-			<p><font face = "cambria" size = 5 color = "grey"> Category </font><font  size = 5 color = "Red"> * </font></p>
+			<p><font face = "cambria" size = 5 color = "grey"> Category </font></p>
 	
 			<div class = "form-group">
 				<div class="col-sm-5">		   
@@ -55,16 +53,34 @@ function a(){
 				</div>
 			</div><br><br><br>
 	
-			<p><font face = "cambria" size = 5 color = "grey"> Facility Price </font><font  size = 5 color = "Red"> * </font></p>
+			<p><font face = "cambria" size = 5 color = "grey"> Day Price </font></p>
 	
 			<div class = "form-group">
 				<div class="col-sm-5">
-				<input id="facId1" name ="price" class="form-control input-group-lg reg_name" type=number step = any min =0    <?php
-				if(isset($_SESSION['fcode'])){echo "value = '".$_SESSION['price']."'";}?> >
+				<input id="facId1" name ="dayprice" class="form-control input-group-lg reg_name" type=number step = any min =0    <?php
+				if(isset($_SESSION['fcode'])){echo "value = '".$_SESSION['dayprice']."'";}?> >
 				</div>
 			</div><br><br>
+
+	<p><font face = "cambria" size = 5 color = "grey"> Night Price </font></p>
 	
-			<p><font face = "cambria" size = 5 color = "grey"> Status </font><font  size = 5 color = "Red"> * </font></p>
+			<div class = "form-group">
+				<div class="col-sm-5">
+				<input id="facId1" name ="nightprice" class="form-control input-group-lg reg_name" type=number step = any min =0    <?php
+				if(isset($_SESSION['fcode'])){echo "value = '".$_SESSION['nightprice']."'";}?> required>
+				</div>
+			</div><br><br>
+
+<p><font face = "cambria" size = 5 color = "grey"> Resident Price </font></p>
+	
+			<div class = "form-group">
+				<div class="col-sm-5">
+				<input id="facId1" name ="residentprice" class="form-control input-group-lg reg_name" type=number step = any min =0    <?php
+				if(isset($_SESSION['fcode'])){echo "value = '".$_SESSION['residentprice']."'";}?>required>
+				</div>
+			</div><br><br>
+
+			<p><font face = "cambria" size = 5 color = "grey"> Status </font></p>
 		
 			<div class = "form-group">
 				<div class="col-md-5">
@@ -79,26 +95,28 @@ function a(){
 			
 			<?php echo "<script>a();</script>"?><center> 
 	
-				<input type="submit" class="btn btn-info" name = "btnEdit" id = "btnEdit" value = "Save Record" >
+				<input type="submit" class="btn btn-info" name = "btnEdit" id = "btnEdit" value = "Save Record" ></div>
 	
 			<?php //Validation
 		
 			if(isset($_POST['btnEdit'])){
 					$strcode = $_POST['facId'];
-					$strprice = (double)$_POST['price'];
+					$strdayprice = (double)$_POST['dayprice'];
+					$strnightprice = (double)$_POST['nightprice'];
+					$strresidentprice = (double)$_POST['residentprice'];
 					$strStatus = $_POST['facstatus'];
 					$b=0;
 					
 				if (preg_match('/[\^£$%&*()}{@#~?><>,|=_+¬-]/', $strprice)){
 					$b = 1;}
 					
-				if($strprice == NULL  ||$strStatus == NULL ){
+				if($strStatus == NULL ){
 					 echo "<script>alert('Please Complete the form');</script>";
 				}else{
 					if($b == 1){echo "<script>alert('Characters like /[\^£$%&*()}{@#~?><>,|=_+¬-]/ is not allowed');</script>";}
 					else{
 						require('connection.php');
-						mysqli_query($con,"Update tblfacility Set strFaciStatus = '$strStatus', dblFaciFixedChargePerHour = $strprice where strFaciName = '$strcode';");
+						mysqli_query($con,"Update tblfacility Set strFaciStatus = '$strStatus', dblFaciDayCharge = $strdayprice,dblFaciNightCharge = $strnightprice,dblFaciDiscount = $strresidentprice where strFaciName = '$strcode';");
 					 
 						echo "<script>alert('Success');</script>";
 					 	session_destroy();

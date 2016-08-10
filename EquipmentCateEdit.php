@@ -1,68 +1,70 @@
 		 <?php session_start();?>
 <!DOCTYPE html>
           <?php require('header.php');?>
-    <?php require('sidebar.php');?>
+    <?php require('sidebar.php');
+	require('connection.php');
+	$a = $_SESSION['a'];
+	$query = "Select * FROM tblcategory where strCategoryCode = '$a'";
+	$sql = mysqli_query($con,$query);
+	$row = mysqli_fetch_object($sql);
+	$desc = $row->strCategoryDesc;
+	$Type= $row->strCategoryType;
+	//echo "<script>alert('$Type')</script>";
+
+	?>
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
-      <!--main content start-->  
+      <!--main content start-->
+	  <script>
+	  
+	  function a(){
+		var zone = '<?php echo $Type;?>';
+		  var selectobject = document.getElementById("ftype");
+			 for (var i=0; i<selectobject.length; i++){
+if(selectobject.options[i].value == zone){
+	
+	document.getElementById("ftype").value = selectobject.options[i].value;}
+	}
+	  }
+	  
+	  
+	  </script>
       <section id="main-content">
           <section class="wrapper site-min-height">		<br>
 		  	<button  class="btn btn-info" onclick="window.location.href='EquipmentCat.php'">  <i class="glyphicon glyphicon-hand-left" aria-hidden="true"></i>&nbsp;Back to the Previous Page</button>
 
 		<legend ><font face = "cambria" size = 8 color = "grey"> Add Facility/Equipment Category </font></legend>
-		<div class="col-sm-9 col-md-6 col-lg-6">
 <form method = POST>					
 
 	 	<div class = "showback">
 	<p><font face = "cambria" size = 5 color = "grey"> Item Description </font></p>
 	<div class = "form-group">
-		   <div class="col-md-12">
+		   <div class="col-md-5">
 		   
-	<input id="PDESC1" name="PDESC1" class="form-control input-group-lg reg_name" type="text" name="facName" title="Enter Facility name" >	
+	<input id="PDESC1" name="PDESC1" class="form-control input-group-lg reg_name" type="text" name="facName" title="Enter Facility name" <?php echo "value='".$desc."'";	 ?>>	
            </div>
 	</div><br><br><br>
-	
+	<?php echo "<script>a();</script>";?>
 		<p><font face = "cambria" size = 5 color = "grey"> Item Type </font></p>
 	<div class = "form-group">
-		   <div class="col-md-12">
+		   <div class="col-md-5">
 		   
-	<select class = "form-control" name = "type">
-	<option> Facility</option>
-	<option> Equipment</option>
+	<select class = "form-control" name = "type" id = "ftype">
+	<option value  ="Facility"> Facility</option>
+	<option value = "Equipment">  Equipment</option>
 	</select>
            </div>
 	</div><br><br><br>
   
-  	<center> <input type="submit" class="btn btn-outline btn-success" name = "btnAdd" id = "btnAdd"  value = "Save Record"  > </div>
-	
+  	<center> <input type="submit" class="btn btn-outline btn-success" name = "btnAdd" id = "btnAdd"  value = "Save Record"  > 
 </div>
-		<div class="col-sm-3 col-md-6 col-lg-6">
-		<div class = "showback">
-		<table  class="table table-striped table-bordered table-hover" >
-		<thead>
-		<th>Category Name</th>
-		<th>Category Type</th>
-		</thead>
-		<tbody>
-							<?php
-					require('connection.php');
-				$sql = "select * from tblCategory ";
-				$query = mysqli_query($con, $sql);
-				if(mysqli_num_rows($query) > 0){
-					$i = 1;
-					while($row = mysqli_fetch_object($query)){?>
-					<tr> 
-					<td><?php echo $row->strCategoryDesc?></td>
-					<td><?php echo $row->strCategoryType?></td>
-					
-				<?php }}?>
-		</tbody>
-		</table>
-		</div>
-	</div>	 
-
+			 
+		<br><br>
 			 <?php
+			 if(isset($_SESSION['a'])){
+				 echo "<script>a();</script>";
+			 }
 			 if (isset($_POST['btnAdd'])){
 				 $strPD = $_POST['PDESC1'];
 				  $strtype = $_POST['type'];
@@ -72,7 +74,7 @@
 				 }
 				 else{
 					 require('connection.php');
-					 mysqli_query($con,"INSERT INTO `tblcategory`(`strCategoryDesc`, `strCategoryType`) VALUES ('$strPD','$strtype');");
+					 mysqli_query($con,"Update tblcategory set strCategoryType = '$strtype', strCategoryDesc = '$strPD' where strCategoryCode = '$a' ");
 					 echo "<script>alert('Success');
 					 window.location = 'EquipmentCat.php'</script>";
 			 }}
