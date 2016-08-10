@@ -24,7 +24,7 @@
 						   <!--Barangay Official and Document-->
 						  <li><a  href="BusinessCat.php">Business Category</a></li>
                           <li><a  href="DocumentMaintenance.php">Document </a></li>
-						  <li><a  href="DocumentPMaintenance.php">Document Purpose</a></li>
+						 
 						  <li><a  href="Streetmaintenance.php">Street</a></li>					  
 						  <!--Facility and Equipment -->
 						  <li><a  href="EquipmentCat.php">Category</a></li>
