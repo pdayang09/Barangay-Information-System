@@ -48,7 +48,7 @@
 								<div class="panel-body">	
 		
 		
-		<legend ><font face = "cambria" size = 10 color = "grey"> Facility Equipment Reservation </font></legend>
+		<legend ><font face = "cambria" size = 10 color = "grey">  </font></legend>
 		
 		<!-- Search Section-->
 		<div class="form-group">
@@ -57,7 +57,7 @@
 			</div>				
 			<div class="col-sm-2">
 				<button class="btn btn-info btn-round btn-xs  " id = "searchst" name = "btnSearch" value = 1 onclick = "search(this.value)"><i class = "glyphicon glyphicon-search"></i></button>
-			</div> <!-- 1 = FacilityEquipmentL -->
+			</div> <!-- 3 = Validity Check -->			
 		</div><br><br><br><br>
 		
 		<!-- Filters Resident / Applicant -->	
@@ -68,9 +68,6 @@
 			</div>
 			<div class="btn-group" role="group">
 				<button class="btn btn-success" id = "searcht" name = "btnSearch" value = 3 onclick = "select(this.value)">Approved</button>
-			</div>
-			<div class="btn-group" role="group">
-				<button class="btn btn-primary" id = "searcht" name = "btnSearch" value = 4 onclick = "select(this.value)">Paid</button>
 			</div>
 		</div>
 		</div><br><br><br>
@@ -170,7 +167,7 @@ function search(val){
 		url: "gettable1.php",
 		data: 'sid=' + a +'&bid='+val,
 		success: function(data){
-			alert(data);
+			//alert(data);
 			$("#tablestreet").html(data);
 		}		
 	});
