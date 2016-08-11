@@ -80,7 +80,7 @@
 		$hours = -1 * $hours;
 		
 		//Gets Today's Date
-		$today = date("F j, Y, g:i a"); // displays date today
+		$today = date("Y-m-d"); // displays date today
 		
 		//Payment
 		$total =0;
@@ -89,6 +89,8 @@
 		$change =0;
 		
 		include("paymentconfig.php");
+		
+		echo"<script> alert('$resFacility');</script>";
 	?>
 	
 	<form method = "POST">

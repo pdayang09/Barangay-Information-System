@@ -3,22 +3,22 @@
 
 	$out = array();
 	
-	$sql   = mysqli_query($con,"SELECT r.strreservationid, r.strrrapplicantid, CONCAT(a.strapplicantlname,' ', 	a.strapplicantfname, ', ', a.strapplicantmname) AS 'Name', a.strapplicantcontactno, r.strrrpurpose, r.datrreserveddate, r.strrrapprovalstatus, p.intrequestorno, r.dtmFrom, r.dtmTo FROM tblreservationrequest r INNER JOIN tblpaymentdetail p ON p.strrequestid = r.strreservationid INNER JOIN tblapplicant a ON a.strapplicantid = r.strrrapplicantid");
+	$sql   = mysqli_query($con,"SELECT r.`strReservationID`, r.`strRSresidentId`, CONCAT(re.`strLastName`,' ', re.`strFirstName`, ', ', re.`strMiddleName`) AS 'Name', re.`strContactNo` AS 'Contact', r.`strRSPurpose`, r.`datRSReserved`, r.`strRSapprovalStatus`, r.`dtmFrom`, r.`dtmTo`, p.intrequestorno FROM tblreservationrequest r INNER JOIN tblpaymentdetail p ON p.strrequestid = r.`strReservationID` INNER JOIN tblhousemember re ON re.`intMemberNo` = r.`strRSresidentId` UNION SELECT r.`strReservationID`, r.`strRSapplicantId`, CONCAT(a.`strApplicantLName`,' ', a.`strApplicantFName`, ', ', a.`strApplicantMName`) AS 'Name', a.`strApplicantContactNo` AS 'Contact', r.`strRSPurpose`, r.`datRSReserved`, r.`strRSapprovalStatus`,r.`dtmFrom`, r.`dtmTo`, p.intrequestorno FROM tblreservationrequest r INNER JOIN tblpaymentdetail p ON p.strrequestid = r.`strReservationID` INNER JOIN tblapplicant a ON a.`strApplicantID` = r.`strRSapplicantId`");
 	
 	while($row = mysqli_fetch_array($sql)) {
-		if($row['strrrapprovalstatus']=='Approved'){
+		if($row['strRSapprovalStatus']=='Approved'){
 			$out[] = array(
-				'id' => $row['strreservationid'],
-				'title' => "Reservation: ".$row['strreservationid']." Name: ".$row['Name']." Purpose: ".$row['strrrpurpose']." Contact No: ".$row['strapplicantcontactno']." ",	
+				'id' => $row['strReservationID'],
+				'title' => "Reservation: ".$row['strReservationID']." Name: ".$row['Name']." Purpose: ".$row['strRSPurpose']." Contact No: ".$row['Contact']." ",	
 				'url' => '#',
 				'class' => 'event-important',
 				'start' => $row['dtmFrom'],
 				'end' => $row['dtmTo']
 			);
-		}else if($row['strrrapprovalstatus']=='Paid'){
+		}else if($row['strRSapprovalStatus']=='Paid'){
 			$out[] = array(
-				'id' => $row['strreservationid'],
-				'title' => "Reservation: ".$row['strreservationid']." Name: ".$row['Name']." Purpose: ".$row['strrrpurpose']." Contact No: ".$row['strapplicantcontactno']." ",	
+				'id' => $row['strReservationID'],
+				'title' => "Reservation: ".$row['strReservationID']." Name: ".$row['Name']." Purpose: ".$row['strRSPurpose']." Contact No: ".$row['Contact']." ",	
 				'url' => '#',
 				'class' => 'event-success',
 				'start' => $row['dtmFrom'],

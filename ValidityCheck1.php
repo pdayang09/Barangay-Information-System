@@ -35,6 +35,7 @@
 	$searchtemp =0;
 ?>
 
+	<form method="POST">
     <div id="wrapper">
     <!--?php include('Nav.php')?>
 
@@ -50,32 +51,20 @@
 		
 		
 		
-		<legend ><font face = "cambria" size = 10 color = "grey"> </font></legend> <!-- Insert Here -->
+		<legend ><font face = "cambria" size = 10 color = "grey"> Validity Check </font></legend>
 		
 		<!-- Search Section-->
 		<div class="form-group">
 			<div class="col-sm-3">
-				<input id="searchr" name="search" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value= "" placeholder="Search Last Name">					
+				<input id="search" name="search" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value= "" placeholder="Input Last Name">					
 			</div>				
 			<div class="col-sm-2">
-				<button class="btn btn-info btn-round btn-xs  " id = "searchst" name = "btnSearch" value = 3 onclick = "search(this.value)"><i class = "glyphicon glyphicon-search"></i></button>
-			</div> <!-- 3 = Validity Check -->			
+				<input type="submit" class="btn btn-outline btn-success" name = "btnSearch" id = "btnSearch" value = "Search">
+			</div>
+			<div class="col-sm-2">
+				<a href="RegisterApplicant.php"><input type="button" class="btn btn-outline btn-success" name = "btnAdd" id = "btnAdd" href="RegisterApplicant.php" value="Add Applicant"></a>
+			</div>
 		</div><br><br><br><br>		
-		
-		<div class="col-sm-6">
-		<div class="btn-group btn-group-justified" role="group" aria-label="...">
-			<div class="btn-group" role="group">
-				<button class="btn btn-primary" id = "searcht" name = "btnSearch" value = 1 onclick = "select(this.value)">Resident</button>
-			</div>
-			<div class="btn-group" role="group">
-				<button class="btn btn-success" id = "searcht" name = "btnSearch" value = 2 onclick = "select(this.value)">Non-Resident</button>
-			</div>
-		</div>
-		</div>
-		
-		<div class="col-sm-2">
-			<a href="RegisterApplicant.php"><input type="button" class="btn btn-outline btn-success" name = "btnAdd" id = "btnAdd" href="RegisterApplicant.php" value="Add Applicant"></a>
-		</div><br><br><br>
 		
 		<?php
 		if(isset($_POST['btnSearch'])){
@@ -90,19 +79,19 @@
 				$statement = "SELECT a.`intMemberNo` AS 'ID', CONCAT(a.`strLastName`, ', ', a.`strFirstName`, ' ', a.`strMiddleName`, ' ', a.`strNameExtension`) AS 'Name', a.`strContactNo`, CONCAT(s.`strStreetName`, ', ', z.`strZoneName`) AS 'Place' FROM tblhousemember a INNER JOIN tblhousehold h ON h.intHouseholdNo = a.intForeignHouseholdNo INNER JOIN tblstreet s ON s.intStreetId = h.intForeignStreetId INNER JOIN tblzone z ON z.intZoneId = s.intForeignZoneId WHERE a.`intMemberNo` = '$search'";
 			}
 		}else{
-				$statement = "SELECT a.`intMemberNo`, CONCAT(a.`strLastName`, ', ', a.`strFirstName`, ' ', a.`strMiddleName`, ' ', a.`strNameExtension`) AS 'Name', a.`strContactNo`, CONCAT(s.`strStreetName`, ', ', z.`strZoneName`) AS 'Place' FROM tblhousemember a INNER JOIN tblhousehold h ON h.intHouseholdNo = a.intForeignHouseholdNo INNER JOIN tblstreet s ON s.intStreetId = h.intForeignStreetId INNER JOIN tblzone z ON z.intZoneId = s.intForeignZoneId";				
+				$statement = "SELECT a.`strApplicantID`, CONCAT(a.`strApplicantLName`, ', ', a.`strApplicantFName`, ' ', a.`strApplicantMName`, ' ', a.`strNameExtension`) AS 'Name', a.`strApplicantContactNo`, CONCAT(a.`strApplicantAddress_street`, ' ', a.`strApplicantAddress_brgy`,', ',a.`strApplicantAddress_city`) AS 'Place' FROM tblapplicant a UNION SELECT a.`intMemberNo`, CONCAT(a.`strLastName`, ', ', a.`strFirstName`, ' ', a.`strMiddleName`, ' ', a.`strNameExtension`) AS 'Name', a.`strContactNo`, CONCAT(s.`strStreetName`, ', ', z.`strZoneName`) AS 'Place' FROM tblhousemember a INNER JOIN tblhousehold h ON h.intHouseholdNo = a.intForeignHouseholdNo INNER JOIN tblstreet s ON s.intStreetId = h.intForeignStreetId INNER JOIN tblzone z ON z.intZoneId = s.intForeignZoneId";				
 		}
 		?>
-
-<form method="POST">		
+		
 		<center>
-		<div class = "showback" id = "tablestreet">	
-			<table class="table table-hover" style="height: 40%; overflow: scroll; "'>
+		<div class="panel panel-default"><!-- Default panel contents -->	
+			<table class="table table-hover" style="height: 40%; overflow: scroll; ">
 				<thead><tr>
 					<th>ID</th>
 					<th>Full Name</th>
 					<th>Contact No</th>
 					<th>Place</th>
+					<th>Type</th>
 					<th>Action</th>
 				</tr></thead>
 			
@@ -110,7 +99,7 @@
 			<?php
 			
 			$query = mysqli_query($con,$statement);
-			while($row = mysqli_fetch_array($query)){ ?>
+			while($row = mysqli_fetch_array($query)){?>
 			
 				<tr><td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[0]; ?></td>
 				<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><?php echo $row[1]; ?></td>
@@ -118,12 +107,15 @@
 				<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[3]; ?></td>
 				<?php
 				if(strstr($row[0], 'app')){
-												
-						echo"<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><button type = 'submit' name='btnProceed' value = '$row[0]' class='btn btn-success btn-xs'><i class='fa fa-check'></i></button><button type = 'submit' name='btnDocument' value = '$row[0]' class='btn btn-success btn-xs'><i class='fa fa-check'></i></button></td>";
+						echo"<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><span class='label label-success'>Applicant</span></td>";
+						
+						echo"<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><button type = 'submit' name='btnProceed' value = '$row[0]' class='btn btn-success btn-xs'><i class='fa fa-check'></i></button></td>";
 						
 					}
-				else{						
-						echo"<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><button type = 'submit' name='btnProceed' value = '$row[0]' class='btn btn-primary btn-xs'><i class='fa fa-check'></i></button><button type = 'submit' name='btnDocument' value = '$row[0]' class='btn btn-primary btn-xs'><i class='fa fa-check'></i></button></td>";
+				else{
+						echo"<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><span class='label label-primary'>Non Resident</span></td>";
+						
+						echo"<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><button type = 'submit' name='btnProceed' value = '$row[0]' class='btn btn-primary btn-xs'><i class='fa fa-check'></i></button></td>";
 						
 					}
 				
@@ -165,43 +157,9 @@
 
 				}
 					
-				echo "<script> window.location = 'FacilityEquipmentT.php';</script>";
-				
-			}else if(isset($_POST['btnDocument'])){
-				$btnDocument = $_POST['btnDocument'];
-				
-				$residency =0;
-				if(strstr($btnDocument, 'app')){
-					
-					$statement = "SELECT a.`strApplicantID`, CONCAT(a.`strApplicantLName`, ', ', a.`strApplicantFName`, ' ', a.`strApplicantMName`, ' ', a.`strNameExtension`) AS 'Name', a.`strApplicantContactNo`, CONCAT(a.`strApplicantAddress_street`, ' ', a.`strApplicantAddress_brgy`,', ',a.`strApplicantAddress_city`) AS 'Place' FROM tblapplicant a WHERE a.`strApplicantID` = '$proceed'";
-					
-					$residency = 2;
-				}else{
-					
-					$statement = "SELECT a.`intMemberNo` AS 'ID', CONCAT(a.`strLastName`, ', ', a.`strFirstName`, ' ', a.`strMiddleName`, ' ', a.`strNameExtension`) AS 'Name', a.`strContactNo`, CONCAT(s.`strStreetName`, ', ', z.`strZoneName`) AS 'Place' FROM tblhousemember a INNER JOIN tblhousehold h ON h.intHouseholdNo = a.intForeignHouseholdNo INNER JOIN tblstreet s ON s.intStreetId = h.intForeignStreetId INNER JOIN tblzone z ON z.intZoneId = s.intForeignZoneId WHERE a.`intMemberNo` = '$proceed'";
-					
-					$residency = 1;
-				}
-				
-				$query = mysqli_query($con,$statement);
-				
-				while($row = mysqli_fetch_array($query)){
-					
-					$clientID = $row[0];
-					$name = $row[1];
-					$contactno = $row[2];	
-					$place = $row[3];
-						
-					$_SESSION['clientID'] = $clientID;
-					$_SESSION['name'] = $name;
-					$_SESSION['contactno'] = $contactno;
-					$_SESSION['place'] = $place;		
-					$_SESSION['residency'] = $residency;
-				}
-				
-				if($residency == 2)				
+				if($residency == 1)				
 					echo "<script> window.location = 'DRselectDocNonResident.php';</script>";
-				else if($residency == 1)
+				else if($residency == 2)
 					echo "<script> window.location = 'DRselectDocResident.php';</script>";
 			}
 			
@@ -217,47 +175,5 @@
 				
 		</section><! --/wrapper -->
       </section><!-- /MAIN CONTENT -->
-	  
-	<script>
-      //custom select box
-function search(val){
-	var a = document.getElementById('searchr').value;
-
-	$.ajax({
-		type: "POST",
-		url: "gettable1.php",
-		data: 'sid=' + a +'&bid='+val,
-		success: function(data){
-			//alert(data);
-			$("#tablestreet").html(data);
-		}		
-	});
-}
-      $(function(){
-          $('select.styled').customSelect();
-      });
-
-  </script>
-  
- 	<script>
-      //custom select box
-function select(val){
-	var a = document.getElementById('searchr').value;
-
-	$.ajax({
-		type: "POST",
-		url: "getValidity.php",
-		data: 'sid=' + a +'&bid='+val,
-		success: function(data){
-			//alert(data);
-			$("#tablestreet").html(data);
-		}		
-	});
-}
-      $(function(){
-          $('select.styled').customSelect();
-      });
-
-  </script>
 
 <?php require("footer.php");?>
