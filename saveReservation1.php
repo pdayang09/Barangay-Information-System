@@ -1,8 +1,6 @@
 <?php
 	require("connection.php");
-		
-	echo"<script> alert('$residency $clientID');</script>";
-		
+				
 	if($residency == 1){
 		
 		//tblreservationrequest` - Resident
@@ -30,8 +28,8 @@
 		//tblreserveequip`
 		if($equipmentF == 1){												
 			for($intCtr = 0; $intCtr < sizeof($equipment); $intCtr++){
-				mysqli_query($con, "INSERT INTO `tblreserveequip`(`strReservationID`, `strREEquipCode`, `dtmREFrom`, `dtmRETo`,`intREQuantity`) VALUES ('$resId','$equipment[$intCtr]','$resFrom','$resTo','$quantity[$intCtr]')");
-				
+				mysqli_query($con, "INSERT INTO `tblreserveequip`(`strReservationID`, `strREEquipCode`, `dtmREFrom`, `dtmRETo`,`intREQuantity`) VALUES ('$resId','$equipment[$intCtr]','$resFrom','$resTo','$quantity1[$intCtr]')");
+			
 				//tblreturnequip`
 				mysqli_query($con, "INSERT INTO `tblreturnequip`(`strReservationID`, `strRTEquipCode`, `datRTDate`, `intReturned`, `intUnreturned`) VALUES ('$resId','$equipment[$intCtr]','$resTo',' ','$quantity1[$intCtr]')");
 			}			
