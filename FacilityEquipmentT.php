@@ -376,7 +376,8 @@
 						$_SESSION['equipment'] = "";
 						$_SESSION['quantity'] = "";
 					}						
-								
+					
+					echo"<script> alert('$residency $clientID');</script>";
 					echo"<script> window.location = 'ReservationPayment1.php';</script>";								
 					}	
 							

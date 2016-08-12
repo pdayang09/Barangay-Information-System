@@ -1,8 +1,18 @@
 <?php
 	require("connection.php");
 		
-		//tblreservationrequest`
-		mysqli_query($con, "INSERT INTO `tblreservationrequest`(`strReservationID`, `strRSapplicantId`, `datRSIssued`, `datRSReserved`, `dtmFrom`, `dtmTo`, `strRSapprovalStatus`,`strRSPurpose`) VALUES ('$resId','$clientID',NOW(),'$resFrom', UNIX_TIMESTAMP('$resFrom')*1000, UNIX_TIMESTAMP('$resTo')*1000,'For Approval','$resPurpose')");
+	echo"<script> alert('$residency $clientID');</script>";
+		
+	if($residency == 1){
+		
+		//tblreservationrequest` - Resident
+		mysqli_query($con, "INSERT INTO `tblreservationrequest`(`strReservationID`,`strRSresidentId`, `strRSapplicantId`,`datRSIssued`, `datRSReserved`, `dtmFrom`, `dtmTo`,`strRSapprovalStatus`,`strRSPurpose`) VALUES ('$resId','$clientID','',NOW(),'$resFrom', UNIX_TIMESTAMP('$resFrom')*1000, UNIX_TIMESTAMP('$resTo')*1000,'For Approval','$resPurpose')");
+	}else if($residency == 2){
+		
+		//tblreservationrequest` - Applicant
+		mysqli_query($con, "INSERT INTO `tblreservationrequest`(`strReservationID`, `strRSresidentId`, `strRSapplicantId`, `datRSIssued`, `datRSReserved`, `dtmFrom`, `dtmTo`, `strRSapprovalStatus`,`strRSPurpose`) VALUES ('$resId','','$clientID',NOW(),'$resFrom', UNIX_TIMESTAMP('$resFrom')*1000, UNIX_TIMESTAMP('$resTo')*1000,'For Approval','$resPurpose')");
+	}
+		
 		
 		//tblpaymentdetail`
 		mysqli_query($con, "INSERT INTO `tblpaymentdetail`(`strRequestID`, `dblReqPayment`, `intRequestORNo`) VALUES ('$resId','$total','');");
@@ -12,7 +22,7 @@
 		
 		if(!empty($resFacility)){
 			//tblreservefaci`
-			mysqli_query($con, "INSERT INTO `tblreservefaci`(`strReservationID`, `strReserveFaciNo`, `dtmREFrom`,`dtmRETo`) VALUES ('$resId','$resFacility','$resFrom','$resTo')");
+			mysqli_query($con,"INSERT INTO `tblreservefaci`(`strReservationID`, `strREFaciCode`, `dtmREFrom`, `dtmRETo`) VALUES ('$resId','$resFacility','$resFrom','$resTo')");
 		}else{
 			
 		}		
@@ -33,8 +43,6 @@
 		}else{
 			
 		}
-		
-		echo" <script> alert('Reservation Noted !');</script>";
 		
 		//Refresh Page
 

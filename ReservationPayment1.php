@@ -89,8 +89,6 @@
 		$change =0;
 		
 		include("paymentconfig.php");
-		
-		echo"<script> alert('$resFacility');</script>";
 	?>
 	
 	<form method = "POST">
