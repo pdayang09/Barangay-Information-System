@@ -58,7 +58,7 @@
 				<input id="searchr" name="search" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value= "" placeholder="Search Last Name">					
 			</div>				
 			<div class="col-sm-2">
-				<button class="btn btn-info btn-round btn-xs  " id = "searchst" name = "btnSearch" value = 3 onclick = "search(this.value)"><i class = "glyphicon glyphicon-search"></i></button>
+				<button class="btn btn-info btn-round btn-s  " id = "searchst" name = "btnSearch" value = 3 onclick = "search(this.value)"><i class = "glyphicon glyphicon-search "></i></button>
 			</div> <!-- 3 = Validity Check -->			
 		</div><br><br><br><br>		
 		
@@ -117,11 +117,11 @@
 				<?php
 				if(strstr($row[0], 'app')){
 												
-						echo"<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><button type = 'submit' name='btnProceed' value = '$row[0]' class='btn btn-success btn-xs'><i class='fa fa-check'></i></button><button type = 'submit' name='btnDocument' value = '$row[0]' class='btn btn-success btn-xs'><i class='fa fa-check'></i></button></td>";
+						echo"<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><button type = 'submit' name='btnProceed' value = '$row[0]' class='btn btn-success btn-xs'><i class='fa fa-calendar'></i></button><button type = 'submit' name='btnDocument' value = '$row[0]' class='btn btn-success btn-xs'><i class='fa fa-file'></i></button></td>";
 						
 					}
 				else{						
-						echo"<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><button type = 'submit' name='btnProceed' value = '$row[0]' class='btn btn-primary btn-xs'><i class='fa fa-check'></i></button><button type = 'submit' name='btnDocument' value = '$row[0]' class='btn btn-primary btn-xs'><i class='fa fa-check'></i></button></td>";
+						echo"<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><button type = 'submit' name='btnProceed' value = '$row[0]' class='btn btn-primary btn-xs'><i class='fa fa-calendar'></i></button><button type = 'submit' name='btnDocument' value = '$row[0]' class='btn btn-primary btn-xs'><i class='fa fa-file'></i></button></td>";
 						
 					}
 				
