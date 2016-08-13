@@ -46,8 +46,7 @@ if($_POST['bid']==1){ //FacilityEquipmentL
 			</tbody>
 			</table>
 		</div></center><!-- Table-responsive -->
-<?php
-}else if($_POST['bid']==2){ //Reservation_Kapitanl
+<?php }else if($_POST['bid']==2){ //Reservation_KapitanL
 	$sid = $_POST["sid"];
 		
 		$statement = "SELECT r.`strReservationID`, r.`strRSresidentId`, CONCAT(re.`strLastName`,' ', re.`strFirstName`,', ',re.`strMiddleName`) AS 'Name', re.`strContactNo`, r.`strRSPurpose`, r.`datRSReserved`, r.`strRSapprovalStatus`, p.intrequestorno FROM tblreservationrequest r INNER JOIN tblpaymentdetail p ON p.strrequestid = r.`strReservationID` INNER JOIN tblhousemember re ON re.`intMemberNo` = r.`strRSresidentId` WHERE re.`strLastName` LIKE ('%$sid%') UNION SELECT r.`strReservationID`, r.`strRSapplicantId`, CONCAT(a.`strApplicantLName`,' ', a.`strApplicantFName`, ', ', a.`strApplicantMName`) AS 'Name', a.`strApplicantContactNo`, r.`strRSPurpose`, r.`datRSReserved`, r.`strRSapprovalStatus`, p.intrequestorno FROM tblreservationrequest r INNER JOIN tblpaymentdetail p ON p.strrequestid = r.`strReservationID` INNER JOIN tblapplicant a ON a.`strApplicantID` = r.`strRSapplicantId` WHERE a.`strApplicantLName` LIKE ('%$sid%')";
@@ -95,6 +94,47 @@ if($_POST['bid']==1){ //FacilityEquipmentL
 			</tbody>
 			</table>
 		</div></center><!-- Table-responsive -->
-<?php }else{
+<?php }else if($_POST['bid']==3){ //Reservation_PaymentL
+	$sid = $_POST["sid"];
+		
+		$statement = "SELECT p.`strRequestID`, CONCAT(r.`strRSresidentId`,r.`strRSapplicantId`) AS 'ID', p.`intRequestORNo`, p.`dblReqPayment`, t.`dblRemaining`, r.`strRSapprovalStatus` FROM tblpaymentdetail p INNER JOIN tblreservationrequest r ON r.strreservationid = p.`strRequestID` INNER JOIN tblpaymenttrans t ON t.intORNo = p.`intRequestORNo` WHERE  p.`strRequestID` LIKE ('%$sid%') AND  p.`dblReqPayment` > 0 ";
+?>
+	<center>
+		<div class="panel panel-default" id = "tablestreet"><!-- Default panel contents -->	
+			<table class="table table-hover" style="height: 40%; overflow: scroll; ">
+				<thead><tr>
+					<th>Reservation ID</th>				
+					<th>Payment</th>
+					<th>Balance</th>
+					<th>Action</th>
+				</tr></thead>
+			
+			<tbody>
+			<?php
+			$query = mysqli_query($con,$statement);
+			while($row = mysqli_fetch_array($query)){?>
+			
+				<tr><td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[0]; ?></td>
+				<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[3]; ?></td>
+			
+			<?php
+					//Balance
+					if($row[2]==0){	//Initial Payment				
+						echo"<td onmouseover='highlightCells(this.parentNode)'  onmouseout='unhighlightCells(this.parentNode)'> $row[3]</td>";
+						
+					}else if($row[2]>0 && $row[4]>0 && $row[3]>$row[4]){ //Partial Payment							
+						echo"<td onmouseover='highlightCells(this.parentNode)'  onmouseout='unhighlightCells(this.parentNode)'> $row[4] </td>";
+						
+					}else if($row[2]>0 && $row[4]==0){	//0 Balance				
+						echo"<td onmouseover='highlightCells(this.parentNode)'  onmouseout='unhighlightCells(this.parentNode)'>0 </td>";
+						
+					}
 
-	}?>
+					echo"<td onmouseover='highlightCells(this.parentNode)'  onmouseout='unhighlightCells(this.parentNode)'><button class='btn btn-success btn-xs' value='$row[0]' name= 'btnRenderF'> Render Payment </button></td></tr>";
+								
+			}?>
+			
+			</tbody>
+			</table>
+		</div></center><br><br> <!-- Table-responsive --> 
+<?php } ?>

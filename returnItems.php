@@ -36,7 +36,6 @@
 	$unreturned =0;
 ?>
 
-	<form method="POST">
     <div id="wrapper">
     <!--?php include('Nav.php')?>
 
@@ -57,59 +56,15 @@
 		<!-- Search Section-->
 		<div class="form-group">
 			<div class="col-sm-3">
-				<input id="search" name="search" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value= "" placeholder="Search Reservation ID">					
+				<input id="searchr" name="search" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value= "" placeholder="Search Last name">					
 			</div>				
 			<div class="col-sm-2">
-				<input type="submit" class="btn btn-outline btn-success" name = "btnSearch" id = "btnSearch" value = "Search">
-			</div>			
-			<div class="col-sm-3">
-				<select name="cmbFilter" class="form-control input-group-lg reg_name" >
-					<option value="1"> January </option>
-					<option value="2"> February </option>
-					<option value="3"> March </option>
-					<option value="4"> April </option>
-					<option value="5"> May </option>
-					<option value="6"> June </option>
-					<option value="7"> July </option>
-					<option value="8"> August </option>
-					<option value="9"> September </option>
-					<option value="10"> October </option>
-					<option value="11"> November </option>
-					<option value="12"> December </option>
-				</select>
-			</div>
-			<div class="col-sm-2">
-				<input type="submit" class="btn btn-outline btn-inform" name = "btnFilter" id = "btnFilter" value = "Filter">			
-			</div>
-		</div><br><br><br><br>
-		
-		<?php
-			if(isset($_POST['btnSearch'])){
-				$search = $_POST['search'];
-				
-				if(!empty($search)){ //Notifies User if Search is empty
-					$statement = "SELECT r.*, SUM(re.intreturned), SUM(re.intunreturned) FROM `tblreservationrequest` r INNER JOIN `tblReturnEquip` re ON re.strreservationid = r.strreservationid GROUP BY re.strreservationid HAVING r.strreservationid = $search;";
-				}else if(empty($search)){
-					echo"<script> alert('Pls Input Reservation ID')</script>";
-					$statement = "SELECT r.*, SUM(re.intreturned), SUM(re.intunreturned) FROM `tblreservationrequest` r INNER JOIN `tblReturnEquip` re ON re.strreservationid = r.strreservationid GROUP BY re.strreservationid ORDER by r.datRReservedDate asc;";
-				}
-				
-			}else if(isset($_POST['btnFilter'])){
-				
-				if(isset($_POST['cmbFilter'])){
-					$mfilter = $_POST['cmbFilter'];
-					
-					$statement = "SELECT r.*, SUM(re.intreturned), SUM(re.intunreturned) FROM `tblreservationrequest` r INNER JOIN `tblReturnEquip` re ON re.strreservationid = r.strreservationid GROUP BY re.strreservationid HAVING YEAR(datrreserveddate) = YEAR(CURDATE()) AND MONTH(datrreserveddate) = $mfilter ORDER by r.datRReservedDate asc, re.intunreturned desc;";
-				}else{
-					
-					$statement = "SELECT r.*, SUM(re.intreturned), SUM(re.intunreturned) FROM `tblreservationrequest` r INNER JOIN `tblReturnEquip` re ON re.strreservationid = r.strreservationid GROUP BY re.strreservationid ORDER by r.datRReservedDate asc, re.intunreturned desc;";
-				}
-				
-			}else{
-				$statement = "SELECT r.*, SUM(re.intreturned), SUM(re.intunreturned) FROM `tblreservationrequest` r INNER JOIN `tblReturnEquip` re ON re.strreservationid = r.strreservationid GROUP BY re.strreservationid ORDER by r.datRReservedDate asc;";
-			}
-		?><br>
-		<center>
+				<button class="btn btn-info btn-round btn-s  " id = "searchst" name = "btnSearch" value = 1 onclick = "search(this.value)"><i class = "glyphicon glyphicon-search "></i></button>
+			</div> <!-- 4 returnItems -->			
+		</div><br><br><br><br>	
+
+<form method="POST">
+	<center>
 		<div class="panel panel-default"><!-- Default panel contents -->	
 			<table class="table table-hover" style="height: 40%; overflow: scroll; ">
 				<thead><tr>
@@ -275,5 +230,47 @@
 		
 		</section><! --/wrapper -->
       </section><!-- /MAIN CONTENT -->
+
+<script>
+      //custom select box
+function search(val){
+	var a = document.getElementById('searchr').value;
+
+	$.ajax({
+		type: "POST",
+		url: "gettable1.php",
+		data: 'sid=' + a +'&bid='+val,
+		success: function(data){
+			//alert(data);
+			$("#tablestreet").html(data);
+		}		
+	});
+}
+      $(function(){
+          $('select.styled').customSelect();
+      });
+
+  </script>
+  
+ 	<script>
+      //custom select box
+function select(val){
+	var a = document.getElementById('searchr').value;
+
+	$.ajax({
+		type: "POST",
+		url: "getReturn.php",
+		data: 'sid=' + a +'&bid='+val,
+		success: function(data){
+			//alert(data);
+			$("#tablestreet").html(data);
+		}		
+	});
+}
+      $(function(){
+          $('select.styled').customSelect();
+      });
+
+  </script>
 
 <?php require("footer.php"); ?>

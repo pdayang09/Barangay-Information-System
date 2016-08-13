@@ -58,7 +58,7 @@
 				<input id="searchr" name="search" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value= "" placeholder="Search Last Name">					
 			</div>				
 			<div class="col-sm-2">
-				<button class="btn btn-info btn-round btn-s  " id = "searchst" name = "btnSearch" value = 3 onclick = "search(this.value)"><i class = "glyphicon glyphicon-search "></i></button>
+				<button class="btn btn-info btn-round btn-s  " id = "searchst" name = "btnSearch" value = 1 onclick = "search(this.value)"><i class = "glyphicon glyphicon-search "></i></button>
 			</div> <!-- 3 = Validity Check -->			
 		</div><br><br><br><br>		
 		
