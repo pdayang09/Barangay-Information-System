@@ -48,16 +48,16 @@
 							<div class = "bodybody">	
 								<div class="panel-body">
 		
-		<legend ><font face = "cambria" size = 10 color = "grey"> Reservation Requests</font></legend>
+		<legend ><font face = "cambria" size = 10 color = "grey"> Request List </font></legend>
 		
 		<!-- Search Section-->
 		<div class="form-group">
 			<div class="col-sm-3">
-				<input id="searchr" name="search" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value= "" placeholder="Search Reservation ID">					
+				<input id="searchr" name="search" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value= "" placeholder="Search Last name">					
 			</div>				
 			<div class="col-sm-2">
-				<button class="btn btn-info btn-round btn-xs  " id = "searchst" name = "btnSearch" value = 2 onclick = "search(this.value)"><i class = "glyphicon glyphicon-search"></i></button>
-			</div> <!-- 1 = FacilityEquipmentL -->
+				<button class="btn btn-info btn-round btn-s  " id = "searchst" name = "btnSearch" value = 2 onclick = "search(this.value)"><i class = "glyphicon glyphicon-search"></i></button>
+			</div> <!-- 1 = Reservation_Kapitanl -->
 		</div><br><br><br><br>
 		
 		<!-- Filters Resident / Applicant -->	
@@ -68,9 +68,6 @@
 			</div>
 			<div class="btn-group" role="group">
 				<button class="btn btn-success" id = "searcht" name = "btnSearch" value = 3 onclick = "select(this.value)">Approved</button>
-			</div>
-			<div class="btn-group" role="group">
-				<button class="btn btn-primary" id = "searcht" name = "btnSearch" value = 4 onclick = "select(this.value)">Paid</button>
 			</div>
 		</div>
 		</div><br><br><br>
@@ -108,24 +105,15 @@
 				<?php
 					if($row[6] == "For Approval"){ 	//Personnel and Action if Status = For Approval, Approve ?>	
 						      <td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'>
-							  <div class="switch switch-square" 
-                                 data-on-label="<i class=' fa fa-check'></i>"
-                                 data-off-label="<i class='fa fa-times'></i>">
-				<?php echo"<input type='checkbox' name=approve[] value='$row[0]'/>"; ?>
-                              </div></td>
+								<span class="input-group-addon"><?php echo"<input type='checkbox' name= approve[] value='$row[0]' />"; ?></span>
+                             </td>
 				<?php		
 					}else if($row[6] == "Approved"){  //Personnel and Action if Status = Approved, Collect ?>
 							  <td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'>
-							  <div class="switch switch-square" 
-                                 data-on-label="<i class=' fa fa-check'></i>"
-                                 data-off-label="<i class='fa fa-times'></i>">
-				<?php echo"<input type='checkbox' name=disapprove[] value='$row[0]' />"; ?>
-                              </div></td>
+								<span class="input-group-addon"><?php echo"<input type='checkbox' name= disapprove[] value='$row[0]' />"; ?></span>
+                             </td>
 				<?php		
-					}else if($row[6] == "Paid"){  //Personnel and Action if Status = Paid, Confirm		
-						//echo"<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><button type = 'submit' name='btnView' value = '$row[0]' class='btn btn-primary btn-xs'><i class='fa fa-check'></i></button>";
-					}
-				
+					}				
 			}?>
 			
 			</tbody>
@@ -184,8 +172,8 @@
 		?>
 		
 		<center>
-		<div class="panel panel-default"><!-- Default panel contents -->	
-			<table class="table table-hover" style="height: 40%; overflow: scroll; ">
+		<div class = "showback" id = "tablestreet">	
+			<table class="table table-hover" style="height: 40%; overflow: scroll; "'>
 				<thead><tr>
 					<th>Full Name</th>					
 					<th>Contact No</th>
@@ -210,23 +198,15 @@
 				<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><?php echo $row[6];?></td>
 				<?php
 					if($row[6] == "2"){ 	//Personnel and Action if Status = For Approval, Approve ?>	
-						      <td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'>
-							  <div class="switch switch-square" 
-                                 data-on-label="<i class=' fa fa-check'></i>"
-                                 data-off-label="<i class='fa fa-times'></i>">
-				<?php echo"<input type='checkbox' name=Dapprove[] value='$row[0]'/>"; ?>
-                              </div></td>
+						     <td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'>
+								<span class="input-group-addon"><?php echo"<input type='checkbox' name=Dapprove[] value='$row[0]' />"; ?></span>
+                             </td>
 				<?php		
 					}else if($row[6] == "3"){  //Personnel and Action if Status = Approved, Collect ?>
 							  <td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'>
-							  <div class="switch switch-square" 
-                                 data-on-label="<i class=' fa fa-check'></i>"
-                                 data-off-label="<i class='fa fa-times'></i>">
-				<?php echo"<input type='checkbox' name=Ddisapprove[] value='$row[0]' />"; ?>
-                              </div></td>
+								<span class="input-group-addon"><?php echo"<input type='checkbox' name=Ddisapprove[] value='$row[0]' />"; ?></span>
+                             </td>
 				<?php		
-					}else if($row[6] == "Paid"){  //Personnel and Action if Status = Paid, Confirm		
-						//echo"<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><button type = 'submit' name='btnView' value = '$row[0]' class='btn btn-primary btn-xs'><i class='fa fa-check'></i></button>";
 					}
 				
 			}?>
@@ -265,7 +245,7 @@
 					
 					//echo"<script> alert(' $reservation');</script>";
 					
-					mysqli_query($con, "UPDATE tblreservationrequest SET strrrapprovalstatus = 'Approved' WHERE strreservationid = '$reservation'");
+					mysqli_query($con, "UPDATE tblreservationrequest SET `strRSapprovalStatus` = 'Approved' WHERE `strReservationID` = '$reservation'");
 					}
 
 					unset($approve);
@@ -280,7 +260,7 @@
 					for($intCtr = 0; $intCtr < sizeof($disapprove); $intCtr++){ 		
 					$reservation = $disapprove[$intCtr];
 										
-					mysqli_query($con, "UPDATE tblreservationrequest SET strrrapprovalstatus = 'For Approval' WHERE strreservationid = '$reservation'");
+					mysqli_query($con, "UPDATE tblreservationrequest SET `strRSapprovalStatus` = 'For Approval' WHERE `strReservationID` = '$reservation'");
 					}
 					
 					unset($disapprove);
@@ -294,7 +274,7 @@
 					for($intCtr = 0; $intCtr < sizeof($Dapprove); $intCtr++){ 		
 					$reservation = $Dapprove[$intCtr];
 										
-					mysqli_query($con, "UPDATE tbldocumentrequest SET strdrapprovedby = '3' WHERE strdocrequestid = '$reservation'");
+					mysqli_query($con, "UPDATE tblreservationrequest SET `strRSapprovalStatus` = 'Approved' WHERE `strReservationID` = '$reservation'");
 					}
 					
 					unset($Dapprove);
@@ -308,7 +288,7 @@
 					for($intCtr = 0; $intCtr < sizeof($Ddisapprove); $intCtr++){ 		
 					$reservation = $Ddisapprove[$intCtr];
 										
-					mysqli_query($con, "UPDATE tbldocumentrequest SET strdrapprovedby = '2' WHERE strdocrequestid = '$reservation'");
+					mysqli_query($con, "UPDATE tblreservationrequest SET `strRSapprovalStatus` = 'For Approval' WHERE `strReservationID` = '$reservation'");
 					}
 					
 					unset($Ddisapprove);

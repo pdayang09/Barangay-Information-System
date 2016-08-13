@@ -42,6 +42,7 @@
 			
 		}
 		
+		echo"<script> alert('Your request has been submitted'); </script>";
 		//Refresh Page
 
 ?>

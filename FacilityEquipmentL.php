@@ -48,17 +48,17 @@
 								<div class="panel-body">	
 		
 		
-		<legend ><font face = "cambria" size = 10 color = "grey">  </font></legend>
+		<legend ><font face = "cambria" size = 10 color = "grey"> Request List </font></legend>
 		
 		<!-- Search Section-->
 		<div class="form-group">
 			<div class="col-sm-3">
-				<input id="searchr" name="search" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value= "" placeholder="Search Last Name">					
+				<input id="searchr" name="search" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value= "" placeholder="Search Last name">					
 			</div>				
 			<div class="col-sm-2">
-				<button class="btn btn-info btn-round btn-xs  " id = "searchst" name = "btnSearch" value = 1 onclick = "search(this.value)"><i class = "glyphicon glyphicon-search"></i></button>
+				<button class="btn btn-info btn-round btn-s  " id = "searchst" name = "btnSearch" value = 1 onclick = "search(this.value)"><i class = "glyphicon glyphicon-search "></i></button>
 			</div> <!-- 3 = Validity Check -->			
-		</div><br><br><br><br>
+		</div><br><br><br><br>	
 		
 		<!-- Filters Resident / Applicant -->	
 		<div class="col-sm-6">

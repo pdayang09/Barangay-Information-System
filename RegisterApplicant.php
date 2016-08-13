@@ -100,6 +100,7 @@
 						mysqli_query($con, "INSERT INTO `tblapplicant`(`strApplicantID`, `strResidentID`, `strApplicantFName`, `strApplicantMName`, `strApplicantLName`, `strNameExtension`, `strApplicantAddress_street`, `strApplicantAddress_brgy`, `strApplicantAddress_city`, `strApplicantContactNo`) VALUES ('$appId', '', '$fname', '$mname', '$lname', '$nameext', '$street', '$brgy', '$city', '$contactno' );");
 						
 						echo"<script> alert('You have successfully registered an applicant');</script>";
+						 echo "<script> window.location = 'validityCheck.php';</script>";
 					}
 				
 				

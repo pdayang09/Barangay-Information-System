@@ -100,49 +100,19 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                    <legend ><font face = "cambria" size = 8 color = "grey"> Payment Summary </font></legend>
+                    <legend ><font face = "cambria" size = 8 color = "grey"> Assessment </font></legend>
 					   	
 						<div class = "bodybody">	
-								<div class="panel-body">
-									<div class="form-group">
-																			
-										<div class="col-sm-4">
-											<font face = "cambria" size = 5 color = "grey"> Date
-											<input id="payDate" class="form-control input-group-lg reg_name" type="text"  name="payDate" value = "<?php echo" $today"; ?>" disabled></font>											
-										</div>
-
-										<div class="col-sm-4">
-											<font face = "cambria" size = 5 color = "grey"> OR No
-											<input id="payOR" name="payOR" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" disabled></font>											
-										</div>	
-									</div><br><br><br><br> <!-- /#form-group -->
-								
-								
-									<div class="form-group">
-										
-										<div class="col-sm-4">
-											<font face = "cambria" size = 5 color = "grey"> Payor
-											<input id="payor" name="payor" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value = "<?php echo" $name"; ?>"></font>		
-										</div>
 									
-										<div class="col-sm-4">
-											<font face = "cambria" size = 5 color = "grey"> Contact Number
-											<input id="busId" name="payName" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value = "<?php echo" $contactno"; ?>"></font>	
-										</div><br><br>
-									
-									</div>
-								</div><br><br>
-									
-								<div class="form-group">
-								<div class="col-sm-10">
-									<div class="form-group"> <!-- /Reservation Details Facility-->
+							<div class="form-group">
+								<div class="col-sm-6">
+									<div class="showback">
 										<font face = "cambria" size = 5 color = "grey"> Reservation Details</font><br><br><br>
 										
-										<div class="col-sm-10">
 										<div class="panel panel-default"><!-- Default panel contents -->
 											<table class="table"'><!-- Table -->
 												<thead>
-												<tr><th> Faclity Name </th>
+												<tr><th> Faclity</th>
 													<th> Per Hour </th>
 													<th> Duration (Hours) </th>
 												</tr>
@@ -153,17 +123,14 @@
 													<td> <?php echo" $hours";?></td>
 												</tr>
 											</tbody>
-										</table>										
-										
-										</div> <!-- /#panel panel-default --> 
-										</div><br><br><br><br><br> <!--col-sm-6-->
+										</table>	
+										</div><br> <!--col-sm-6-->
 									
 										<!-- /Reservation Details Equipment-->	
-										<div class="col-sm-10">
 										<div class="panel panel-default"><!-- Default panel contents -->
 											<table class="table"><!-- Table -->
 												<thead>
-												<tr><th> Equipment Name </th>
+												<tr><th> Equipment </th>
 													<th> Quantity </th>
 													<th> Per Hour</th>
 												</tr>
@@ -185,43 +152,49 @@
 												}else{
 												}?>											
 											</tbody>
-											</table>										
-										
-										</div> <!-- /#table-responsive -->
+											</table> <!-- /#table-responsive -->
 										</div>
 									</div>
-								</div><br><br>
-									
-									<?php 
-										$total = $total + $resfee * $hours;
-									?>
-																		
-								<div class="col-sm-10">
-									<!-- /Payment Details -->								
-									<font face = "cambria" size = 5 color = "grey"> Payment Details</font>
-									<br><br><br>
-								</div>
-								
-								<div class="col-sm-4">
-									<font face = "cambria" size = 5 color = "grey"> Total Amount Due :
-										<input id="total" name="total" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value= " <?php echo" $total";?>"disabled></font><br><br>
+								</div>					
 
-									<a href="FacilityEquipmentT.php"><input type="button" class="btn btn-outline btn-success" name = "btnGoBack" value = "Go Back"></a>
-									<input type="submit" class="btn btn-outline btn-success" name = "btnNote" value = "Note Reservation">
-								</div>														
-								
+								<div class="form-group">
+									<div class="col-sm-5">
+										<div class="showback">	
+											<font face = "cambria" size = 5 color = "grey"> Reservation ID
+											<input id="resId" class="form-control input-group-lg reg_name" type="text"  name="resId" value = "<?php echo" $resId"; ?>" disabled></font>	
+											<font face = "cambria" size = 5 color = "grey"> Date
+											<input id="payDate" class="form-control input-group-lg reg_name" type="text"  name="payDate" value = "<?php echo" $today"; ?>" disabled></font>		
+										</div>
+									</div>
 								</div>
+									
+								<?php 
+									$total = $total + $resfee * $hours;
+								?>
+
+								<div class="form-group">
+									<div class="col-sm-5">
+										<div class="showback">	
+											<font face = "cambria" size = 5 color = "grey"> Total
+											<input id="total" class="form-control input-group-lg reg_name" type="text"  name="total" value = "<?php echo" $total"; ?>" disabled></font>		
+										</div>
+									</div>
+								</div>																
+							</div>
+
+							<center>
+							<div class="form-group">
+								<div class="col-sm-6">
+									<a href="validityCheck.php"><input type="button" class="btn btn-outline btn-success" name = "btnGoBack" value = "Reserve Again"></a>
+									<input type="submit" class="btn btn-outline btn-success" name = "btnNote" value = "Assess Payment">
+									<a href="facilityequipmentL.php"><input type="button" class="btn btn-outline btn-success" name = "btnView" value = "View Reservation"></a>
+								</div>
+							</div></center>
+
 								
-								<?php
-								if(isset($_POST['btnNote'])){
-									include("saveReservation1.php");
-								}?>
-							
-			<button type="submit" name="btnProceed">Facility Equipment List</button>
-	
-			<?php if(isset($_POST['btnProceed'])){
-					session_destroy();
-					echo"<script> window.location = 'FacilityEquipmentL.php'</script>";
+			<?php
+				if(isset($_POST['btnNote'])){
+					include("saveReservation1.php");
 			}?>
 								
 						</form> <!-- /#form method -->									
