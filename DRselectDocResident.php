@@ -60,6 +60,9 @@
                               </thead>
 				</table>
 			</button -->
+			
+			
+			
 			<button type='submit' class='showback col-xs-5' name='btnBrgyCertification'>
 			<img src="images/docicon.ico" style="height:60px;" class="pull-left">
 			<font face='cambria' size=5 color='black'><b><?php echo"$certi";?></b></font>	
@@ -69,35 +72,82 @@
 		<?php
 				if(isset($_POST['btnBrgyCertification']))    
 				{
+					$appId  = $_SESSION['clientID'];
+					$add = $_SESSION['place'];
+					$resId = $_SESSION['clientID'];
+					$contactno = $_SESSION['contactno'];		
+					$name = $_SESSION['name'];
+					$doc = $_SESSION['document'];
+					
 					$_SESSION['document'] = $certi;
 					$_SESSION['clientID'] = $resId;
-					$_SESSION['appId'] = $appId;
+					$_SESSION['clientID'] = $appId;
 					$_SESSION['name'] = $name;
 					$_SESSION['contactno'] = $contactno;
 					$_SESSION['place'] = $add;
-					
+					$_SESSION['document'] = "Certification";
 					echo "<script> window.location = 'DRformCertification.php';</script>";
 				}
 		?>
-
+			
+			<!--<button type="button" class="showback col-xs-5" name='btnBusClearance'>
+						  <img src="images/docicon.ico" style="height:60px;" class="pull-left">
+						<font face='cambria' size=5 color='black'><b><?php echo"$busClear";?></b></font>	
+						<span class='glyphicon glyphicon-chevron-right pull-right'></span>
+						  
+						  
+						  </button>
+						  <button type="button" class="btn btn-theme03 dropdown-toggle" data-toggle="dropdown">
+						    <span class="caret"></span>
+						    <span class="sr-only">Toggle Dropdown</span>
+						  </button>
+						  <ul class="dropdown-menu" role="menu">
+						    <li><a href="#">Something else here</a></li>
+						    <li class="divider"></li>
+						    <li><a href="#">Separated link</a></li>
+						  </ul>
+						  -->
+			
+			
+			
 			<button type='submit' class='showback col-xs-5' name='btnBusClearance'>
 			<img src="images/docicon.ico" style="height:60px;" class="pull-left">
 			<font face='cambria' size=5 color='black'><b><?php echo"$busClear";?></b></font>	
 			<span class='glyphicon glyphicon-chevron-right pull-right'></span></button><br>
+			
+
+						  
+
+								  
+
+			
+			
+			
 
 		<?php
 				if(isset($_POST['btnBusClearance']))
 				{
+					$appId  = $_SESSION['clientID'];
+					$add = $_SESSION['place'];
+					$resId = $_SESSION['clientID'];
+					$contactno = $_SESSION['contactno'];		
+					$name = $_SESSION['name'];
+					$doc = $_SESSION['document'];
+					
 					$_SESSION['document'] = $busClear;
-					$_SESSION['resId'] = $resId;
-					$_SESSION['appId'] = $appId;
+					if($resid == NULL)
+					{
+						$_SESSION['clientID'] = $appId;
+					}else
+					$_SESSION['clientID'] = $resid;
 					$_SESSION['name'] = $name;
 					$_SESSION['contactno'] = $contactno;
-					$_SESSION['place'] = $place;
-					
-					echo "<script> window.location = 'DRformBusClearanceNEW.php';</script>";
-				} 
-		?>
+					$_SESSION['place'] = $add;
+					echo "<script> window.location = 'DRformBusClearanceNew.php';</script>";
+				}
+			?>
+				 
+		
 			<button type='submit' class='showback col-sm-5' name='btnCTC'>
 			<img src="images/docicon.ico" style="height:60px;" class="pull-left">
 			<font face='cambria' size=5 color='black'><b><?php echo"$CTC";?></b></font>	
@@ -123,6 +173,13 @@
 			
 		<?php		if(isset($_POST['btnExcavation']))
 				{
+					$appId  = $_SESSION['clientID'];
+					$add = $_SESSION['place'];
+					$resId = $_SESSION['clientID'];
+					$contactno = $_SESSION['contactno'];		
+					$name = $_SESSION['name'];
+					$doc = $_SESSION['document'];
+					
 					$_SESSION['document'] = $excav;
 					$_SESSION['resId'] = $resId;
 					$_SESSION['appId'] = $appId;
@@ -140,14 +197,22 @@
 			
 			<div class="col-xs-1"></div>
 			
-		<?php		if(isset($_POST['btnIndigency']))
+		<?php		
+		if(isset($_POST['btnIndigency']))
 				{
+					$appId  = $_SESSION['clientID'];
+					$add = $_SESSION['place'];
+					$resId = $_SESSION['clientID'];
+					$contactno = $_SESSION['contactno'];		
+					$name = $_SESSION['name'];
+					$doc = $_SESSION['document'];
+					
 					$_SESSION['document'] = $indig;
 					$_SESSION['resId'] = $resId;
 					$_SESSION['appId'] = $appId;
 					$_SESSION['name'] = $name;
 					$_SESSION['contactno'] = $contactno;
-					$_SESSION['place'] = $place;
+					$_SESSION['place'] = $add;
 					echo "<script> window.location = 'DRformIndigency.php';</script>";
 				} 
 			?>
@@ -159,12 +224,19 @@
 			
 		<?php	if(isset($_POST['btnStreetPermit']))
 			{
+				$appId  = $_SESSION['clientID'];
+					$add = $_SESSION['place'];
+					$resId = $_SESSION['clientID'];
+					$contactno = $_SESSION['contactno'];		
+					$name = $_SESSION['name'];
+					$doc = $_SESSION['document'];
+					
 				$_SESSION['document'] = $streetPer;
 				$_SESSION['resId'] = $resId;
 					$_SESSION['appId'] = $appId;
 					$_SESSION['name'] = $name;
 					$_SESSION['contactno'] = $contactno;
-					$_SESSION['place'] = $place;
+					$_SESSION['place'] = $add;
 				echo "<script> window.location = 'DRformStreetPermit.php';</script>";
 			} 
 		
@@ -178,7 +250,15 @@
 			
 		<?php		if(isset($_POST['btnVehicle']))
 				{
-					$_SESSION['document'] = $TRU;
+					$appId  = $_SESSION['clientID'];
+					$add = $_SESSION['place'];
+					$resId = $_SESSION['clientID'];
+					$contactno = $_SESSION['contactno'];		
+					$name = $_SESSION['name'];
+					$doc = $_SESSION['document'];
+					
+					
+					//$_SESSION['document'] = $TRU;
 					$_SESSION['resId'] = $resId;
 					$_SESSION['appId'] = $appId;
 					$_SESSION['name'] = $name;

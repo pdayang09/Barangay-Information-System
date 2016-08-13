@@ -7,8 +7,6 @@
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
       <!--main content start-->
-      <section id="main-content">
-        <section class="wrapper site-min-height">
 		
 		<?php 
 		  require('connection.php');
@@ -41,109 +39,128 @@
 		  
 		?>
 
-	<form method="post">
-    <div id="wrapper">
-    <!--?php include('Nav.php')?>
+		
+	<section id="main-content">
+		<section class="wrapper site-min-height">
+			<div class="row">
+                <div class="col-lg-12">
+								
+					<?php echo "<legend><font face = 'cambria' size = 10 color = 'grey'> $doc </font></legend><br>";?>		
+					<br>
+					<div class="showback">
+						<form method="POST" id="Form1">
+						<div class = "form-group">							
+							
+							<font face="cambria" size=5 color="grey"><center><b>Requirements</b></center></font><br><?php
 
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <div class="container-fluid">
-			
-                <div class="row">
-                    <div class="col-lg-12">
-					
-							<div class = "bodybody">	
-								<div class="panel-body">
-		
-		<legend ><font face = "cambria" size = 10 color = "grey"> Street Permit </font></legend><br>
-		<!-- p><font face = "cambria" size =5 color = "red">* required fields</font -->
-		
-		<!-- Street Permit form section -->
-		<!--div class="panel-group" -->
-			<div class="panel panel-primary">
-				<div class="panel-heading"><font face="cambria" size=5 color="white"><center><b>DOCUMENT REQUEST DETAILS</b></center></font></div>
-					<div class="panel-body">
-						<div class = "form-group">
-							<div class="col-sm-4">
-								<p><font face="cambria" size=5 color="grey"> Document Request ID </font></p>			
-								<input id="DRdocreqID" class="form-control input-group-lg reg_name" type="text" name="DRdocreqID" title="system-generated">
+								$query = mysqli_query($con, "Select strRequirementName,intReqID from tbldocRequirements as a, tblrequirements as b,tblDocument where strReqId = intReqId and strDocName = 'Street Permit' and strDocId = intDocCode;");
+								while($row = mysqli_fetch_object($query)){
+									?>
+								
+								<div class="checkbox">
+								<label><input type="checkbox" value="" name = "requirement" onclick="sample(this.checked, 'SPstreet', 'SPdateOfUse', 'SPtimeStart', 'SPtimeEnd', 'DRpurpose', 'btnSubmit')">
+								<font face="cambria" size=5 color="black"><?php echo "$row->strRequirementName"?></label>
+								</div>
+								<?php
+								 }
+							?>								
+							
+						</div>
+						</form>
+					</div>
+					<br>
+					<div class="showback">
+						<form method="POST" id="Form1">
+						<div class = "form-group">							
+							
+							<font face="cambria" size=5 color="grey"><center><b>Details</b></center></font><br>				
+						
+							<div class="col-sm-3">
+								<p><font face="cambria" size=5 color="grey"> Date Requested </font></p>						
+								<input id='DRdatereq' class='form-control input-group-lg reg_name' type='date' name="DRdtereq" title='system-generated' 
+								value = "<?php echo"$today"; ?>" disabled>		
 							</div>
 							
-							<div class='col-sm-4'>
-							<p><font face='cambria' size=5 color='grey'> Document Purpose </font></p>
-						
-								<select class='form-control' id='DRpurpose' name="DRpurpose">
-									<option selected='selected' value='0'>Choose Document Purpose</option>							
-							<?php							
+							<div class="col-sm-9">
+								<p><font face="cambria" size=5 color="grey"> Street </font></p>
+								<select class='form-control' id='SPstreet' name="SPstreet" disabled>
+									<option selected='selected' value='' disabled>Street</option>							
+								<?php							
 									while($row = mysqli_fetch_array($certiPurpose))
 									{
-							?>		<option value='<?php echo "$row[0]";?>'><?php echo"$row[1]"; ?> </option>
-							<?php	}?>
-								</select>						
+								?>		<option value='<?php echo "$row[0]";?>'><?php echo"$row[1]"; ?> </option>
+								<?php	}?>
+								</select>
 							</div>
 							
 							<div class="col-sm-4">
-							<p><font face="cambria" size=5 color="grey"> Date Requested </font></p>						
-							<input id='DRdatereq' class='form-control input-group-lg reg_name' type='date' name="DRdtereq" title='system-generated' value = "<?php echo"$today"; ?>" disabled>							
-						</div>
-							<!-- div class="col-sm-4">
-								<p><font face="cambria" size=5 color="grey"> Document Applicant ID </font></p>			
-								<input id="DRapplicantID" class="form-control input-group-lg reg_name" type="text" name="DRapplicantID" title="system-generated">
+								<p><font face="cambria" size=5 color="grey"> Date of Use </font></p>			
+								<input id="SPdateOfUse" class="form-control input-group-lg reg_name" type="date" name="SPdateOfUse" title="system-generated" disabled>
 							</div>
-							<div class="col-sm-3">
-								<p><font face="cambria" size=5 color="grey"> Date Requested </font></p>			
-								<input id="DRdatereq" class="form-control input-group-lg reg_name" type="text" name="DRdtereq" title="system-generated">
+							<div class="col-sm-4">
+							<!--dpat number dropdown -->
+							
+								<p><font face="cambria" size=5 color="grey"> Start Time of Use </font></p>			
+								<input id="SPtimeStart" class="form-control input-group-lg reg_name" type="number" name="SPtimeStart" title="system-generated" min="1" max="12" disabled>
 							</div>
-							<div class="col-sm-5">
-								<p><font face="cambria" size=5 color="grey"> Approved By </font></p>			
-								<input id="DRapprovedBy" class="form-control input-group-lg reg_name" type="text" name="DRapprovedBy" title="system-generated">
-							</div -->
+							<div class="col-sm-4">
+							<!--dpat number dropdown -->
+								<p><font face="cambria" size=5 color="grey"> End Time of Use </font></p>
+								<input id="SPtimeEnd" class="form-control input-group-lg reg_name" type="number" name="SPtimeEnd" title="system-generated" min="1" max="12" disabled>
+								
+							</div>
+							<div class="col-sm-12">
+								<!-- Name Validation-->
+								<p><font face="cambria" size=5 color="grey"> Purpose </font></p>			
+								<input id="DRpurpose" class="form-control input-group-lg reg_name" type="text" name="DRpurpose" title="system-generated" placeholder="Purpose" disabled>
+								<br>
+							</div><br>
+							<center><input type="submit" class="btn btn-success" name = "btnSubmit" id="btnSubmit" value = "Submit" disabled></center>
+
 						</div>
-					</div>
-				</div>	
-			<div class="panel panel-primary">
-				<div class="panel-heading"><font face="cambria" size=5 color="white"><center><b>STREET PERMIT DETAILS</b></center></font></div>
-					<div class="panel-body">
-						<div class="col-sm-12">
-							<p><font face="cambria" size=5 color="grey"> Street </font></p>			
-							<input id="SPstreet" class="form-control input-group-lg reg_name" type="text" name="SPstreet" title="system-generated">
-						</div><br>
-						<div class="col-sm-6">
-							<p><font face="cambria" size=5 color="grey"> Date of Use </font></p>			
-							<input id="SPdateOfUse" class="form-control input-group-lg reg_name" type="date" name="SPdateOfUse" title="system-generated">
-						</div>
-						<div class="col-sm-3">
-						<!--dpat number dropdown -->
+						<script language="javascript">
 						
-							<p><font face="cambria" size=5 color="grey"> Start Time of Use </font></p>			
-							<input id="SPtimeStart" class="form-control input-group-lg reg_name" type="number" name="SPtimeStart" title="system-generated" min="1" max="12">
-						</div>
-						<div class="col-sm-3">
-						<!--dpat number dropdown -->
-							<p><font face="cambria" size=5 color="grey"> End Time of Use </font></p>
-							<input id="SPtimeEnd" class="form-control input-group-lg reg_name" type="number" name="SPtimeEnd" title="system-generated" min="1" max="10">
-							<br><br>
-						</div>
-							<input type="submit" class="btn btn-success btn-lg btn-block" name = "btnSubmitSP" id = "btnSubmitSP" value = "Submit">
+						
+						function sample(bEnable,SPstreet, SPdateOfUse, SPtimeStart, SPtimeEnd, DRpurpose, btnSubmit){
+								var isSelected = 0;
+								var o = document.getElementById("Form1").getElementsByTagName("input");
+								var max = o.length;
+								var allischecked = (function(){
+								  for(var i=0,l=o.length;i<l;i++){
+								    if((o[i].type == "checkbox" && o[i].name == "requirement" && o[i].checked)) {
+								    	isSelected++;
+								  	}
+								  }
+								})();
+								if(isSelected >= o.length){
+									document.getElementById(DRpurpose).disabled = !bEnable;
+									document.getElementById(SPstreet).disabled = !bEnable;
+									document.getElementById(SPdateOfUse).disabled = !bEnable;
+									document.getElementById(SPtimeStart).disabled = true;
+									document.getElementById(SPtimeEnd).disabled = true;
+									document.getElementById(btnSubmit).disabled = true;
+							  
+								}else{
+									document.getElementById(DRpurpose).disabled = true;
+									document.getElementById(SPstreet).disabled = true;
+									document.getElementById(SPdateOfUse).disabled = true;
+									document.getElementById(SPtimeEnd).disabled = true;
+									document.getElementById(SPtimeStart).disabled = true;
+									document.getElementById(btnSubmit).disabled = true;
+								}
+							}
+						</script>
 						</form>
-						</div>
 					</div>
 				</div>
-			<div>
-			<br>
+			</div>
+			
 		
 		<?php
 			
 			if(isset($_POST['btnSubmit']))
 			{
-				$docReqID = $_POST['DRdocreqID'];						
-				$busID = $_POST['busID'];
-				$busName = $_POST['busName'];
-				$contactPerson = $_POST['contactPerson'];
-				$contactNo = $_POST['contactNo'];
-				$busCategory = $_POST['busCategory'];
-				$busLoc = $_POST['busLoc'];
-				$busDesc = $_POST['busDesc'];
+				//SPstreet, SPdateOfUse, SPtimeStart, SPtimeEnd, DRpurpose
 				$officer = "";//nag approved
 				
 				if(isset($_POST['DRpurpose'])){
