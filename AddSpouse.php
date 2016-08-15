@@ -188,7 +188,7 @@
 		   
 		   
 	</div><br><br><br><br><br></div>
-
+<div class="form-group" >
 
 
 <div class="form-group" id = "Tin-div">				
@@ -201,8 +201,17 @@
 		  
 		   
 		   
-	</div><br><br><br><br><br>
+	</div>
+<div class="form-group" id = "Voter-div">				
+           <div class="col-sm-5">
 
+	<p><font face = "cambria" size = 4 color = "grey">Voter's ID(optional): </font></p>
+             <input id="RFName1" class="form-control input-group-lg reg_name" type= text name="Vote" title="Enter first name"  onblur= fnValid(this,"SSS-div","SSS")  <?php if(isset($_POST["Vote"])) echo "value = ".$_POST["Vote"]; ?>>
+           </div> 
+		  
+		   
+		   
+	</div><br><br><br><br><br></div>
 		  
 		  
 
@@ -228,6 +237,7 @@ else{$Ename = $_POST['Ename'];}
 $Gend = $_POST['gend'];
 $contact = $_POST['contactno'];
 $bday = $_POST['bday'];
+    $age = (date("Y-m-d") - $bday);
 $occup = $_POST['occup'];
 $SSS = "";
 if($_POST['SSS'] == NULL){
@@ -239,7 +249,13 @@ if($_POST['TIN'] == NULL){
 	$TIN = "";
 }
 else{$TIN = $_POST['TIN'];}
-$civil = $_POST['civil'];
+$Vote = "";
+if($_POST['Vote'] == NULL){
+	$Vote = "";
+}
+else{$Vote= $_POST['Vote'];}
+if($age>=18)
+{$civil = $_POST['civil'];
 	$last = $_POST['hidlname'];
 	$first = $_POST['hidfname'];
 	$birth = $_POST['hidbday'];
@@ -247,13 +263,16 @@ if($last == 0&&$birth == 0&&$first == 0){
 $_Lname = mysqli_real_escape_string($con,$Lname);
 $_Fname = mysqli_real_escape_string($con,$Fname);
 $_Mname = mysqli_real_escape_string($con,$Mname);
-mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`) 
-VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gend','$bday','$contact','$occup','$SSS','$TIN','$Hno','$civil','Spouse','Alive')");
-echo "<script>window.location = 'HholdPersonal.php'</script>";
-}
+mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`,`strVotersId`) 
+VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gend','$bday','$contact','$occup','$SSS','$TIN','$Hno','$civil','Spouse','Alive','$Vote')");
+echo "<script>window.location = 'HholdPersonal.php'</script>";}
+
+
 else{
 	
 	echo "<script>alert('Please input valid values!');</script>";
+}}else{
+	echo "<script>alert('Date must be 18 and Above!');</script>";
 }
 }
 

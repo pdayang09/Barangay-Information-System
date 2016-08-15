@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 10, 2016 at 11:50 PM
+-- Generation Time: Aug 15, 2016 at 05:36 PM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.5.30
 
@@ -19,7 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `brgydb`
 --
-
+Create database brgydb;
+use brgydb;
 -- --------------------------------------------------------
 
 --
@@ -189,6 +190,17 @@ CREATE TABLE `tblctc` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbldeceased`
+--
+
+CREATE TABLE `tbldeceased` (
+  `intDeceasedNo` int(11) NOT NULL,
+  `dtDied` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbldocrequirements`
 --
 
@@ -232,6 +244,13 @@ CREATE TABLE `tbldocumentpurpose` (
   `strPurposeName` varchar(45) NOT NULL,
   `dblPrice` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbldocumentpurpose`
+--
+
+INSERT INTO `tbldocumentpurpose` (`strDocPurposeID`, `strPurposeName`, `dblPrice`) VALUES
+(0, 'W', 0);
 
 -- --------------------------------------------------------
 
@@ -339,7 +358,11 @@ INSERT INTO `tblhousehold` (`intHouseholdNo`, `strBuildingNo`, `intForeignStreet
 (3, '922', 1, 'Perez', 'Rent', '911 Jan Street, Brgy. Sta ana, Malate, Manila', 'Enable'),
 (4, '88', 1, 'Wu', 'Owned', '891 Maa', 'Enable'),
 (5, '677', 1, 'Tedder', 'Owned', '672 jads aada', 'Enable'),
-(6, '844 Interior 29', 1, 'Marquez', 'Rent', 'Pasig', 'Enabled');
+(6, '844 Interior 29', 1, 'Marquez', 'Rent', 'Pasig', 'Enabled'),
+(8, '1221', 1, 'sda', 'Rent', 'sda', 'Enabled'),
+(9, '321', 1, 'Ara', 'Rent', 'New', 'Enabled'),
+(10, '312', 1, 'Sista', 'Rent', 'sda', 'Enabled'),
+(11, '211', 1, 'Salas', 'Owned', 'Bagong Nayon, Antipolo City', 'Enabled');
 
 -- --------------------------------------------------------
 
@@ -359,6 +382,7 @@ CREATE TABLE `tblhousemember` (
   `strOccupation` varchar(50) DEFAULT NULL,
   `strSSSNo` varchar(9) DEFAULT NULL,
   `strTINNo` varchar(50) DEFAULT NULL,
+  `strVotersId` varchar(25) NOT NULL,
   `intForeignHouseholdNo` int(11) NOT NULL,
   `strCivilStatus` varchar(20) NOT NULL,
   `strStatus` varchar(10) NOT NULL,
@@ -371,21 +395,27 @@ CREATE TABLE `tblhousemember` (
 -- Dumping data for table `tblhousemember`
 --
 
-INSERT INTO `tblhousemember` (`intMemberNo`, `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`, `charLiterate`, `charDisable`) VALUES
-(1, 'Paul', 'Aquino', 'Dayang', '', 'M', '1996-05-12', '0920947581', 'Company Driver', '00010101', '', 1, '', 'Head', 'Alive', 'Y', 'N'),
-(2, 'Pingris', 'Santos', 'Daya', 'Jr', 'M', '1996-05-19', '09132321321', 'Dancer', '', 'ads', 2, 'Married', 'Head', 'Alive', 'Y', 'N'),
-(3, 'Matteo', 'Ting', 'Perez', 'Jr', 'M', '1980-05-21', '09123321243', 'Sales', '6543213', '331231', 2, 'Single', 'Spouse', 'Dead', 'Y', 'N'),
-(4, 'Mikhael', 'Castro', 'Daya', '', 'M', '2016-05-04', '', '', '', '', 2, 'Single', 'Children', 'Moved', 'Y', 'N'),
-(5, 'Gema', 'Peng', 'Gutierez', '', 'F', '1996-12-27', '02313321', 'Sales Clerk', '', 'sad', 2, 'Single', 'Cousin', 'Moved', 'Y', 'N'),
-(6, 'Jenny', 'Akihiro', 'Dayang', '', 'F', '2016-07-09', '', '', '', '', 2, 'Single', 'Cousin', 'Dead', 'Y', 'N'),
-(7, 'Lola', 'Ting', 'Dayang', '', 'F', '1990-03-08', '09890930943', 'Sales Clerk', '', 'dd', 1, 'Single', 'Sister', 'Alive', 'Y', 'N'),
-(8, 'Jenna', 'Alie', 'Dayang', '', 'F', '1989-07-06', '09999999', '', '', '', 1, 'Married', 'Spouse', 'Alive', 'Y', 'N'),
-(9, 'Paulo', 'Ting', 'Perez', 'Jr', 'M', '1980-05-21', '09123321243', 'Sales Clerk', '', '331231', 3, 'Single', 'Head', 'Alive', 'Y', 'N'),
-(10, 'Jenny', '', 'Wu', '', 'F', '1981-06-21', '09238472912', 'Accountant', '98121921', '921081', 4, 'Single', 'Head', 'Alive', 'Y', 'Y'),
-(11, 'Ryan Benjamin', 'Saludo', 'Tedder', '', 'M', '1979-06-26', '0921384913', 'Singer', '92192913', '12121', 5, 'Single', 'Head', 'Alive', 'Y', 'N'),
-(12, 'Angel', '', 'Marquez', '', 'M', '1986-01-01', '', '', '', '', 6, 'Single', 'Head', 'Alive', 'N', 'N'),
-(13, 'Kimmy', '', 'Marquez', '', 'F', '1982-01-01', '', '', '', '', 6, 'Married', 'Spouse', 'Dead', 'Y', 'Y'),
-(14, 'James', 'aa', 'aa', 'aa', 'M', '2016-08-01', '', '', '', '', 2, 'Single', 'Children', 'Alive', 'Y', 'Y');
+INSERT INTO `tblhousemember` (`intMemberNo`, `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `strVotersId`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`, `charLiterate`, `charDisable`) VALUES
+(1, 'Paul', 'Aquino', 'Dayang', '', 'M', '1996-05-12', '0920947581', 'Company Driver', '00010101', '', '09', 1, '', 'Head', 'Alive', 'Y', 'N'),
+(2, 'Pingris', 'Santos', 'Daya', 'Jr', 'M', '1996-05-19', '09132321321', 'Dancer', '', 'ads', 'e3qe', 2, 'Married', 'Head', 'Alive', 'Y', 'N'),
+(3, 'Matteo', 'Ting', 'Perez', 'Jr', 'M', '1980-05-21', '09123321243', 'Sales', '6543213', '331231', '232qe2qe', 2, 'Single', 'Spouse', 'Dead', 'Y', 'N'),
+(4, 'Mikhael', 'Castro', 'Daya', '', 'M', '2016-05-04', '', '', '', '', '', 2, 'Single', 'Children', 'Moved', 'Y', 'N'),
+(5, 'Gema', 'Peng', 'Gutierez', '', 'F', '1996-12-27', '02313321', 'Sales Clerk', '', 'sad', 'qe23', 2, 'Single', 'Cousin', 'Moved', 'Y', 'N'),
+(6, 'Jenny', 'Akihiro', 'Dayang', '', 'F', '2016-07-09', '', '', '', '', '', 2, 'Single', 'Cousin', 'Dead', 'Y', 'N'),
+(7, 'Lola', 'Ting', 'Dayang', '', 'F', '1990-03-08', '09890930943', 'Sales Clerk', '', 'dd', '2qwewwe', 1, 'Single', 'Sister', 'Alive', 'Y', 'N'),
+(8, 'Jenna', 'Alie', 'Dayang', '', 'F', '1989-07-06', '09999999', '', '', '', 'weewq', 1, 'Married', 'Spouse', 'Alive', 'Y', 'N'),
+(9, 'Paulo', 'Ting', 'Perez', 'Jr', 'M', '1980-05-21', '09123321243', 'Sales Clerk', '', '331231', 'weewq', 3, 'Single', 'Head', 'Alive', 'Y', 'N'),
+(10, 'Jenny', '', 'Wu', '', 'F', '1981-06-21', '09238472912', 'Accountant', '98121921', '921081', 'weewqeqw', 4, 'Single', 'Head', 'Alive', 'Y', 'Y'),
+(11, 'Ryan Benjamin', 'Saludo', 'Tedder', '', 'M', '1979-06-26', '0921384913', 'Singer', '92192913', '12121', 'ewqeewq', 5, 'Single', 'Head', 'Alive', 'Y', 'N'),
+(12, 'Angel', '', 'Marquez', '', 'M', '1986-01-01', '', '', '', '', 'weqeq', 6, 'Single', 'Head', 'Alive', 'N', 'N'),
+(13, 'Kimmy', '', 'Marquez', '', 'F', '1982-01-01', '', '', '', '', '', 6, 'Married', 'Spouse', 'Dead', 'Y', 'Y'),
+(14, 'James', 'aa', 'aa', 'aa', 'M', '2016-08-01', '', '', '', '', '', 2, 'Single', 'Children', 'Alive', 'Y', 'Y'),
+(15, 'Jenny', '', 'Santos', '', 'F', '1996-08-16', '0934242', '', '', '', '0101010', 2, 'Married', 'Spouse', 'Alive', '', ''),
+(16, 'Daiaina', 'Ongpauco', 'Perez', '', 'F', '1987-08-23', '', '', '', '', '', 3, 'Married', 'Spouse', 'Alive', '', ''),
+(20, 'dsa', 'sdaa', 'ds', '', 'M', '1992-08-14', '', '', '', '', '', 6, 'Single', 'Head', 'Alive', 'Y', 'N'),
+(21, 'Mary', '', 'Ara', '', 'F', '1995-01-01', '12', 'Sales', '786', '56', '54', 9, 'Single', 'Head', 'Alive', 'Y', 'N'),
+(22, 'Kimmy', '', 'Sista', '', 'F', '1992-08-03', '', '', '', '', '', 10, 'Single', 'Head', 'Alive', 'Y', 'N'),
+(23, 'Mary Nicole', '', 'Salas', '', 'F', '1993-03-17', '09298873921', 'Sales Clerk', '0934121', '23324231', '928322', 11, 'Single', 'Head', 'Alive', 'Y', 'N');
 
 -- --------------------------------------------------------
 
@@ -729,6 +759,12 @@ ALTER TABLE `tblctc`
   ADD KEY `strDocRequestID_idx` (`strDocRequestID`);
 
 --
+-- Indexes for table `tbldeceased`
+--
+ALTER TABLE `tbldeceased`
+  ADD PRIMARY KEY (`intDeceasedNo`);
+
+--
 -- Indexes for table `tbldocrequirements`
 --
 ALTER TABLE `tbldocrequirements`
@@ -887,6 +923,11 @@ ALTER TABLE `tblbusinesscate`
 ALTER TABLE `tblcategory`
   MODIFY `strCategoryCode` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
+-- AUTO_INCREMENT for table `tbldeceased`
+--
+ALTER TABLE `tbldeceased`
+  MODIFY `intDeceasedNo` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `tbldocument`
 --
 ALTER TABLE `tbldocument`
@@ -905,12 +946,12 @@ ALTER TABLE `tblfacility`
 -- AUTO_INCREMENT for table `tblhousehold`
 --
 ALTER TABLE `tblhousehold`
-  MODIFY `intHouseholdNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `intHouseholdNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `tblhousemember`
 --
 ALTER TABLE `tblhousemember`
-  MODIFY `intMemberNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `intMemberNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT for table `tblpaymentdetail`
 --
