@@ -8,7 +8,30 @@
 	  *********************************************************************************************************************************************************** -->
 	  <!--main content start-->
 	  	   <script>
-
+function empty() {
+    var x = document.getElementById("Purok").value;
+	var y = document.getElementById("StreetList").value;
+	var lname  =document.getElementById("hidlname").value;
+	var fname = document.getElementById("hidfname").value;
+	var age = getAge(document.getElementById('bday').value);
+	
+    if (x == "Purok Name" || y == "" || lname == 1 || fname == 1 || age<18) {
+        alert("Please Make sure the form is filled out correctly");
+        return false;
+    }
+}
+function getAge(birthDateString) {
+	//alert(birthDateString);
+    var today = new Date();
+    var birthDate = new Date(birthDateString);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+	//alert(age);
+    return age;
+}
 
 	function checkpurok(){
 	if(document.getElementById('Purok').value == "Purok Name"){
@@ -60,8 +83,8 @@
 	    }
 		
 		function fnValidDate(obj,strdiv,strSpanName){ 
-
-	            if ((obj.value.trim() == "") || (obj.value <= 0) ){  
+var age = getAge(document.getElementById('bday').value);
+	            if ((obj.value.trim() == "") || (obj.value <= 0) || age<18){  
 	         
 				   document.getElementById(strdiv).className="has-error";
 				   document.getElementById("hidbday").value=1;
@@ -80,9 +103,13 @@
 	            
 	    }
 		
+	
 	</script>
 	  <section id="main-content">
-	      <section class="wrapper site-min-height">		<form method = POST><br>
+	      <section class="wrapper site-min-height">		<form method = POST><br>	 
+		  <input id = "hidfname" name="hidfname" class="form-control" type="hidden"  <?php if(isset($_POST["hidfname"])) echo "value = ".$_POST["hidfname"]; ?>>
+			<input id = "hidlname" name="hidlname" class="form-control" type="hidden" <?php if(isset($_POST["hidlname"])) echo "value = ".$_POST["hidlname"]; ?>>
+			<input id = "hidbday" name="hidbday" class="form-control" type="hidden" <?php if(isset($_POST["hidbday"])) echo "value = ".$_POST["hidbday"]; ?>>
 	<legend ><font face = "cambria" size = 8 color = "grey"> Resident Module </font></legend>
 	<button  class="btn btn-info" onclick="window.location.href='Hholdview.php'">  <i class="glyphicon glyphicon-hand-left" aria-hidden="true"></i>&nbsp;Back to the Previous Page</button><legend></legend>
 	<div class = "showback">
@@ -137,7 +164,7 @@
 			$sql = "Select * from tblZone";
 			$sql1 = mysqli_query($con,$sql);
 			while($row = mysqli_fetch_object($sql1)){
-				?> <option  <?php echo "value =".$row->intZoneId;?>> <?php echo $row->strZoneName;?></option><?php
+				?> <option  <?php echo "value = '".$row->intZoneId."'";?>> <?php echo $row->strZoneName;?></option><?php
 			}?>
 			</select>
 		
@@ -171,7 +198,7 @@
 	<div class="form-group" id = "bday-div">				
 	       <div class="col-sm-5">
 	<p><font face = "cambria" size = 4 color = "grey"> Birthday </font></p>
-	         <input required id="RFName1" class="form-control input-group-lg reg_name" type= date name="Birthdate"   max="<?php echo date("Y-m-d"); ?>"title="Enter first name"  onblur= fnValidDate(this,"bday-div","Birthdate") <?php if(isset($_POST["Birthdate"])) echo "value = ".$_POST["Birthdate"]; ?>>
+	         <input required id="bday" class="form-control input-group-lg reg_name" type= date name="Birthdate"   max="<?php echo date("Y-m-d"); ?>"title="Enter first name"  onblur= fnValidDate(this,"bday-div","Birthdate") <?php if(isset($_POST["Birthdate"])) echo "value = ".$_POST["Birthdate"]; ?>>
 	       </div> 
 		  
 		   
@@ -247,25 +274,31 @@
 		   
 	</div>
 
-
-
-	<div class="form-group">				
+<div class="form-group" id = "Vote-div">				
 	       <div class="col-sm-5">
-	<p><font face = "cambria" size = 4 color = "grey"> Residence: </font></p>
+		   <p><font face = "cambria" size = 4 color = "grey">Voter's ID(optional): </font></p>
+
+	         <input id="RFName1" class="form-control input-group-lg reg_name" type= text name="Vote" title="Enter first name"  onblur= fnValid(this,"SSS-div","SSS")  <?php if(isset($_POST["Vote"])) echo "value = ".$_POST["Vote"]; ?>>
+	       </div> </div>
+
+	
+		  
+		   
+		   
+	</div></div><br><br><br><br><br>
+	<div class = "form-group">
+<div class="form-group">				
+ <div class="col-sm-5">	<p><font face = "cambria" size = 4 color = "grey"> Residence: </font></p>
+	<div class="col-sm-10">	
 	<select name = "Residence" class = "form-control">
 	<option>Rent</option>
 	<option>Owned</option>
 	</select> 
 	        
 	       </div> 
-		  
-		   
-		   
-	</div></div><br><br><br><br><br>
 
 
-	<button type = submit  class="btn btn-info" name = "btnsubmit">Submit Record</button>
-	<br><br></div>
+	<br><br></div><br><br><br><br></div>	<center><button type = submit  class="btn btn-info" name = "btnsubmit" onClick="return empty()">Submit Record</button></center>
 	<?php
 	require('connection.php');
 
@@ -284,9 +317,11 @@
 	}
 	else{$Ename = $_POST['Ename'];}
 	$Gender = $_POST['gend'];
+
 	$Contact = $_POST['contact'];
 	$Civil = $_POST['civil'];
 	$Birthdate = $_POST['Birthdate'];
+	$age = (date("Y-m-d") - $Birthdate);
 	$Occupation = $_POST['occupation'];
 	$SSS = "";
 	if($_POST['SSS'] == NULL){
@@ -298,6 +333,11 @@
 	$TIN = "";
 	}
 	else{$TIN = $_POST['TIN'];}
+	$Vote = "";
+	if($_POST['Vote'] == NULL){
+	$Vote = "";
+	}
+	else{$Vote= $_POST['Vote'];}
 	$Street = $_POST['Street'];
 	$Residence = $_POST['Residence'];
 	$Old = $_POST['OldAddress'];
@@ -305,20 +345,21 @@
 	$last = $_POST['hidlname'];
 	$first = $_POST['hidfname'];
 	$birth = $_POST['hidbday'];
-
+	if($age>=18){
 	if($last == 0&&$birth == 0&&$first == 0){
 	$_Lname = mysqli_real_escape_string($con,$Lname);
 	$_Fname = mysqli_real_escape_string($con,$Fname);
 	$_Mname = mysqli_real_escape_string($con,$Mname);
 
-	mysqli_query($con,"INSERT INTO `tblhousehold`( `intForeignStreetId`, `strBuildingNo`, `strHouseholdLname`,`strResidence`,`strOldAddress`,`strStatus`) VALUES ($Street,'$Building','$_Lname','$Residence','$Old','Enabled')");
-	$query = mysqli_query($con,"Select Householdno from tblhousehold order by Householdno desc");
+	$mysqli = mysqli_query($con,"INSERT INTO `tblhousehold`( `intForeignStreetId`, `strBuildingNo`, `strHouseholdLname`,`strResidence`,`strOldAddress`,`strStatus`) VALUES ($Street,'$Building','$_Lname','$Residence','$Old','Enabled')");
+echo("Error description: " . mysqli_error($con));
+	$query = mysqli_query($con,"Select intHouseholdNo from tblhousehold order by intHouseholdNo desc");
 
 	$row = mysqli_fetch_object($query);
-	$no = $row->Householdno;
-
-	mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`,`strCivilStatus`, `strStatus`,`strLifeStatus`,charLiterate,charDisable) 
-	VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gender','$Birthdate','$Contact','$Occupation','$SSS','$TIN','$no','$Civil','Head','Alive','Y','N')");
+	$no = $row->intHouseholdNo;
+	
+	mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`,`strCivilStatus`, `strStatus`,`strLifeStatus`,charLiterate,charDisable, `strVotersId`) 
+	VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gender','$Birthdate','$Contact','$Occupation','$SSS','$TIN','$no','$Civil','Head','Alive','Y','N','$Vote')");
 	$_SESSION['Hno'] = $no;
 
 	echo "<script>window.location = 'HholdPersonal.php' </script>";
@@ -330,6 +371,9 @@
 	else{
 
 	echo "<script>alert('Please input valid values!');</script>";
+	}}
+	else{
+		echo "<script>alert('Please input valid Birthdate!');</script>";
 	}
 	}
 
