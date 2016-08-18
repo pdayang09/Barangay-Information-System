@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 15, 2016 at 05:36 PM
+-- Generation Time: Aug 18, 2016 at 03:03 AM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.5.30
 
@@ -19,8 +19,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `brgydb`
 --
-Create database brgydb;
-use brgydb;
+
 -- --------------------------------------------------------
 
 --
@@ -172,7 +171,7 @@ INSERT INTO `tblcategory` (`strCategoryCode`, `strCategoryDesc`, `strCategoryTyp
 (4, 'Net', 'Equipment'),
 (5, 'Racket', 'Equipment'),
 (6, 'Scoreboard', 'Equipment'),
-(7, 'Ball', 'Equipment'),
+(7, 'Sports Material', 'Equipment'),
 (8, 'Other', 'Equipment');
 
 -- --------------------------------------------------------
@@ -296,14 +295,16 @@ CREATE TABLE `tblequipment` (
 --
 
 INSERT INTO `tblequipment` (`strEquipNo`, `strEquipName`, `strEquipCategory`, `intEquipQuantity`, `dblEquipFee`, `dblEquipDiscount`, `strStatus`) VALUES
-(1, 'Basketball', '8', 13, 50.51, 10, 'Enabled'),
-(2, 'Volleyball', '8', 10, 50, 0, 'Enabled'),
-(3, 'Tennis Ball', '8', 10, 50, 0, 'Enabled'),
-(4, 'Shuttlecock', '8', 10, 50, 0, 'Enabled'),
-(5, 'Volleyball Net', '4', 10, 0, 0, 'Enabled'),
-(6, 'Tennis Net', '4', 3, 0, 0, 'Disabled'),
+(1, 'Basketball', '7', 13, 50.51, 10, 'Enabled'),
+(2, 'Volleyball', '7', 10, 50, 0, 'Enabled'),
+(3, 'Tennis Ball', '7', 10, 50, 0, 'Enabled'),
+(4, 'Shuttlecock', '7', 10, 50, 0, 'Enabled'),
+(5, 'Volleyball Net', '7', 10, 0, 0, 'Enabled'),
+(6, 'Tennis Net', '7', 3, 0, 0, 'Disabled'),
 (7, 'Digital Scoreboard', '6', 5, 250, 0, 'Enabled'),
-(8, 'Tennis', '5', 90, 20.6, 0, 'Enabled');
+(8, 'Tennis', '7', 90, 20.6, 0, 'Enabled'),
+(9, 'Tent', '8', 15, 250, 50, 'Enabled'),
+(10, 'Monoblock', '8', 300, 250, 50, 'Enabled');
 
 -- --------------------------------------------------------
 
@@ -446,17 +447,8 @@ CREATE TABLE `tblpaymentdetail` (
 --
 
 INSERT INTO `tblpaymentdetail` (`intNum`, `strRequestID`, `dblReqPayment`, `intRequestORNo`) VALUES
-(1, '001', 250, 0),
-(2, '002', 100, 0),
-(3, '003', 600, 0),
-(4, '004', 566.02, 0),
-(5, '005', 1500, 0),
-(6, '006', 625, 0),
-(7, '007', 1650, 0),
-(8, '008', 600, 0),
-(9, '009', 1200, 0),
-(10, '010', 1500, 0),
-(11, '010', 1250, 0);
+(12, '001', 1000, 0),
+(13, '002', 1651.53, 0);
 
 -- --------------------------------------------------------
 
@@ -515,16 +507,8 @@ CREATE TABLE `tblreservationrequest` (
 --
 
 INSERT INTO `tblreservationrequest` (`strReservationID`, `strRSresidentId`, `strRSapplicantId`, `datRSIssued`, `datRSReserved`, `dtmFrom`, `dtmTo`, `strRSapprovalStatus`, `strRSPurpose`) VALUES
-('001', '', ' app002', '2016-08-10', '2016-08-19', 1471622400000, 1471626000000, 'Approved', 'Practice 1.0'),
-('002', '', '10', '2016-08-10', '2016-08-13', 1471111200000, 1471127400000, 'Paid', 'Practice 2.0'),
-('003', '', '11', '2016-08-10', '2016-08-13', 1471105800000, 1471120200000, 'For Approval', 'Party'),
-('004', '', ' app003', '2016-08-10', '2016-08-15', 1471269600000, 1471280400000, 'For Approval', 'Practice 3.0'),
-('005', '', ' app001', '2016-08-10', '2016-08-25', 1472148000000, 1472158800000, 'For Approval', 'Party 2.0'),
-('006', '', '8', '2016-08-10', '2016-08-15', 1471289400000, 1471298400000, 'For Approval', 'Pa party'),
-('007', '', ' app001', '2016-08-10', '2016-08-23', 1471995000000, 1472005800000, 'For Approval', 'Debut'),
-('008', '', '7', '2016-08-10', '2016-08-30', 1472565600000, 1472572800000, 'For Approval', 'Badminton Tourn'),
-('009', '', ' app002', '2016-08-10', '2016-08-24', 1472065200000, 1472072400000, 'For Approval', 'Tennis Play 1.0'),
-('010', '', '10', '2016-08-10', '2016-08-30', 1472596200000, 1472614200000, 'For Approval', 'Pageant Night');
+('001', '4', '', '2016-08-17', '2016-08-20', 1471707000000, 1471721400000, 'For Approval', 'Party in the USA'),
+('002', '', ' app002', '2016-08-17', '2016-08-25', 1472160600000, 1472171400000, 'For Approval', 'Practice');
 
 -- --------------------------------------------------------
 
@@ -546,12 +530,7 @@ CREATE TABLE `tblreserveequip` (
 --
 
 INSERT INTO `tblreserveequip` (`strReserveEquipNo`, `strReservationID`, `strREEquipCode`, `dtmREFrom`, `dtmRETo`, `intREQuantity`) VALUES
-(1, '001', 'Tennis Ball', '2016-08-19 09:00:00', '2016-08-19 10:00:00', 0),
-(2, '001', 'Tennis Net', '2016-08-19 09:00:00', '2016-08-19 10:00:00', 0),
-(3, '002', 'Tennis Ball', '2016-08-13 11:00:00', '2016-08-13 15:30:00', 0),
-(4, '002', 'Tennis Net', '2016-08-13 11:00:00', '2016-08-13 15:30:00', 0),
-(5, '004', 'Basketball', '2016-08-15 07:00:00', '2016-08-15 10:00:00', 2),
-(6, '009', 'Tennis Ball', '2016-08-24 12:00:00', '2016-08-24 14:00:00', 0);
+(1, '002', 'Basketball', '2016-08-25 14:30:00', '2016-08-25 17:30:00', 3);
 
 -- --------------------------------------------------------
 
@@ -572,10 +551,8 @@ CREATE TABLE `tblreservefaci` (
 --
 
 INSERT INTO `tblreservefaci` (`strReserveFaciNo`, `strReservationID`, `strREFaciCode`, `dtmREFrom`, `dtmRETo`) VALUES
-(1, '004', '', '2016-08-15 07:00:00', '2016-08-15 10:00:00'),
-(2, '008', '', '2016-08-30 07:00:00', '2016-08-30 09:00:00'),
-(3, '001', '', '2016-08-19 09:00:00', '2016-08-19 10:00:00'),
-(5, '003', '', '2016-08-13 09:30:00', '2016-08-13 13:30:00');
+(1, '001', '5', '2016-08-20 08:30:00', '2016-08-20 12:30:00'),
+(2, '002', '1', '2016-08-25 14:30:00', '2016-08-25 17:30:00');
 
 -- --------------------------------------------------------
 
@@ -597,12 +574,7 @@ CREATE TABLE `tblreturnequip` (
 --
 
 INSERT INTO `tblreturnequip` (`strReturnEquipNo`, `strReservationID`, `strRTEquipCode`, `datRTDate`, `intReturned`, `intUnreturned`) VALUES
-(1, '001', 'Tennis Ball', '2016-08-19', 0, 2),
-(2, '001', 'Tennis Net', '2016-08-19', 0, 1),
-(3, '002', 'Tennis Ball', '2016-08-13', 0, 2),
-(4, '002', 'Tennis Net', '2016-08-13', 0, 1),
-(5, '004', 'Basketball', '2016-08-15', 0, 2),
-(6, '009', 'Tennis Ball', '2016-08-24', 0, 2);
+(1, '002', 'Basketball', '2016-08-25', 0, 3);
 
 -- --------------------------------------------------------
 
@@ -936,7 +908,7 @@ ALTER TABLE `tbldocument`
 -- AUTO_INCREMENT for table `tblequipment`
 --
 ALTER TABLE `tblequipment`
-  MODIFY `strEquipNo` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `strEquipNo` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `tblfacility`
 --
@@ -956,7 +928,7 @@ ALTER TABLE `tblhousemember`
 -- AUTO_INCREMENT for table `tblpaymentdetail`
 --
 ALTER TABLE `tblpaymentdetail`
-  MODIFY `intNum` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `intNum` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `tblrequirements`
 --
@@ -966,17 +938,17 @@ ALTER TABLE `tblrequirements`
 -- AUTO_INCREMENT for table `tblreserveequip`
 --
 ALTER TABLE `tblreserveequip`
-  MODIFY `strReserveEquipNo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `strReserveEquipNo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `tblreservefaci`
 --
 ALTER TABLE `tblreservefaci`
-  MODIFY `strReserveFaciNo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `strReserveFaciNo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `tblreturnequip`
 --
 ALTER TABLE `tblreturnequip`
-  MODIFY `strReturnEquipNo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `strReturnEquipNo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `tblstreet`
 --
