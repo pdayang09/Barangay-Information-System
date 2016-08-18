@@ -8,7 +8,7 @@
       <!--main content start-->  
       <section id="main-content">
           <section class="wrapper site-min-height">		<form method = POST>
-<legend ><font face = "cambria" size = 8 color = "grey"> Facility/Equipment Category Maintenance </font></legend>
+<legend ><font face = "cambria" size = 8 color = "grey"> Reservation Category Maintenance </font></legend>
                      
                                <form method = POST>
 	 <input type="button" class="btn btn-info" name = "btnEdit1" id = "btnEdit1" value = "Add Category" onclick = "window.location='EquipmentCateAdd.php'">

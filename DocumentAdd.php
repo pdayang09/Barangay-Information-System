@@ -8,8 +8,11 @@
       <section id="main-content">
          <br>
           <section class="wrapper site-min-height">
- <button  class="btn btn-info" onclick="window.location.href='DocumentMaintenance.php'">  <i class="glyphicon glyphicon-hand-left" aria-hidden="true"></i>&nbsp;Back to the Previous Page</button>
-<legend ><font size = 8 color = "grey"> Add Document Details </font></legend>
+
+ <legend ><font size = 8 color = "grey"> Add Document Details </font></legend>
+
+ <button  class="btn btn-info" onclick="window.location.href='DocumentMaintenance.php'">  <i class="glyphicon glyphicon-hand-left" aria-hidden="true"></i>&nbsp;Back to the Previous Page</button><br><br>
+
 		<div class="col-sm-9 col-md-6 col-lg-6">
 <div class = "showback">
 <form method = POST>

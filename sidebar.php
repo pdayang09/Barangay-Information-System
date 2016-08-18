@@ -41,7 +41,7 @@
                       <ul class="sub">
                           <li><a  href="Hholdview.php">Resident Transaction</a></li>
 						  <li><a  href="validitycheck.php">Facility Equipment Reservation</a></li>
-						  <li><a  href="validitycheck1.php">Document Request</a></li>
+						  <li><a  href="validitycheck.php">Document Request</a></li>
 						  <li><a  href="returnitems.php">Return Items</a></li>
                       </ul>
                   </li>

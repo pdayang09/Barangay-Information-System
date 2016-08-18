@@ -8,8 +8,11 @@
       <section id="main-content">
          <br>
           <section class="wrapper site-min-height">
- <button  class="btn btn-info" onclick="window.location.href='FacilityMaintenance.php'">  <i class="glyphicon glyphicon-hand-left" aria-hidden="true"></i>&nbsp;Back to the Previous Page</button>
-	<legend ><font face = "cambria" size = 8 color = "grey"> Facility Maintenance </font></legend>
+
+ <legend ><font face = "cambria" size = 8 color = "grey"> Facility Maintenance </font></legend>
+
+ <button  class="btn btn-info" onclick="window.location.href='FacilityMaintenance.php'">  <i class="glyphicon glyphicon-hand-left" aria-hidden="true"></i>&nbsp;Back to the Previous Page</button><br><br>
+	
 			<form method = POST>
 									
 	<div class="col-sm-9 col-md-6 col-lg-6">
