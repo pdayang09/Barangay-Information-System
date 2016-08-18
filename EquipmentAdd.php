@@ -104,7 +104,7 @@
 			 else{
 				 require('connection.php');
 			
-				mysqli_query($con,"INSERT INTO `tblequipment`(`strEquipName`, `strEquipCategory`, `intEquipQuantity`, `dblEquipFee`,`dblEquipDiscount`) VALUES ('$strcont','$strcategory',$intquantity,$fee,$intDisc);");
+				mysqli_query($con,"INSERT INTO `tblequipment`(`strEquipName`, `strEquipCategory`, `intEquipQuantity`, `dblEquipFee`,`dblEquipDiscount`,`strStatus`) VALUES ('$strcont','$strcategory',$intquantity,$fee,$intDisc,'Enabled');");
 					 echo "<script>alert('Success');
 					 window.location = 'EquipmentMaintenance.php'</script>";
 			 }
