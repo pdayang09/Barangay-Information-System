@@ -8,6 +8,32 @@
       <!--main content start-->
 	   <script>
 <!-- Validation Code Javascript Start -->
+function empty() {
+   
+	var lname  =document.getElementById("hidlname").value;
+	var fname = document.getElementById("hidfname").value;
+
+
+    if ( lname == 1 || fname == 1 ) {
+        alert("Please Make sure the form is filled out correctly");
+        return false;
+    }
+	
+}
+
+
+function getAge(birthDateString) {
+	//alert(birthDateString);
+    var today = new Date();
+    var birthDate = new Date(birthDateString);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+	//alert(age);
+    return age;
+}
  function fnLastn(obj,strdiv,strSpanName){ <!-- Lastname Validation -->
 			var pattern = new RegExp(/[~`!#$%\^&*+=[\]\\;,/{}|\\":<>\?]/);
             if((obj.value.trim() == "") || (obj.value <= 0) || pattern.test(obj.value)){
@@ -53,14 +79,26 @@
         }
 		
 		function fnValidDate(obj,strdiv,strSpanName){  <!-- Birthday Validation -->
-
+			var age = getAge(document.getElementById('bday').value);
                 if ((obj.value.trim() == "") || (obj.value <= 0) ){  
              
 				   document.getElementById(strdiv).className="has-error";
 				   document.getElementById("hidbday").value=1;
                 }else{
+					
                     document.getElementById(strdiv).className="has-success";
 					document.getElementById("hidbday").value=0;
+					
+					if(age<18){
+						document.getElementById('SSS').disabled = true;
+						document.getElementById('TIN').disabled = true;
+						document.getElementById('VID').disabled = true;
+					}
+					else{
+						document.getElementById('SSS').disabled = false;
+						document.getElementById('TIN').disabled = false;
+						document.getElementById('VID').disabled = false;
+					}
                 }  
         }
 		
@@ -131,7 +169,7 @@
 	<div class="form-group" id = "bday-div">				
            <div class="col-sm-5">
 <p><font face = "cambria" size = 4 color = "grey"> Birthday </font></p>
-             <input required id="RFName1" class="form-control input-group-lg reg_name" type= date  max="<?php echo date("Y-m-d"); ?>" name="bday" title="Enter first name"  onblur= fnValidDate(this,"bday-div","bday") <?php if(isset($_POST["bday"])) echo "value = ".$_POST["bday"]; ?>>
+             <input required id="bday" class="form-control input-group-lg reg_name" type= date  max="<?php echo date("Y-m-d"); ?>" name="bday" title="Enter first name"  onblur= fnValidDate(this,"bday-div","bday") <?php if(isset($_POST["bday"])) echo "value = ".$_POST["bday"]; ?>>
            </div> 
 		  
 		   
@@ -186,7 +224,7 @@
 <div class="form-group" id = "SSS-div">				
            <div class="col-sm-5">
 
-             <input id="RFName1" class="form-control input-group-lg reg_name" type= text name="SSS" title="Enter first name"  onblur= fnValid(this,"SSS-div","SSS")  <?php if(isset($_POST["SSS"])) echo "value = ".$_POST["SSS"]; ?>>
+             <input id="SSS" class="form-control input-group-lg reg_name" type= text name="SSS" title="Enter first name"  onblur= fnValid(this,"SSS-div","SSS")  <?php if(isset($_POST["SSS"])) echo "value = ".$_POST["SSS"]; ?>>
            </div> 
 		  
 		   
@@ -199,7 +237,7 @@
            <div class="col-sm-5"><p><font face = "cambria" size = 4 color = "grey">TIN Number(optional): </font></p>
 
   <div class="col-sm-10">
-             <input id="RFName1" class="form-control input-group-lg reg_name" type= text name="TIN" title="Enter first name" onblur= fnValid(this,"Tin-div","TIN")  <?php if(isset($_POST["TIN"])) echo "value = ".$_POST["TIN"]; ?>> 
+             <input id="TIN" class="form-control input-group-lg reg_name" type= text name="TIN" title="Enter first name" onblur= fnValid(this,"Tin-div","TIN")  <?php if(isset($_POST["TIN"])) echo "value = ".$_POST["TIN"]; ?>> 
            </div> </div>
 		  
 		   
@@ -207,15 +245,24 @@
 	</div>
 
 
-<div class="form-group" id = "relation-div">				
-           <div class="col-sm-5"><p><font face = "cambria" size = 4 color = "grey">Relation to the Owner<font></p>
+<div class="form-group" id = "Vid-div">				
+           <div class="col-sm-5"><p><font face = "cambria" size = 4 color = "grey">Voter's ID(Optional)<font></p>
 
-             <input id="RFName1" class="form-control input-group-lg reg_name" type= text name="relation" title="Enter first name" onblur= fnValid(this,"relation-div","relation")  <?php if(isset($_POST["relation"])) echo "value = ".$_POST["relation"];?>>
+             <input id="VID" class="form-control input-group-lg reg_name" type= text name="Vid" title="Enter first name" onblur= fnValid(this,"Vid-div","Vid")  <?php if(isset($_POST["Vid"])) echo "value = ".$_POST["Vid"];?>>
            </div> 
 		  
 		   
 		   
 	</div><br><br><br>		  </div>
+	<div class="form-group" id = "relation-div">				
+           <div class="col-sm-5"><p><font face = "cambria" size = 4 color = "grey">Relation to the Owner<font></p>
+ <div class="col-sm-10">
+             <input id="RFName1" class="form-control input-group-lg reg_name" type= text name="relation" title="Enter first name" onblur= fnValid(this,"relation-div","relation")  <?php if(isset($_POST["relation"])) echo "value = ".$_POST["relation"];?>>
+           </div> </div> 
+		  
+		   
+		   
+	</div><br><br><br>	
 		  
 
 <button type = submit  class="btn btn-info" name = "subm">Submit Record</button>
@@ -254,6 +301,11 @@ if($_POST['TIN'] == NULL){
 	$TIN = "";
 }
 else{$TIN = $_POST['TIN'];}
+$Vid = "";
+if($_POST['Vid'] == NULL){
+	$Vid = "";
+}
+else{$Vid = $_POST['Vid'];}
 $civil = $_POST['civil'];
 
 	$last = $_POST['hidlname'];
@@ -264,8 +316,8 @@ if($last == 0&&$birth == 0&&$first == 0){ //-- Checking if a textfield is red(ha
 $_Lname = mysqli_real_escape_string($con,$Lname); //-- For using apostrophe ex. O'Hara
 $_Fname = mysqli_real_escape_string($con,$Fname); //-- For using apostrophe ex. O'Hara
 $_Mname = mysqli_real_escape_string($con,$Mname); //-- For using apostrophe ex. O'Hara
-mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`) 
-VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gend','$bday','$contact','$occup','$SSS','$TIN','$Hno','$civil','$relation','Alive')");
+mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`,strVotersId,charLiterate,charDisable) 
+VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gend','$bday','$contact','$occup','$SSS','$TIN','$Hno','$civil','$relation','Alive','$Vid','Y','N')");
 echo "<script>window.location = 'HholdPersonal.php'</script>";
 }
 else{

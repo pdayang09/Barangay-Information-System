@@ -8,6 +8,33 @@
       <!--main content start-->
 	
     <script>
+		function empty() {
+   
+	var lname  =document.getElementById("hidlname").value;
+	var fname = document.getElementById("hidfname").value;
+
+
+    if ( lname == 1 || fname == 1 ) {
+        alert("Please Make sure the form is filled out correctly");
+        return false;
+    }
+	
+}
+
+
+function getAge(birthDateString) {
+	//alert(birthDateString);
+    var today = new Date();
+    var birthDate = new Date(birthDateString);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+	//alert(age);
+    return age;
+}
+
 		function fnMiddletn(obj,strdiv,strSpanName){
 			var pattern = new RegExp(/[~`!#$%\^&*+=[\]\\;,/{}|\\":<>\?]/);
             if(pattern.test(obj.value)){
@@ -56,7 +83,7 @@
         }
 		
 		function fnValidDate(obj,strdiv,strSpanName){ 
-
+		var age = getAge(document.getElementById('bday').value);
                 if ((obj.value.trim() == "") || (obj.value <= 0) ){  
              
 				   document.getElementById(strdiv).className="has-error";
@@ -64,6 +91,16 @@
                 }else{
                     document.getElementById(strdiv).className="has-success";
 					document.getElementById("hidbday").value=0;
+					if(age<18){
+						document.getElementById('SSS').disabled = true;
+						document.getElementById('TIN').disabled = true;
+						document.getElementById('VID').disabled = true;
+					}
+					else{
+						document.getElementById('SSS').disabled = false;
+						document.getElementById('TIN').disabled = false;
+						document.getElementById('VID').disabled = false;
+					}
                 }  
         }
 		
@@ -75,7 +112,13 @@
                     document.getElementById(strdiv).className="has-success";
                 
         }
-			
+			function fnValid(obj,strdiv,strSpanName){ 
+		
+           
+             
+                    document.getElementById(strdiv).className="has-success";
+                
+        }
     </script>
       <section id="main-content">
           <section class="wrapper site-min-height">		
@@ -131,16 +174,14 @@
            <div class="col-sm-5">
 <p><font face = "cambria" size = 4 color = "grey"> Birthday </font></p>
 
-             <input required id="RFName1" class="form-control input-group-lg reg_name" type= date  max="<?php echo date("Y-m-d"); ?>" name="bday" title="Enter first name"  onblur= fnValidDate(this,"bday-div","bday") <?php if(isset($_POST["bday"])) echo "value = ".$_POST["bday"]; ?>>
+             <input required id="bday" class="form-control input-group-lg reg_name" type= date  max="<?php echo date("Y-m-d"); ?>" name="bday" title="Enter first name"  onblur= fnValidDate(this,"bday-div","bday") <?php if(isset($_POST["bday"])) echo "value = ".$_POST["bday"]; ?>>
            </div> 
 		  
 		   
 		   
 	</div><br><br><br><br><br></div>
 	<div class ="form-group">
-	<script>
-	$(function() { $("#datepicker").datepicker({  maxDate: '0'}); });
-	</script>
+
 <div class = "form-group">
 <div class="form-group" id = "contact-div">				
            <div class="col-sm-5">
@@ -166,16 +207,16 @@
 		  
 		   
 		   
-	</div><br><br><br><br><br></div>
+	</div><br><br><br></div>
 	<div class = "form-group">
 
 
 <div class="form-group" id = "occup-div">				
            <div class="col-sm-5">
-	<p><font face = "cambria" size = 4 color = "grey"> Occupation(optional): </font></p><div class="col-sm-10">
-             <input id="RFName1" class="form-control input-group-lg reg_name" type= text name="occup" title="Enter first name" onblur= fnValid(this,"occup-div","occup")  <?php if(isset($_POST["occup"])) echo "value = ".$_POST["occup"]; ?>>
+	<p><font face = "cambria" size = 4 color = "grey"> Voter's ID (optional): </font></p><div class="col-sm-10">
+             <input id="VID" class="form-control input-group-lg reg_name" type= text name="vid" title="Enter first name" onblur= fnValid(this,"occup-div","occup")  <?php if(isset($_POST["vid"])) echo "value = ".$_POST["vid"]; ?> disabled>
            </div> 
-		  
+		  </div>
 		   
 		   
 	</div>
@@ -185,32 +226,44 @@
 <div class="form-group" id = "SSS-div">				
            <div class="col-sm-5">
 
-             <input id="RFName1" class="form-control input-group-lg reg_name" type= text name="SSS" title="Enter first name"  onblur= fnValid(this,"SSS-div","SSS")  <?php if(isset($_POST["SSS"])) echo "value = ".$_POST["SSS"]; ?>>
+             <input id="SSS" class="form-control input-group-lg reg_name" type= text name="SSS" title="Enter first name"  onblur= fnValid(this,"SSS-div","SSS")  <?php if(isset($_POST["SSS"])) echo "value = ".$_POST["SSS"]; ?> disabled>
            </div> 
 		  
 		   
 		   
-	</div><br><br><br><br><br></div>
+	</div><br><br><br><br></div>
 
+<div class = "form-group">
+
+
+<div class="form-group" id = "occup-div">				
+           <div class="col-sm-5">
+	<p><font face = "cambria" size = 4 color = "grey"> Occupation(optional): </font></p><div class="col-sm-10">
+             <input id="RFName1" class="form-control input-group-lg reg_name" type= text name="occup" title="Enter first name" onblur= fnValid(this,"occup-div","occup")  <?php if(isset($_POST["occup"])) echo "value = ".$_POST["occup"]; ?>>
+           </div> 
+		  </div>
+		   
+		   
+	</div>
 
 	
 
 <div class="form-group" id = "Tin-div">				
            <div class="col-sm-5">
-<p><font face = "cambria" size = 4 color = "grey">TIN Number(optional): </font></p><div class="col-sm-10">
-             <input id="RFName1" class="form-control input-group-lg reg_name" type= text name="TIN" title="Enter first name" onblur= fnValid(this,"Tin-div","TIN")  <?php if(isset($_POST["TIN"])) echo "value = ".$_POST["TIN"]; ?>> 
-           </div> 
+<p><font face = "cambria" size = 4 color = "grey">TIN Number(optional): </font></p>
+             <input id="TIN" class="form-control input-group-lg reg_name" type= text name="TIN" title="Enter first name" onblur= fnValid(this,"Tin-div","TIN")  <?php if(isset($_POST["TIN"])) echo "value = ".$_POST["TIN"]; ?> disabled> 
+        
 		  
 		   
 		   
-	</div><br><br><br><br><br>
+	</div><br><br><br><br><br></div>
 
 		  
-		  
+		  </div>
 
-<button type = submit id= "subm" class="btn btn-info" name = "subm" >Submit Record</button>
-<br><br></div>
 
+<button type = submit id= "subm" class="btn btn-info" name = "subm" onclick = "return empty()">Submit Record</button>
+<br><br>
 <?php
 require('connection.php');
 if(isset($_POST['subm'])){$Hno = $_SESSION['Hno'];
@@ -240,6 +293,12 @@ if($_POST['TIN'] == NULL){
 	$TIN = "";
 }
 else{$TIN = $_POST['TIN'];}
+$VID = "";
+if($_POST['VID'] == NULL){
+	$VID = "";
+}
+else{$VID = $_POST['vid'];}
+
 $civil = $_POST['civil'];
 	$last = $_POST['hidlname'];
 	$first = $_POST['hidfname'];
@@ -248,8 +307,8 @@ if($last == 0&&$birth == 0&&$first == 0){
 $_Lname = mysqli_real_escape_string($con,$Lname);
 $_Fname = mysqli_real_escape_string($con,$Fname);
 $_Mname = mysqli_real_escape_string($con,$Mname);
-mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`) 
-VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gend','$bday','$contact','$occup','$SSS','$TIN','$Hno','$civil','Children','Alive')");
+mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`,`strVotersId`) 
+VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gend','$bday','$contact','$occup','$SSS','$TIN','$Hno','$civil','Children','Alive','$VID')");
 echo "<script>window.location = 'HholdPersonal.php'</script>";
 }
 else{
