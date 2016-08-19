@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 18, 2016 at 03:03 AM
+-- Generation Time: Aug 19, 2016 at 05:04 AM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.5.30
 
@@ -171,7 +171,7 @@ INSERT INTO `tblcategory` (`strCategoryCode`, `strCategoryDesc`, `strCategoryTyp
 (4, 'Net', 'Equipment'),
 (5, 'Racket', 'Equipment'),
 (6, 'Scoreboard', 'Equipment'),
-(7, 'Sports Material', 'Equipment'),
+(7, 'Ball', 'Equipment'),
 (8, 'Other', 'Equipment');
 
 -- --------------------------------------------------------
@@ -194,8 +194,21 @@ CREATE TABLE `tblctc` (
 
 CREATE TABLE `tbldeceased` (
   `intDeceasedNo` int(11) NOT NULL,
+  `strFirstName` varchar(50) NOT NULL,
+  `strMiddleName` varchar(50) NOT NULL,
+  `strLastName` varchar(50) NOT NULL,
+  `strNameExtension` varchar(50) NOT NULL,
+  `charGender` char(1) NOT NULL,
+  `dtBirthdate` date NOT NULL,
   `dtDied` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbldeceased`
+--
+
+INSERT INTO `tbldeceased` (`intDeceasedNo`, `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `dtDied`) VALUES
+(1, 'Jenny', '', 'Santos', '', 'F', '1996-08-16', '2009-01-01');
 
 -- --------------------------------------------------------
 
@@ -295,16 +308,14 @@ CREATE TABLE `tblequipment` (
 --
 
 INSERT INTO `tblequipment` (`strEquipNo`, `strEquipName`, `strEquipCategory`, `intEquipQuantity`, `dblEquipFee`, `dblEquipDiscount`, `strStatus`) VALUES
-(1, 'Basketball', '7', 13, 50.51, 10, 'Enabled'),
-(2, 'Volleyball', '7', 10, 50, 0, 'Enabled'),
-(3, 'Tennis Ball', '7', 10, 50, 0, 'Enabled'),
-(4, 'Shuttlecock', '7', 10, 50, 0, 'Enabled'),
-(5, 'Volleyball Net', '7', 10, 0, 0, 'Enabled'),
-(6, 'Tennis Net', '7', 3, 0, 0, 'Disabled'),
+(1, 'Basketball', '8', 13, 50.51, 10, 'Enabled'),
+(2, 'Volleyball', '8', 10, 50, 0, 'Enabled'),
+(3, 'Tennis Ball', '8', 10, 50, 0, 'Enabled'),
+(4, 'Shuttlecock', '8', 10, 50, 0, 'Enabled'),
+(5, 'Volleyball Net', '4', 10, 0, 0, 'Enabled'),
+(6, 'Tennis Net', '4', 3, 0, 0, 'Disabled'),
 (7, 'Digital Scoreboard', '6', 5, 250, 0, 'Enabled'),
-(8, 'Tennis', '7', 90, 20.6, 0, 'Enabled'),
-(9, 'Tent', '8', 15, 250, 50, 'Enabled'),
-(10, 'Monoblock', '8', 300, 250, 50, 'Enabled');
+(8, 'Tennis', '5', 90, 20.6, 0, 'Enabled');
 
 -- --------------------------------------------------------
 
@@ -360,10 +371,8 @@ INSERT INTO `tblhousehold` (`intHouseholdNo`, `strBuildingNo`, `intForeignStreet
 (4, '88', 1, 'Wu', 'Owned', '891 Maa', 'Enable'),
 (5, '677', 1, 'Tedder', 'Owned', '672 jads aada', 'Enable'),
 (6, '844 Interior 29', 1, 'Marquez', 'Rent', 'Pasig', 'Enabled'),
-(8, '1221', 1, 'sda', 'Rent', 'sda', 'Enabled'),
 (9, '321', 1, 'Ara', 'Rent', 'New', 'Enabled'),
-(10, '312', 1, 'Sista', 'Rent', 'sda', 'Enabled'),
-(11, '211', 1, 'Salas', 'Owned', 'Bagong Nayon, Antipolo City', 'Enabled');
+(10, '312', 1, 'Sista', 'Rent', 'sda', 'Enabled');
 
 -- --------------------------------------------------------
 
@@ -398,11 +407,10 @@ CREATE TABLE `tblhousemember` (
 
 INSERT INTO `tblhousemember` (`intMemberNo`, `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `strVotersId`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`, `charLiterate`, `charDisable`) VALUES
 (1, 'Paul', 'Aquino', 'Dayang', '', 'M', '1996-05-12', '0920947581', 'Company Driver', '00010101', '', '09', 1, '', 'Head', 'Alive', 'Y', 'N'),
-(2, 'Pingris', 'Santos', 'Daya', 'Jr', 'M', '1996-05-19', '09132321321', 'Dancer', '', 'ads', 'e3qe', 2, 'Married', 'Head', 'Alive', 'Y', 'N'),
+(2, 'Pingris', 'Santos', 'Daya', 'Jr', 'M', '1992-01-01', '09132321321', 'Dancer', '', 'ads', 'e3qeaaa', 2, '', 'Head', 'Alive', 'Y', 'N'),
 (3, 'Matteo', 'Ting', 'Perez', 'Jr', 'M', '1980-05-21', '09123321243', 'Sales', '6543213', '331231', '232qe2qe', 2, 'Single', 'Spouse', 'Dead', 'Y', 'N'),
 (4, 'Mikhael', 'Castro', 'Daya', '', 'M', '2016-05-04', '', '', '', '', '', 2, 'Single', 'Children', 'Moved', 'Y', 'N'),
 (5, 'Gema', 'Peng', 'Gutierez', '', 'F', '1996-12-27', '02313321', 'Sales Clerk', '', 'sad', 'qe23', 2, 'Single', 'Cousin', 'Moved', 'Y', 'N'),
-(6, 'Jenny', 'Akihiro', 'Dayang', '', 'F', '2016-07-09', '', '', '', '', '', 2, 'Single', 'Cousin', 'Dead', 'Y', 'N'),
 (7, 'Lola', 'Ting', 'Dayang', '', 'F', '1990-03-08', '09890930943', 'Sales Clerk', '', 'dd', '2qwewwe', 1, 'Single', 'Sister', 'Alive', 'Y', 'N'),
 (8, 'Jenna', 'Alie', 'Dayang', '', 'F', '1989-07-06', '09999999', '', '', '', 'weewq', 1, 'Married', 'Spouse', 'Alive', 'Y', 'N'),
 (9, 'Paulo', 'Ting', 'Perez', 'Jr', 'M', '1980-05-21', '09123321243', 'Sales Clerk', '', '331231', 'weewq', 3, 'Single', 'Head', 'Alive', 'Y', 'N'),
@@ -410,13 +418,13 @@ INSERT INTO `tblhousemember` (`intMemberNo`, `strFirstName`, `strMiddleName`, `s
 (11, 'Ryan Benjamin', 'Saludo', 'Tedder', '', 'M', '1979-06-26', '0921384913', 'Singer', '92192913', '12121', 'ewqeewq', 5, 'Single', 'Head', 'Alive', 'Y', 'N'),
 (12, 'Angel', '', 'Marquez', '', 'M', '1986-01-01', '', '', '', '', 'weqeq', 6, 'Single', 'Head', 'Alive', 'N', 'N'),
 (13, 'Kimmy', '', 'Marquez', '', 'F', '1982-01-01', '', '', '', '', '', 6, 'Married', 'Spouse', 'Dead', 'Y', 'Y'),
-(14, 'James', 'aa', 'aa', 'aa', 'M', '2016-08-01', '', '', '', '', '', 2, 'Single', 'Children', 'Alive', 'Y', 'Y'),
-(15, 'Jenny', '', 'Santos', '', 'F', '1996-08-16', '0934242', '', '', '', '0101010', 2, 'Married', 'Spouse', 'Alive', '', ''),
-(16, 'Daiaina', 'Ongpauco', 'Perez', '', 'F', '1987-08-23', '', '', '', '', '', 3, 'Married', 'Spouse', 'Alive', '', ''),
 (20, 'dsa', 'sdaa', 'ds', '', 'M', '1992-08-14', '', '', '', '', '', 6, 'Single', 'Head', 'Alive', 'Y', 'N'),
 (21, 'Mary', '', 'Ara', '', 'F', '1995-01-01', '12', 'Sales', '786', '56', '54', 9, 'Single', 'Head', 'Alive', 'Y', 'N'),
 (22, 'Kimmy', '', 'Sista', '', 'F', '1992-08-03', '', '', '', '', '', 10, 'Single', 'Head', 'Alive', 'Y', 'N'),
-(23, 'Mary Nicole', '', 'Salas', '', 'F', '1993-03-17', '09298873921', 'Sales Clerk', '0934121', '23324231', '928322', 11, 'Single', 'Head', 'Alive', 'Y', 'N');
+(25, 'Maria Rosa', '', 'SpatNa', '', 'F', '1992-01-01', '', '', '', '', '', 2, 'Single', 'Tenant', 'Alive', '', ''),
+(26, 'Paula', 'Ting', 'Perez', '', 'F', '1996-01-01', '', '', '', '', '', 3, 'Single', 'Spouse', 'Alive', '', ''),
+(27, 'Carl', 'Ting', 'Perez', '', 'M', '2010-01-01', '0129931', 'Student', '', '', '', 3, 'Single', 'Children', 'Alive', '', ''),
+(28, 'Mary Joan', '', 'Meno', '', 'F', '1992-01-01', '09283771829', 'Businesswoman', '', '', '', 3, 'Single', 'Tenant', 'Alive', 'Y', 'N');
 
 -- --------------------------------------------------------
 
@@ -447,8 +455,17 @@ CREATE TABLE `tblpaymentdetail` (
 --
 
 INSERT INTO `tblpaymentdetail` (`intNum`, `strRequestID`, `dblReqPayment`, `intRequestORNo`) VALUES
-(12, '001', 1000, 0),
-(13, '002', 1651.53, 0);
+(1, '001', 250, 0),
+(2, '002', 100, 0),
+(3, '003', 600, 0),
+(4, '004', 566.02, 0),
+(5, '005', 1500, 0),
+(6, '006', 625, 0),
+(7, '007', 1650, 0),
+(8, '008', 600, 0),
+(9, '009', 1200, 0),
+(10, '010', 1500, 0),
+(11, '010', 1250, 0);
 
 -- --------------------------------------------------------
 
@@ -507,8 +524,16 @@ CREATE TABLE `tblreservationrequest` (
 --
 
 INSERT INTO `tblreservationrequest` (`strReservationID`, `strRSresidentId`, `strRSapplicantId`, `datRSIssued`, `datRSReserved`, `dtmFrom`, `dtmTo`, `strRSapprovalStatus`, `strRSPurpose`) VALUES
-('001', '4', '', '2016-08-17', '2016-08-20', 1471707000000, 1471721400000, 'For Approval', 'Party in the USA'),
-('002', '', ' app002', '2016-08-17', '2016-08-25', 1472160600000, 1472171400000, 'For Approval', 'Practice');
+('001', '', ' app002', '2016-08-10', '2016-08-19', 1471622400000, 1471626000000, 'Approved', 'Practice 1.0'),
+('002', '', '10', '2016-08-10', '2016-08-13', 1471111200000, 1471127400000, 'Paid', 'Practice 2.0'),
+('003', '', '11', '2016-08-10', '2016-08-13', 1471105800000, 1471120200000, 'For Approval', 'Party'),
+('004', '', ' app003', '2016-08-10', '2016-08-15', 1471269600000, 1471280400000, 'For Approval', 'Practice 3.0'),
+('005', '', ' app001', '2016-08-10', '2016-08-25', 1472148000000, 1472158800000, 'For Approval', 'Party 2.0'),
+('006', '', '8', '2016-08-10', '2016-08-15', 1471289400000, 1471298400000, 'For Approval', 'Pa party'),
+('007', '', ' app001', '2016-08-10', '2016-08-23', 1471995000000, 1472005800000, 'For Approval', 'Debut'),
+('008', '', '7', '2016-08-10', '2016-08-30', 1472565600000, 1472572800000, 'For Approval', 'Badminton Tourn'),
+('009', '', ' app002', '2016-08-10', '2016-08-24', 1472065200000, 1472072400000, 'For Approval', 'Tennis Play 1.0'),
+('010', '', '10', '2016-08-10', '2016-08-30', 1472596200000, 1472614200000, 'For Approval', 'Pageant Night');
 
 -- --------------------------------------------------------
 
@@ -530,7 +555,12 @@ CREATE TABLE `tblreserveequip` (
 --
 
 INSERT INTO `tblreserveequip` (`strReserveEquipNo`, `strReservationID`, `strREEquipCode`, `dtmREFrom`, `dtmRETo`, `intREQuantity`) VALUES
-(1, '002', 'Basketball', '2016-08-25 14:30:00', '2016-08-25 17:30:00', 3);
+(1, '001', 'Tennis Ball', '2016-08-19 09:00:00', '2016-08-19 10:00:00', 0),
+(2, '001', 'Tennis Net', '2016-08-19 09:00:00', '2016-08-19 10:00:00', 0),
+(3, '002', 'Tennis Ball', '2016-08-13 11:00:00', '2016-08-13 15:30:00', 0),
+(4, '002', 'Tennis Net', '2016-08-13 11:00:00', '2016-08-13 15:30:00', 0),
+(5, '004', 'Basketball', '2016-08-15 07:00:00', '2016-08-15 10:00:00', 2),
+(6, '009', 'Tennis Ball', '2016-08-24 12:00:00', '2016-08-24 14:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -551,8 +581,10 @@ CREATE TABLE `tblreservefaci` (
 --
 
 INSERT INTO `tblreservefaci` (`strReserveFaciNo`, `strReservationID`, `strREFaciCode`, `dtmREFrom`, `dtmRETo`) VALUES
-(1, '001', '5', '2016-08-20 08:30:00', '2016-08-20 12:30:00'),
-(2, '002', '1', '2016-08-25 14:30:00', '2016-08-25 17:30:00');
+(1, '004', '', '2016-08-15 07:00:00', '2016-08-15 10:00:00'),
+(2, '008', '', '2016-08-30 07:00:00', '2016-08-30 09:00:00'),
+(3, '001', '', '2016-08-19 09:00:00', '2016-08-19 10:00:00'),
+(5, '003', '', '2016-08-13 09:30:00', '2016-08-13 13:30:00');
 
 -- --------------------------------------------------------
 
@@ -574,7 +606,12 @@ CREATE TABLE `tblreturnequip` (
 --
 
 INSERT INTO `tblreturnequip` (`strReturnEquipNo`, `strReservationID`, `strRTEquipCode`, `datRTDate`, `intReturned`, `intUnreturned`) VALUES
-(1, '002', 'Basketball', '2016-08-25', 0, 3);
+(1, '001', 'Tennis Ball', '2016-08-19', 0, 2),
+(2, '001', 'Tennis Net', '2016-08-19', 0, 1),
+(3, '002', 'Tennis Ball', '2016-08-13', 0, 2),
+(4, '002', 'Tennis Net', '2016-08-13', 0, 1),
+(5, '004', 'Basketball', '2016-08-15', 0, 2),
+(6, '009', 'Tennis Ball', '2016-08-24', 0, 2);
 
 -- --------------------------------------------------------
 
@@ -898,7 +935,7 @@ ALTER TABLE `tblcategory`
 -- AUTO_INCREMENT for table `tbldeceased`
 --
 ALTER TABLE `tbldeceased`
-  MODIFY `intDeceasedNo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `intDeceasedNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `tbldocument`
 --
@@ -908,7 +945,7 @@ ALTER TABLE `tbldocument`
 -- AUTO_INCREMENT for table `tblequipment`
 --
 ALTER TABLE `tblequipment`
-  MODIFY `strEquipNo` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `strEquipNo` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `tblfacility`
 --
@@ -923,12 +960,12 @@ ALTER TABLE `tblhousehold`
 -- AUTO_INCREMENT for table `tblhousemember`
 --
 ALTER TABLE `tblhousemember`
-  MODIFY `intMemberNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `intMemberNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 --
 -- AUTO_INCREMENT for table `tblpaymentdetail`
 --
 ALTER TABLE `tblpaymentdetail`
-  MODIFY `intNum` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `intNum` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `tblrequirements`
 --
@@ -938,17 +975,17 @@ ALTER TABLE `tblrequirements`
 -- AUTO_INCREMENT for table `tblreserveequip`
 --
 ALTER TABLE `tblreserveequip`
-  MODIFY `strReserveEquipNo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `strReserveEquipNo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `tblreservefaci`
 --
 ALTER TABLE `tblreservefaci`
-  MODIFY `strReserveFaciNo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `strReserveFaciNo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `tblreturnequip`
 --
 ALTER TABLE `tblreturnequip`
-  MODIFY `strReturnEquipNo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `strReturnEquipNo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `tblstreet`
 --

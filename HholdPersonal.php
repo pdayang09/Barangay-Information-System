@@ -21,7 +21,7 @@
       		<br>
       		<form method = POST>
 
-      			<div class="showback"">     
+      			<div class="showback">     
       				<?php
       				require('connection.php');
       				$Hno = $_SESSION['Hno'];
@@ -52,14 +52,22 @@
       					$Ext = $row->strNameExtension;
       				}
 
-      				echo "Head of Household: ".$row->strLastName.",".$row->strFirstName." ".$Mid." ".$Ext?><button type = submit  class="btn btn-info"  style="float: right; margin-right: 5cm;" value = <?php echo $row->intMemberNo?> name = 'Edit' >Edit Head Detail</button><br><?php
+      				echo "Head of Household: ".$row->strLastName.",".$row->strFirstName." ".$Mid." ".$Ext?>
+					<div class="btn-group " role="group"style="float: right; margin-right: 5cm;"> 
+						<div class="btn-group" role="group"  >
+						<button type = submit  class="btn btn-info btn-round btn-sm"   value = <?php echo $row->intMemberNo?> name = 'Edit' >Edit Head Detail</button>
+						</div>
+						<div class="btn-group" role="group">
+						<button type = button  class="btn btn-danger btn-round btn-sm"    onclick = "DecHead(this.value)" data-toggle="modal" data-target="#DeceasedModal"  value = <?php echo $row->intForeignHouseholdNo?> name = 'HDec' >Deceased</button>
+						</div>
+						</div><br><?php
       				echo "Gender: ".$Gend."<br>";
       				echo "Date of Birth: ".$row->dtBirthdate."<br>";
       				echo "Contact Number: ".$row->strContactNo."<br>";
       				echo "Occupation: ".$row->strOccupation."<br>";
       				echo "SSS Number: ".$row->strSSSNo."<br>";
       				echo "TIN Number: ".$row->strTINNo."<br>";
-
+					echo "Voter's Id: ".$row->strVotersId."<br>";
       				?>
       				<br><br>
       				<a class="btn btn-info btn-sm" href = 'AddSpouse.php' <?php
@@ -105,21 +113,22 @@
       								<td>
       									<div class="btn-group " role="group" aria-label="..." >	
       										<div class="btn-group" role="group"> 
-      											<button class="btn btn-primary btn-sm" type = submit  value = <?php echo $row->intMemberNo?>  name = 'View' >View</button>
+      											<button class="btn btn-primary btn-round btn-sm" type = submit  value = <?php echo $row->intMemberNo?>  name = 'View' >View</button>
       										</div>	
       										<div class="btn-group" role="group"> 
-      											<button class="btn btn-success btn-sm" type = button value = <?php echo $row->intMemberNo?> onclick = 'Del(this.value);' data-toggle="modal" data-target="#RemoveModal" name = 'Move' >Remove</button>
+      											<button class="btn btn-info btn-sm" type = button value = <?php echo $row->intMemberNo?> onclick = 'Del(this.value);' data-toggle="modal" data-target="#RemoveModal" name = 'Move' >Remove</button>
       										</div>	
       										<div class="btn-group" role="group">
-      											<button class="btn btn-success btn-sm" type = submit  value = <?php echo $row->intMemberNo?> name = 'Transfer' >Transfer</button>
+      											<button class="btn btn-info btn-sm" type = submit  value = <?php echo $row->intMemberNo?> name = 'Transfer' >Transfer</button>
       										</div>	
+      										
       										<div class="btn-group" role="group">
-      											<button class="btn btn-success btn-sm" type = button value = <?php echo $row->intMemberNo?> data-toggle="modal" data-target="#DeceasedModal"  name = 'Deceased' >Deceased</button>
-      										</div>
-      										<div class="btn-group" role="group">
-      											<button  class="btn btn-success btn-sm"type = submit value = <?php echo $row->intMemberNo?> onClick="return confirm(
-      												'Do you really want to perform this action?');" name = 'Edit' >Edit</button>
-      											</div></div></td>
+      											<button  class="btn btn-info btn-sm"type = submit value = <?php echo $row->intMemberNo?> name = 'Edit' >Edit</button>
+      											</div>
+												<div class="btn-group" role="group">
+											
+      											<button class="btn btn-danger btn-round btn-sm" type = button value = <?php echo $row->intMemberNo?> onclick = 'Dec(this.value);' data-toggle="modal" data-target="#DeceasedModal"  name = 'Deceased' >Deceased</button>
+      										</div></div></td>
       											
 
       										</tr>
@@ -159,21 +168,21 @@
       														<td>
       															<div class="btn-group " role="group" aria-label="..." >	
       																<div class="btn-group" role="group"> 
-      																	<button class="btn btn-primary btn-sm" type = submit  value = <?php echo $row->intMemberNo?>  name = 'View' >View</button>
+      																	<button class="btn btn-primary btn-round btn-sm" type = submit  value = <?php echo $row->intMemberNo?>  name = 'View' >View</button>
       																</div>	
       																<div class="btn-group" role="group"> 
-      																	<button class="btn btn-success btn-sm" type = button value = <?php echo $row->intMemberNo?> onclick = 'Del(this.value);' data-toggle="modal" data-target="#RemoveModal" name = 'Move' >Remove</button>
+      																	<button class="btn btn-info btn-sm" type = button value = <?php echo $row->intMemberNo?> onclick = 'Del(this.value);' data-toggle="modal" data-target="#RemoveModal" name = 'Move' >Remove</button>
       																</div>	
       																<div class="btn-group" role="group">
-      																	<button class="btn btn-success btn-sm" type = submit  value = <?php echo $row->intMemberNo?> name = 'Transfer' >Transfer</button>
+      																	<button class="btn btn-info btn-sm" type = submit  value = <?php echo $row->intMemberNo?> name = 'Transfer' >Transfer</button>
       																</div>	
+      																
       																<div class="btn-group" role="group">
-      																	<button class="btn btn-success btn-sm" type = button  value = <?php echo $row->intMemberNo?>  data-toggle="modal" data-target="#DeceasedModal" name = 'Deceased' >Deceased</button>
-      																</div>
-      																<div class="btn-group" role="group">
-      																	<button  class="btn btn-success btn-sm"type = submit value = <?php echo $row->intMemberNo?> onClick="return confirm(
-      																		'Do you really want to perform this action?');" name = 'Edit' >Edit</button>
-      																	</div></div></td>
+      																	<button  class="btn btn-info btn-round btn-sm"type = submit value = <?php echo $row->intMemberNo?> name = 'Edit' >Edit</button>
+      																	</div>
+																		<div class="btn-group" role="group">
+      																	<button class="btn btn-danger btn-round btn-sm" type = button  value = <?php echo $row->intMemberNo?> onclick ='Dec(this.value);'  data-toggle="modal" data-target="#DeceasedModal" name = 'Deceased' >Deceased</button>
+      																</div></div></td>
       																	
 
       																</tr>
@@ -224,7 +233,21 @@
       										<!--script for this page-->
       										
       										<script>
+											
+      											function DecHead(val){
+      											//alert(val);
+      											$.ajax({
+      											type: "POST",
+      											url: "DeceasedHeadValidate.php",
+      											data: 'sid=' + val,
+      											success: function(data){
+      											//alert(data);
+      											$("#Decease").html(data);
+      										}
+      									});
+      								}
       											//custom select box
+												
       											function Del(val){
       											//alert(val);
       											$.ajax({
@@ -237,6 +260,20 @@
       										}
       									});
       								}
+								
+									function Dec(a){
+      											//alert(a);
+      											$.ajax({
+      											type: "POST",
+      											url: "Deceasedmember.php",
+      											data: 'sid=' + a,
+      											success: function(data){
+      											//alert(data);
+      											$("#Decease").html(data);
+      										}
+      									});
+      								}
+									
       								$(function(){
       								$('select.styled').customSelect();
       							});
