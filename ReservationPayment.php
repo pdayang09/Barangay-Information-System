@@ -109,7 +109,7 @@
 
 										<div class="col-sm-4">
 											<font face = "cambria" size = 5 color = "grey"> OR No
-											<input id="payOR" name="payOR" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" disabled></font>											
+											<input id="payOR" name="payOR" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" required></font>											
 										</div>	
 									</div><br><br><br><br> <!-- /#form-group -->
 								
@@ -118,21 +118,21 @@
 										
 										<div class="col-sm-4">
 											<font face = "cambria" size = 5 color = "grey"> Payor
-											<input id="payor" name="payor" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value = "<?php echo" $name"; ?>"></font>		
+											<input id="payor" name="payor" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value = "<?php echo" $name"; ?>" disabled></font>		
 										</div>
 									
 										<div class="col-sm-4">
 											<font face = "cambria" size = 5 color = "grey"> Contact Number
-											<input id="busId" name="payName" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value = "<?php echo" $contactno"; ?>"></font>	
+											<input id="busId" name="payName" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value = "<?php echo" $contactno"; ?>" disabled></font>	
 										</div><br><br>
 									
 									</div>
-								</div><br><br>
+								</div><br>
 									
 								<div class="form-group">
 								<div class="col-sm-10">
 									<div class="form-group"> <!-- /Reservation Details Facility-->
-										<font face = "cambria" size = 5 color = "grey"> Reservation Details</font><br><br><br>
+										<font face = "cambria" size = 5 color = "grey"> Reservation Details</font><br><br>
 										
 										<div class="col-sm-10">
 										<div class="panel panel-default"><!-- Default panel contents -->
@@ -186,7 +186,7 @@
 										</div> <!-- /#table-responsive -->
 										</div>
 									</div>
-								</div><br><br>
+								</div><br><br><br><br>
 									
 									<?php 
 										$total = $total + $resfee * $hours;
@@ -195,32 +195,68 @@
 								<div class="col-sm-10">
 									<!-- /Payment Details -->								
 									<font face = "cambria" size = 5 color = "grey"> Payment Details</font>
-									<br><br><br>
+									<br><br>
 								</div>
 								
-								<div class="col-sm-4">
+								<div class="col-sm-4" id="showAmount">
 									<font face = "cambria" size = 5 color = "grey"> Total Amount Due :
-										<input id="total" name="total" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value= " <?php echo" $total";?>"disabled></font><br><br>
+										<input id="demo" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" name="total" value= " <?php echo" $total";?>"disabled></font>
+										<font face = "cambria" size = 5 color = "grey"> Amount Render
+										<input name="render" class="form-control input-group-lg reg_name" type="number"  title="generated brgyId" value= "0.00"></font>					
+								</div>	
 
-									<a href="FacilityEquipmentT.php"><input type="button" class="btn btn-outline btn-success" name = "btnGoBack" value = "Go Back"></a>
-									<input type="submit" class="btn btn-outline btn-success" name = "btnNote" value = "Note Reservation">
-								</div>														
-								
+								<div class="col-sm-4" class = "form-group">
+									<font face = "cambria" size = 5 color = "grey"> Mode of Payment
+										<select class = "form-control" id="mySelect" onchange="myFunction()" name="mode">
+											<option value="Full"> Full </option>
+											<option value="Partial"> Partial </option>
+										</select>	
+									<font face = "cambria" size = 5 color = "grey"> Change
+										<input id="total" name="total" class="form-control input-group-lg reg_name" type="number"  title="generated brgyId" value= "0.00"></font><br><br>							
 								</div>
-								
-								<?php
-								if(isset($_POST['btnNote'])){
-									include("saveReservation1.php");
-								}?>
+
+								<p id="demo"></p>
+
+								<div class="col-sm-6">
+									<button type="submit" class="btn btn-outline btn-success" name = "btnPay" value = '$resId'>Render Payment</button>
+								</div>
+
+								</div>
 							
-			<button type="submit" name="btnProceed">Facility Equipment List</button>
-	
-			<?php if(isset($_POST['btnProceed'])){
-					session_destroy();
-					echo"<script> window.location = 'FacilityEquipmentL.php'</script>";
-			}?>
-								
-						</form> <!-- /#form method -->									
+			<?php if(isset($_POST['btnPay'])){
+				$pay = $_POST['btnPay'];
+
+					$payOR = $_POST['payOR'];
+					$render = $_POST['render'];
+
+				if(!empty($render) && !empty($total)){
+					if($render > $total){
+						$change = $render - $total;
+					}else if($render == $total){
+						$change = 0;
+					}else if($render < $total){
+						echo"<script> alert('You have inserted invalid payment')</script>";
+					}
+
+					if(isset($_POST['mode'])){
+						$mode = $_POST['mode'];
+
+						if($mode == "Full"){
+							$balance = 0;
+						}else if($mode == "Partial"){
+							$balance = $total/2;
+						}
+					}else{
+						$balance = 0;
+					}					
+
+
+					echo"<script> alert('$mode $balance $total $change')</script>";
+				}else{
+					echo"<script> alert('You have inserted invalid amount')</script>";
+				}
+
+			}?>							
 									
 						</div><br> <!-- /#bodybody -->
 					</div> <!-- /#col-lg-12 -->
@@ -233,5 +269,12 @@
 				
 		</section><! --/wrapper -->
       </section><!-- /MAIN CONTENT -->
+
+<script>
+function myFunction() {
+    var x = document.getElementById("mySelect").value;
+    document.getElementById("demo").innerHTML = "You selected: " + x;
+}
+</script>
 
 <?php require("footer.php");?>

@@ -27,7 +27,7 @@
                 		
 			<?php						
 				require("connection.php");
-				 $query = mysqli_query($con,"SELECT f.`strFaciName`, TIME(r.`dtmREFrom`), TIME(r.`dtmRETo`) FROM tblreservefaci r INNER JOIN tblfacility f ON f.`strFaciNo` = r.`strREFaciCode` WHERE r.`dtmREFrom` BETWEEN '$resfrom' AND '$resfrom' OR r.`dtmRETo` BETWEEN '$resto' AND '$resto' ORDER BY r.`dtmREFrom`");
+				 $query = mysqli_query($con,"SELECT f.`strFaciName`, TIME(r.`dtmREFrom`), TIME(r.`dtmRETo`) FROM tblreservefaci r INNER JOIN tblfacility f ON f.`strFaciNo` = r.`strREFaciCode` WHERE r.`dtmREFrom` BETWEEN '$resfrom' AND '$resto' OR r.`dtmRETo` BETWEEN '$resfrom' AND '$resto' ORDER BY r.`dtmREFrom`");
 
 				while($row = mysqli_fetch_row($query)){
 					$facitemp = $row[0];

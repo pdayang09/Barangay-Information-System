@@ -175,16 +175,16 @@
 								<div class="form-group">
 									<div class="col-sm-5">
 										<div class="showback">	
-											<font face = "cambria" size = 5 color = "grey"> Total
+											<font face = "cambria" size = 6 color = "grey"> Total
 											<input id="total" class="form-control input-group-lg reg_name" type="text"  name="total" value = "<?php echo" $total"; ?>" disabled></font>		
 										</div>
 									</div>
-								</div>																
-							</div>
+								</div>														
+							</div><br><br><br><br>
 
 							<center>
 							<div class="form-group">
-								<div class="col-sm-6">
+								<div class="col-sm-7">
 									<a href="validityCheck.php"><input type="button" class="btn btn-outline btn-success" name = "btnGoBack" value = "Reserve Again"></a>
 									<input type="submit" class="btn btn-outline btn-success" name = "btnNote" value = "Assess Payment">
 									<a href="facilityequipmentL.php"><input type="button" class="btn btn-outline btn-success" name = "btnView" value = "View Reservation"></a>

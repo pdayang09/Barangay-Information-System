@@ -287,18 +287,11 @@
             <font face="arial" size=4 color="grey"> 
             
             <!-- gets list of facility from tblfacility -->
-            <?php include("facilityFormM.php"); ?><br><br><br><br>
-                        
-            <div class="col-sm-5">
-                <p><font face="cambria" size=6 color="grey"> Sports Material </font></p>
-                <font face="arial" size=4 color="grey">
-            </div><br><br>
-
-            <?php include("sportsForm.php"); ?> 
-            <br><br><br><br><br><br><br>
+            <?php include("facilityFormM.php"); ?>
+            <br><br><br><br>
 
             <div class="col-sm-5">
-                <p><font face="cambria" size=6 color="grey"> Equipment </font></p>
+                <p><font face="cambria" size=6 color="grey"> Items </font></p>
                 <font face="arial" size=4 color="grey">
             </div><br><br>
 
@@ -308,7 +301,7 @@
             $quantity[] = array();
             
             include("equipmentFormM.php"); ?> 
-            <br><br><br><br><br>  
+            <br><br><br><br><br><br><br><br><br><br>
             </form>   
 
             <div class="form-group">

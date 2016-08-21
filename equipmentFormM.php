@@ -2,7 +2,7 @@
 
 	<?php
 	require("connection.php");
-	$query = mysqli_query($con, "SELECT `strEquipName`,  `intEquipQuantity`, `strStatus` from tblequipment where `intEquipQuantity` > 0 AND `strStatus` = 'Enabled' AND `strEquipCategory`!= '7'");
+	$query = mysqli_query($con, "SELECT `strEquipName`,  `intEquipQuantity`, `strStatus` from tblequipment where `intEquipQuantity` > 0 AND `strStatus` = 'Enabled'");
 
   	 while($row = mysqli_fetch_row($query)){
 	   
