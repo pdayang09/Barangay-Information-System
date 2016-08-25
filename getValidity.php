@@ -8,8 +8,8 @@ if($_POST['bid']==2){
 }else if($_POST['bid']==1){
 	
 		$statement = "SELECT a.`intMemberNo`, CONCAT(a.`strLastName`, ', ', a.`strFirstName`, ' ', a.`strMiddleName`, ' ', a.`strNameExtension`) AS 'Name', a.`strContactNo`, CONCAT(s.`strStreetName`, ', ', z.`strZoneName`) AS 'Place' FROM tblhousemember a INNER JOIN tblhousehold h ON h.intHouseholdNo = a.intForeignHouseholdNo INNER JOIN tblstreet s ON s.intStreetId = h.intForeignStreetId INNER JOIN tblzone z ON z.intZoneId = s.intForeignZoneId";	
-}
-?>
+}?>
+
 <center>
 		<div class="panel panel-default" id = "tablestreet">	
 			<table class="table table-hover" style="height: 40%; overflow: scroll; "'>

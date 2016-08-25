@@ -44,33 +44,6 @@
 					   	
 					<div class = "bodybody">	
 						
-						<div class = "col-sm-4">	
-							<div class="form-group">
-								<div class = "showback">												
-									<font face = "cambria" size = 5 color = "grey"> Date
-									<input id="payDate" class="form-control input-group-lg reg_name" type="text"  name="payDate" value = "<?php echo" $today"; ?>" disabled></font>										
-									<font face = "cambria" size = 5 color = "grey"> OR No
-									<input id="payOR" name="payOR" class="form-control input-group-lg reg_name" type="text"  value="<?php if(isset($_POST['payOR'])){echo $_POST['payOR'];}else{echo $payOR;}?>" title="generated brgyId" required></font>	
-
-									<font face = "cambria" size = 5 color = "grey"> Mode of Payment </font>
-									<select class = "form-control" id = "mode" name = "mode" onchange = "myFunction()">
-										<option value="Full"> Full </option>
-										<option value="Partial"> Partial </option>
-									</select>
-											
-									<p id="total" font face = "cambria" size = 7 color = "grey" > </p>
-
-									<font face = "cambria" size = 5 color = "grey"> Amount Render </font>
-									<input name="render" class="form-control put-group-lg reg_name" type="number"  title="generated brgyId" value="<?php if(isset($_POST['render'])){echo $_POST['render'];}else{}?>" min="0"			
-
-									<font face = "cambria" size = 5 color = "grey" > ............................................
-									<center>
-									<button type="submit" class="btn btn-outline btn-success" name = "btnPay" value = '<?php echo $resId;?>'> Render Payment </button></center></font>
-
-									</div><br><br><br><br>							
-							</div>
-						</div>
-
 						<div class = "col-sm-7">	
 							<div class="form-group">
 								<div class = "showback">												
@@ -95,6 +68,32 @@
 							</div>
 						</div>
 
+						<div class = "col-sm-4">	
+							<div class="form-group">
+								<div class = "showback">												
+									<font face = "cambria" size = 5 color = "grey"> Date
+									<input id="payDate" class="form-control input-group-lg reg_name" type="text"  name="payDate" value = "<?php echo" $today"; ?>" disabled></font>										
+									<font face = "cambria" size = 5 color = "grey"> OR No
+									<input id="payOR" name="payOR" class="form-control input-group-lg reg_name" type="text"  value="<?php if(isset($_POST['payOR'])){echo $_POST['payOR'];}else{echo $payOR;}?>" title="generated brgyId" required></font>	
+
+									<font face = "cambria" size = 5 color = "grey"> Mode of Payment </font>
+									<select class = "form-control" id = "mode" name = "mode" onchange = "myFunction()">
+										<option value="Full"> Full </option>
+										<option value="Partial"> Partial </option>
+									</select><br>
+									<center>		
+									<font face = "cambria" size = 7 color = "grey" > <?php echo $balance;?> </font><br>
+
+									<font face = "cambria" size = 5 color = "grey"> Amount Render </font>
+									<input name="render" class="form-control put-group-lg reg_name" type="number"  title="generated brgyId" value="<?php if(isset($_POST['render'])){echo $_POST['render'];}else{}?>" min="0">			
+
+									<font face = "cambria" size = 5 color = "grey" > ............................................
+									
+									<button type="submit" class="btn btn-outline btn-success" name = "btnPay" value = '<?php echo $resId;?>'> Render Payment </button></center></font>
+
+									</div><br><br><br><br>							
+							</div>
+						</div>		
 
 						<div class = "col-sm-7">	
 							<div class="form-group">
@@ -127,21 +126,21 @@
 					$balance = 0;
 				}
 
-				if($render > $total && !empty($total)){
+				if($render >= $total && !empty($total)){
 					$change = $render - $total;				
-
-					echo"<script> alert('$pay $mode $total $change $balance $payOR')</script>";
 
 					mysqli_query($con, "UPDATE `tblpaymentdetail` SET `intRequestORNo`= '$payOR' WHERE `strRequestID`= $pay");
 
 					mysqli_query($con, "UPDATE `tblpaymenttrans` SET `intORNo`='$payOR',`dtmPaymentDate`= NOW(),`dblPaidAmount`='$render',`dblRemaining`= '$balance' WHERE `intORNo`= $pay");
 
 				if($balance ==0){
+
 					mysqli_query($con, "UPDATE `tblreservationrequest` SET `strRSapprovalStatus`='Paid' WHERE `strReservationID`= $pay");
 				}else if($balance > 0){
 
 				}
 
+					echo"<script> alert('Your payment has been collected')</script>";
 				}else{
 					echo"<script> alert('You have inserted invalid amount')</script>";
 				}

@@ -10,7 +10,7 @@ if($_POST['bid']==2){
 		$statement = "SELECT r.`strReservationID`, r.`strRSresidentId`, CONCAT(re.`strLastName`,' ', re.`strFirstName`, ', ', re.`strMiddleName`) AS 'Name', re.`strContactNo`, r.`strRSPurpose`, r.`datRSReserved`, r.`strRSapprovalStatus`, p.intrequestorno FROM tblreservationrequest r INNER JOIN tblpaymentdetail p ON p.strrequestid = r.`strReservationID` INNER JOIN tblhousemember re ON re.`intMemberNo` = r.`strRSresidentId` WHERE r.`strRSapprovalStatus` = 'Approved' UNION SELECT r.`strReservationID`, r.`strRSapplicantId`, CONCAT(a.`strApplicantLName`,' ', a.`strApplicantFName`, ', ', a.`strApplicantMName`) AS 'Name', a.`strApplicantContactNo`, r.`strRSPurpose`, r.`datRSReserved`, r.`strRSapprovalStatus`, p.intrequestorno FROM tblreservationrequest r INNER JOIN tblpaymentdetail p ON p.strrequestid = r.`strReservationID` INNER JOIN tblapplicant a ON a.`strApplicantID` = r.`strRSapplicantId` WHERE r.`strRSapprovalStatus` = 'Approved'";	
 }else if($_POST['bid']==4){
 	
-		$statement = "SELECT r.`strReservationID`, r.`strRSapplicantId`, r.`strRSPurpose`, r.`datRSReserved`, r.`strRSapprovalStatus`, p.`intRequestORNo` FROM tblreservationrequest r INNER JOIN tblpaymentdetail p ON p.strrequestid = r.`strReservationID` WHERE r.`strRSapprovalStatus` = 'Paid'";
+		$statement = "SELECT r.`strReservationID`, r.`strRSresidentId`, CONCAT(re.`strLastName`,' ', re.`strFirstName`, ', ', re.`strMiddleName`) AS 'Name', re.`strContactNo`, r.`strRSPurpose`, r.`datRSReserved`, r.`strRSapprovalStatus`, p.intrequestorno FROM tblreservationrequest r INNER JOIN tblpaymentdetail p ON p.strrequestid = r.`strReservationID` INNER JOIN tblhousemember re ON re.`intMemberNo` = r.`strRSresidentId` WHERE r.`strRSapprovalStatus` = 'Paid' UNION SELECT r.`strReservationID`, r.`strRSapplicantId`, CONCAT(a.`strApplicantLName`,' ', a.`strApplicantFName`, ', ', a.`strApplicantMName`) AS 'Name', a.`strApplicantContactNo`, r.`strRSPurpose`, r.`datRSReserved`, r.`strRSapprovalStatus`, p.intrequestorno FROM tblreservationrequest r INNER JOIN tblpaymentdetail p ON p.strrequestid = r.`strReservationID` INNER JOIN tblapplicant a ON a.`strApplicantID` = r.`strRSapplicantId` WHERE r.`strRSapprovalStatus` = 'Paid'";
 }
 ?>
 	<center>
@@ -41,15 +41,19 @@ if($_POST['bid']==2){
 				<?php
 					if($row[6] == "For Approval"){ 	//Personnel and Action if Status = For Approval, Approve ?>	
 						      <td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'>
-								<span class="input-group-addon"><?php echo"<input type='checkbox' name=Ddisapprove[] value='$row[0]' />"; ?></span>
+								<?php echo"<input type='checkbox' name=Ddisapprove[] value='$row[0]' />"; ?>
                              </td>
 				<?php		
 					}else if($row[6] == "Approved"){  //Personnel and Action if Status = Approved, Collect ?>
 							  <td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'>
-								<span class="input-group-addon"><?php echo"<input type='checkbox' name=Ddisapprove[] value='$row[0]' />"; ?></span>
+								<?php echo"<input type='checkbox' name=Ddisapprove[] value='$row[0]' />"; ?>
                              </td>
 				<?php		
-					}
+					}else if($row[6] == "Paid"){  //Personnel and Action if Status = Approved, Collect ?>
+							 <td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'>
+							<?php echo"<button type = 'submit' name='btnDisapprove' value = '$row[0]' class='btn btn-primary btn-xs'>Disapprove</button>"; ?>
+                             </td>		
+				<?php	}
 				
 			}?>
 			
