@@ -8,6 +8,30 @@
       <!--main content start-->
 	  
     <script>
+	function empty() {
+   
+	var lname  =document.getElementById("hidlname").value;
+	var fname = document.getElementById("hidfname").value;
+	var age = getAge(document.getElementById('bday').value);
+
+    if ( lname == 1 || fname == 1 || age<18) {
+        alert("Please Make sure the form is filled out correctly");
+        return false;
+    }
+	
+}
+function getAge(birthDateString) {
+	//alert(birthDateString);
+    var today = new Date();
+    var birthDate = new Date(birthDateString);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+	//alert(age);
+    return age;
+}
 
  function fnLastn(obj,strdiv,strSpanName){
 			var pattern = new RegExp(/[~`!#$%\^&*+=[\]\\;,/{}|\\":<>\?]/);
@@ -54,8 +78,8 @@
         }
 		
 		function fnValidDate(obj,strdiv,strSpanName){ 
-
-                if ((obj.value.trim() == "") || (obj.value <= 0) ){  
+		var age = getAge(document.getElementById('bday').value);
+                if ((obj.value.trim() == "") || (obj.value <= 0) || age<18 ){  
              
 				   document.getElementById(strdiv).className="has-error";
 				   document.getElementById("hidbday").value=1;
@@ -127,7 +151,7 @@
 	<div class="form-group" id = "bday-div">				
            <div class="col-sm-5">
 <p><font face = "cambria" size =4 color = "grey"> Birthday </font></p>
-             <input required id="RFName1" class="form-control input-group-lg reg_name" type= date name="bday"  max="<?php echo date("Y-m-d"); ?>" title="Enter first name"  onblur= fnValidDate(this,"bday-div","bday") <?php if(isset($_POST["bday"])) echo "value = ".$_POST["bday"]; ?>>
+             <input required id="bday" class="form-control input-group-lg reg_name" type= date name="bday"  max="<?php echo date("Y-m-d"); ?>" title="Enter first name"  onblur= fnValidDate(this,"bday-div","bday") <?php if(isset($_POST["bday"])) echo "value = '".$_POST["bday"]."'"; ?>>
            </div> 
 		  
 		   
@@ -206,7 +230,7 @@
            <div class="col-sm-5">
 
 	<p><font face = "cambria" size = 4 color = "grey">Voter's ID(optional): </font></p>
-             <input id="RFName1" class="form-control input-group-lg reg_name" type= text name="Vote" title="Enter first name"  onblur= fnValid(this,"SSS-div","SSS")  <?php if(isset($_POST["Vote"])) echo "value = ".$_POST["Vote"]; ?>>
+             <input id="RFName1" class="form-control input-group-lg reg_name" type= text name="Vote" title="Enter first name"  onblur= fnValid(this,"Voter-div","Vote")  <?php if(isset($_POST["Vote"])) echo "value = ".$_POST["Vote"]; ?>>
            </div> 
 		  
 		   
@@ -215,7 +239,7 @@
 		  
 		  
 
-<button type = submit  class="btn btn-info" name = "subm">Submit Record</button>
+<button type = submit  class="btn btn-info" name = "subm" onclick = "return empty()"> Submit Record</button>
 <br><br></div>
 <?php
 

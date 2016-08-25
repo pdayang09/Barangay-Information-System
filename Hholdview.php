@@ -1,5 +1,6 @@
  <?php session_start();?>
 <!DOCTYPE html>
+
           <?php require('header.php');?>
     <?php require('sidebar.php');?>
       <!-- **********************************************************************************************************************************************************
@@ -7,6 +8,7 @@
       *********************************************************************************************************************************************************** -->
       <!--main content start-->
       <section id="main-content">
+	  <?php require('Removevalidatefamily.php');?>
           <section class="wrapper site-min-height">		
 <legend ><font face = "cambria" size = 8 color = "grey"> Resident Module </font></legend>
 <div class="input-append"><div class="form-group">				
@@ -49,8 +51,7 @@
 					
 					</div>	
 					<div class="btn-group" role="group"> 
-					 <button  class="btn btn-success btn-xs" type = submit value = <?php echo $row->intHouseholdNo?> onClick="return confirm(
-  'Do you really want to perform this action?');" name = 'Move' >Remove</button>
+					 <button  class="btn btn-success btn-xs" type = button value = <?php echo $row->intHouseholdNo?> onclick = "Del(this.value)" data-toggle="modal" data-target="#RemoveModal"  name = 'Move' >Remove</button>
 			
 					</div>	
 					<div class="btn-group" role="group">
@@ -66,13 +67,7 @@
 					echo "<script>window.location = 'HholdPersonal.php'</script>";
 				}
 				
-				if(isset($_POST['Move'])){
-					$A = $_POST['Move'];
-					require('connection.php');
-					mysqli_query($con,"Delete from tblhousemember WHERE intForeignHouseholdNo = '$A' ");
-					mysqli_query($con,"Delete from tblhousehold WHERE intHouseholdNo = '$A' ");
-					echo "<script>window.location = 'Hholdview.php'</script>";
-				}
+		
 				
 						if(isset($_POST['transfer'])){
 					$_SESSION['transfer'] = $_POST['transfer'];
@@ -109,6 +104,18 @@
     <!--script for this page-->
     
   <script>
+  function Del(val){
+      										//alert(val);
+      											$.ajax({
+      											type: "POST",
+      											url: "Deletefamily.php",
+      											data: 'sid=' + val,
+      											success: function(data){
+      											//alert(data);
+      										$("#Remove").html(data);
+      										}
+      									});
+      								}
       //custom select box
 	function Search(){
 		var b = document.getElementById('search').value;

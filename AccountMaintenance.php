@@ -17,7 +17,7 @@
 <?php if(isset($_POST['s1'])){
 $_SESSION['s'] = $_POST['search'];
 	echo "<script>window.location = 'AccountMaintenance2.php'; </script>";}?>
-	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <button  class="btn btn-info" onclick = "window.location.href='AccountAdd.php'">Add New Account</button><br>
+	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <button  class="btn btn-info" onclick = "window.location.href='AddAccount.php'">Add New Account</button><br>
 <form method = POST>
 						
 <center>
