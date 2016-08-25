@@ -15,76 +15,20 @@
 		//Personal Details
 		$resId = $_SESSION['resId'];
 		$clientID = $_SESSION['clientID'];
-		$name = $_SESSION['name'];
-		$contactno = $_SESSION['contactno'];
-		$address =  $_SESSION['address'];
-		
-		//Purpose
-		$resPurpose = $_SESSION['resPurpose'];
-		
-		//Facility		
-		$resFacility = $_SESSION['resFacility'];
-		$resFrom = $_SESSION['resfrom'];
-		$resTo = $_SESSION['resto'];
-		$resfee = $_SESSION['resfee'];
-		//$dayresfee = $_SESSION['dayresfee'];
-		//$nightresfee = $_SESSION['nightresfee'];
-		//$discount = $_SESSION['discount'];
-		
-		//Equipment
-		$equipment = $_SESSION['equipment'];
-		$quantity = $_SESSION['quantity'];		
-		$quantity1[] = array(); //Temporary storage for quantity array	
-		$equipfee1[] = array(); //Temporary storage for quantity array
-		
-		$equipmentF = 0;
-		if(!empty($equipment)){
-			
-			$intCtr =0;
-			foreach($equipment as $a){
-				if(!empty($a)){
-					
-					require("connection.php");
-					$query = mysqli_query($con, "select dblequipfee from tblequipment where strequipname = '$a'");
-					
-					while($row = mysqli_fetch_row($query)){
-						$equipfee1[$intCtr] = $row[0];
-					}
-					
-					$intCtr++;
-					//echo $i;
-				}					
-			}
-			
-			$intCtr =0;
-			foreach($quantity as $i){
-				if(!empty($i)){
-					$quantity1[$intCtr] = $i;
-					$intCtr++;
-					//echo $i;
-				}					
-			}
-			$equipmentF = 1;
-			
-		}else{
-			$equipmentF = 0; //EquipmentF tells whether array $equipment is empty or not
-		}
-		
-		//Conversion of Time
-		$time1 = StrToTime ($resFrom);
-		$time2 = StrToTime ($resTo);
-		$diff = $time1 - $time2;
-		$hours = $diff / ( 60 * 60 );
-		$hours = -1 * $hours;
-		
+		$OR = $_SESSION['OR'];
+		$payment = $_SESSION['payment'];
+		$balance = $_SESSION['balance'];
+				
 		//Gets Today's Date
-		$today = date("F j, Y, g:i a"); // displays date today
+		$today = date("Y-m-d"); // displays date today
 		
 		//Payment
-		$total =0;
+		$total = $balance;
 		$amountR =0;
-		$balance =0;
+		$balance = $balance;
 		$change =0;
+		$payOR = $OR;
+
 	?>
 	
 	<form method = "POST">
@@ -98,160 +42,106 @@
                     <div class="col-lg-12">
                     <legend ><font face = "cambria" size = 8 color = "grey"> Payment Summary </font></legend>
 					   	
-						<div class = "bodybody">	
-								<div class="panel-body">
-									<div class="form-group">
-																			
-										<div class="col-sm-4">
-											<font face = "cambria" size = 5 color = "grey"> Date
-											<input id="payDate" class="form-control input-group-lg reg_name" type="text"  name="payDate" value = "<?php echo" $today"; ?>" disabled></font>											
-										</div>
+					<div class = "bodybody">	
+						
+						<div class = "col-sm-4">	
+							<div class="form-group">
+								<div class = "showback">												
+									<font face = "cambria" size = 5 color = "grey"> Date
+									<input id="payDate" class="form-control input-group-lg reg_name" type="text"  name="payDate" value = "<?php echo" $today"; ?>" disabled></font>										
+									<font face = "cambria" size = 5 color = "grey"> OR No
+									<input id="payOR" name="payOR" class="form-control input-group-lg reg_name" type="text"  value="<?php if(isset($_POST['payOR'])){echo $_POST['payOR'];}else{echo $payOR;}?>" title="generated brgyId" required></font>	
 
-										<div class="col-sm-4">
-											<font face = "cambria" size = 5 color = "grey"> OR No
-											<input id="payOR" name="payOR" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" required></font>											
-										</div>	
-									</div><br><br><br><br> <!-- /#form-group -->
-								
-								
-									<div class="form-group">
-										
-										<div class="col-sm-4">
-											<font face = "cambria" size = 5 color = "grey"> Payor
-											<input id="payor" name="payor" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value = "<?php echo" $name"; ?>" disabled></font>		
-										</div>
-									
-										<div class="col-sm-4">
-											<font face = "cambria" size = 5 color = "grey"> Contact Number
-											<input id="busId" name="payName" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value = "<?php echo" $contactno"; ?>" disabled></font>	
-										</div><br><br>
-									
-									</div>
-								</div><br>
-									
-								<div class="form-group">
-								<div class="col-sm-10">
-									<div class="form-group"> <!-- /Reservation Details Facility-->
-										<font face = "cambria" size = 5 color = "grey"> Reservation Details</font><br><br>
-										
-										<div class="col-sm-10">
-										<div class="panel panel-default"><!-- Default panel contents -->
-											<table class="table"'><!-- Table -->
-												<thead>
-												<tr><th> Faclity Name </th>
-													<th> Per Hour </th>
-													<th> Duration (Hours) </th>
+									<font face = "cambria" size = 5 color = "grey"> Mode of Payment </font>
+									<select class = "form-control" id = "mode" name = "mode" onchange = "myFunction()">
+										<option value="Full"> Full </option>
+										<option value="Partial"> Partial </option>
+									</select>
+											
+									<p id="total" font face = "cambria" size = 7 color = "grey" > </p>
+
+									<font face = "cambria" size = 5 color = "grey"> Amount Render </font>
+									<input name="render" class="form-control put-group-lg reg_name" type="number"  title="generated brgyId" value="<?php if(isset($_POST['render'])){echo $_POST['render'];}else{}?>" min="0"			
+
+									<font face = "cambria" size = 5 color = "grey" > ............................................
+									<center>
+									<button type="submit" class="btn btn-outline btn-success" name = "btnPay" value = '<?php echo $resId;?>'> Render Payment </button></center></font>
+
+									</div><br><br><br><br>							
+							</div>
+						</div>
+
+						<div class = "col-sm-7">	
+							<div class="form-group">
+								<div class = "showback">												
+									<font face = "cambria" size = 5 color = "grey"> Payment Details</font><br><br>								
+									<div class="panel panel-default"><!-- Default panel contents -->
+										<table class="table"'><!-- Table -->
+											<thead>
+												<tr><th> Reservation ID </th>
+													<th> Payment </th>
+													<th> Balance (Hours) </th>
 												</tr>
 												</thead>
 											<tbody>
-												<tr><td> <?php echo" $resFacility";?> </td>
-													<td> <?php echo" $resfee";?> </td>
-													<td> <?php echo" $hours";?></td>
+												<tr><td> <?php echo"$resId"; ?> </td>
+													<td> <?php echo"$payment"; ?> </td>
+													<td> <?php echo"$balance"; ?></td>
 												</tr>
 											</tbody>
-										</table>										
-										
-										</div> <!-- /#panel panel-default --> 
-										</div><br><br><br><br><br> <!--col-sm-6-->
-									
-										<!-- /Reservation Details Equipment-->	
-										<div class="col-sm-10">
-										<div class="panel panel-default"><!-- Default panel contents -->
-											<table class="table"><!-- Table -->
-												<thead>
-												<tr><th> Equipment Name </th>
-													<th> Quantity </th>
-													<th> Per Hour</th>
-												</tr>
-												</thead>
-											<tbody>											
-												<?php 
-												if($equipmentF == 1){
-												
-												for($intCtr = 0; $intCtr < sizeof($equipment); $intCtr++){ ?>		
-												<tr>
-													<td> <?php echo" $equipment[$intCtr]";?> </td>
-													<td> <?php echo" $quantity1[$intCtr]";?> </td>
-													<td> <?php echo" $equipfee1[$intCtr]";?></td>
-												</tr>
-												<?php 
-													$total = $total + $quantity1[$intCtr] * $equipfee1[$intCtr];
-													} 
-											
-												}else{
-												}?>											
-											</tbody>
-											</table>										
-										
-										</div> <!-- /#table-responsive -->
-										</div>
-									</div>
-								</div><br><br><br><br>
-									
-									<?php 
-										$total = $total + $resfee * $hours;
-									?>
-																		
-								<div class="col-sm-10">
-									<!-- /Payment Details -->								
-									<font face = "cambria" size = 5 color = "grey"> Payment Details</font>
-									<br><br>
-								</div>
-								
-								<div class="col-sm-4" id="showAmount">
-									<font face = "cambria" size = 5 color = "grey"> Total Amount Due :
-										<input id="demo" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" name="total" value= " <?php echo" $total";?>"disabled></font>
-										<font face = "cambria" size = 5 color = "grey"> Amount Render
-										<input name="render" class="form-control input-group-lg reg_name" type="number"  title="generated brgyId" value= "0.00"></font>					
-								</div>	
+										</table>			
+									</div>												
+								</div>						
+							</div>
+						</div>
 
-								<div class="col-sm-4" class = "form-group">
-									<font face = "cambria" size = 5 color = "grey"> Mode of Payment
-										<select class = "form-control" id="mySelect" onchange="myFunction()" name="mode">
-											<option value="Full"> Full </option>
-											<option value="Partial"> Partial </option>
-										</select>	
-									<font face = "cambria" size = 5 color = "grey"> Change
-										<input id="total" name="total" class="form-control input-group-lg reg_name" type="number"  title="generated brgyId" value= "0.00"></font><br><br>							
-								</div>
 
-								<p id="demo"></p>
-
-								<div class="col-sm-6">
-									<button type="submit" class="btn btn-outline btn-success" name = "btnPay" value = '$resId'>Render Payment</button>
-								</div>
-
-								</div>
+						<div class = "col-sm-7">	
+							<div class="form-group">
+								<div class = "showback">												
+																
+								</div>						
+							</div>
+						</div>		
+						
+				</div>
 							
 			<?php if(isset($_POST['btnPay'])){
 				$pay = $_POST['btnPay'];
 
-					$payOR = $_POST['payOR'];
 					$render = $_POST['render'];
+					$payOR = $_POST['payOR'];
 
-				if(!empty($render) && !empty($total)){
-					if($render > $total){
-						$change = $render - $total;
-					}else if($render == $total){
-						$change = 0;
-					}else if($render < $total){
-						echo"<script> alert('You have inserted invalid payment')</script>";
-					}
+				if(isset($_POST['mode'])){
+					$mode = $_POST['mode'];
 
-					if(isset($_POST['mode'])){
-						$mode = $_POST['mode'];
-
-						if($mode == "Full"){
-							$balance = 0;
-						}else if($mode == "Partial"){
-							$balance = $total/2;
-						}
-					}else{
+					if($mode == "Partial"){
+						$total = $total/2;
+						$balance = $total;
+					}else if($mode == "Full"){
+						$total = $total;
 						$balance = 0;
-					}					
+					}
+				}else{
+					$total = $total;
+					$balance = 0;
+				}
 
+				if($render > $total && !empty($total)){
+					$change = $render - $total;				
 
-					echo"<script> alert('$mode $balance $total $change')</script>";
+					echo"<script> alert('$pay $mode $total $change $balance $payOR')</script>";
+
+					mysqli_query($con, "UPDATE `tblpaymentdetail` SET `intRequestORNo`= '$payOR' WHERE `strRequestID`= $pay");
+
+					mysqli_query($con, "UPDATE `tblpaymenttrans` SET `intORNo`='$payOR',`dtmPaymentDate`= NOW(),`dblPaidAmount`='$render',`dblRemaining`= '$balance' WHERE `intORNo`= $pay");
+
+				if($balance ==0){
+					mysqli_query($con, "UPDATE `tblreservationrequest` SET `strRSapprovalStatus`='Paid' WHERE `strReservationID`= $pay");
+				}else if($balance > 0){
+
+				}
+
 				}else{
 					echo"<script> alert('You have inserted invalid amount')</script>";
 				}
@@ -269,6 +159,14 @@
 				
 		</section><! --/wrapper -->
       </section><!-- /MAIN CONTENT -->
+
+
+<script>
+	function myFunction() {
+   	var x = document.getElementById("mode").value;
+   	document.getElementById("total").innerHTML = x;
+}
+</script>
 
 <script>
 function myFunction() {

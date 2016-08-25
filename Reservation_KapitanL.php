@@ -120,101 +120,7 @@
 			</table>
 		</div></center> <!-- Table-responsive -->    
 		</div><br><br>
-		
-		<div class="panel-body">
-		
-		<legend ><font face = "cambria" size = 10 color = "grey"> Document Request </font></legend>
-		
-		<!-- Search Section-->
-		<div class="form-group">
-			<div class="col-sm-3">
-				<input id="search" name="search" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value= "" placeholder="Search Last Name">					
-			</div>				
-			<div class="col-sm-2">
-				<input type="submit" class="btn btn-outline btn-success" name = "btnSearch" id = "btnSearch" value = "Search">
-			</div>			
-		</div><br><br><br><br>
-		
-		<!-- Filters Resident / Applicant -->	
-		<div class="col-sm-6">
-		<div class="btn-group btn-group-justified" role="group" aria-label="...">
-			<div class="btn-group" role="group">
-				<input type = "submit" name="ftrApproval" id="ftrApproval" class="btn btn-warning" value="For Approval">
-			</div>
-			<div class="btn-group" role="group">
-				<input type = "submit" name="ftrApproved" id="ftrApproved" class="btn btn-success" value="Approved">
-			</div>
-		</div>
-		</div><br><br><br>
-		
-		<?php
-			if(isset($_POST['btnSearch'])){
-				$search = $_POST['search'];
 				
-				if(!empty($search)){ 
-					$statement = "SELECT r.strdocrequestid, r.strdrapplicantid, CONCAT(a.strapplicantlname,' ', a.strapplicantfname, ', ', a.strapplicantmname) AS 'Name', a.strapplicantcontactno, r.strdocpurposeid, r.datdrdaterequested, r.strdrapprovedby FROM tbldocumentrequest r INNER JOIN tblapplicant a ON a.strapplicantid = r.strdrapplicantid HAVING Name LIKE ('%$search%');";
-				}else if(empty($search)){ //Notifies User if Search is empty
-					echo"<script> alert('Pls Input Last Name or Reservation ID')</script>";
-					$statement = "SELECT r.strdocrequestid, r.strdrapplicantid, CONCAT(a.strapplicantlname,' ', a.strapplicantfname, ', ', a.strapplicantmname) AS 'Name', a.strapplicantcontactno, r.strdocpurposeid, r.datdrdaterequested, r.strdrapprovedby FROM tbldocumentrequest r INNER JOIN tblapplicant a ON a.strapplicantid = r.strdrapplicantid WHERE r.strdrapprovedby = '2'";
-				}
-				
-			}else if(isset($_POST['ftrApproval'])){
-				
-				$statement = "SELECT r.strdocrequestid, r.strdrapplicantid, CONCAT(a.strapplicantlname,' ', a.strapplicantfname, ', ', a.strapplicantmname) AS 'Name', a.strapplicantcontactno, r.strdocpurposeid, r.datdrdaterequested, r.strdrapprovedby FROM tbldocumentrequest r INNER JOIN tblapplicant a ON a.strapplicantid = r.strdrapplicantid WHERE r.strdrapprovedby = '2'";
-				
-			}else if(isset($_POST['ftrApproved'])){
-				
-				$statement = "SELECT r.strdocrequestid, r.strdrapplicantid, CONCAT(a.strapplicantlname,' ', a.strapplicantfname, ', ', a.strapplicantmname) AS 'Name', a.strapplicantcontactno, r.strdocpurposeid, r.datdrdaterequested, r.strdrapprovedby FROM tbldocumentrequest r INNER JOIN tblapplicant a ON a.strapplicantid = r.strdrapplicantid WHERE r.strdrapprovedby = '3'";
-				
-			}else{
-				$statement = "SELECT r.strdocrequestid, r.strdrapplicantid, CONCAT(a.strapplicantlname,' ', a.strapplicantfname, ', ', a.strapplicantmname) AS 'Name', a.strapplicantcontactno, r.strdocpurposeid, r.datdrdaterequested, r.strdrapprovedby FROM tbldocumentrequest r INNER JOIN tblapplicant a ON a.strapplicantid = r.strdrapplicantid WHERE r.strdrapprovedby = '2'";
-			}
-		?>
-		
-		<center>
-		<div class = "showback" id = "tablestreet">	
-			<table class="table table-hover" style="height: 40%; overflow: scroll; "'>
-				<thead><tr>
-					<th>Full Name</th>					
-					<th>Contact No</th>
-					<th>Purpose</th>
-					<th>Reservation Date</th>
-					<th>Status</th>
-					<th>Action</th>
-				</tr></thead>
-			
-			<tbody>
-			<?php
-			$Dapprove[] = array();
-			$Ddisapprove[] = array();
-			
-			$query = mysqli_query($con,$statement);
-			while($row = mysqli_fetch_array($query)){?>
-				<tr>
-				<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[2]; ?></td>
-				<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[3]; ?></td>
-				<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[4]; ?></td>
-				<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><?php echo $row[5];?></td>
-				<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><?php echo $row[6];?></td>
-				<?php
-					if($row[6] == "2"){ 	//Personnel and Action if Status = For Approval, Approve ?>	
-						     <td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'>
-								<span class="input-group-addon"><?php echo"<input type='checkbox' name=Dapprove[] value='$row[0]' />"; ?></span>
-                             </td>
-				<?php		
-					}else if($row[6] == "3"){  //Personnel and Action if Status = Approved, Collect ?>
-							  <td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'>
-								<span class="input-group-addon"><?php echo"<input type='checkbox' name=Ddisapprove[] value='$row[0]' />"; ?></span>
-                             </td>
-				<?php		
-					}
-				
-			}?>
-			
-			</tbody>
-			</table>
-		</div></center><br><br> <!-- Table-responsive -->    
-		
 		<div class="col-sm-3">
 		<div class="btn-group btn-group-justified" role="group" aria-label="...">
 			<div class="btn-group" role="group">
@@ -222,7 +128,6 @@
 			</div>
 		</div>
 		</div>	
-		</div>
 		
 	</form> 				
 								</div> <!-- panel-body -->
@@ -243,9 +148,18 @@
 					for($intCtr = 0; $intCtr < sizeof($approve); $intCtr++){ 		
 					$reservation = $approve[$intCtr];
 					
-					//echo"<script> alert(' $reservation');</script>";
-					
+					$statement = "SELECT `dblReqPayment` FROM `tblpaymentdetail` WHERE `strRequestID` = $reservation";
+
+					$query = mysqli_query($con,$statement);
+					while($row = mysqli_fetch_array($query)){
+						$payment = $row[0];
+
+						echo "<script> alert('$payment');</script>";
+					}
+
 					mysqli_query($con, "UPDATE tblreservationrequest SET `strRSapprovalStatus` = 'Approved' WHERE `strReservationID` = '$reservation'");
+
+					mysqli_query($con, "INSERT INTO `tblpaymenttrans`(`intORNo`, `dtmPaymentDate`, `dblPaymentAmount`, `dblPaidAmount`, `dblRemaining`) VALUES ('$reservation','','$payment','0','$payment')");					
 					}
 
 					unset($approve);

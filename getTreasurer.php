@@ -4,17 +4,18 @@ require("connection.php");
 
 if($_POST['bid']==1){
 
-	 $statement = "SELECT DISTINCT p.`strRequestID`, CONCAT(r.`strRSresidentId`,r.`strRSapplicantId`) AS ID, p.`intRequestORNo`, p.`dblReqPayment`, t.`dblRemaining`, r.`strRSapprovalStatus` FROM tblpaymentdetail p INNER JOIN tblreservationrequest r ON r.strreservationid = p.`strRequestID` INNER JOIN tblpaymenttrans t ON t.intORNo = p.`intRequestORNo` WHERE r.`strRSapprovalStatus` = 'Approved' AND  p.`dblReqPayment` > 0";
+	 $statement = "SELECT p.`strRequestID`, r.`strRSresidentId`, p.`intRequestORNo`, p.`dblReqPayment`, r.`strRSapprovalStatus`, t.`dblPaidAmount`, t.`dblRemaining` FROM tblpaymentdetail p INNER JOIN tblreservationrequest r ON r.`strReservationID` = p.`strRequestID` INNER JOIN tblpaymenttrans t ON t.intORNo = p.`intRequestORNo` WHERE r.`strRSresidentId` != '' AND r.`strRSapprovalStatus`='Approved' AND t.dblRemaining > 0 UNION SELECT p.`strRequestID`, r.`strRSapplicantId`, p.`intRequestORNo`, p.`dblReqPayment`, r.`strRSapprovalStatus`, t.`dblPaidAmount`, t.`dblRemaining` FROM tblpaymentdetail p INNER JOIN tblreservationrequest r ON r.`strReservationID` = p.`strRequestID` INNER JOIN tblpaymenttrans t ON t.intORNo = p.`intRequestORNo` WHERE r.`strRSapplicantId` != '' AND r.`strRSapprovalStatus`='Approved' AND t.dblRemaining > 0";
+
 }else if($_POST['bid']==2){
 
-	$statement = "SELECT DISTINCT p.`strRequestID`, CONCAT(r.`strRSresidentId`,r.`strRSapplicantId`) AS ID, p.`intRequestORNo`, p.`dblReqPayment`, t.`dblRemaining`, r.`strRSapprovalStatus` FROM tblpaymentdetail p INNER JOIN tblreservationrequest r ON r.strreservationid = p.`strRequestID` INNER JOIN tblpaymenttrans t ON t.intORNo = p.`intRequestORNo` WHERE r.`strRSapprovalStatus` = 'Paid' AND  p.`dblReqPayment` > 0";
+	$statement = "SELECT p.`strRequestID`, r.`strRSresidentId`, p.`intRequestORNo`, p.`dblReqPayment`, r.`strRSapprovalStatus`, t.`dblPaidAmount`, t.`dblRemaining` FROM tblpaymentdetail p INNER JOIN tblreservationrequest r ON r.`strReservationID` = p.`strRequestID` INNER JOIN tblpaymenttrans t ON t.intORNo = p.`intRequestORNo` WHERE r.`strRSresidentId` != '' AND r.`strRSapprovalStatus`='Paid' UNION SELECT p.`strRequestID`, r.`strRSapplicantId`, p.`intRequestORNo`, p.`dblReqPayment`, r.`strRSapprovalStatus`, t.`dblPaidAmount`, t.`dblRemaining` FROM tblpaymentdetail p INNER JOIN tblreservationrequest r ON r.`strReservationID` = p.`strRequestID` INNER JOIN tblpaymenttrans t ON t.intORNo = p.`intRequestORNo` WHERE r.`strRSapplicantId` != '' AND r.`strRSapprovalStatus`='Paid'";
 }
 					
 		?>
 
 	<center>
-		<div class="panel panel-default" id = "tablestreet"><!-- Default panel contents -->	
-			<table class="table table-hover" style="height: 40%; overflow: scroll; ">
+		<div class="panel panel-default" id = "tablestreet">	
+			<table class="table table-hover" style="height: 40%; overflow: scroll;">
 				<thead><tr>
 					<th>Reservation ID</th>				
 					<th>Payment</th>
@@ -29,24 +30,11 @@ if($_POST['bid']==1){
 			
 				<tr><td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[0]; ?></td>
 				<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[3]; ?></td>
-			
+				<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[6]; ?></td>
 			<?php
-					//Balance
-					if($row[2]==0){	//Initial Payment				
-						echo"<td onmouseover='highlightCells(this.parentNode)'  onmouseout='unhighlightCells(this.parentNode)'> $row[3]</td>";
-						
-					}else if($row[2]>0 && $row[4]>0 && $row[3]>$row[4]){ //Partial Payment							
-						echo"<td onmouseover='highlightCells(this.parentNode)'  onmouseout='unhighlightCells(this.parentNode)'> $row[4] </td>";
-						
-					}else if($row[2]>0 && $row[4]==0){	//0 Balance				
-						echo"<td onmouseover='highlightCells(this.parentNode)'  onmouseout='unhighlightCells(this.parentNode)'>0 </td>";
-						
-					}
+				echo"<td onmouseover='highlightCells(this.parentNode)'  onmouseout='unhighlightCells(this.parentNode)'><button class='btn btn-success btn-xs' type='submit' value = '$row[0]' name= 'btnRenderF'> Render Payment </button></td>"; 
 
-					echo"<td onmouseover='highlightCells(this.parentNode)'  onmouseout='unhighlightCells(this.parentNode)'><button class='btn btn-success btn-xs' value='$row[0]' name= 'btnRenderF'> Render Payment </button></td></tr>";
-								
-			}?>
-			
+			} ?>
 			</tbody>
 			</table>
-		</div></center><br><br> <!-- Table-responsive --> 
+		</div></center><br><br> <!-- Table-responsive -->
