@@ -58,7 +58,7 @@
 						<button type = submit  class="btn btn-info btn-round btn-sm"   value = <?php echo $row->intMemberNo?> name = 'Edit' >Edit Head Detail</button>
 						</div>
 						<div class="btn-group" role="group">
-						<button type = button  class="btn btn-danger btn-round btn-sm"    onclick = "DecHead(this.value)" data-toggle="modal" data-target="#DeceasedModal"  value = <?php echo $row->intForeignHouseholdNo?> name = 'HDec' >Deceased</button>
+						<button type = button  class="btn btn-danger btn-round btn-sm"    onclick = "DecHead(this.value)" data-toggle="modal" data-target="#DeceasedModal"  value = <?php echo $row->intMemberNo?> name = 'HDec' >Deceased</button>
 						</div>
 						</div><br><?php
       				echo "Gender: ".$Gend."<br>";
@@ -94,7 +94,7 @@
       					</tr>
       					<?php
       					require('connection.php');
-      					$sql = "SELECT concat(strLastname,',',strFirstname,' ',strMiddleName,' ',strNameExtension) as 'Name',charGender,strStatus,intMemberNo FROM `tblhousemember` where intForeignHouseholdNo = '$Hno' AND (strLifeStatus  NOT LIKE 'Moved' AND strLifeStatus NOT LIKE 'Dead') AND (strStatus LIKE 'Spouse' OR strStatus LIKE 'Children')";
+      					$sql = "SELECT concat(strLastname,',',strFirstname,' ',strMiddleName,' ',strNameExtension) as 'Name',charGender,strStatus,intMemberNo FROM `tblhousemember` where intForeignHouseholdNo = '$Hno' AND (strLifeStatus  NOT LIKE 'Moved' AND strLifeStatus NOT LIKE 'Dead') AND !(strStatus = 'Tenant' || strStatus = 'Head' )";
       					$query = mysqli_query($con, $sql);
       					if(mysqli_num_rows($query) > 0){
       						
@@ -139,7 +139,7 @@
       								<br>
       								<form method = POST>
       									<div class="showback">                         
-      										<h4>Other Member/s of the Household</h4>
+      										<h4>Tenant/s of the Household</h4>
       										<table class="table table-striped table-bordered table-hover" border = '2' style = 'width:95%'>
       											<tr>
       												<th>Name</th>
@@ -149,7 +149,7 @@
       											</tr>
       											<?php
       											require('connection.php');
-      											$sql = "SELECT concat(strLastname,',',strFirstname,' ',strMiddleName,' ',strNameExtension) as 'Name',charGender,strStatus,intMemberNo FROM `tblhousemember` where intForeignHouseholdNo = '$Hno' AND strLifeStatus  NOT LIKE 'Moved' AND strStatus NOT LIKE 'Head' AND (strStatus NOT LIKE 'Spouse' AND strStatus NOT LIKE 'Children')";
+      											$sql = "SELECT concat(strLastname,',',strFirstname,' ',strMiddleName,' ',strNameExtension) as 'Name',charGender,strStatus,intMemberNo FROM `tblhousemember` where intForeignHouseholdNo = '$Hno' AND strStatus = 'Tenant'";
       											$query = mysqli_query($con, $sql);
       											if(mysqli_num_rows($query) > 0){
       												
