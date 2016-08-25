@@ -108,7 +108,7 @@ session_start();
 		$strUsername = $_POST['user'];
 		$strPassword = $_POST['password'];
 				
-		$sql = mysqli_query($con, "select `strUsername`, `strPassword`, `strOfficerFName` from tblaccount where strUsername = '$strUsername' and strPassword = '$strPassword'");
+		$sql = mysqli_query($con, "select `strUsername`, `strPassword` from tblaccount where strUsername = '$strUsername' and strPassword = '$strPassword'");
 		
 		$num = mysqli_num_rows($sql);
 		$row = mysqli_fetch_array($sql);
@@ -123,7 +123,7 @@ session_start();
 			
 			$strUsername = $_SESSION['strUsername'];
 			$strPassword = $_SESSION['strPassword'];
-			$strOfficerFName = $row['strOfficerFName'];
+			
 				
 			if($_SESSION['strUsername']=="admin")
 			{
