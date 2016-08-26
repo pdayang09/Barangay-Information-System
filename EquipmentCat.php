@@ -8,7 +8,7 @@
       <!--main content start-->  
       <section id="main-content">
           <section class="wrapper site-min-height">		<form method = POST>
-<legend ><font face = "cambria" size = 8 color = "grey"> Reservation Category Maintenance </font></legend>
+<legend ><font face = "cambria" size = 8 color = "grey"> Facility/Equipment Category Maintenance </font></legend>
                      
                                <form method = POST>
 	 <input type="button" class="btn btn-info" name = "btnEdit1" id = "btnEdit1" value = "Add Category" onclick = "window.location='EquipmentCateAdd.php'">
@@ -22,7 +22,7 @@
 										<th>Category ID</th>
 					<th>Category Name</th>
 					<th>Category Type</th>
-					<th>Delete</th>
+					<th>Action</th>
 					</tr>
 					</thead>
 					<tbody>
@@ -36,8 +36,21 @@
 					<tr> <td><?php echo $row->strCategoryCode?></td>
 					<td><?php echo $row->strCategoryDesc?></td>
 					<td><?php echo $row->strCategoryType?></td>
-					<td><button class ="btn btn-success btn-sm" type = submit name = "del" value =<?php echo $row->strCategoryCode?>>DELETE</button></td>
+					<td>
+									<div class="btn-group " role="group">	
+									<button  class="btn btn-info btn-round" type = submit name = "btnEdit" value = <?php echo $row->strCategoryCode; ?> >Edit</button>
+									</div>
+									
+									
+									
+									
+									</td>
 				<?php }}
+				if(isset($_POST['btnEdit'])){
+					$_SESSION['a'] = $_POST['btnEdit'];
+					echo "<script>
+					window.location ='EquipmentCateEdit.php';</script>";
+				}		
 				if(isset($_POST['del'])){
 					$a = $_POST['del'];
 					mysqli_query($con,"Delete From tblCategory where strCategoryCode = '$a'");

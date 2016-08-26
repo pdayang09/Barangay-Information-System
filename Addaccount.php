@@ -8,10 +8,10 @@
       <section id="main-content">
          <br>
           <section class="wrapper site-min-height">
- <button  class="btn btn-info" onclick="window.location.href='StreetMaintenance.php'">  <i class="glyphicon glyphicon-hand-left" aria-hidden="true"></i>&nbsp;Back to the Previous Page</button>
+
 
 <legend ><font face = "cambria" size = 8 color = "grey"> Add new Account</font></legend>
-		
+		 <button  class="btn btn-info" onclick="window.location.href='AccountMaintenance.php'">  <i class="glyphicon glyphicon-hand-left" aria-hidden="true"></i>&nbsp;Back to the Previous Page</button><br><br>
 		<form method = POST>
 
 <div class="col-sm-9 col-md-6 col-lg-6" id = 'appointmember'>
@@ -42,6 +42,14 @@
 			</div>
 		</div>
 	<br><br><br>	
+	<div class="split-para"><font face = "cambria" size = 5 color = "grey"> Position</font></p>
+			<div class="col-sm-12">		
+		<select class ="form-control input-group-lg reg_name" readonly>
+		<option>--Select Position--</option>
+		</select>
+			</div>
+		</div>
+	<br><br><br>
 	<div class="split-para"><font face = "cambria" size = 5 color = "grey"> Email Address</font></p>
 			<div class="col-sm-12">		
 			<input id="controlno" name = "StreetName" class="form-control input-group-lg reg_name" type="text"  readonly>	
@@ -101,18 +109,18 @@
 <!-- DIV END-->
 		<?php
 		 if (isset($_POST['btnAdd'])){
-			 $strStreet = $_POST['StreetName'];
-			 $strPurok = $_POST['Purok'];
-			 if($strStreet == NULL ){
-				 echo "<script>alert('Please Complete the form');</script>";
-			 }
-			 else{
-				 require('connection.php');
+			 $id = $_POST['btnAdd'];
+			 $pos = $_POST['position'];
+			 $username = $_POST['UserN'];
+			 $pass = $_POST['Pass'];
+			$Email = $_POST['Email'];
+			$start = $_POST['Start'];
+			$end = $_POST['End'];
 			
-				mysqli_query($con,"INSERT INTO `tblStreet`(`strStreetName`, `intForeignZoneId`) VALUES ('$strStreet','$strPurok');");
-					 echo "<script>alert('Success');
-					 window.location = 'StreetMaintenance.php';</script>";
-			 }
+			mysqli_query($con,"INSERT INTO `tblaccount`(`intForeignMemberNo`, `strUsername`, `strPassword`, `strPosition`, `strEmailAdd`, `dtStart`, `dtEnd`, `strStatus`) VALUES ('$id','$username','$pass','$pos','$Email','$start','$end','Enabled')");
+			
+			echo "<script>alert('Successfully Inserted!');
+			window.location = 'AccountMaintenance.php';</script>";
 		}
 		?>
 

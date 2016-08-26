@@ -7,12 +7,10 @@
       *********************************************************************************************************************************************************** -->
       <!--main content start-->  
       <section id="main-content">
-          <section class="wrapper site-min-height">		
+          <section class="wrapper site-min-height">		<br>
+		  	<button  class="btn btn-info" onclick="window.location.href='EquipmentCat.php'">  <i class="glyphicon glyphicon-hand-left" aria-hidden="true"></i>&nbsp;Back to the Previous Page</button>
 
-          <legend ><font face = "cambria" size = 8 color = "grey"> Add Facility/Equipment Category </font></legend>
-
-		  	<button  class="btn btn-info" onclick="window.location.href='EquipmentCat.php'">  <i class="glyphicon glyphicon-hand-left" aria-hidden="true"></i>&nbsp;Back to the Previous Page</button><br><br>
-		
+		<legend ><font face = "cambria" size = 8 color = "grey"> Add Facility/Equipment Category </font></legend>
 		<div class="col-sm-9 col-md-6 col-lg-6">
 <form method = POST>					
 
@@ -45,6 +43,7 @@
 		<thead>
 		<th>Category Name</th>
 		<th>Category Type</th>
+		
 		</thead>
 		<tbody>
 							<?php

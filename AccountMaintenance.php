@@ -6,38 +6,31 @@
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
       <!--main content start-->
-      <section id="main-content">
-          <section class="wrapper site-min-height">		<form method = POST>
-<legend ><font face = "cambria" size = 8 color = "grey"> Account Maintenance </font></legend>
+       <section id="main-content">
+          <section class="wrapper site-min-height">
+<legend><font face = "cambria" size = 8 color = "grey"> Account Maintenance </font></legend>
+
+				<div class = 'showback'>		
+
+	 &nbsp; &nbsp; &nbsp; &nbsp; <button  class="btn btn-info" onclick = "window.location.href='AddAccount.php'">Add New Account</button><br>
+				<form method = POST><center>
 <br>
-<div class="input-append">
-       &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;    <input name="search" id="search" placeholder = "Input Name"/>
-    <button class="btn btn-info" name = "s1">Search</button>
-</div><br><br></form >
-<?php if(isset($_POST['s1'])){
-$_SESSION['s'] = $_POST['search'];
-	echo "<script>window.location = 'AccountMaintenance2.php'; </script>";}?>
-	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <button  class="btn btn-info" onclick = "window.location.href='AddAccount.php'">Add New Account</button><br>
-<form method = POST>
-						
-<center>
-<br>
-					 <table border = '2' style = 'width:95%'>
+					 <table class="table table-striped table-bordered table-hover" border = '2' style = 'width:95%'>
 					<thead>
 					<tr>
 					<th>Account ID</th>
 					<th>Employee Name</th>
 					<th>Username</th>
 					<th>Password</th>
-					<th>Birthdate</th>
-					<th></th>
-				
+					<th>Date Start</th>
+					<th>Date End</th>
+					<th>Action</th>
 					</tr>
 					</thead>
 					<tbody>
 					<?php
 					require('connection.php');
-				$sql = "SELECT `strOfficerID`,`strUsername`,`strPassword`, concat(strOfficerLname,',',strOfficerFname,' ',strOfficerMname) as 'Name', `datOfficerBirthdate` FROM `tblaccount` ";
+				$sql = "SELECT `strOfficerID`,`strUsername`,`strPassword`, concat(strLastName,',',strFirstName,' ',strMiddleName) as 'Name', `dtStart`,`dtEnd` FROM `tblaccount` as a inner join `tblhousemember` as b on b.intMemberNo = a.intForeignMemberNo";
 				$query = mysqli_query($con, $sql);
 				if(mysqli_num_rows($query) > 0){
 					$i = 1;
@@ -46,8 +39,9 @@ $_SESSION['s'] = $_POST['search'];
 					<td><?php echo $row->Name?></td>
 					<td><?php echo $row->strUsername?></td>
 					<td><?php echo $row->strPassword?></td>
-					<td><?php echo $row->datOfficerBirthdate?></td>
-					<td><button type = submit value = <?php echo $row->strOfficerID?> name = 'Edit' >Edit</button></td>
+					<td><?php echo $row->dtStart?></td>
+					<td><?php echo $row->dtEnd?></td>
+					<td><button type = submit class = "btn btn-info btn-round btn-sm"value = <?php echo $row->strOfficerID?> name = 'Edit' >Edit</button></td>
 
 					</tr>
 				<?php }}
@@ -65,6 +59,7 @@ $_SESSION['s'] = $_POST['search'];
 						echo "<script>window.location = 'AccountEdit.php'</script>";
 					}			?></tbody>
 				</table>
+				</div>
 </center>
 </form>
                        

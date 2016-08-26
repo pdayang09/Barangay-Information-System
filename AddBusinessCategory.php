@@ -63,6 +63,7 @@
 		<thead>
 		<th>Category Name</th>
 		<th>Price</th>
+		<th>Status</th>
 		</thead>
 		<tbody>
 							<?php
@@ -75,7 +76,7 @@
 					<tr> 
 					<td><?php echo $row->strBusCateName?></td>
 					<td><?php echo $row->dblAmount?></td>
-					
+					<td><?php echo $row->strStatus?>
 				<?php }}?>
 		</tbody>
 		</table></div>

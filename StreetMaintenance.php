@@ -10,17 +10,11 @@
       <section id="main-content">
           <section class="wrapper site-min-height">		
 <legend ><font face = "cambria" size = 8 color = "grey">Street Maintenance </font></legend>
-<br>
-<div class="input-append">
-       <input name="search" id="searchr"  placeholder = "Input Street Name"/>
-    <button class="btn btn-info btn-round btn-xs  " id = "searchst" name = "s1" value = 2 onclick = "search(this.value)"><i class = "glyphicon glyphicon-search"></i></button>
- <button class="btn btn-info btn-round btn-xs " id = "searchst" name = "s1" value = 1 onclick = "search(this.value)" ><i class = "	glyphicon glyphicon-eye-open"></i></button>
 
-
-</div><br>
-	<button  class="btn btn-info btn-round" onclick = "window.location.href='AddStreet.php'">Add New Street</button><br>
+	<button  class="btn btn-info btn-round" onclick = "window.location.href='AddStreet.php'">Add New Street</button> 
 <center><br>		            <form method = POST>                		
-			<div class = "showback" id = "tablestreet">	
+				<div class = "showback" id = "tblview">
+	
 				<table class="table table-striped table-bordered table-hover"  border = '3' style = 'width:95%'><!-- Table -->
 					<thead><tr>
 						<th> Street ID </th>
@@ -42,14 +36,12 @@
 									<td><?php echo $row->strStreetName?>				</td>
 									<td><?php echo $row->strZoneName?></td>
 									<td>
-									<div class="btn-group " role="group" aria-label="..." >	
+					
 									<div class="btn-group " role="group">	
 									<button  class="btn btn-info btn-round" type = submit name = "btnEdit" value = <?php echo $row->intStreetId; ?> >Edit</button>
 									</div>
-									<div class="btn-group " role="group" >	
-									<button  class="btn btn-success btn-round" type = submit name = "btnDelete" value = <?php echo $row->intStreetId; ?> >Delete</button>
-									</div>
-									</div></td>
+
+									</td>
 								</tr>
 		<?php }} ?></tbody>
 				</table>
@@ -90,22 +82,7 @@
     
   <script>
       //custom select box
-function search(val){
-	var a = document.getElementById('searchr').value;
 
-	$.ajax({
-		type: "POST",
-		url: "gettable.php",
-		data: 'sid=' + a +'&bid='+val,
-		success: function(data){
-			//alert(data);
-			$("#tablestreet").html(data);
-		}
-		
-	});
-	
-	  
-}
       $(function(){
           $('select.styled').customSelect();
       });

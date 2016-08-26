@@ -8,12 +8,9 @@
       <section id="main-content">
          <br>
           <section class="wrapper site-min-height">
-
- <legend ><font size = 8 color = "grey"> Add Document Details </font></legend>
-
- <button  class="btn btn-info" onclick="window.location.href='DocumentMaintenance.php'">  <i class="glyphicon glyphicon-hand-left" aria-hidden="true"></i>&nbsp;Back to the Previous Page</button><br><br>
-
-		<div class="col-sm-9 col-md-6 col-lg-6">
+ 
+<legend ><font size = 8 color = "grey"> Add Document Details </font></legend>
+		<button  class="btn btn-info" onclick="window.location.href='DocumentMaintenance.php'">  <i class="glyphicon glyphicon-hand-left" aria-hidden="true"></i>&nbsp;Back to the Previous Page</button><br><br><div class="col-sm-9 col-md-6 col-lg-6">
 <div class = "showback">
 <form method = POST>
 					
@@ -64,6 +61,7 @@
 		<thead>
 		<th>Category Name</th>
 		<th>Price</th>
+		<th>Status</th>
 		</thead>
 		<tbody>
 							<?php
@@ -76,7 +74,7 @@
 					<tr> 
 					<td><?php echo $row->strDocName?></td>
 					<td><?php echo $row->strDocFee?></td>
-					
+					<td><?php echo $row->strStatus?></td>
 				<?php }}?>
 		</tbody>
 		</table></div>
