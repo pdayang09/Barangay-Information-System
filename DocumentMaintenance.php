@@ -10,12 +10,12 @@
           <section class="wrapper site-min-height">
 <legend ><font face = "cambria" size = 8 color = "grey"> Document Maintenance </font></legend>
 
-	&nbsp; &nbsp; &nbsp; &nbsp; <button  class="btn btn-info" onclick="window.location.href='DocumentAdd.php'">Add New Document</button><br>
+	&nbsp; &nbsp; &nbsp; &nbsp; <button  class="btn btn-info" onclick="window.location.href='DocumentAdd.php'">Add New Document</button>&nbsp;&nbsp;<input type= checkbox id = "showdisabled" onclick ="showdis()"> Show Disabled Items<br>
 
 								<form method = POST>
 							
 							<br>
-								<div class= 'showback'>
+								<div class= 'showback' id = 'tblview'>
                             
                                 <center>
 								<table   class="table table-striped table-bordered table-hover"   border = '2' style = 'width:95%'>
@@ -31,7 +31,7 @@
 							<tbody>	
 							<?php
 								require('connection.php');
-								$sql = "select * from tbldocument";
+								$sql = "select * from tbldocument where strStatus = 'Enabled'";
 								$query = mysqli_query($con, $sql);
 				
 								if(mysqli_num_rows($query) > 0){
@@ -43,22 +43,28 @@
 								<td><?php echo $row->strDocName?></td>
 								<td><?php echo $row->strDocFee?></td>
 								<td>
-								
 								<div class="btn-group " role="group" aria-label="..." >	
-					<div class="btn-group" role="group"> 
-					<button type = submit class = "btn btn-info btn-sm" name ='btnEdit' value = <?php echo $row->intDocCode?>>Edit</button>
-					</div>	
-					<div class="btn-group" role="group"> 
-					<?php if($row->strStatus == 'Enabled'){echo "<button class = 'btn btn-success btn-sm' type = submit name = 'btnDbl' value = ".$row->intDocCode.">Disable</button>";}
-								else  if($row->strStatus == 'Disabled'){echo "<button class = 'btn btn-success btn-sm'  type = submit name = 'btnAbl' value = ".$row->intDocCode.">Enable</button>";}				}}	?>
-								
-					</div>	
-					</div></td>
+									<div class="btn-group " role="group">	
+									<button  class="btn btn-info btn-round" type = submit name = "btnEdit" value = <?php echo $row->intDocCode; ?> >Edit</button>
+									</div>
+									<div class="btn-group " role="group" >	
+									<button  class="btn btn-danger btn-round" type = submit name = "btnDelete" onclick = "return confirm('Do you really want to continue?');" value = <?php echo $row->intDocCode; ?> >Disable</button>
+									</div>
+									</div>
+							</td>
 								</tr>
 								
-							<?php  
+								<?php  }}
 							
-							if(isset($_POST['btnEdit'])){
+							?>
+							</tbody>
+								</table>
+							
+								</center>
+                       </form>
+                       
+                    </div>
+			<?php 		if(isset($_POST['btnEdit'])){
 								$search = $_POST['btnEdit'];
 								$query= mysqli_query($con,"Select * from tbldocument where intDocCode = '$search'");
 								if(mysqli_num_rows($query)>0)
@@ -70,28 +76,19 @@
 									echo "<script> window.location= 'DocumentEdit.php';</script>";
 							}
 							
-							if(isset($_POST['btnDbl'])){
-								$search = $_POST['btnDbl'];
-								 mysqli_query($con,"Update tbldocument SET strStatus = 'Disabled' where intDocCode = '$search'");
-								 
-									echo "<script>alert('Succesfully Updated'); 
-									window.location= 'DocumentMaintenance.php';</script>";
-							}
-							if(isset($_POST['btnAbl'])){
-								$search = $_POST['btnAbl'];
-								 mysqli_query($con,"Update tbldocument SET strStatus = 'Enabled' where intDocCode = '$search'");
-								 
-									echo "<script>alert('Succesfully Updated'); 
-									window.location= 'DocumentMaintenance.php';</script>";
-							}?>
-							</tbody>
-								</table>
-							
-								</center>
-                       </form>
-                       
-                    </div>
-			
+							if(isset($_POST['btnDelete'])){
+						$a = $_POST['btnDelete'];
+					mysqli_query($con,"Update tblDocument set strStatus = 'Disabled' where intDocCode = '$a'");
+				echo "<script>
+					window.location ='DocumentMaintenance.php';</script>";
+				}
+if(isset($_POST['btnEnable'])){
+						$a = $_POST['btnEnable'];
+					mysqli_query($con,"Update tblDocument set strStatus = 'Enabled' where intDocCode = '$a'");
+				echo "<script>
+					window.location ='DocumentMaintenance.php';</script>";
+				}					?>
+				
 		</section><! --/wrapper -->
       </section><!-- /MAIN CONTENT -->
 
@@ -116,7 +113,26 @@
     
   <script>
       //custom select box
-
+function showdis(){
+		var val = 0;
+		if(document.getElementById('showdisabled').checked){
+			val = 1;
+		}
+		else{
+			val = 2;
+		}
+		//alert(val);
+		$.ajax({
+		type: "POST",
+		url: "DisabledtableDoc.php",
+		data: 'sid=' + val,
+		success: function(data){
+			//alert(data);
+			$("#tblview").html(data);
+		}
+		
+	});
+	}
       $(function(){
           $('select.styled').customSelect();
       });

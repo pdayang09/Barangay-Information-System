@@ -257,6 +257,7 @@ function getAge(birthDateString) {
 	<div class="form-group" id = "relation-div">				
            <div class="col-sm-5"><p><font face = "cambria" size = 4 color = "grey">Relation to the Owner<font></p>
  <div class="col-sm-10">
+ 
              <input id="RFName1" class="form-control input-group-lg reg_name" type= text name="relation" title="Enter first name" onblur= fnValid(this,"relation-div","relation")  <?php if(isset($_POST["relation"])) echo "value = ".$_POST["relation"];?>>
            </div> </div> 
 		  

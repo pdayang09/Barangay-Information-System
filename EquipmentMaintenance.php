@@ -9,9 +9,9 @@
       <section id="main-content">
           <section class="wrapper site-min-height">		
 <legend ><font face = "cambria" size = 8 color = "grey"> Equipment Maintenance </font></legend>
-	<button  class="btn btn-info" onclick = "window.location.href='EquipmentAdd.php'">Add New Equipment</button><br>
+	<button  class="btn btn-info" onclick = "window.location.href='EquipmentAdd.php'">Add New Equipment</button>&nbsp;&nbsp;<input type= checkbox id = "showdisabled" onclick ="showdis()"> Show Disabled Items<br>
                             <center><br>				
-				<div class = "showback">
+				<div class = "showback" id = 'tblview'>
 	<form method = POST>
 				<table class="table table-striped table-bordered table-hover"  border = '3' style = 'width:95%'><!-- Table -->
 					<thead><tr>
@@ -51,13 +51,13 @@
 									<button  class="btn btn-info btn-round" type = submit name = "btnEdit" value = <?php echo $row->strEquipNo; ?> >Edit</button>
 									</div>
 									<div class="btn-group " role="group" >	
-									<button  class="btn btn-success btn-round" type = submit name = "btnDelete" onclick = "return confirm('Do you really want to continue?');" value = <?php echo $row->strEquipNo; ?> >Disable</button>
+									<button  class="btn btn-danger btn-round" type = submit name = "btnDelete" onclick = "return confirm('Do you really want to continue?');" value = <?php echo $row->strEquipNo; ?> >Disable</button>
 									</div>
 									</div></td>
 								</tr>
 		<?php }} ?></tbody>
 				</table>
-			</div><br><br>
+                    </form>             			</div><br><br>
 				<?php
 					if(isset($_POST['btnEdit'])){
 						$equipcode = $_POST['btnEdit'];		
@@ -80,8 +80,14 @@
 					mysqli_query($con,"Update tblEquipment set strStatus = 'Disabled' where strEquipNo = '$a'");
 				echo "<script>
 					window.location ='EquipmentMaintenance.php';</script>";
-				}			?>
-                    </form>             
+				}	
+if(isset($_POST['btnEnable'])){
+						$a = $_POST['btnEnable'];
+					mysqli_query($con,"Update tblEquipment set strStatus = 'Enabled' where strEquipNo = '$a'");
+				echo "<script>
+					window.location ='EquipmentMaintenance.php';</script>";
+				}						?>
+
                   </center>
 			
 		</section><! --/wrapper -->
@@ -109,6 +115,26 @@
   <script>
       //custom select box
 
+function showdis(){
+		var val = 0;
+		if(document.getElementById('showdisabled').checked){
+			val = 1;
+		}
+		else{
+			val = 2;
+		}
+		//alert(val);
+		$.ajax({
+		type: "POST",
+		url: "DisabledtableEquip.php",
+		data: 'sid=' + val,
+		success: function(data){
+			//alert(data);
+			$("#tblview").html(data);
+		}
+		
+	});
+	}
       $(function(){
           $('select.styled').customSelect();
       });

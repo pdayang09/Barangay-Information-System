@@ -13,10 +13,11 @@
                      
                               
 	 <input type="button" class="btn btn-info" name = "btnEdit1" id = "btnEdit1" value = "Add Category" onclick = "window.location = 'AddBusinessCategory.php'" >
+	 &nbsp;&nbsp;<input type= checkbox id = "showdisabled" onclick ="showdis()"> Show Disabled Items
                             <form method = POST>
                                
 <center>
-<br><div class = "showback">
+<br><div class = "showback" id = "tblview">
 					 <table   class="table table-striped table-bordered table-hover"  border = '2' style = 'width:95%'>
 					<thead>
 					<tr>
@@ -40,11 +41,16 @@
 									<button  class="btn btn-info btn-round" type = submit name = "btnEdit" value = <?php echo $row->strBusCatergory; ?> >Edit</button>
 									</div>
 									<div class="btn-group " role="group" >	
-									<button  class="btn btn-success btn-round" type = submit name = "btnDelete" onclick = "return confirm('Do you really want to continue?');" value = <?php echo $row->strBusCatergory; ?> >Disable</button>
+									<button  class="btn btn-danger btn-round" type = submit name = "btnDelete" onclick = "return confirm('Do you really want to continue?');" value = <?php echo $row->strBusCatergory; ?> >Disable</button>
 									</div>
 									</div></td>
 				<?php }}
-				if(isset($_POST['btnEdit'])){
+				?></tbody>
+				</table>
+				</div>
+</center>
+</form>
+             <?php	if(isset($_POST['btnEdit'])){
 					$_SESSION['cate'] = $_POST['btnEdit'];
 					
 				echo "<script>
@@ -55,12 +61,13 @@
 					mysqli_query($con,"Update tblBusinessCate set strStatus = 'Disabled' where strBusCatergory = '$a'");
 				echo "<script>
 					window.location ='BusinessCat.php';</script>";
-				}				?></tbody>
-				</table>
-				
-</center>
-</form>
-                    </div>
+				}
+if(isset($_POST['btnEnable'])){
+					$a = $_POST['btnEnable'];
+					mysqli_query($con,"Update tblBusinessCate set strStatus = 'Enabled' where strBusCatergory = '$a'");
+				echo "<script>
+					window.location ='BusinessCat.php';</script>";
+				}						?>       </div>
 			
 		</section><! --/wrapper -->
       </section><!-- /MAIN CONTENT -->
@@ -86,7 +93,26 @@
     
   <script>
       //custom select box
-
+	function showdis(){
+		var val = 0;
+		if(document.getElementById('showdisabled').checked){
+			val = 1;
+		}
+		else{
+			val = 2;
+		}
+		//alert(val);
+		$.ajax({
+		type: "POST",
+		url: "DisabledtableCat.php",
+		data: 'sid=' + val,
+		success: function(data){
+			//alert(data);
+			$("#tblview").html(data);
+		}
+		
+	});
+	}
       $(function(){
           $('select.styled').customSelect();
       });

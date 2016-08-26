@@ -8,11 +8,10 @@
       <section id="main-content">
          <br>
           <section class="wrapper site-min-height">
+ <button  class="btn btn-info" onclick="window.location.href='EquipmentMaintenance.php'">  <i class="glyphicon glyphicon-hand-left" aria-hidden="true"></i>&nbsp;Back to the Previous Page</button>
 
- <legend ><font face = "cambria" size = 8 color = "grey"> Add new Equipment</font></legend>
-
- <button  class="btn btn-info" onclick="window.location.href='EquipmentMaintenance.php'">  <i class="glyphicon glyphicon-hand-left" aria-hidden="true"></i>&nbsp;Back to the Previous Page</button><br><br>
-	
+<legend ><font face = "cambria" size = 8 color = "grey"> Add new Equipment</font></legend>
+		
 		<form method = POST>
 							<div class="col-sm-9 col-md-6 col-lg-6">
 <div class = "showback">
@@ -71,6 +70,7 @@
 		<th>Category Name</th>
 		<th>Quantity</th>
 		<th>Price</th>
+		<th>Status</th>
 	
 		</thead>
 		<tbody>
@@ -85,6 +85,7 @@
 					<td><?php echo $row->strEquipName?></td>
 					<td><?php echo $row->intEquipQuantity?></td>
 					<td><?php echo $row->dblEquipFee?></td>
+					<td><?php echo $row->strStatus?></td>
 				<?php }}?>
 		</tbody>
 		</table></div>
@@ -104,7 +105,7 @@
 			 else{
 				 require('connection.php');
 			
-				mysqli_query($con,"INSERT INTO `tblequipment`(`strEquipName`, `strEquipCategory`, `intEquipQuantity`, `dblEquipFee`,`dblEquipDiscount`,`strStatus`) VALUES ('$strcont','$strcategory',$intquantity,$fee,$intDisc,'Enabled');");
+				mysqli_query($con,"INSERT INTO `tblequipment`(`strEquipName`, `strEquipCategory`, `intEquipQuantity`, `dblEquipFee`,`dblEquipDiscount`) VALUES ('$strcont','$strcategory',$intquantity,$fee,$intDisc);");
 					 echo "<script>alert('Success');
 					 window.location = 'EquipmentMaintenance.php'</script>";
 			 }
