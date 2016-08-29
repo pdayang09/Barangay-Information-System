@@ -41,7 +41,7 @@
 									?>
 								<tr>
 								<td><?php echo $row->strDocName?></td>
-								<td><?php echo $row->strDocFee?></td>
+								<td><?php echo $row->dblDocFee?></td>
 								<td>
 								<div class="btn-group " role="group" aria-label="..." >	
 									<div class="btn-group " role="group">	

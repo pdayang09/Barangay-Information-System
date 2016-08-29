@@ -108,37 +108,34 @@ session_start();
 		$strUsername = $_POST['user'];
 		$strPassword = $_POST['password'];
 				
-		$sql = mysqli_query($con, "select `strUsername`, `strPassword` from tblaccount where strUsername = '$strUsername' and strPassword = '$strPassword'");
+		$sql = mysqli_query($con, "SELECT `strUsername`, `strPassword`,`strPosition`,concat(strFirstName,' ',strMiddleName,' ',strLastName,' ',strNameExtension) as Name 
+		from tblaccount as a inner join tblhousemember as b on a.intForeignMemberNo = b.intMemberNo  where BINARY strUsername = '$strUsername' and BINARY strPassword = '$strPassword'");
 		
 		$num = mysqli_num_rows($sql);
-		$row = mysqli_fetch_array($sql);
-		
+		$row = mysqli_fetch_object($sql);
+		$pos = $row->strPosition;
+		$name = $row->Name;
 		if($num > 0){
-			if(isset($_SESSION['strUsername']))$_SESSION['strUsername'];
-			if(isset($_SESSION['strPassword']))$_SESSION['strPassword'];
-			if(isset($_SESSION['strOfficerFName']))$_SESSION['strOfficerFName'];
-			
-			$_SESSION['strUsername'] = $row['strUsername'];
-			$_SESSION['strPassword'] = $row['strPassword'];
-			
-			$strUsername = $_SESSION['strUsername'];
-			$strPassword = $_SESSION['strPassword'];
-			
-				
-			if($_SESSION['strUsername']=="admin")
-			{
-				if($_SESSION['strPassword'] == "admin")	{
-					
-					$url = "validitycheck.php";
-					if (!headers_sent()) {
-						header('Location: '.$url);
-						exit;            }
-						
-														}
-				
+			if($pos == 'Secretary'){
+				$_SESSION['Secretary'] = $name;
+				echo "<script>alert('Welcome Secretary $name');
+				window.location = 'StreetMaintenance.php'</script>";
 			}
-					}
-									}
+				else if($pos == 'Barangay Captain'){
+				$_SESSION['BarangayCaptain'] = $name;
+				echo "<script>alert('Welcome Kapitan $name');
+				window.location = 'reservation_kapitanl.php'</script>";
+			}
+			else if($pos == 'Treasurer'){
+				$_SESSION['Treasurer'] = $name;
+				echo "<script>alert('Welcome Kapitan $name');
+				window.location = 'reservation_kapitanl.php'</script>";
+			}
+	}
+	else{
+		echo "<script>alert('Unauthorized Access!');</script>";
+	}
+	}
 
 ?>
 

@@ -46,7 +46,7 @@
 				 }
 				 else{
 					 require('connection.php');
-					 mysqli_query($con,"insert into tblDocument	(`strDocName`, `strDocFee`, `strStatus`) values ('$strDocN',$strPrice,'Enabled');");
+					 mysqli_query($con,"insert into tblDocument	(`strDocName`, `dblDocFee`, `strStatus`) values ('$strDocN',$strPrice,'Enabled');");
 					 echo "<script>alert('Success');
 					 window.location = 'DocumentMaintenance.php'</script>";
 			 }}
@@ -73,7 +73,7 @@
 					while($row = mysqli_fetch_object($query)){?>
 					<tr> 
 					<td><?php echo $row->strDocName?></td>
-					<td><?php echo $row->strDocFee?></td>
+					<td><?php echo $row->dblDocFee?></td>
 					<td><?php echo $row->strStatus?></td>
 				<?php }}?>
 		</tbody>
