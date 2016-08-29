@@ -12,54 +12,53 @@
 
 		<legend ><font face = "cambria" size = 8 color = "grey"> Add Facility/Equipment Category </font></legend>
 		<div class="col-sm-9 col-md-6 col-lg-6">
-<form method = POST>					
-
-	 	<div class = "showback">
-	<p><font face = "cambria" size = 5 color = "grey"> Item Description </font></p>
-	<div class = "form-group">
-		   <div class="col-md-12">
-		   
-	<input id="PDESC1" name="PDESC1" class="form-control input-group-lg reg_name" type="text" name="facName" title="Enter Facility name" >	
-           </div>
-	</div><br><br><br>
+		
+<form method = POST>	
+			<div class = "showback">
+				<p><font face = "cambria" size = 5 color = "grey"> Item Description </font></p>
+			<div class = "form-group">
+				   <div class="col-md-12">
+						<input id="PDESC1" name="PDESC1" class="form-control input-group-lg reg_name" type="text" name="facName" title="Enter Facility name" >	
+				   </div>
+			</div><br><br><br>
 	
 		<p><font face = "cambria" size = 5 color = "grey"> Item Type </font></p>
 	<div class = "form-group">
 		   <div class="col-md-12">
-		   
-	<select class = "form-control" name = "type">
-	<option> Facility</option>
-	<option> Equipment</option>
-	</select>
+				<select class = "form-control" name = "type">
+					<option> Facility</option>
+					<option> Equipment</option>
+				</select>
            </div>
 	</div><br><br><br>
   
-  	<center> <input type="submit" class="btn btn-outline btn-success" name = "btnAdd" id = "btnAdd"  value = "Save Record"  > </div>
+  	<center> <input type="submit" class="btn btn-outline btn-success" name = "btnAdd" id = "btnAdd"  value = "Save Record"  > 
+			</div>
+		</div>
 	
-</div>
-		<div class="col-sm-3 col-md-6 col-lg-6">
+	<div class="col-sm-3 col-md-6 col-lg-6">
 		<div class = "showback">
-		<table  class="table table-striped table-bordered table-hover" >
-		<thead>
-		<th>Category Name</th>
-		<th>Category Type</th>
-		
-		</thead>
-		<tbody>
-							<?php
-					require('connection.php');
-				$sql = "select * from tblCategory ";
-				$query = mysqli_query($con, $sql);
-				if(mysqli_num_rows($query) > 0){
-					$i = 1;
-					while($row = mysqli_fetch_object($query)){?>
-					<tr> 
-					<td><?php echo $row->strCategoryDesc?></td>
-					<td><?php echo $row->strCategoryType?></td>
-					
-				<?php }}?>
-		</tbody>
-		</table>
+			<table  class="table table-striped table-bordered table-hover" >
+				<thead>
+					<th><i class="fa fa-bullhorn"></i> Category Name</th>
+					<th><i class="fa fa-bookmark"></i> Category Type</th>
+				</thead>
+				
+				<tbody>
+						<?php
+						require('connection.php');
+						$sql = "select * from tblCategory ";
+						$query = mysqli_query($con, $sql);
+						if(mysqli_num_rows($query) > 0){
+							$i = 1;
+							while($row = mysqli_fetch_object($query)){?>
+							<tr> 
+							<td><?php echo $row->strCategoryDesc?></td>
+							<td><?php echo $row->strCategoryType?></td>
+							
+						<?php }}?>
+				</tbody>
+			</table>
 		</div>
 	</div>	 
 

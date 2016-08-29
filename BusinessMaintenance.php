@@ -1,103 +1,156 @@
  <?php session_start();?>
 <!DOCTYPE html>
-          <?php require('header.php');?>
+    <?php require('header.php');?>
     <?php require('sidebar.php');?>
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
       <!--main content start-->
-      <section id="main-content">
-          <section class="wrapper site-min-height">		<form method = POST>
-<legend ><font face = "cambria" size = 8 color = "grey"> Business Maintenance </font></legend>
-<br>
-<div class="input-append">
-       &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;    <input name="search" id="search" placeholder = "Input Business Name"/>
-    <button class="btn btn-info" name = "s1">Search</button></form>
-</div><br><br>
-<?php if(isset($_POST['s1'])){
-$_SESSION['s'] = $_POST['search'];
-	echo "<script>window.location = 'BusinessMaintenance2.php'; </script>";}?>
-	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <button  class="btn btn-info" onclick = "window.location.href='BusinessAdd.php'">Add New Business</button><br>
-                            <div class="table-responsive">
-                               <form method = POST>
-<center> 		<br><br>
-						<table  border = '3' style = 'width:95%'>
-					<tr>
-					
-					<th>Business ID</th>
-					<th>Business Name</th>
-					<th>Business Description</th>
-					<th>Business Category</th>
-					<th>Contact Person</th>
-					<th>Contact Number</th>
-					<th>Location</th>
-					<th>Status</th>
-					<th>Edit</th>
-					<th>Enable/Disable</th>
-					</tr>
-					<?php
-					require('connection.php');
-				$sql = "select * from tblbusiness";
-				$query = mysqli_query($con, $sql);
-				if(mysqli_num_rows($query) > 0){
-					$i = 1;
-					while($row = mysqli_fetch_object($query)){?>
-					<tr> <td><?php echo $row->strBusinessID?></td>
-					<td><?php echo $row->strBusinessName?></td>
-					<td><?php echo $row->strBusinessDescription?></td>
-					<td><?php echo $row->strCategory?></td>
-					<td><?php echo $row->strContactPerson?></td>
-					<td><?php echo $row->strContactNo?></td>
-					<td><?php echo $row->strLocation?></td>
-					<td><?php echo $row->strStatus?></td>
-					<td> <button type = submit name = "btnEdit1" value = <?php echo $row->strBusinessID?>>EDIT</button></td>
-					<td> <?php if($row->strStatus == 'active'){echo "<button type = submit name = 'disable' value = ".$row->strBusinessID.">Disable</button>";}
-								else  if($row->strStatus == 'inactive'){echo "<button type = submit name = 'able' value = ".$row->strBusinessID.">Enable</button>";}					?></td>
-					</tr>
-					
-				<?php }} ?></tbody>
-					</table>
-					<br><br>
-					
-					<?php
-					if(isset($_POST['btnEdit1'])){
-						$search  = $_POST['btnEdit1'];
-						$query = mysqli_query($con,"Select * from tblbusiness where strBusinessID = '$search'");
-						if(mysqli_num_rows($query)>0){
-							$row = mysqli_fetch_object($query);
-							$_SESSION['bid'] = 	$search;
-							$_SESSION['bn'] = 	$row->strBusinessName;
-							$_SESSION['bd'] = 	$row->strBusinessDescription;
-							$_SESSION['bc'] = 	$row->strCategory;
-							$_SESSION['bcp'] = 	$row->strContactPerson;
-							$_SESSION['bcn'] = 	$row->strContactNo;
-							$_SESSION['bl'] = 	$row->strLocation;
-							$_SESSION['bst'] = 	$row->strStatus;
-							
-							echo "<script>
-							window.location = 'BusinessEdit.php'; </script>";
-					}}
-						
-						if(isset($_POST['disable'])){
-						$search  = $_POST['disable'];
-						mysqli_query($con,"Update tblbusiness set strStatus = 'inactive' where strBusinessID = '$search'");
-						echo "<script>alert('Successfully Updated');
-							window.location = 'BusinessMaintenance.php'; </script>";
-					}
-					
-						if(isset($_POST['able'])){
-						$search  = $_POST['able'];
-						mysqli_query($con,"Update tblbusiness set strStatus = 'active' where strBusinessID = '$search'");
-						echo "<script>alert('Successfully Updated');
-							window.location = 'BusinessMaintenance.php'; </script>";
-					}?>
-</center>
-</form>
-                       
-                    </div>
+<section id="main-content">
+	<section class="wrapper site-min-height">		
+		<form method = POST>
+			<legend ><font face = "cambria" size = 8 color = "grey"> Maintenance </font></legend>
+				<h2>Business</h2><br>
 			
+				<p align="right">
+				<button  type="button" class="btn btn-info" name = "btnEdit1" id = "btnEdit1" onclick = "window.location.href='BusinessAdd.php'" ><i class="fa fa-plus"></i> Add New </button><br>
+				</p>
+			
+			<form method = POST>
+				<center> 
+				<div class="showback">
+					<table  class="table table-striped table-bordered table-hover" id="tableView" border = '2' style = 'width:95%'>
+						
+						<thead>
+							<tr>
+								<th># Business ID</th>
+								<th><i class="fa fa-bullhorn"></i> Business Name</th>
+								<th><i class="fa fa-bullhorn"></i> Business Description</th>
+								<th><i class="fa fa-bookmark"></i> Business Category</th>
+								<th><i class="fa fa-cog"></i> Contact Person</th>
+								<th><i class="fa fa-cog"></i> Contact Number</th>
+								<th><i class="fa fa-bookmark"></i> Location</th>
+								<th><i class="fa fa-cog"></i> Status</th>
+								<th><i class="fa fa-edit"></i> Action</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th># Business ID</th>
+								<th><i class="fa fa-bullhorn"></i> Business Name</th>
+								<th><i class="fa fa-bullhorn"></i> Business Description</th>
+								<th><i class="fa fa-bookmark"></i> Business Category</th>
+								<th><i class="fa fa-cog"></i> Contact Person</th>
+								<th><i class="fa fa-cog"></i> Contact Number</th>
+								<th><i class="fa fa-bookmark"></i> Location</th>
+								<th><i class="fa fa-cog"></i> Status</th>
+								<th><i class="fa fa-edit"></i> Action</th>
+							</tr>
+						</tfoot>
+						
+						<tbody>
+							<?php
+							require('connection.php');
+							$sql = "select * from tblbusiness";
+							$query = mysqli_query($con, $sql);
+							if(mysqli_num_rows($query) > 0){
+							$i = 1;
+							while($row = mysqli_fetch_object($query)){?>
+							
+							
+							
+							<tr> 
+								<td><?php echo $row->strBusinessID?></td>
+								<td><?php echo $row->strBusinessName?></td>
+								<td><?php echo $row->strBusinessDesc?></td>
+								<td><?php 
+										$id = $row->strBusinessID;
+										$sql1 = "SELECT `strBusCateName`FROM tblbusinesscate as a INNER JOIN tblbusiness as b ON b.strBusinessCateID = a.strBusCatergory where strBusinessID ='$id' ";
+										$query1 = mysqli_query($con, $sql1);
+										
+										if(mysqli_num_rows($query1) > 0){
+										$i = 1;
+										
+										while($row1 = mysqli_fetch_array($query1)){
+											echo $row1[0]."<br>";
+										}}
+									?>
+								</td>
+								<td><?php echo $row->strBusinessContactPerson?></td>
+								<td><?php echo $row->strContactNum?></td>
+								<td><?php echo $row->strBusinessLocation?></td>
+								<td><?php 
+										$id = $row->strBusinessID;
+										$sql1 = "SELECT `strStatus`FROM tblbusinesscate as a INNER JOIN tblbusiness as b ON b.strBusinessCateID = a.strBusCatergory where strBusinessID ='$id' ";
+										$query1 = mysqli_query($con, $sql1);
+										
+										if(mysqli_num_rows($query1) > 0){
+										$i = 1;
+										
+										while($row1 = mysqli_fetch_array($query1)){
+											echo $row1[0]."<br>";
+										}}
+									?> 
+								</td>
+								<td> 
+									<div class="btn-group " role="group" aria-label="..." >	
+										<div class="btn-group " role="group">
+											<button  class="btn btn-primary btn-xs" type = submit name = "btnEdit" value = <?php echo $row->strBusinessID?>><i class="fa fa-pencil"></i></button>
+											<button  class="btn btn-danger btn-xs" type = submit name = "btnDelete" onclick = "return confirm('Do you really want to continue?');" value = <?php echo $row->strBusinessID; ?> >disable</button>
+										</div>
+									</div>
+								</td>
+
+								<!-- ?php if($row->strStatus == 'active'){echo "<button type = submit name = 'disable' value = ".$row->strBusinessID.">Disable</button>";}
+								
+								else  if($row->strStatus == 'inactive'){echo "<button type = submit name = 'able' value = ".$row->strBusinessID.">Enable</button>";}					? --></td>
+							</tr>
+						<?php }}   ?>
+						</tbody>
+					</table>
+							<br><br>
+							
+							<?php
+								if(isset($_POST['btnEdit'])){
+								$search  = $_POST['btnEdit'];
+								
+								$query = mysqli_query ($con,"SELECT * FROM tblbusinesscate as a INNER JOIN tblbusiness as b ON b.strBusinessCateID = a.strBusCatergory where strBusinessID ='$search' " );
+								//$query = mysqli_query($con,"Select * from tblbusiness where strBusinessID = '$search'");
+								if(mysqli_num_rows($query)>0){
+									$row = mysqli_fetch_object($query);
+									$_SESSION['bid'] = 	$search;
+									$_SESSION['bn'] = 	$row->strBusinessName;
+									$_SESSION['bd'] = 	$row->strBusinessDesc;
+									$_SESSION['bc'] = 	$row->strBusCateName;
+									$_SESSION['bcp'] = 	$row->strBusinessContactPerson;
+									$_SESSION['bcn'] = 	$row->strContactNum;
+									$_SESSION['bl'] = 	$row->strBusinessLocation;
+									$_SESSION['bst'] = 	$row->strStatus;
+									
+									echo "<script>
+									window.location = 'BusinessEdit.php'; </script>";
+							}}
+								
+								if(isset($_POST['disable'])){
+								$search  = $_POST['disable'];
+								mysqli_query($con,"Update tblbusiness set strStatus = 'inactive' where strBusinessID = '$search'");
+								echo "<script>alert('Successfully Updated');
+									window.location = 'BusinessMaintenance.php'; </script>";
+							}
+							
+								if(isset($_POST['able'])){
+								$search  = $_POST['able'];
+								mysqli_query($con,"Update tblbusiness set strStatus = 'active' where strBusinessID = '$search'");
+								echo "<script>alert('Successfully Updated');
+									window.location = 'BusinessMaintenance.php'; </script>";
+							}?>
+				</center>
+				</div>
+				
+		</form>        
+		
 		</section><! --/wrapper -->
-      </section><!-- /MAIN CONTENT -->
+</section><!-- /MAIN CONTENT -->
 
       <!--main content end-->
       

@@ -36,7 +36,7 @@
 	</div><br><br><br>
 	
 
-  	<center> <input type="submit" class="btn btn-round btn-outline btn-success" name = "btnAdd" id = "btnAdd"  value = "Save Record"  > 	</div>
+  	<center> <input type="submit" class="btn btn-success" name = "btnAdd" id = "btnAdd"  value = "Save Record"  > 	</div>
 		
 			 <?php
 			 if (isset($_POST['btnAdd'])){
@@ -58,28 +58,30 @@
 </div><!--DIV END -->
 <!-- DIV FOR TABLE -->
 		<div class="col-sm-3 col-md-6 col-lg-6">
-		<div class = "showback">
-		<table  class="table table-striped table-bordered table-hover" >
-		<thead>
-		<th>Category Name</th>
-		<th>Price</th>
-		<th>Status</th>
-		</thead>
-		<tbody>
-							<?php
-					require('connection.php');
-				$sql = "select * from tblbusinesscate ";
-				$query = mysqli_query($con, $sql);
-				if(mysqli_num_rows($query) > 0){
-					$i = 1;
-					while($row = mysqli_fetch_object($query)){?>
-					<tr> 
-					<td><?php echo $row->strBusCateName?></td>
-					<td><?php echo $row->dblAmount?></td>
-					<td><?php echo $row->strStatus?>
-				<?php }}?>
-		</tbody>
-		</table></div>
+			<div class = "showback">
+				<table  class="table table-striped table-bordered table-hover" >
+					<thead>
+						<th><i class="fa fa-bullhorn"></i> Category Name</th>
+						<th><i class="fa fa-bookmark"></i> Price</th>
+						<th><i class="fa fa-edit"></i> Status</th>
+					</thead>
+				
+					<tbody>
+						<?php
+							require('connection.php');
+							$sql = "select * from tblbusinesscate ";
+							$query = mysqli_query($con, $sql);
+							if(mysqli_num_rows($query) > 0){
+								$i = 1;
+								while($row = mysqli_fetch_object($query)){?>
+								<tr> 
+									<td><?php echo $row->strBusCateName?></td>
+									<td><?php echo $row->dblAmount?></td>
+									<td><?php echo $row->strStatus?>
+							<?php }}?>
+					</tbody>
+				</table>
+			</div>
 		</div>
 <!-- DIV END-->
 		</section><! --/wrapper -->

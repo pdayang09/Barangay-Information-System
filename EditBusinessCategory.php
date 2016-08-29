@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-          <?php session_start();
-		  require('header.php');?>
+    <?php session_start();
+	 require('header.php');?>
     <?php require('sidebar.php');
 	require('connection.php');
 	$a = $_SESSION['cate'];
@@ -25,12 +25,12 @@
 	
   	<div class = 'showback'>	
 	<p><font face = "cambria" size = 5 color = "grey"> Business Category Name </font>  </font></p>
-	<div class = "form-group">
-		   <div class="col-md-5">
-		   
-	<input id="PDESC1" name="PDESC1" class="form-control input-group-lg reg_name" type="text" name="facName" title="Enter Facility name" <?php echo "value='".$row->strBusCateName."'";?>>	
-           </div>
-	</div><br><br><br>
+		<div class = "form-group">
+			<div class="col-md-5">
+			   
+		<input id="PDESC1" name="PDESC1" class="form-control input-group-lg reg_name" type="text" name="facName" title="Enter Facility name" <?php echo "value='".$row->strBusCateName."'";?>>	
+			   </div>
+		</div><br><br><br>
 	
 
 	<p><font face = "cambria" size = 5 color = "grey"> Amount </font></p>
@@ -42,7 +42,7 @@
 	</div><br><br><br>
 	
 
-  	<center> <input type="submit" class="btn btn-round btn-outline btn-success" name = "btnAdd" id = "btnAdd"  value = "Save Record"  > 
+  	<center> <input type="submit" class="btn btn-success" name = "btnAdd" id = "btnAdd"  value = "Save Record"  > 
 			 <?php
 			 if (isset($_POST['btnAdd'])){
 				 $strPD = $_POST['PDESC1'];

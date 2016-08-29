@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-          <?php require('header.php');?>
+    <?php require('header.php');?>
     <?php require('sidebar.php');?>
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
@@ -15,8 +15,7 @@
 	
 			<form method = POST>
 									
-	<div class="col-sm-9 col-md-6 col-lg-6">
-	
+<div class="col-sm-9 col-md-6 col-lg-6">
   	<div class = 'showback'>
 			<p><font face = "cambria" size = 5 color = "grey"> Facility  </font></p>
 	
@@ -47,6 +46,7 @@
 			</div><br><br>
 			
 			<p><font face = "cambria" size = 5 color = "grey"> Facility Day Charge </font></p>
+			
 			<div class = "form-group">
 				<div class="col-sm-12">
 					<input id="facId1" name ="dayprice" class="form-control input-group-lg reg_name" type= text value = 0 required>
@@ -54,6 +54,7 @@
 			</div><br><br>
 		   
 			<p><font face = "cambria" size = 5 color = "grey"> Facility Night Charge </font></p>
+			
 			<div class = "form-group">
 				<div class="col-sm-12">
 					<input id="facId1" name ="nightprice" class="form-control input-group-lg reg_name" type= text value = 0 required>
@@ -61,11 +62,13 @@
 			</div><br><br>
 			
 			<p><font face = "cambria" size = 5 color = "grey"> Facility Resident Charge </font></p>
+			
 			<div class = "form-group">
 				<div class="col-sm-12">
 					<input id="facId1" name ="residentprice" class="form-control input-group-lg reg_name" type= text value = 0 required>
 				</div>
 			</div><br><br>
+			
 		   <div class="form-group">
 		   <br><p><font face = "cambria" size = 5 color = "grey"> Status </font></p>
 				<div class="col-sm-12">
@@ -77,34 +80,73 @@
 				</div>
 			</div><br><br><br><br><br>
   
-			<center> <input type="submit" class="btn btn-info" name = "btnAdd" id = "btnAdd"  value = "Save Record"  >    </div></div>
+			<center> <input type="submit" class="btn btn-info" name = "btnAdd" id = "btnAdd"  value = "Save Record"  >    
+	</div>
+</div>
 			<!-- DIV FOR TABLE -->
 		<div class="col-sm-3 col-md-6 col-lg-6">
-		<div class = "showback">
-		<table  class="table table-striped table-bordered table-hover" >
-		<thead>
-		<th>Facility Name</th>
-		<th>Day Price</th>
-		<th>Night Price</th>
-		</thead>
-		<tbody>
+			<div class = "showback">
+				<table  class="table table-striped table-bordered table-hover" >
+					<thead>
+						<th><i class="fa fa-question-circle"></i> Facility Name</th>
+						<th><i class="fa fa-bookmark"></i> Day Price</th>
+						<th><i class="fa fa-bookmark"></i> Night Price</th>
+					</thead>
+				
+					<tbody>
 							<?php
+							require('connection.php');
+							$sql = "select * from tblfacility ";
+							$query = mysqli_query($con, $sql);
+							if(mysqli_num_rows($query) > 0){
+								$i = 1;
+								while($row = mysqli_fetch_object($query)){?>
+								<tr> 
+								<td><?php echo $row->strFaciName?></td>
+								<td><?php echo $row->dblFaciDayCharge?></td>
+									<td><?php echo $row->dblFaciNightCharge?></td>
+							<?php }}?>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+		
+		<div class="col-sm-3 col-md-6 col-lg-6">
+			<div class = "showback">
+				<form action='' method='POST' enctype='multipart/form-data'>
+					Image Name
+					<input type='text' name='image_name_1'><br>
+					<br>
+					<input type='file' name='userFile'><br>
+					<input type='submit' name='upload_btn' value='upload'>
+				</form>
+				
+				<?php
+					if (isset($_POST['upload_btn'])){
+						// $ImageName2 = $_POST['image_name_1'];
+
+					//$info = pathinfo($_FILES['userFile']['name']);
+					//$ext = $info['extension']; // get the extension of the file
+
+					$originalname = $_FILES['userFile']['name'];
+					$newname = "$originalname."; 
+
+					$target = 'images/FacilityUpload/'.$newname;
+					move_uploaded_file( $_FILES['userFile']['tmp_name'], $target);
+					//echo $_FILES['userFile']['tmp_name'];
+
 					require('connection.php');
-				$sql = "select * from tblfacility ";
-				$query = mysqli_query($con, $sql);
-				if(mysqli_num_rows($query) > 0){
-					$i = 1;
-					while($row = mysqli_fetch_object($query)){?>
-					<tr> 
-					<td><?php echo $row->strFaciName?></td>
-					<td><?php echo $row->dblFaciDayCharge?></td>
-						<td><?php echo $row->dblFaciNightCharge?></td>
-				<?php }}?>
-		</tbody>
-		</table></div>
+					mysqli_query($con,"INSERT INTO `tblfacility`( `imageUpload`) VALUES ('$originalname');");
+					//echo "<script>alert('Success');</script>";
+							 }
+				?>
+			</div>
 		</div>
 <!-- DIV END-->
+
 </form>
+				
 		
 			 <?php
 			 if (isset($_POST['btnAdd'])){

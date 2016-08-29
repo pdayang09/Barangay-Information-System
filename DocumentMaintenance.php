@@ -8,26 +8,35 @@
       <!--main content start-->
       <section id="main-content">
           <section class="wrapper site-min-height">
-<legend ><font face = "cambria" size = 8 color = "grey"> Document Maintenance </font></legend>
+<legend ><font face = "cambria" size = 8 color = "grey"> Maintenance </font></legend>
+		<h2>Document</h2>
+						
+						<p align="right">
+						<button  class="btn btn-info" onclick="window.location.href='DocumentAdd.php'"><i class="fa fa-plus"></i> Add New</button>
+						</p>
+	&nbsp;&nbsp;<input type= checkbox id = "showdisabled" onclick ="showdis()"> Show Disabled Items<br>
 
-	&nbsp; &nbsp; &nbsp; &nbsp; <button  class="btn btn-info" onclick="window.location.href='DocumentAdd.php'">Add New Document</button>&nbsp;&nbsp;<input type= checkbox id = "showdisabled" onclick ="showdis()"> Show Disabled Items<br>
-
-								<form method = POST>
-							
-							<br>
+								<form method = POST><br>
 								<div class= 'showback' id = 'tblview'>
                             
                                 <center>
 								<table   class="table table-striped table-bordered table-hover"   border = '2' style = 'width:95%'>
 								<thead>
 								<tr>
-								
-								<th>Document Name</th>
-								<th>Price</th>
-								<th>Action</th>							
+									<th><i class="fa fa-bullhorn"></i> Document Name</th>
+									<th><i class="fa fa-bookmark"></i> Price</th>
+									<th><i class="fa fa-edit"></i> Action</th>
 								</tr>
 								</thead>
-					
+								<tfoot>
+								<tr>
+									<th><i class="fa fa-bullhorn"></i> Document Name</th>
+									<th><i class="fa fa-bookmark"></i> Price</th>
+									<th><i class="fa fa-edit"></i> Action</th>
+								</tr>
+								</tfoot>
+								
+								
 							<tbody>	
 							<?php
 								require('connection.php');
@@ -40,18 +49,16 @@
 								while($row = mysqli_fetch_object($query)){
 									?>
 								<tr>
-								<td><?php echo $row->strDocName?></td>
-								<td><?php echo $row->dblDocFee?></td>
-								<td>
-								<div class="btn-group " role="group" aria-label="..." >	
-									<div class="btn-group " role="group">	
-									<button  class="btn btn-info btn-round" type = submit name = "btnEdit" value = <?php echo $row->intDocCode; ?> >Edit</button>
+									<td><?php echo $row->strDocName?></td>
+									<td><?php echo $row->dblDocFee?></td>
+									<td>
+									<div class="btn-group " role="group" aria-label="..." >	
+										<div class="btn-group " role="group">	
+											<button  class="btn btn-primary btn-xs" type = submit name = "btnEdit" value = <?php echo $row->intDocCode; ?> ><i class="fa fa-pencil"></i></button>	
+											<button  class="btn btn-danger btn-xs" type = submit name = "btnDelete" onclick = "return confirm('Do you really want to continue?');" value = <?php echo $row->intDocCode; ?> >Disable</button>
+										</div>
 									</div>
-									<div class="btn-group " role="group" >	
-									<button  class="btn btn-danger btn-round" type = submit name = "btnDelete" onclick = "return confirm('Do you really want to continue?');" value = <?php echo $row->intDocCode; ?> >Disable</button>
-									</div>
-									</div>
-							</td>
+									</td>
 								</tr>
 								
 								<?php  }}
@@ -71,23 +78,22 @@
 									$row = mysqli_fetch_object($query);
 									$_SESSION['id'] = $row->intDocCode;
 									$_SESSION['name'] = $row->strDocName;
-									$_SESSION['price'] = $row->strDocFee;
+									$_SESSION['price'] = $row->dblDocFee;
 									//echo "<script>alert('". $row->strDocName."');</script>";
 									echo "<script> window.location= 'DocumentEdit.php';</script>";
 							}
 							
 							if(isset($_POST['btnDelete'])){
-						$a = $_POST['btnDelete'];
-					mysqli_query($con,"Update tblDocument set strStatus = 'Disabled' where intDocCode = '$a'");
-				echo "<script>
-					window.location ='DocumentMaintenance.php';</script>";
-				}
-if(isset($_POST['btnEnable'])){
-						$a = $_POST['btnEnable'];
-					mysqli_query($con,"Update tblDocument set strStatus = 'Enabled' where intDocCode = '$a'");
-				echo "<script>
-					window.location ='DocumentMaintenance.php';</script>";
-				}					?>
+								$a = $_POST['btnDelete'];
+								mysqli_query($con,"Update tbldocument set strStatus = 'Disabled' where intDocCode = '$a'");
+								echo "<script>window.location ='DocumentMaintenance.php';</script>";
+								}
+						if(isset($_POST['btnEnable'])){
+							$a = $_POST['btnEnable'];
+							mysqli_query($con,"Update tblDocument set strStatus = 'Enabled' where intDocCode = '$a'");
+							echo "<script>window.location ='DocumentMaintenance.php';</script>";
+									}
+			?>
 				
 		</section><! --/wrapper -->
       </section><!-- /MAIN CONTENT -->

@@ -1,43 +1,38 @@
 <!DOCTYPE html>
-          <?php session_start();
+<?php session_start();
 		 //echo "<script>alert('". $_SESSION['name']	."');</script>";
 		 $a = $_SESSION['name'];
 		  require('header.php');?>
-    <?php require('sidebar.php');?>
+	<?php require('sidebar.php');?>
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
       <!--main content start-->
 
-      <section id="main-content">
-	  <br>
-          <section class="wrapper site-min-height">
- <button class="btn btn-theme" onclick="window.location.href='DocumentMaintenance.php'">Back to the Previous Page</button>
- 	                    <form method = POST>
+<section id="main-content"><br>
+    <section class="wrapper site-min-height">
+		<button class="btn btn-theme" onclick="window.location.href='DocumentMaintenance.php'">Back to the Previous Page</button>
+			<form method = POST>
                        <legend ><font face = "cambria" size = 8 color = "grey"> Edit Document Details</font></legend>		
 				<div class = "showback">
-				<input id="DocumentC" name ="DocumentC" class="form-control input-group-lg reg_name" type="hidden" <?php if(isset($_SESSION['id'])) {echo "value =  ".$_SESSION['id'];}?>  placeholder =" 000 DOC 123" readonly>
-			 
+					<input id="DocumentC" name ="DocumentC" class="form-control input-group-lg reg_name" type="hidden" <?php if(isset($_SESSION['id'])) {echo "value =  ".$_SESSION['id'];}?>  placeholder =" 000 DOC 123" readonly>				 							
+						<p><font face = "cambria" size = 5 color = "grey"> Document Name </font></p>
 				
-	
-				<p><font face = "cambria" size = 5 color = "grey"> Document Name </font></p>
-			
-			<div class = "form-group">
-				<div class="col-sm-5">		   
-				<input id="DocumentN"  name="DocumentN" class="form-control input-group-lg reg_name" type="text" title="Enter Document name" required <?php if(isset($_SESSION['id'])) {echo "value =  '".$a."'";}?>>
-			 
-				</div><br><br><br>
-				<p><font face = "cambria" size = 5 color = "grey">Price </font></p>
-			<div class = "form-group">
-				<div class="col-sm-5">		   
-				<input id="DocumentN1"  name="Price" class="form-control input-group-lg reg_name" type= number step = any title="Enter Document name"  <?php if(isset($_SESSION['id'])) {echo "value =  ".$_SESSION['price'];}?> required >
-			 
+					<div class = "form-group">
+						<div class="col-sm-5">		   
+							<input id="DocumentN"  name="DocumentN" class="form-control input-group-lg reg_name" type="text" title="Enter Document name" required <?php if(isset($_SESSION['id'])) {echo "value =  '".$a."'";}?>>				 
+						</div><br><br><br>
+						<p><font face = "cambria" size = 5 color = "grey">Price </font></p>
+						
+						<div class = "form-group">
+							<div class="col-sm-5">		   
+								<input id="DocumentN1"  name="Price" class="form-control input-group-lg reg_name" type= number step = any title="Enter Document name"  <?php if(isset($_SESSION['id'])) {echo "value =  ".$_SESSION['price'];}?> required >			 
+							</div>
+						</div><br><br><br>	
+					</div><center>
+	  
+					<input type="submit" class="btn btn-info" name = "btnEdit" id = "btnEdit" value = "Edit Record" >
 				</div>
-			</div><br><br><br>				
-  
-			</div><center>
-  
-				<input type="submit" class="btn btn-info" name = "btnEdit" id = "btnEdit" value = "Edit Record" ></div>
 			
 	
 				
@@ -51,7 +46,7 @@
 					}
 					else{
 						require('connection.php');
-						$g = mysqli_query($con,"UPDATE tbldocument SET strDocName ='$strDocN',strDocFee ='$strPrice' where intDocCode = '$strDocC'");
+						$g = mysqli_query($con,"UPDATE tbldocument SET strDocName ='$strDocN',dblDocFee ='$strPrice' where intDocCode = '$strDocC'");
 						if($g==true){
 						session_destroy();
 						echo "<script>alert('Success');</script>";
@@ -66,11 +61,10 @@
 				    echo "<script> window.location = 'DocumentMaintenance.php' </script> ";
 				}
 			?>
-							</tbody>
-								</table>
 							
-								</center>
-                       </form>
+							
+						</center>
+            </form>
 			
 		</section><! --/wrapper -->
       </section><!-- /MAIN CONTENT -->

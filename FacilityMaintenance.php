@@ -1,42 +1,49 @@
  <?php session_start();?>
 <!DOCTYPE html>
-          <?php require('header.php');?>
-    <?php require('sidebar.php');?>
+  <?php require('header.php');?>
+  <?php require('sidebar.php');?>
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
       <!--main content start-->
       <section id="main-content">
           <section class="wrapper site-min-height">		<form method = POST>
-<legend ><font face = "cambria" size = 8 color = "grey"> Facility Maintenance </font></legend>
+			<legend ><font face = "cambria" size = 8 color = "grey"> Maintenance </font></legend>
+					<h2>Facility</h2>
 
-<div class="input-append">
-     <input name="search" id="search" placeholder = "Input Facility Name"/>
-    <button class="btn btn-info" name = "s1">Search</button></form>
-</div><br>
-<?php if(isset($_POST['s1'])){
-$_SESSION['s'] = $_POST['search'];
-	echo "<script>window.location = 'FacilityMaintenance2.php'; </script>";}?>
-	 <button  class="btn btn-info" onclick = "window.location.href='FacilityAdd.php'">Add New Facility</button><br>
-                     <br>
+				<p align="right">
+				<button type="button" class="btn btn-info" name = "btnEdit1" id = "btnEdit1"  onclick = "window.location = 'FacilityAdd.php'" ><i class="fa fa-plus"></i> Add New</button>
+				</p>
                                <form method = POST><div class = "showback">
 <center> 		<br><br>
 						<table  class="table table-striped table-bordered table-hover" border = '3' style = 'width:95%'>
-					<thead>
-							<tr>
-								
-								<th>Name</th>
-								<th>Category</th>
-								<th>Day Charge</th>
-								<th>Night Charge</th>
-								<th>Status</th>
-								<th>Action</th>
-							</tr>
-						</thead>
+							<thead>
+								<tr>
+									
+									<th><i class="fa fa-question-circle"></i> Name</th>
+									<th><i class="fa fa-bullhorn"></i> Category</th>
+									<th><i class="fa fa-bookmark"></i> Day Charge</th>
+									<th><i class="fa fa-bookmark"></i> Night Charge</th>
+									<th><i class="fa fa-cog"></i> Status</th>
+									<th><i class="fa fa-edit"></i> Action</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									
+									<th><i class="fa fa-question-circle"></i> Name</th>
+									<th><i class="fa fa-bullhorn"></i> Category</th>
+									<th><i class="fa fa-bookmark"></i> Day Charge</th>
+									<th><i class="fa fa-bookmark"></i> Night Charge</th>
+									<th><i class="fa fa-cog"></i> Status</th>
+									<th><i class="fa fa-edit"></i> Action</th>
+								</tr>
+							</tfoot>
+							
 						<tbody>
 			 
 					<?php
-						require('connection.php');
+							require('connection.php');
 							$sql = "select * from tblfacility where strFaciStatus = 'Good Condition'";
 							$query = mysqli_query($con, $sql);
 				
@@ -56,11 +63,13 @@ $_SESSION['s'] = $_POST['search'];
 					}?>
 					
 									</td>
-									<td><?php echo $row->dblFaciDayCharge?></td>
+										<td><?php echo $row->dblFaciDayCharge?></td>
 										<td><?php echo $row->dblFaciNightCharge?></td>
-									<td><?php echo $row->strFaciStatus?></td>
-									<td><button type = submit  class="btn btn-success" name = 'btnedit' value = <?php echo $row->strFaciNo ?> > EDIT </button></td>
-								</tr>		 </form>  
+										<td><?php echo $row->strFaciStatus?></td>
+										
+										<td><button type = submit  class="btn btn-primary btn-xs" name = 'btnedit' value = <?php echo $row->strFaciNo ?> ><i class="fa fa-pencil"></i></button></td>
+									</tr>		 
+								</form>  
 					<?php 		}
 							}
 				

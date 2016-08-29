@@ -50,8 +50,8 @@
 		<div class = "showback">
 		<table  class="table table-striped table-bordered table-hover" >
 		<thead>
-		<th>Street Name</th>
-		<th>Purok Name</th>
+		<th><i class="fa fa-bullhorn"></i> Street Name</th>
+		<th><i class="fa fa-bookmark"></i> Purok Name</th>
 		
 		</thead>
 		<tbody>

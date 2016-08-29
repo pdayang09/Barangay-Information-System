@@ -1,40 +1,26 @@
 <!DOCTYPE html>
           <?php session_start();
-		  
 		  require('header.php');?>
-    <?php require('sidebar.php');?>
+		  <?php require('sidebar.php');?>
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
       <!--main content start-->
 
-<script>
-function a(){
-	
-	var strtype = '<?php echo $_SESSION['stat']?>';
-	var selectobject = document.getElementById("facstatus");
-	
-		for (var i=0; i<selectobject.length; i++){
-			if(selectobject.options[i].value == strtype){
-				document.getElementById("facstatus").value = selectobject.options[i].value;}
-			else{
-			}
-		}
-}
-</script>
-     
-      <section id="main-content">
-	  <br>
-          <section class="wrapper site-min-height">
- <button class="btn btn-theme" onclick= "window.location.href='FacilityMaintenance.php'">Back to the Previous Page</button>
- 	                           <form method = POST>
 
-    
-    
-        <!-- Page Content -->
-   
-			<legend ><font face = "cambria" size = 8 color = "grey"> Edit Facility </font></legend>
-<div class = "showback">
+     
+<section id="main-content"><br>
+	<section class="wrapper site-min-height">
+
+ 	  <!-- Page Content -->
+	
+		<legend ><font face = "cambria" size = 8 color = "grey"> Edit Facility </font></legend>
+			
+			
+		<button  class="btn btn-info" onclick= "window.location.href='FacilityMaintenance.php'">  <i class="glyphicon glyphicon-hand-left" aria-hidden="true"></i>&nbsp;Back to the Previous Page</button>
+			<br><br>
+<form method = POST>			
+	<div class = "showback">
 			<p><font face = "cambria" size = 5 color = "grey"> Facility Name </font></p>
 	
 			<div class = "form-group">
@@ -48,8 +34,8 @@ function a(){
 	
 			<div class = "form-group">
 				<div class="col-sm-5">		   
-				<input id="facName"  name="facName" class="form-control input-group-lg reg_name" type="text" title="Enter Facility name"  <?php				 
-				if(isset($_SESSION['fcode'])){echo "value = '".$_SESSION['type']."'";}?> readonly >
+					<input id="facName"  name="facName" class="form-control input-group-lg reg_name" type="text" title="Enter Facility name"  <?php				 
+					if(isset($_SESSION['fcode'])){echo "value = '".$_SESSION['type']."'";}?> readonly >
 				</div>
 			</div><br><br><br>
 	
@@ -57,8 +43,8 @@ function a(){
 	
 			<div class = "form-group">
 				<div class="col-sm-5">
-				<input id="facId1" name ="dayprice" class="form-control input-group-lg reg_name" type=number step = any min =0    <?php
-				if(isset($_SESSION['fcode'])){echo "value = '".$_SESSION['dayprice']."'";}?> >
+					<input id="facId1" name ="dayprice" class="form-control input-group-lg reg_name" type=number step = any min =0    <?php
+					if(isset($_SESSION['fcode'])){echo "value = '".$_SESSION['dayprice']."'";}?> >
 				</div>
 			</div><br><br>
 
@@ -66,17 +52,17 @@ function a(){
 	
 			<div class = "form-group">
 				<div class="col-sm-5">
-				<input id="facId1" name ="nightprice" class="form-control input-group-lg reg_name" type=number step = any min =0    <?php
-				if(isset($_SESSION['fcode'])){echo "value = '".$_SESSION['nightprice']."'";}?> required>
+					<input id="facId1" name ="nightprice" class="form-control input-group-lg reg_name" type=number step = any min =0    <?php
+					if(isset($_SESSION['fcode'])){echo "value = '".$_SESSION['nightprice']."'";}?> required>
 				</div>
 			</div><br><br>
 
-<p><font face = "cambria" size = 5 color = "grey"> Resident Price </font></p>
+	<p><font face = "cambria" size = 5 color = "grey"> Resident Price </font></p>
 	
 			<div class = "form-group">
 				<div class="col-sm-5">
-				<input id="facId1" name ="residentprice" class="form-control input-group-lg reg_name" type=number step = any min =0    <?php
-				if(isset($_SESSION['fcode'])){echo "value = '".$_SESSION['residentprice']."'";}?>required>
+					<input id="facId1" name ="residentprice" class="form-control input-group-lg reg_name" type=number step = any min =0 <?php
+					if(isset($_SESSION['fcode'])){echo "value = '".$_SESSION['residentprice']."'";}?>required>
 				</div>
 			</div><br><br>
 
@@ -93,10 +79,14 @@ function a(){
 			</div><br><br><br><br><br>
 	
 			
-			<?php echo "<script>a();</script>"?><center> 
+			<?php echo "<script>a();</script>"?>
 	
-				<input type="submit" class="btn btn-info" name = "btnEdit" id = "btnEdit" value = "Save Record" ></div>
-	
+				<input type="submit" class="btn btn-info" name = "btnEdit" id = "btnEdit" value = "Save Record" >
+	</div>
+ </form>
+
+		
+
 			<?php //Validation
 		
 			if(isset($_POST['btnEdit'])){
@@ -125,13 +115,14 @@ function a(){
 				}
 			}
 			 
-		?></center><br><br>
-                       </form>
+		?><br><br>
+   
+				
                                <!-- /#page-content-wrapper -->
 
 			
-		</section><! --/wrapper -->
-      </section><!-- /MAIN CONTENT -->
+		</section> <!--/wrapper -->
+</section><!-- /MAIN CONTENT -->
 
       <!--main content end-->
   
@@ -160,6 +151,21 @@ function a(){
       });
 
   </script>
+  
+	<script>
+		function a(){
+			
+			var strtype = '<?php echo $_SESSION['stat']?>';
+			var selectobject = document.getElementById("facstatus");
+			
+				for (var i=0; i<selectobject.length; i++){
+					if(selectobject.options[i].value == strtype){
+						document.getElementById("facstatus").value = selectobject.options[i].value;}
+					else{
+					}
+				}
+		}
+	</script>
 
   </body>
 </html>
