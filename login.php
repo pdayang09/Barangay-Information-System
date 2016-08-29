@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <?php 
 session_start();
-session_destroy();
 ?>
 
 <html lang="en">
@@ -99,7 +98,7 @@ session_destroy();
     </script>
 	
 <?php
-session_start();
+
 	
 	if(isset($_POST['btnsignin'])){	
 		require("connection.php");
@@ -128,8 +127,13 @@ session_start();
 			}
 			else if($pos == 'Treasurer'){
 				$_SESSION['Treasurer'] = $name;
-				echo "<script>alert('Welcome Kapitan $name');
-				window.location = 'reservation_kapitanl.php'</script>";
+				echo "<script>alert('Welcome Treasurer $name');
+				window.location = 'reservation_paymentl.php'</script>";
+			}
+			else if($pos == 'Liason'){
+				$_SESSION['Liason'] = $name;
+				echo "<script>alert('Welcome Liason $name');
+				window.location = 'facilityequipmentl.php'</script>";
 			}
 	}
 	else{

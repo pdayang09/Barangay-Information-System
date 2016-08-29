@@ -41,7 +41,7 @@
                       <ul class="sub">
                           <li><a  href="Hholdview.php">Resident Transaction</a></li>
 						  <li><a  href="validitycheck.php">Facility Equipment Reservation</a></li>
-						  <li><a  href="validitycheck.php">Document Request</a></li>
+						  <li><a  href="validitycheck1.php">Document Request</a></li>
 						  <li><a  href="returnitems.php">Return Items</a></li>
                       </ul>
                   </li>
@@ -53,18 +53,6 @@
                       </a>
                   </li>
 				  
-				  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class="fa fa-bar-chart-o"></i>
-                          <span>Views</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="facilityequipmentl.php">Liason</a></li>
-						  <li><a  href="DocumentRequestL.php">Secretary</a></li>
-						  <li><a  href="reservation_paymentl.php">Treasurer</a></li>
-						  <li><a  href="reservation_kapitanl.php">Kapitan</a></li>
-                      </ul>
-                  </li>
                   
                   <li class="sub-menu">
                       <a href="javascript:;" >

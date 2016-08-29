@@ -99,10 +99,16 @@
                     <!-- inbox dropdown end -->
                 </ul>
                 <!--  notification end -->
-            </div>
+            </div><form method = POST>
             <div class="top-menu">
             	<ul class="nav pull-right top-menu">
-                    <li><a class="logout" href="login.php">Logout</a></li>
+                    <li><br><button name = 'logout' class = 'btn btn-info ' type = submit>Logout</button></li>
             	</ul>
             </div>
+			</form>
         </header>
+		<?php
+		if(isset($_POST['logout'])){
+			session_destroy();
+			echo "<script>window.location = 'login.php'</script>";
+		}?>
