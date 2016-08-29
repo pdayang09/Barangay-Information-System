@@ -1,10 +1,10 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.0.2
+-- version 4.5.1
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 24, 2016 at 01:26 PM
--- Server version: 10.0.17-MariaDB
+-- Generation Time: Aug 29, 2016 at 11:49 AM
+-- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.5.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -27,21 +27,25 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `tblaccount` (
-  `strOfficerID` varchar(25) NOT NULL,
+  `strOfficerID` int(25) NOT NULL,
+  `intForeignMemberNo` int(11) NOT NULL,
   `strUsername` varchar(45) NOT NULL,
   `strPassword` varchar(45) NOT NULL,
-  `strOfficerFName` varchar(45) NOT NULL,
-  `strOfficerMName` varchar(45) NOT NULL,
-  `strOfficerLName` varchar(45) NOT NULL,
-  `dtmBirthdate` date NOT NULL
+  `strPosition` varchar(25) NOT NULL,
+  `strEmailAdd` varchar(25) NOT NULL,
+  `dtStart` date NOT NULL,
+  `dtEnd` date NOT NULL,
+  `strStatus` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tblaccount`
 --
 
-INSERT INTO `tblaccount` (`strOfficerID`, `strUsername`, `strPassword`, `strOfficerFName`, `strOfficerMName`, `strOfficerLName`, `dtmBirthdate`) VALUES
-('001', 'admin', 'admin', '', '', '', '0000-00-00');
+INSERT INTO `tblaccount` (`strOfficerID`, `intForeignMemberNo`, `strUsername`, `strPassword`, `strPosition`, `strEmailAdd`, `dtStart`, `dtEnd`, `strStatus`) VALUES
+(1, 1, 'dayang_paul', 'pauldayang', 'Secretary', ' ', '2016-08-29', '2018-08-29', 'Enabled'),
+(2, 10, 'wu_jenny', 'jennywu', 'Barangay Captain', 'JennyWu@yahoo.com', '2016-08-29', '2018-08-29', 'Enabled'),
+(3, 21, 'ara_mary', 'maryara', 'Treasurer', 'MariaAra@gmail.com', '2016-08-29', '2018-08-29', 'Enabled');
 
 -- --------------------------------------------------------
 
@@ -151,7 +155,7 @@ CREATE TABLE `tblbusinesscate` (
 INSERT INTO `tblbusinesscate` (`strBusCatergory`, `strBusCateName`, `dblAmount`, `strStatus`) VALUES
 (1, 'Hardware', 1000, 'Enabled'),
 (3, 'Pet Shop', 1000, 'Enabled'),
-(5, 'Clean', 800.05, 'Enabled'),
+(5, 'Clean', 800.05, 'Disabled'),
 (6, 'Restaurant', 999.95, 'Enable');
 
 -- --------------------------------------------------------
@@ -325,14 +329,14 @@ CREATE TABLE `tbldocument` (
 --
 
 INSERT INTO `tbldocument` (`intDocCode`, `strDocName`, `dblDocFee`, `strStatus`, `strDocTemplate`) VALUES
-(2, 'Certification', 10, 'Enable', ''),
-(3, 'Business Clearance New', 100, 'Enable', ''),
-(4, 'Indigency', 95.95, 'Enable', ''),
-(5, 'Excavation', 1500, 'Enabe', ''),
-(6, 'Street Permit', 0, 'Enable', ''),
-(7, 'Business Clearance Renewal', 0, 'Enable', ''),
-(8, 'TRU Clearance', 100, 'Enable', ''),
-(9, 'Utility Clearance', 100, 'Enable', '');
+(2, 'Certification', 10, 'Enabled', ''),
+(3, 'Business Clearance New', 100, 'Enabled', ''),
+(4, 'Indigency', 95.95, 'Enabled', ''),
+(5, 'Excavation', 1500, 'Enabed', ''),
+(6, 'Street Permit', 0, 'Enabled', ''),
+(7, 'Business Clearance Renewal', 0, 'Enabled', ''),
+(8, 'TRU Clearance', 100, 'Enabled', ''),
+(9, 'Utility Clearance', 100, 'Enabled', '');
 
 -- --------------------------------------------------------
 
@@ -1154,6 +1158,11 @@ ALTER TABLE `tblzone`
 --
 
 --
+-- AUTO_INCREMENT for table `tblaccount`
+--
+ALTER TABLE `tblaccount`
+  MODIFY `strOfficerID` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
 -- AUTO_INCREMENT for table `tblbusiness`
 --
 ALTER TABLE `tblbusiness`
@@ -1263,16 +1272,6 @@ ALTER TABLE `tblvehicleclearance`
 --
 ALTER TABLE `tblzone`
   MODIFY `intZoneId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `tblbrgyofficial`
---
-ALTER TABLE `tblbrgyofficial`
-  ADD CONSTRAINT `strbrgyofficial` FOREIGN KEY (`strOfficerID`) REFERENCES `tblaccount` (`strOfficerID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
