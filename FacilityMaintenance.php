@@ -14,7 +14,9 @@
 				<p align="right">
 				<button type="button" class="btn btn-info" name = "btnEdit1" id = "btnEdit1"  onclick = "window.location = 'FacilityAdd.php'" ><i class="fa fa-plus"></i> Add New</button>
 				</p>
-                               <form method = POST><div class = "showback">
+				&nbsp;&nbsp;<input type= checkbox id = "showdisabled" onclick ="showdis()"> Show Broken/Under Maintenance Facility
+                               <form method = POST>
+							   <div class = "showback" id = "tblview">
 <center> 		<br><br>
 						<table  class="table table-striped table-bordered table-hover" border = '3' style = 'width:95%'>
 							<thead>
@@ -121,7 +123,26 @@
     
   <script>
       //custom select box
-
+function showdis(){
+		var val = 0;
+		if(document.getElementById('showdisabled').checked){
+			val = 1;
+		}
+		else{
+			val = 2;
+		}
+		//alert(val);
+		$.ajax({
+		type: "POST",
+		url: "DisabledtableFacility.php",
+		data: 'sid=' + val,
+		success: function(data){
+			//alert(data);
+			$("#tblview").html(data);
+		}
+		
+	});
+	}
       $(function(){
           $('select.styled').customSelect();
       });
