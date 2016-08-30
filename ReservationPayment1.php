@@ -14,28 +14,21 @@
 	
 		//Personal Details
 		$residency = $_SESSION['residency'];
-		$resId = $_SESSION['resId'];
 		$clientID = $_SESSION['clientID'];
 		$name = $_SESSION['name'];
-		$contactno = $_SESSION['contactno'];
-		$address =  $_SESSION['address'];
-		
-		//Purpose
+		$contactno = $_SESSION['contactno'];	
+		$resId = $_SESSION['resId'];
 		$resPurpose = $_SESSION['resPurpose'];
-		
-		//Facility		
+		$num = $_SESSION['num']; 
+
+		$resFrom = $_SESSION['resFrom']; //FROM
+		$resTo = $_SESSION['resTo']; // TO
+		$resFacility = $_SESSION['resFacility'];
 		$resFacName = $_SESSION['resFacName'];
-		$resFacility = $_SESSION['resFacility'];		
-		$resFrom = $_SESSION['resfrom'];
-		$resTo = $_SESSION['resto'];
-		$resfee = $_SESSION['resfee'];
-		$dayresfee = $_SESSION['resfee'];
-		$nightresfee = $_SESSION['nightresfee'];
-		$discount = $_SESSION['discount'];
-		
-		//Equipment
-		$equipment = $_SESSION['equipment'];
-		$quantity = $_SESSION['quantity'];		
+			
+		//EQUIPMENT
+		$equipment[] = $_SESSION['equipment'];
+		$quantity[] = $_SESSION['quantity'];		
 		$quantity1[] = array(); //Temporary storage for quantity array	
 		$equipfee1[] = array(); //Equipment Fee
 		
@@ -89,6 +82,7 @@
 		$change =0;
 		
 		include("paymentconfig.php");
+		$hours = round($hours)
 	?>
 	
 	<form method = "POST">
@@ -147,6 +141,7 @@
 												</tr>
 												<?php 
 													$total = $total + $quantity1[$intCtr] * $equipfee1[$intCtr];
+													$total = number_format($total, 2);
 													} 
 											
 												}else{
@@ -170,6 +165,7 @@
 									
 								<?php 
 									$total = $total + $resfee * $hours;
+									$total = number_format($total, 2);
 								?>
 
 								<div class="form-group">

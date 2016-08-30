@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
   <head>  
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
@@ -286,8 +286,10 @@
             </div><br><br><br>      
             <font face="arial" size=4 color="grey"> 
             
+            <div class="form-group">
             <!-- gets list of facility from tblfacility -->
             <?php include("facilityFormM.php"); ?>
+            </div>
             <br><br><br><br>
 
             <div class="col-sm-5">
@@ -295,12 +297,16 @@
                 <font face="arial" size=4 color="grey">
             </div><br><br>
 
+            <div class="form-group">
             <!-- gets equipment from tblequipment -->           
             <?php 
             $equipment[] = array();
             $quantity[] = array();
             
+
             include("equipmentFormM.php"); ?> 
+            </div>
+
             <br><br><br><br><br><br><br><br><br><br>
             </form>   
 

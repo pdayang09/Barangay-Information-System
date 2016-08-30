@@ -152,7 +152,7 @@
 
 				}
 				
-				echo "<script> window.location = 'FacilityEquipmentT.php';</script>";
+				echo "<script> window.location = 'FacilityEquipment.php';</script>";
 				
 			}else if(isset($_POST['btnDocument'])){
 				$btnDocument = $_POST['btnDocument'];

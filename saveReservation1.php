@@ -37,7 +37,12 @@
 			unset($equipment);
 			unset($quantity);
 			unset($quantity1);
+			unset($resFacility);
+			$resFacName = "";
+			$resfee = "";
+			$hours = "";
 			
+			session_destroy();			
 		}else{
 			
 		}
