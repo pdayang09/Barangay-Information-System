@@ -1,7 +1,7 @@
  <?php session_start();?>
 <!DOCTYPE html>
-          <?php require('header.php');?>
-    <?php require('sidebar.php');?>
+ <?php require('header.php');?>
+ <?php require('sidebar.php');?>
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
@@ -9,42 +9,57 @@
 
       <section id="main-content">
           <section class="wrapper site-min-height">		
-<legend ><font face = "cambria" size = 8 color = "grey">Street Maintenance </font></legend>
-
-	<button  class="btn btn-info btn-round" onclick = "window.location.href='AddStreet.php'">Add New Street</button> 
-<center><br>		            <form method = POST>                		
-				<div class = "showback" id = "tblview">
+			<legend ><font face = "cambria" size = 8 color = "grey">Maintenance </font></legend>
+				<h2>Street</h2>
+	<p align="right">			
+	<button  class="btn btn-info" onclick = "window.location.href='AddStreet.php'"><i class="fa fa-plus"></i>  Add New</button> 
+	</p>
 	
-				<table class="table table-striped table-bordered table-hover"  border = '3' style = 'width:95%'><!-- Table -->
-					<thead><tr>
-						<th> Street ID </th>
-						<th> Street Name </th>
-						<th> Purok Name </th>
-						<th> Action </th>
-					</tr></thead>
-					
-					<tbody><?php
-					require('connection.php');
-						$sql = "select intStreetId , strStreetName, strZoneName from tblStreet inner join tblZone on intForeignZoneId = intZoneId order by intForeignZoneId , intStreetId desc";
-						$query = mysqli_query($con, $sql);
-				
-						if(mysqli_num_rows($query) > 0){
-							$i = 1;
-					
-							while($row = mysqli_fetch_object($query)){?>
-								<tr> <td><?php echo $row->intStreetId?></td>
-									<td><?php echo $row->strStreetName?>				</td>
-									<td><?php echo $row->strZoneName?></td>
-									<td>
-					
-									<div class="btn-group " role="group">	
-									<button  class="btn btn-info btn-round" type = submit name = "btnEdit" value = <?php echo $row->intStreetId; ?> >Edit</button>
-									</div>
+<center><br>		          
+			<form method = POST>                		
+				<div class = "showback" id = "tblview">
+					<table class="table table-striped table-bordered table-hover"  border = '3' style = 'width:95%'><!-- Table -->
+						<thead>
+							<tr>
+								<th># Street ID </th>
+								<th><i class="fa fa-bullhorn"></i> Street Name </th>
+								<th><i class="fa fa-bookmark"></i> Purok Name </th>
+								<th><i class="fa fa-edit"></i> Action </th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th># Street ID </th>
+								<th><i class="fa fa-bullhorn"></i> Street Name </th>
+								<th><i class="fa fa-bookmark"></i> Purok Name </th>
+								<th><i class="fa fa-edit"></i> Action </th>
+							</tr>
+						</tfoot>
+						
+						<tbody>
+							<?php
+							require('connection.php');
+								$sql = "select intStreetId , strStreetName, strZoneName from tblStreet inner join tblZone on intForeignZoneId = intZoneId order by intForeignZoneId , intStreetId desc";
+								$query = mysqli_query($con, $sql);
+						
+								if(mysqli_num_rows($query) > 0){
+									$i = 1;
+							
+									while($row = mysqli_fetch_object($query)){?>
+										<tr> <td><?php echo $row->intStreetId?></td>
+											<td><?php echo $row->strStreetName?>				</td>
+											<td><?php echo $row->strZoneName?></td>
+											<td>
+							
+											<div class="btn-group " role="group">	
+											<button  class="btn btn-primary btn-xs" type = submit name = "btnEdit" value = <?php echo $row->intStreetId; ?> ><i class="fa fa-pencil"></i></button>
+											</div>
 
-									</td>
-								</tr>
-		<?php }} ?></tbody>
-				</table>
+											</td>
+										</tr>
+							<?php }} ?>
+						</tbody>
+					</table>
 			</div><br><br>
 				<?php
 					if(isset($_POST['btnEdit'])){
@@ -56,13 +71,11 @@
 					
                     </form>             
                   </center>
-			
-		</section><! --/wrapper -->
-      </section><!-- /MAIN CONTENT -->
+		</section> <!--/wrapper -->
+      </section> <!-- /MAIN CONTENT -->
 
       <!--main content end-->
-      
-  </section>
+</section>
 
     <!-- js placed at the end of the document so the pages load faster -->
 	

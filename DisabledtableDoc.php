@@ -36,7 +36,7 @@
 									?>
 								<tr>
 									<td><?php echo $row->strDocName?></td>
-									<td><?php echo $row->dblDocFee?></td>
+									<td><?php echo $row->strDocFee?></td>
 									<td>
 										<div class="btn-group " role="group" aria-label="..." >	
 											<div class="btn-group " role="group">	
@@ -61,7 +61,7 @@
 									?>
 								<tr>
 									<td><?php echo $row->strDocName?></td>
-									<td><?php echo $row->dblDocFee?></td>
+									<td><?php echo $row->strDocFee?></td>
 									<td>
 										<button  class="btn btn-info btn-xs" type = submit name = "btnEnable" onclick = "return confirm('Do you really want to continue?');" value = <?php echo $row->intDocCode; ?> >Enable</button>																	
 									</td>

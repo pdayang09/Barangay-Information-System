@@ -18,7 +18,7 @@
 			<legend ><font face = "cambria" size = 8 color = "grey"> Maintenance </font></legend>
 				<h2>Vehicle</h2>
                
-				<p align="right">
+				<!-- p align="right">
 				<button type="button" class="btn btn-info" name = "btnEdit1" id = "btnEdit1"  onclick = "window.location = 'AddVehicle.php'" ><i class="fa fa-plus"></i> Add New</button>
 				</p>
 				

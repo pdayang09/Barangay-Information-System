@@ -50,7 +50,7 @@
 									?>
 								<tr>
 									<td><?php echo $row->strDocName?></td>
-									<td><?php echo $row->dblDocFee?></td>
+									<td><?php echo $row->strDocFee?></td>
 									<td>
 									<div class="btn-group " role="group" aria-label="..." >	
 										<div class="btn-group " role="group">	
@@ -78,7 +78,7 @@
 									$row = mysqli_fetch_object($query);
 									$_SESSION['id'] = $row->intDocCode;
 									$_SESSION['name'] = $row->strDocName;
-									$_SESSION['price'] = $row->dblDocFee;
+									$_SESSION['price'] = $row->strDocFee;
 									//echo "<script>alert('". $row->strDocName."');</script>";
 									echo "<script> window.location= 'DocumentEdit.php';</script>";
 							}

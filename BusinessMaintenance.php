@@ -12,9 +12,9 @@
 			<legend ><font face = "cambria" size = 8 color = "grey"> Maintenance </font></legend>
 				<h2>Business</h2><br>
 			
-				<p align="right">
+				<!-- p align="right">
 				<button  type="button" class="btn btn-info" name = "btnEdit1" id = "btnEdit1" onclick = "window.location.href='BusinessAdd.php'" ><i class="fa fa-plus"></i> Add New </button><br>
-				</p>
+				</p -->
 			
 			<form method = POST>
 				<center> 

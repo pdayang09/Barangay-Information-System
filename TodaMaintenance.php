@@ -17,8 +17,7 @@
 
 <div class='requirementMain'>			
 		<legend ><font face = "cambria" size = 8 color = "grey"> Maintenance </font></legend>
-
-	<h2> TODA </h2>
+			<h2>Toda</h2> 
 	
 </div><br><!-- div class='requirementMain'-->	
 
@@ -29,7 +28,7 @@
 	<div class="col-sm-9 col-md-6 col-lg-6">
   	<div class = 'showback'>	
 					
-	
+	<br>
 	
 	<p><font face = "cambria" size = 5 color = "grey"> Toda Name </font></p>   
 	<center>
@@ -57,7 +56,7 @@
 				 else{
 					 require('connection.php');
 					 mysqli_query($con,"INSERT INTO `tbltoda`(`strTODAName`,`strTODADesc`) VALUES ('$strTodaNM','$strTodaDescription');");
-					 echo "INSERT INTO `tbltoda`(`strTODAName`,`strTODADesc`) VALUES ('$strTodaNM','$strTodaDescription');";
+					 //echo "INSERT INTO `tbltoda`(`strTODAName`,`strTODADesc`) VALUES ('$strTodaNM','$strTodaDescription');";
 					 echo "<script>alert('Success');</script>";
 			 }}
 				 ?>
@@ -73,13 +72,22 @@
 	<div class = "showback">
 					 <table   class="table table-striped table-bordered table-hover"  border = '2' style = 'width:95%'>
 					<thead>
-					<tr>
-					<th>ID</th>
-					<th>Toda Name</th>
-					<th>Toda Description</th>
-					<th>Action</th>
-					</tr>
+						<tr>
+							<th><i class="fa fa-bullhorn"></i> ID</th>
+							<th><i class="fa fa-cog"></i> Toda Name</th>
+							<th><i class="fa fa-bookmark"></i> Toda Description</th>
+							<th><i class="fa fa-edit"></i> Action</th>
+						</tr>
 					</thead>
+					<tfoot>
+						<tr>
+							<th><i class="fa fa-bullhorn"></i> ID</th>
+							<th><i class="fa fa-cog"></i> Toda Name</th>
+							<th><i class="fa fa-bookmark"></i> Toda Description</th>
+							<th><i class="fa fa-edit"></i> Action</th>
+						</tr>
+					</tfoot>
+					
 					<tbody>
 					
 					<?php
@@ -94,14 +102,14 @@
 					<td><?php echo $row->intTODAID?></td>
 					<td><?php echo $row->strTODAName?></td>
 					<td><?php echo $row->strTODADesc?></td>
-					<td><button class ="btn btn-success btn-sm" type = submit name = "del" value =<?php echo $row->intTODAID?>>DELETE</button></td>
+					<td><button class ="btn btn-danger btn-xs" type = submit name = "del" value =<?php echo $row->intTODAID?>> <i class="fa fa-trash-o"></i></button></td>
 				
 				<?php }}
 				if(isset($_POST['del'])){
 					$a = $_POST['del'];
 					mysqli_query($con,"Delete From tblToda where `intTODAID` = '$a'");
 					echo "<script>alert('Successful!');
-					window.location ='TodaNameMaintenance.php';</script>";
+					window.location ='TodaMaintenance.php';</script>";
 				}				?></tbody>
 				</table></div>
 

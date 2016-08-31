@@ -46,7 +46,7 @@
 					}
 					else{
 						require('connection.php');
-						$g = mysqli_query($con,"UPDATE tbldocument SET strDocName ='$strDocN',dblDocFee ='$strPrice' where intDocCode = '$strDocC'");
+						$g = mysqli_query($con,"UPDATE tbldocument SET strDocName ='$strDocN',strDocFee ='$strPrice' where intDocCode = '$strDocC'");
 						if($g==true){
 						session_destroy();
 						echo "<script>alert('Success');</script>";
