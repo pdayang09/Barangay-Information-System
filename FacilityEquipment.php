@@ -461,13 +461,13 @@ function finReserve(){
         $.each($("input[name='equipment']:checked"), function(){            
                 equipment.push($(this).val());
             });
-        alert("My Equipments are: " + equipment.join(", "));
+        alert("My Equipments are: " + equipment.join(" "));
 
     var quantity = [];
         $.each($("input[name='quantity']"), function(){            
                 quantity.push($(this).val());
             });
-        alert("My quantity are: " + quantity.join(", "));
+        alert("My quantity are: " + quantity.join(" "));
 
     document.getElementById("showCheck").innerHTML = a + b + c + resId + resPurpose + num;
 

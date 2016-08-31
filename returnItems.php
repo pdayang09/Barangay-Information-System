@@ -155,10 +155,10 @@
 							
 					?>
 							<tr><td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[0]; ?></td>
-							<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[2]; ?></td>
-							<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><?php echo $row[3]; ?></td>		
+							<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[1]; ?></td>
+							<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><?php echo $row[2]; ?></td>		
 							<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'>
-							<input type='number' min = '0' name = quantity[] value = '0' max = '<?php echo $row[4]; ?>'</td>
+							<input type='number' min = '0' name = quantity[] value = '0' max = '<?php echo $row[3]; ?>'</td>
 							</tr>							
 					<?php				
 						}?>			
