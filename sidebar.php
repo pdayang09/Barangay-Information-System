@@ -22,14 +22,16 @@
                       <ul class="sub">
 					  
 						   <!--Barangay Official and Document-->
+						  <li><a  href="BusinessMaintenance.php">Business</a></li>
 						  <li><a  href="BusinessCat.php">Business Category</a></li>
                           <li><a  href="DocumentMaintenance.php">Document </a></li>
-						 
 						  <li><a  href="Streetmaintenance.php">Street</a></li>					  
 						  <!--Facility and Equipment -->
 						  <li><a  href="EquipmentCat.php">Category</a></li>
 						  <li><a  href="FacilityMaintenance.php">Facility </a></li>
 						  <li><a  href="EquipmentMaintenance.php">Equipment </a></li>
+						  <li><a  href="TodaMaintenance.php">Toda </a></li>
+						  <li><a  href="VehicleMaintenance.php">Vehicle </a></li>
                       </ul>
                   </li>
 
@@ -41,7 +43,7 @@
                       <ul class="sub">
                           <li><a  href="Hholdview.php">Resident Transaction</a></li>
 						  <li><a  href="validitycheck.php">Facility Equipment Reservation</a></li>
-						  <li><a  href="validitycheck1.php">Document Request</a></li>
+						  <li><a  href="validitycheck.php">Document Request</a></li>
 						  <li><a  href="returnitems.php">Return Items</a></li>
                       </ul>
                   </li>
@@ -53,6 +55,18 @@
                       </a>
                   </li>
 				  
+				  <li class="sub-menu">
+                      <a href="javascript:;" >
+                          <i class="fa fa-bar-chart-o"></i>
+                          <span>Views</span>
+                      </a>
+                      <ul class="sub">
+                          <li><a  href="facilityequipmentl.php">Liason</a></li>
+						  <li><a  href="DocumentRequestL.php">Secretary</a></li>
+						  <li><a  href="reservation_paymentl.php">Treasurer</a></li>
+						  <li><a  href="reservation_kapitanl.php">Kapitan</a></li>
+                      </ul>
+                  </li>
                   
                   <li class="sub-menu">
                       <a href="javascript:;" >

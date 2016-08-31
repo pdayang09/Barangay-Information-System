@@ -16,9 +16,9 @@
 	 <!-- input type="button" class="btn btn-info" name = "btnAdd" id = "btnAdd" value = "Add Requirement" data-toggle="modal" data-target="#myModala"> <!--MODAL BUTTON -->          
 
 <div class='requirementMain'>			
-		<legend ><font face = "cambria" size = 8 color = "grey"> Toda Maintenance </font><font  size = 5 color = "Red"> * </font></legend>
+		<legend ><font face = "cambria" size = 8 color = "grey"> Maintenance </font></legend>
 
-	<p><font face = "cambria" size = 5 color = "grey"> Maintenance </font><font  size = 5 color = "Red"> </font></p>
+	<h2> TODA </h2>
 	
 </div><br><!-- div class='requirementMain'-->	
 
@@ -29,19 +29,19 @@
 	<div class="col-sm-9 col-md-6 col-lg-6">
   	<div class = 'showback'>	
 					
-	<br><br><br>
 	
-	<p><font face = "cambria" size = 5 color = "grey"> Toda Name </font><font  size = 5 color = "Red"> * </font></p>   
+	
+	<p><font face = "cambria" size = 5 color = "grey"> Toda Name </font></p>   
 	<center>
 		<input id ="strTodaName" name = "TodaNameMaintenance"  class="form-control input-group-lg reg_name" type="text" >	
 	</center>
-	<p><font face = "cambria" size = 5 color = "grey"> Toda Description</font><font  size = 5 color = "Red"> * </font></p>   
+	<p><font face = "cambria" size = 5 color = "grey"> Toda Description</font></p>   
 	<center>	
 		<input id ="strTodaDC" name = "TodaDescMaintenance"  class="form-control input-group-lg reg_name" type="text" >	
 	</center><br>
 	
 	<center>
-	<br><br><br>
+	<br>
 		<input type="submit" class="btn btn-outline btn-success" name = "btnAdd" id = "btnAdd"  value = "Add"  > 
 			 <input type="submit" class="btn btn-outline btn-success" name = "btnCancel" id = "btnCancel"  value = "Cancel" >
 				
