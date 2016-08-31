@@ -14,10 +14,17 @@
 				<p align="right">
 				<button type="button" class="btn btn-info" name = "btnEdit1" id = "btnEdit1"  onclick = "window.location = 'FacilityAdd.php'" ><i class="fa fa-plus"></i> Add New</button>
 				</p>
-				&nbsp;&nbsp;<input type= checkbox id = "showdisabled" onclick ="showdis()"> Show Broken/Under Maintenance Facility
+	
+				<input type= checkbox id = "showdisabled" onclick ="showdis()"> Show Broken/Under Maintenance Facility
+                         <br><br>    
+							 <form method = POST><div class = "showback">
+								
+				
                                <form method = POST>
 							   <div class = "showback" id = "tblview">
-<center> 		<br><br>
+
+							   
+<center> 
 						<table  class="table table-striped table-bordered table-hover" border = '3' style = 'width:95%'>
 							<thead>
 								<tr>
@@ -26,6 +33,7 @@
 									<th><i class="fa fa-bullhorn"></i> Category</th>
 									<th><i class="fa fa-bookmark"></i> Day Charge</th>
 									<th><i class="fa fa-bookmark"></i> Night Charge</th>
+									<th><i class="fa fa-bookmark"></i> Non Resident Charge</th>
 									<th><i class="fa fa-cog"></i> Status</th>
 									<th><i class="fa fa-edit"></i> Action</th>
 								</tr>
@@ -37,6 +45,7 @@
 									<th><i class="fa fa-bullhorn"></i> Category</th>
 									<th><i class="fa fa-bookmark"></i> Day Charge</th>
 									<th><i class="fa fa-bookmark"></i> Night Charge</th>
+									<th><i class="fa fa-bookmark"></i> Non Resident Charge</th>
 									<th><i class="fa fa-cog"></i> Status</th>
 									<th><i class="fa fa-edit"></i> Action</th>
 								</tr>
@@ -67,6 +76,7 @@
 									</td>
 										<td><?php echo $row->dblFaciDayCharge?></td>
 										<td><?php echo $row->dblFaciNightCharge?></td>
+										<td><?php echo $row->dblFaciNResidentCharge?></td>
 										<td><?php echo $row->strFaciStatus?></td>
 										
 										<td><button type = submit  class="btn btn-primary btn-xs" name = 'btnedit' value = <?php echo $row->strFaciNo ?> ><i class="fa fa-pencil"></i></button></td>
@@ -85,7 +95,7 @@
 								$_SESSION['stat'] = $row->strFaciStatus;
 								$_SESSION['dayprice'] = $row->dblFaciDayCharge;
 								$_SESSION['nightprice'] = $row->dblFaciNightCharge;
-								$_SESSION['residentprice'] = $row->dblFaciDiscount;
+								$_SESSION['residentprice'] = $row->dblFaciNResidentCharge;
 								$a = $row->strFaciCategory;
 					
 								$query2 = mysqli_query($con,"Select * from tblcategory where strcategorycode = '$a'");
