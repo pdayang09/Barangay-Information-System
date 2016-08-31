@@ -45,7 +45,7 @@
 				</div>
 			</div><br><br>
 			
-			<p><font face = "cambria" size = 5 color = "grey"> Facility Day Charge </font></p>
+			<p><font face = "cambria" size = 5 color = "grey"> Day Charge </font></p>
 			
 			<div class = "form-group">
 				<div class="col-sm-12">
@@ -53,7 +53,7 @@
 				</div>
 			</div><br><br>
 		   
-			<p><font face = "cambria" size = 5 color = "grey"> Facility Night Charge </font></p>
+			<p><font face = "cambria" size = 5 color = "grey"> Night Charge </font></p>
 			
 			<div class = "form-group">
 				<div class="col-sm-12">
@@ -61,7 +61,7 @@
 				</div>
 			</div><br><br>
 			
-			<p><font face = "cambria" size = 5 color = "grey"> Facility Resident Charge </font></p>
+			<p><font face = "cambria" size = 5 color = "grey"> Non Resident Charge </font></p>
 			
 			<div class = "form-group">
 				<div class="col-sm-12">
@@ -80,7 +80,7 @@
 				</div>
 			</div><br><br><br><br><br>
   
-			<center> <input type="submit" class="btn btn-info" name = "btnAdd" id = "btnAdd"  value = "Save Record"  >    
+			<center> <button  class="btn btn-info" name = "btnAdd" id = "btnAdd"  value = "Save Record"  >Save Record </button>  
 	</div>
 </div>
 			<!-- DIV FOR TABLE -->
@@ -91,6 +91,7 @@
 						<th><i class="fa fa-question-circle"></i> Facility Name</th>
 						<th><i class="fa fa-bookmark"></i> Day Price</th>
 						<th><i class="fa fa-bookmark"></i> Night Price</th>
+						<th><i class="fa fa-bookmark"></i> Non Resident Price</th>
 					</thead>
 				
 					<tbody>
@@ -105,6 +106,7 @@
 								<td><?php echo $row->strFaciName?></td>
 								<td><?php echo $row->dblFaciDayCharge?></td>
 									<td><?php echo $row->dblFaciNightCharge?></td>
+									<td><?php echo $row->dblFaciNResidentCharge?></td>
 							<?php }}?>
 					</tbody>
 				</table>
@@ -155,8 +157,10 @@
 				 $strdayprice = (double)$_POST['dayprice'];
 				 $strnightprice = (double)$_POST['nightprice'];
 				 $strresidentprice = (double)$_POST['residentprice'];
-				 if($strprice == NULL){
-					 $strprice = 0;
+				 if($strdayprice == NULL || $strnightprice == NULL || $strresidentprice == NULL){
+					 $strdayprice = 0;
+					 $strnightprice = 0;
+					 $strresidentprice = 0;
 				 }
 				 
 				 $strStatus = $_POST['facstatus1'];
@@ -167,9 +171,9 @@
 				 else{
 					
 					 require('connection.php');
-					 mysqli_query($con,"INSERT INTO `tblfacility`(`strFaciName`, `strFaciCategory`, `strFaciStatus`, `dblFaciDayCharge`, `dblFaciNightCharge`,`dblFaciDiscount`) VALUES ('$strcode','$strname','$strStatus', $strdayprice, $strnightprice,$strresidentprice);");
+					 mysqli_query($con,"INSERT INTO `tblfacility`(`strFaciName`, `strFaciCategory`, `strFaciStatus`, `dblFaciDayCharge`, `dblFaciNightCharge`,`dblFaciNResidentCharge`) VALUES ('$strcode','$strname','$strStatus', $strdayprice, $strnightprice,$strresidentprice);");
 					 echo "<script>alert('Success');
-					 window.location = 'FacilityMaintenance.php'</script>";
+					window.location = 'FacilityMaintenance.php'</script> </script>";
 			 }}
 			 
 			?><br><br></center>

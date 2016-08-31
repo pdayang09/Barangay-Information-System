@@ -106,7 +106,7 @@
 					if($b == 1){echo "<script>alert('Characters like /[\^£$%&*()}{@#~?><>,|=_+¬-]/ is not allowed');</script>";}
 					else{
 						require('connection.php');
-						mysqli_query($con,"Update tblfacility Set strFaciStatus = '$strStatus', dblFaciDayCharge = $strdayprice,dblFaciNightCharge = $strnightprice,dblFaciDiscount = $strresidentprice where strFaciName = '$strcode';");
+						mysqli_query($con,"Update tblfacility Set strFaciStatus = '$strStatus', dblFaciDayCharge = $strdayprice,dblFaciNightCharge = $strnightprice,dblFaciNResidentCharge = $strresidentprice where strFaciName = '$strcode';");
 					 
 						echo "<script>alert('Success');</script>";
 					 	session_destroy();
