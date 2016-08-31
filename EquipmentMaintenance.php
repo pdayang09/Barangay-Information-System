@@ -1,6 +1,6 @@
  <?php session_start();?>
 <!DOCTYPE html>
-          <?php require('header.php');?>
+    <?php require('header.php');?>
     <?php require('sidebar.php');?>
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
@@ -8,19 +8,37 @@
       <!--main content start-->
       <section id="main-content">
           <section class="wrapper site-min-height">		
-<legend ><font face = "cambria" size = 8 color = "grey"> Equipment Maintenance </font></legend>
-	<button  class="btn btn-info" onclick = "window.location.href='EquipmentAdd.php'">Add New Equipment</button>&nbsp;&nbsp;<input type= checkbox id = "showdisabled" onclick ="showdis()"> Show Disabled Items<br>
-                            <center><br>				
+<legend ><font face = "cambria" size = 8 color = "grey">  Maintenance </font></legend>
+		<h2> Equipment</h2>
+				<p align="right">
+				<button type="button" class="btn btn-info" onclick = "window.location.href='EquipmentAdd.php'"><i class="fa fa-plus"></i> Add New</button>
+				</p>
+				
+				<input type= checkbox id = "showdisabled" onclick ="showdis()"> Show Disabled Items<br>
+										<center><br>				
 				<div class = "showback" id = 'tblview'>
 	<form method = POST>
 				<table class="table table-striped table-bordered table-hover"  border = '3' style = 'width:95%'><!-- Table -->
-					<thead><tr>
-						<th> Equipment </th>
-						<th> Category </th>
-						<th> Price</th>
-						<th> Quantity </th>
-						<th> Action</th>
-					</tr></thead>
+					<thead>
+						<tr>
+							<th><i class="fa fa-question-circle"></i> Equipment </th>
+							<th><i class="fa fa-bullhorn"></i> Category </th>
+							<th><i class="fa fa-bookmark"></i> Resident Price</th>
+							<th><i class="fa fa-bookmark"></i> Non-Resident Price</th>
+							<th><i class="fa fa-cog"></i> Quantity </th>
+							<th><i class="fa fa-edit"></i> Action</th>
+						</tr>
+					</thead>
+					<tfoot>
+						<tr>
+							<th><i class="fa fa-question-circle"></i> Equipment </th>
+							<th><i class="fa fa-bullhorn"></i> Category </th>
+							<th><i class="fa fa-bookmark"></i> Resident Price</th>
+							<th><i class="fa fa-bookmark"></i> Non-Resident Price</th>
+							<th><i class="fa fa-cog"></i> Quantity </th>
+							<th><i class="fa fa-edit"></i> Action</th>
+						</tr>
+					</tfoot>
 					
 					<tbody><?php
 					require('connection.php');
@@ -45,13 +63,14 @@
 								}
 					?>				</td>
 									<td><?php echo $row->dblEquipFee?></td>
+									<td><?php echo $row->dblEquipNResidentCharge?></td>
 									<td><?php echo $row->intEquipQuantity?></td>
 									<td><div class="btn-group " role="group" aria-label="..." >	
 									<div class="btn-group " role="group">	
-									<button  class="btn btn-info btn-round" type = submit name = "btnEdit" value = <?php echo $row->strEquipNo; ?> >Edit</button>
+									<button  class="btn btn-info btn-xs" type = submit name = "btnEdit" value = <?php echo $row->strEquipNo; ?> ><i class="fa fa-pencil"></i></button>
 									</div>
 									<div class="btn-group " role="group" >	
-									<button  class="btn btn-danger btn-round" type = submit name = "btnDelete" onclick = "return confirm('Do you really want to continue?');" value = <?php echo $row->strEquipNo; ?> >Disable</button>
+									<button  class="btn btn-danger btn-xs" type = submit name = "btnDelete" onclick = "return confirm('Do you really want to continue?');" value = <?php echo $row->strEquipNo; ?> >Disable</button>
 									</div>
 									</div></td>
 								</tr>

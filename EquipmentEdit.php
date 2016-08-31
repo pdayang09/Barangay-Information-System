@@ -41,13 +41,13 @@
 					<input id="controlno1" name = "quantity" class="form-control input-group-lg reg_name" type="number" min="1" value = <?php if(isset($_SESSION['stat'])){echo $_SESSION['stat']; } ?> required>			 
 				</div>
 			</div><br><br><br>
-			<p><font face = "cambria" size = 5 color = "grey"> Price </font></p>
+			<p><font face = "cambria" size = 5 color = "grey"> Resident Price </font></p>
 			<div class = "form-group">
 				<div class="col-sm-5">
 					<input id="controlno1" name = "price" class="form-control input-group-lg reg_name" type="number" min="1" step = any value = <?php if(isset($_SESSION['dblEquipFee'])){echo $_SESSION['dblEquipFee']; } ?> required>			 
 				</div>
 			</div><br><br><br>
-			<p><font face = "cambria" size = 5 color = "grey"> Discount</font></p>
+			<p><font face = "cambria" size = 5 color = "grey"> Non-Resident Price</font></p>
 			<div class = "form-group">
 				<div class="col-sm-5">
 					<input id="controlno1" name = "discount" class="form-control input-group-lg reg_name" type="number" min="1" value = <?php if(isset($_SESSION['discount'])){echo $_SESSION['discount']; } ?> required>			 
@@ -65,10 +65,10 @@
 			 if (isset($_POST['btnEdit'])){
 				 $strcont = $_POST['btnEdit'];		
 				 $intquantity = $_POST['quantity'];
-				  $Price = $_POST['price'];
-				   $discount= $_POST['discount'];
+				 $Price = $_POST['price'];
+				 $discount= $_POST['discount'];
 				require('connection.php');
-				 $g = mysqli_query($con,"UPDATE tblequipment SET intEquipQuantity = '$intquantity', dblEquipFee = $Price , dblEquipDiscount = $discount WHERE strEquipNo = '$strcont'");
+				 $g = mysqli_query($con,"UPDATE tblequipment SET intEquipQuantity = '$intquantity', dblEquipFee = $Price , dblEquipNResidentCharge = $discount WHERE strEquipNo = '$strcont'");
 				
 				if($g == true){
 					 echo "<script>alert('Success');</script>";
