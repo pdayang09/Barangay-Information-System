@@ -76,17 +76,20 @@
 			
 			<tbody>
 			<?php
+				$statement = 'SELECT r.`strReservationID`, r.`strRSPurpose`, r.`datRSReserved`, re.`strREEquipCode`, re.`dtmREFrom`, re.`dtmRETo`, re.`intREQuantity`, rt.`intReturned`, rt.`intUnreturned` FROM `tblreservationrequest` r INNER JOIN tblreserveequip re ON re.`strReservationID` = r.`strReservationID` INNER JOIN tblreturnequip rt ON rt.strReservationID = re.strReservationID';
+
+
 			$query = mysqli_query($con,$statement);
 			while($row = mysqli_fetch_array($query)){?>
 			
 				<tr><td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[0]; ?></td>
-				<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><?php echo $row[7];?></td>
+				<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><?php echo $row[1];?></td>
 				<?php
-					if($row[9]==0){
+					if($row[7]==$row[6]){
 						echo"<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode' >Complete</td>";
 						echo"<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode' ><button disabled class='btn btn-success btn-xs' type ='submit' name = ''?>RETURN</button></td>";
 						
-					}else if($row[9]>0){
+					}else if($row[7]<$row[6]){
 						echo"<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'>Incomplete</td>";
 						echo"<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><button class='btn btn-success btn-xs' type ='submit' name = 'return' value = $row[0]>RETURN</button></td>
 				";
@@ -105,13 +108,14 @@
 				$_SESSION['return'] = $return;
 				
 					//Reservation Details
-					$query = mysqli_query($con,"select a.strApplicantFname AS Name,  a.strapplicantcontactno AS ContactNo, r.strreservationid AS ReservationID, r.datRReserveddate AS ReservationDate FROM tblApplicant a INNER JOIN tblreservationrequest r ON r.strrrapplicantid = a.strapplicantid WHERE r.strReservationID=$return ORDER BY r.datRReservedDate asc;");
+					$query = mysqli_query($con,"SELECT r.`strReservationID`, r.`strRSPurpose`, r.`datRSReserved`, re.`strREEquipCode`, re.`dtmREFrom`, re.`dtmRETo`, re.`intREQuantity`, rt.`intReturned`, rt.`intUnreturned` FROM `tblreservationrequest` r INNER JOIN tblreserveequip re ON re.`strReservationID` = r.`strReservationID` INNER JOIN tblreturnequip rt ON rt.strReservationID = re.strReservationID WHERE rt.`strReservationID` = $return");
 					
 					while($row = mysqli_fetch_array($query)){
-						$name = $row[0];
-						$contactno = $row[1];
-						$resId = $row[2];
-						$resDate = $row[3];
+
+						$resId = $row[0];
+						$resPurpose = $row[1];
+						$resFrom = $row[4];
+						$resTo = $row[5];
 					}?>
 					
 			<div class="form-group">
@@ -122,22 +126,20 @@
 				<br>
 				<font face = "cambria" size = 4 color = "grey"> <?php echo"Reservation Id: $resId";?></font>
 				<br>
-				<font face = "cambria" size = 4 color = "grey"> <?php echo"Name: $name";?></font>
+				<font face = "cambria" size = 4 color = "grey"> <?php echo"Purpose: $resPurpose";?></font>
 				<br>
-				<font face = "cambria" size = 4 color = "grey"> <?php echo"Contact No: $contactno";?></font>
+				<font face = "cambria" size = 4 color = "grey"> <?php echo"From: $resFrom";?></font>
 				<br><br>
-				<!--<font face = "cambria" size = 5 color = "grey"> <?php echo"Purpose: $resPurpose";?></font>
+				<!--<font face = "cambria" size = 5 color = "grey"> <?php echo"To: $resTo";?></font>
 				<br> 
-				<font face = "cambria" size = 5 color = "grey"> <?php echo"From: $resFrom  <br> To: $resTo";?></font>
-				<br><br> -->
 				</div>
 			</div>		
 
-					<!-- Equipment Reservation Details -->
-					<center>
+			<!-- Equipment Reservation Details -->
+			<center>
 				<div class="col-sm-7">
-					<div class="panel panel-default"><!-- Default panel contents -->	
-						<table class="table"><!-- Table -->
+					<div class="panel panel-default"><!-- Default panel contents -->
+					<table class="table table-hover" style="height: 40%; overflow: scroll; "><!-- Table -->
 							<thead><tr>
 								<th>Equipment</th>
 								<th>Quantity</th>
@@ -147,20 +149,22 @@
 			
 						<tbody>
 						<?php
-						$query = mysqli_query($con,"SELECT rt.strequipcode AS Equipment, rt.intreturned AS ReturnedQty, rt.intunreturned AS UnreturnedQty FROM tblreservationrequest r INNER JOIN tblreturnequip rt ON rt.strreservationid = r.strreservationid WHERE r.strreservationid = $return;");
+						$query = mysqli_query($con,"SELECT r.`strReservationID`, r.`strRSPurpose`, r.`datRSReserved`, re.`strREEquipCode`, re.`dtmREFrom`, re.`dtmRETo`, re.`intREQuantity`, rt.`intReturned`, rt.`intUnreturned` FROM `tblreservationrequest` r INNER JOIN tblreserveequip re ON re.`strReservationID` = r.`strReservationID` INNER JOIN tblreturnequip rt ON rt.strReservationID = re.strReservationID WHERE rt.`strReservationID` = $return;");
+						
 						while($row = mysqli_fetch_array($query)){
+							$remain = $row[8] - $row[7];
 					?>
-							<tr><td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[0]; ?></td>
-							<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[1] + $row[2]; ?></td>
-							<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><?php echo $row[1]; ?></td>		
-							<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><input type="number" min = "0" max = "<?php echo ($row[1] + $row[2])-$row[1]; ?>" class="form-control input-group-lg reg_name" name = quantity[] value = 0></td>
-							</tr>
-							
+							<tr><td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[3]; ?></td>
+							<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[6]; ?></td>
+							<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><?php echo $row[7]; ?></td>		
+							<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'>
+							<input type='number' min = '0' name = quantity[] value = '0' max = '<?php echo $remain; ?>'</td>
+							</tr>							
 					<?php				
 						}?>			
 						</tbody>
 						</table>
-					</div><br><br>
+					</div>
 					
 					<input type="submit" class="btn btn-outline btn-success" name = "btnReturn" value="Update Return">					
 				</div></center>		
