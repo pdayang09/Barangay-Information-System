@@ -108,27 +108,34 @@ session_start();
 		$strUsername = $_POST['user'];
 		$strPassword = $_POST['password'];
 				
-		$sql = mysqli_query($con, "SELECT `strUsername`, `strPassword`,`strView`,concat(strFirstName,' ',strMiddleName,' ',strLastName,' ',strNameExtension) as Name from tblaccount as a inner join tblhousemember as b on a.intForeignMemberNo = b.intMemberNo inner join tblbrgyposition as c on a.intForeignPositionId = c.intPositionId 
+		$sql = @mysqli_query($con, "SELECT `strUsername`, `strPassword`,`strView`,strPositionName,concat(strFirstName,' ',strMiddleName,' ',strLastName,' ',strNameExtension) as Name from tblaccount as a inner join tblhousemember as b on a.intForeignMemberNo = b.intMemberNo inner join tblbrgyposition as c on a.intForeignPositionId = c.intPositionId 
 		where BINARY  strUsername = '$strUsername' and BINARY strPassword = '$strPassword'");
 		
 		$num = mysqli_num_rows($sql);
 		$row = mysqli_fetch_object($sql);
-		$pos = $row->strView;
-		$name = $row->Name;
+		
 		if($num > 0){
-			if($pos == 'Secretary'){
-				$_SESSION['Sec'] = $name;
-				echo "<script>alert('Welcome Secretary $name');
+			$pos = $row->strView;
+		$name = $row->Name;
+			if($pos == 'Sec'){
+				$_SESSION['Secretary'] = $name;
+				echo "<script>alert('Welcome ".$row->strPositionName." $name');
 				window.location = 'StreetMaintenance.php'</script>";
 			}
 				else if($pos == 'Kap'){
 				$_SESSION['BarangayCaptain'] = $name;
-				echo "<script>alert('Welcome Kapitan $name');
+				echo "<script>alert('Welcome ".$row->strPositionName." $name');
+				window.location = 'reservation_kapitanl.php'</script>";
+			}
+				else if($pos == 'Tres'){
+				$_SESSION['Treasurer'] = $name;
+				echo "<script>alert('Welcome ".$row->strPositionName." $name');
 				window.location = 'reservation_kapitanl.php'</script>";
 			}
 			
 	}
 	else{
+
 		echo "<script>alert('Unauthorized Access!');</script>";
 	}
 	}
