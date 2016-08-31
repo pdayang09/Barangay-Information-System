@@ -1,16 +1,29 @@
-<form method = POST>
+	<form method = POST>
 <?php
 require('connection.php');
 $val = $_POST['sid'];?>
      
                                <table class="table table-striped table-bordered table-hover"  border = '3' style = 'width:95%'><!-- Table -->
-					<thead><tr>
-						<th> Equipment </th>
-						<th> Category </th>
-						<th> Price</th>
-						<th> Quantity </th>
-						<th> Action</th>
-					</tr></thead>
+					<thead>
+						<tr>
+							<th><i class="fa fa-question-circle"></i> Equipment </th>
+							<th><i class="fa fa-bullhorn"></i> Category </th>
+							<th><i class="fa fa-bookmark"></i> Resident Price</th>
+							<th><i class="fa fa-bookmark"></i> Non-Resident Price</th>
+							<th><i class="fa fa-cog"></i> Quantity </th>
+							<th><i class="fa fa-edit"></i> Action</th>
+						</tr>
+					</thead>
+					<tfoot>
+						<tr>
+							<th><i class="fa fa-question-circle"></i> Equipment </th>
+							<th><i class="fa fa-bullhorn"></i> Category </th>
+							<th><i class="fa fa-bookmark"></i> Resident Price</th>
+							<th><i class="fa fa-bookmark"></i> Non-Resident Price</th>
+							<th><i class="fa fa-cog"></i> Quantity </th>
+							<th><i class="fa fa-edit"></i> Action</th>
+						</tr>
+					</tfoot>
 					
 					<tbody><?php
 if($val == 2){require('connection.php');
@@ -35,15 +48,18 @@ if($val == 2){require('connection.php');
 								}
 					?>				</td>
 									<td><?php echo $row->dblEquipFee?></td>
+									<td><?php echo $row->dblEquipNResidentCharge?></td>
 									<td><?php echo $row->intEquipQuantity?></td>
-									<td><div class="btn-group " role="group" aria-label="..." >	
-									<div class="btn-group " role="group">	
-									<button  class="btn btn-info btn-round" type = submit name = "btnEdit" value = <?php echo $row->strEquipNo; ?> >Edit</button>
+									<td>
+									<div class="btn-group " role="group" aria-label="..." >	
+										<div class="btn-group " role="group">	
+											<button  class="btn btn-info btn-xs" type = submit name = "btnEdit" value = <?php echo $row->strEquipNo; ?> ><i class="fa fa-pencil"></i></button>
+										</div>
+										<div class="btn-group " role="group" >	
+											<button  class="btn btn-danger btn-xs" type = submit name = "btnDelete" onclick = "return confirm('Do you really want to continue?');" value = <?php echo $row->strEquipNo; ?> >Disable</button>
+										</div>
 									</div>
-									<div class="btn-group " role="group" >	
-									<button  class="btn btn-danger btn-round" type = submit name = "btnDelete" onclick = "return confirm('Do you really want to continue?');" value = <?php echo $row->strEquipNo; ?> >Disable</button>
-									</div>
-									</div></td>
+									</td>
 								</tr>
 		<?php }} }
 if($val == 1){require('connection.php');
@@ -68,10 +84,11 @@ if($val == 1){require('connection.php');
 								}
 					?>				</td>
 									<td><?php echo $row->dblEquipFee?></td>
+									<td><?php echo $row->dblEquipNResidentCharge?></td>
 									<td><?php echo $row->intEquipQuantity?></td>
 									<td>
 									<div class="btn-group " role="group">	
-									<button  class="btn btn-info btn-round" type = submit  onclick = "return confirm('Do you really want to continue?');" name = "btnEnable" value = <?php echo $row->strEquipNo; ?> >Enable</button>
+									<button  class="btn btn-info btn-xs" type = submit  onclick = "return confirm('Do you really want to continue?');" name = "btnEnable" value = <?php echo $row->strEquipNo; ?> >Enable</button>
 									</div>
 									</td>
 								</tr>
