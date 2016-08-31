@@ -8,7 +8,7 @@
 	   
 	   	echo "
 		<p><font face='cambria' size=4 color='grey'><input type='checkbox' name = equipment[] value='$row[0]'/> $row[0] </font></p>
-		<input class='form-control input-group-lg reg_name' type='number' name = quantity[] title='Input Quantity' placeholder='Input Quantity' min='1' max='$row[1]' value=''; >
+		<input class='form-control input-group-lg reg_name' type='number' name = 'quantity' title='Input Quantity' placeholder='Input Quantity' min='1' max='$row[1]' value=''; >
 	";
 	
    	} ?>
