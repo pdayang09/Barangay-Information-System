@@ -463,11 +463,15 @@ function finReserve(){
             });
         alert("My Equipments are: " + equipment.join(" "));
 
+        equipment.join(equipment)
+
     var quantity = [];
         $.each($("input[name='quantity']"), function(){            
                 quantity.push($(this).val());
             });
         alert("My quantity are: " + quantity.join(" "));
+
+        quantity.join(quantity)
 
     document.getElementById("showCheck").innerHTML = a + b + c + resId + resPurpose + num;
 

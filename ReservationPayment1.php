@@ -27,12 +27,17 @@
 		$resFacName = $_SESSION['resFacName'];
 			
 		//EQUIPMENT
-		$equipment[] = $_SESSION['equipment'];
-		$quantity[] = $_SESSION['quantity'];		
+		$equipment[] = array();
+		$quantity[] = array();		
 		$quantity1[] = array(); //Temporary storage for quantity array	
 		$equipfee1[] = array(); //Equipment Fee
 		
-		$equipmentF = 0;
+		$temp = explode(",",$_SESSION['equipment']);
+		$equipment = array_merge($equipment, $temp);
+
+		$temp1 = explode(",",$_SESSION['quantity']);
+		$quantity = array_merge($quantity, $temp1);
+
 		if(!empty($equipment)){
 			
 			$intCtr =0;
@@ -42,22 +47,34 @@
 					require("connection.php");
 					$query = mysqli_query($con, "select dblequipfee from tblequipment where strequipname = '$a'");
 					
+					//echo $a;
+
 					while($row = mysqli_fetch_row($query)){
-						$equipfee1[$intCtr] = $row[0];
+						$equipfee1[$intCtr] = number_format($row[0],2);
+						//echo $equipfee1[$intCtr];
+						//echo "<br>";
 					}
 					
+					//echo $equipment[$intCtr];
+					//echo "<br>";
+
 					$intCtr++;
-					//echo $i;
-				}					
+				}
+				$intCtr =0;					
 			}
-			
+
+
 			$intCtr =0;
 			foreach($quantity as $i){
 				if(!empty($i)){
-					$quantity1[$intCtr] = $i;
-					$intCtr++;
-					//echo $i;
-				}					
+					$quantity1[$intCtr] = number_format($i,0);
+									
+					//echo $quantity[$intCtr];
+					//echo $quantity1[$intCtr];
+					//echo "<br>";
+				}	
+
+				$intCtr++;				
 			}
 			$equipmentF = 1;
 			
@@ -130,22 +147,30 @@
 												</tr>
 												</thead>
 											<tbody>											
-												<?php 
-												if($equipmentF == 1){
-												
-												for($intCtr = 0; $intCtr < sizeof($equipment); $intCtr++){ ?>		
-												<tr>
-													<td> <?php echo" $equipment[$intCtr]";?> </td>
-													<td> <?php echo" $quantity1[$intCtr]";?> </td>
-													<td> <?php echo" $equipfee1[$intCtr]";?></td>
-												</tr>
-												<?php 
-													$total = $total + $quantity1[$intCtr] * $equipfee1[$intCtr];
-													$total = number_format($total, 2);
-													} 
+										<?php 
+
+										if($equipmentF == 1){
+
+										foreach($equipment as $a){
+												if(!empty($a)){
+										?>
+
+										<tr>
+											<td> <?php echo $a;?> </td>
+											<td> <?php $quantity?> </td>
+											<td> <?php $equipfee1?></td>
+										</tr>
+
+										<?php 
+											$total = $total + $quantity1[$intCtr] * $equipfee1[$intCtr];
+											$total = number_format($total, 2);
+												}
+											}
 											
-												}else{
-												}?>											
+										}else{
+										}
+
+										?>											
 											</tbody>
 											</table> <!-- /#table-responsive -->
 										</div>
