@@ -265,9 +265,9 @@
                         <font face = "cambria" size = 5 color = "grey"> Check Availability </font><br><br>
 
                         <p><font face="cambria" size=4 color="grey"> From </font></p>
-                        <input name = "From" type="text" id="datetimepicker5" class="form-control input-group-lg reg_name, some_class" value="<?php if(isset($_POST['From'])){echo $_POST['From'];}else{}?>" >                 
+                        <input name = "From" type="text" id="datetimepicker" class="form-control input-group-lg reg_name, some_class" value="<?php if(isset($_POST['From'])){echo $_POST['From'];}else{}?>" >                 
                         <p><font face="cambria" size=4 color="grey"> To </font></p>
-                        <input name = "To" type="text" id="datetimepicker5" class="form-control input-group-lg reg_name, some_class" value="<?php if(isset($_POST['To'])){echo $_POST['To'];}else{}?>" > <br><br>
+                        <input name = "To" type="text" id="datetimepicker003" class="form-control input-group-lg reg_name, some_class" value="<?php if(isset($_POST['To'])){echo $_POST['To'];}else{}?>" > <br><br>
 
                        <center><button class="btn btn-outline btn-success" type="button" onclick='Check()' > Check </button></center>
 
@@ -507,13 +507,38 @@ $("#datetimepicker_format_locale").on("change", function(e){
     $.datetimepicker.setLocale($(e.currentTarget).val());
 });
 
-$('#datetimepicker').datetimepicker({
-dayOfWeekStart : 1,
-lang:'en',
-disabledDates:['1986/01/08','1986/01/09','1986/01/10'],
-startDate:  '1986/01/05'
+$("#datetimepicker_format_locale").on("change", function(e){
+    $.datetimepicker.setLocale($(e.currentTarget).val());
 });
-$('#datetimepicker').datetimepicker({value:'2015/04/15 05:03',step:10});
+
+$('#datetimepicker').datetimepicker({
+dayOfWeekStart : 0,
+lang:'en',
+//dateToDisable: ['09.05.2016'],
+startDate:  0,
+defaultDate: new Date(),
+defaultTime: '08:00',
+minDate: +new Date(),
+value: +new Date(),
+
+datepicker:true,
+    allowTimes:['4:30','5:00','5:30','6:00','6:30','7:00','7:30','8:00','8:30','9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00','20:30','21:00','21:30','22:00','22:30','23:00'],
+    step:5
+});
+$('#datetimepicker003').datetimepicker({
+dayOfWeekStart : 0,
+lang:'en',
+//dateToDisable: ['09.05.2016'],
+startDate:  0,
+defaultDate: new Date(),
+defaultTime: '08:00',
+minDate: +new Date(),
+value: +new Date(),
+
+datepicker:true,
+    allowTimes:['4:30','5:00','5:30','6:00','6:30','7:00','7:30','8:00','8:30','9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00','20:30','21:00','21:30','22:00','22:30','23:00'],
+    step:5
+});
 
 $('.some_class').datetimepicker({   
     formatTime:'H:i',

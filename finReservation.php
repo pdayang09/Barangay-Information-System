@@ -16,10 +16,14 @@ session_start();
     
     //Facility 
      if(!empty($resFacility)){
-        require("connection.php");
-        $query = mysqli_query($con, "select `strFaciName`,`dblFaciDayCharge`, `dblFaciNightCharge`, `dblFaciNResidentCharge` from tblFacility where `strFaciNo` = $resFacility");
-                        
-     while($row = mysqli_fetch_row($query)){
+
+      require("connection.php");
+      $query = mysqli_query($con, "select `strFaciName`,`dblFaciDayCharge`, `dblFaciNightCharge`, `dblFaciNResidentCharge` from tblFacility where `strFaciNo` = '$resFacility'");
+
+      if(mysqli_num_rows($query) > 0){
+        $i = 1;
+
+        while($row = mysqli_fetch_array($query)){
         $_SESSION['resfacno'] = $resFacility;
         $_SESSION['resFacility'] = $resFacility;
         $_SESSION['resFacName'] = $row[0];
@@ -27,10 +31,10 @@ session_start();
         $_SESSION['dayresfee'] = $row[1];
         $_SESSION['nightresfee'] = $row[2];
         $_SESSION['NResidentCharge'] = $row[3];
-
                        
        }
-                                  
+      }
+
       }else{
         $_SESSION['resfacno'] = "";
         $_SESSION['resFacility'] = "";

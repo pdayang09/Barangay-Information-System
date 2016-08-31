@@ -21,8 +21,8 @@
 		$resPurpose = $_SESSION['resPurpose'];
 		$num = $_SESSION['num']; 
 
-		$resFrom = $_SESSION['resFrom']; //FROM
-		$resTo = $_SESSION['resTo']; // TO
+		$resFrom = $_SESSION['resFrom']; 
+		$resTo = $_SESSION['resTo']; 
 		$resFacility = $_SESSION['resFacility'];
 		$resFacName = $_SESSION['resFacName'];
 			
