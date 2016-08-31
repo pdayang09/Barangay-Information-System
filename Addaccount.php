@@ -90,7 +90,7 @@
 		<tbody>
 							<?php
 					require('connection.php');
-						$sql = "SELECT  intMemberNo,concat(strLastName,' ,',strFirstName) as 'Name', concat(strBuildingNo,' , ',strStreetName) as 'Street',Timestampdiff(YEAR,dtBirthdate,NOW()) as Age   FROM `tblhousemember` as a inner join `tblhousehold` as b on  a.intForeignHouseholdNo = b.intHouseholdNo inner join tblaccount as c on !(a.intMemberNo = c.intForeignMemberNo) inner join tblstreet as d on b.intForeignStreetId = d.intStreetId where !(strVotersId = '') && Timestampdiff(YEAR,dtBirthdate,NOW())";
+						$sql = "SELECT intMemberNo,concat(strLastName,' ,',strFirstName) as 'Name', concat(strBuildingNo,' , ',strStreetName) as 'Street',Timestampdiff(YEAR,dtBirthdate,NOW()) as Age FROM `tblhousemember` as a inner join tblhousehold as b on a.intForeignHouseholdNo = b.intHouseholdNo inner join tblstreet as c on b.intForeignStreetId = c.intStreetId WHERE a.intMemberNo NOT IN (SELECT intForeignMemberNo FROM tblaccount) && !(strVotersId = '') && Timestampdiff(YEAR,dtBirthdate,NOW())";
 						$query = mysqli_query($con, $sql);
 				
 						if(mysqli_num_rows($query) > 0){
@@ -117,7 +117,7 @@
 			$start = $_POST['Start'];
 			$end = $_POST['End'];
 			
-			mysqli_query($con,"INSERT INTO `tblaccount`(`intForeignMemberNo`, `strUsername`, `strPassword`, `strPosition`, `strEmailAdd`, `dtStart`, `dtEnd`, `strStatus`) VALUES ('$id','$username','$pass','$pos','$Email','$start','$end','Enabled')");
+			mysqli_query($con,"INSERT INTO `tblaccount`(`intForeignMemberNo`, `strUsername`, `strPassword`, `intForeignPositionId`, `strEmailAdd`, `dtStart`, `dtEnd`, `strStatus`) VALUES ('$id','$username','$pass','$pos','$Email','$start','$end','Enabled')");
 			
 			echo "<script>alert('Successfully Inserted!');
 			window.location = 'AccountMaintenance.php';</script>";

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php 
 session_start();
+session_destroy();
 ?>
 
 <html lang="en">
@@ -98,7 +99,7 @@ session_start();
     </script>
 	
 <?php
-
+session_start();
 	
 	if(isset($_POST['btnsignin'])){	
 		require("connection.php");
@@ -107,34 +108,25 @@ session_start();
 		$strUsername = $_POST['user'];
 		$strPassword = $_POST['password'];
 				
-		$sql = mysqli_query($con, "SELECT `strUsername`, `strPassword`,`strPosition`,concat(strFirstName,' ',strMiddleName,' ',strLastName,' ',strNameExtension) as Name 
-		from tblaccount as a inner join tblhousemember as b on a.intForeignMemberNo = b.intMemberNo  where BINARY strUsername = '$strUsername' and BINARY strPassword = '$strPassword'");
+		$sql = mysqli_query($con, "SELECT `strUsername`, `strPassword`,`strView`,concat(strFirstName,' ',strMiddleName,' ',strLastName,' ',strNameExtension) as Name from tblaccount as a inner join tblhousemember as b on a.intForeignMemberNo = b.intMemberNo inner join tblbrgyposition as c on a.intForeignPositionId = c.intPositionId 
+		where BINARY  strUsername = '$strUsername' and BINARY strPassword = '$strPassword'");
 		
 		$num = mysqli_num_rows($sql);
 		$row = mysqli_fetch_object($sql);
-		$pos = $row->strPosition;
+		$pos = $row->strView;
 		$name = $row->Name;
 		if($num > 0){
 			if($pos == 'Secretary'){
-				$_SESSION['Secretary'] = $name;
+				$_SESSION['Sec'] = $name;
 				echo "<script>alert('Welcome Secretary $name');
 				window.location = 'StreetMaintenance.php'</script>";
 			}
-				else if($pos == 'Barangay Captain'){
+				else if($pos == 'Kap'){
 				$_SESSION['BarangayCaptain'] = $name;
 				echo "<script>alert('Welcome Kapitan $name');
 				window.location = 'reservation_kapitanl.php'</script>";
 			}
-			else if($pos == 'Treasurer'){
-				$_SESSION['Treasurer'] = $name;
-				echo "<script>alert('Welcome Treasurer $name');
-				window.location = 'reservation_paymentl.php'</script>";
-			}
-			else if($pos == 'Liason'){
-				$_SESSION['Liason'] = $name;
-				echo "<script>alert('Welcome Liason $name');
-				window.location = 'facilityequipmentl.php'</script>";
-			}
+			
 	}
 	else{
 		echo "<script>alert('Unauthorized Access!');</script>";
