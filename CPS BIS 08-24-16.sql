@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 30, 2016 at 02:58 AM
+-- Generation Time: Aug 31, 2016 at 08:47 AM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.5.30
 
@@ -31,7 +31,7 @@ CREATE TABLE `tblaccount` (
   `intForeignMemberNo` int(11) NOT NULL,
   `strUsername` varchar(45) NOT NULL,
   `strPassword` varchar(45) NOT NULL,
-  `strPosition` varchar(25) NOT NULL,
+  `intForeignPositionId` int(11) NOT NULL,
   `strEmailAdd` varchar(25) NOT NULL,
   `dtStart` date NOT NULL,
   `dtEnd` date NOT NULL,
@@ -42,10 +42,12 @@ CREATE TABLE `tblaccount` (
 -- Dumping data for table `tblaccount`
 --
 
-INSERT INTO `tblaccount` (`strOfficerID`, `intForeignMemberNo`, `strUsername`, `strPassword`, `strPosition`, `strEmailAdd`, `dtStart`, `dtEnd`, `strStatus`) VALUES
-(1, 1, 'dayang_paul', 'pauldayang', 'Secretary', ' ', '2016-08-29', '2018-08-29', 'Enabled'),
-(2, 10, 'wu_jenny', 'jennywu', 'Barangay Captain', 'JennyWu@yahoo.com', '2016-08-29', '2018-08-29', 'Enabled'),
-(3, 21, 'ara_mary', 'maryara', 'Treasurer', 'MariaAra@gmail.com', '2016-08-29', '2018-08-29', 'Enabled');
+INSERT INTO `tblaccount` (`strOfficerID`, `intForeignMemberNo`, `strUsername`, `strPassword`, `intForeignPositionId`, `strEmailAdd`, `dtStart`, `dtEnd`, `strStatus`) VALUES
+(1, 1, 'dayang_paul', 'pauldayang', 1, ' ', '2016-08-29', '2018-08-29', 'Enabled'),
+(2, 10, 'wu_jenny', 'jennywu', 2, 'JennyWu@yahoo.com', '2016-08-29', '2018-08-29', 'Enabled'),
+(3, 21, 'ara_mary', 'maryara', 4, 'MariaAra@gmail.com', '2016-08-29', '2018-08-29', 'Enabled'),
+(4, 2, 'perez_paula', 'paulaperez', 4, '', '2016-08-30', '2018-08-30', 'Enabled'),
+(5, 3, 'perez_matteo', '12345', 4, '', '2016-08-30', '2018-08-30', 'Enabled');
 
 -- --------------------------------------------------------
 
@@ -95,8 +97,21 @@ CREATE TABLE `tblbrgyofficial` (
 --
 
 CREATE TABLE `tblbrgyposition` (
-  `strPositionnName` varchar(45) NOT NULL
+  `intPositionId` int(11) NOT NULL,
+  `strPositionName` varchar(45) NOT NULL,
+  `strView` varchar(25) NOT NULL,
+  `intNumber` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tblbrgyposition`
+--
+
+INSERT INTO `tblbrgyposition` (`intPositionId`, `strPositionName`, `strView`, `intNumber`) VALUES
+(1, 'Secretary', 'Sec', 1),
+(2, 'Barangay Captain', 'Kap', 1),
+(3, 'Liason', 'Liason', 1),
+(4, 'Administrator', 'Admin', 3);
 
 -- --------------------------------------------------------
 
@@ -956,7 +971,7 @@ ALTER TABLE `tblbrgyofficial`
 -- Indexes for table `tblbrgyposition`
 --
 ALTER TABLE `tblbrgyposition`
-  ADD PRIMARY KEY (`strPositionnName`);
+  ADD PRIMARY KEY (`intPositionId`);
 
 --
 -- Indexes for table `tblbusiness`
@@ -1161,7 +1176,12 @@ ALTER TABLE `tblzone`
 -- AUTO_INCREMENT for table `tblaccount`
 --
 ALTER TABLE `tblaccount`
-  MODIFY `strOfficerID` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `strOfficerID` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `tblbrgyposition`
+--
+ALTER TABLE `tblbrgyposition`
+  MODIFY `intPositionId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `tblbusiness`
 --
