@@ -76,7 +76,7 @@
 			
 			<tbody>
 			<?php
-				$statement = 'SELECT r.`strReservationID`, r.`strRSPurpose`, r.`datRSReserved`, re.`strREEquipCode`, re.`dtmREFrom`, re.`dtmRETo`, re.`intREQuantity`, rt.`intReturned`, rt.`intUnreturned` FROM `tblreservationrequest` r INNER JOIN tblreserveequip re ON re.`strReservationID` = r.`strReservationID` INNER JOIN tblreturnequip rt ON rt.strReservationID = re.strReservationID';
+				$statement = 'SELECT r.`strReservationID`, r.`strRSPurpose`, r.`datRSReserved`, rt.`intReturned`, rt.`intUnreturned` FROM `tblreservationrequest` r INNER JOIN tblreturnequip rt ON rt.strReservationID = r.strReservationID';
 
 
 			$query = mysqli_query($con,$statement);
@@ -85,11 +85,11 @@
 				<tr><td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[0]; ?></td>
 				<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><?php echo $row[1];?></td>
 				<?php
-					if($row[7]==$row[6]){
+					if($row[4]==0){
 						echo"<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode' >Complete</td>";
 						echo"<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode' ><button disabled class='btn btn-success btn-xs' type ='submit' name = ''?>RETURN</button></td>";
 						
-					}else if($row[7]<$row[6]){
+					}else if($row[4]>0){
 						echo"<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'>Incomplete</td>";
 						echo"<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><button class='btn btn-success btn-xs' type ='submit' name = 'return' value = $row[0]>RETURN</button></td>
 				";
@@ -149,16 +149,16 @@
 			
 						<tbody>
 						<?php
-						$query = mysqli_query($con,"SELECT r.`strReservationID`, r.`strRSPurpose`, r.`datRSReserved`, re.`strREEquipCode`, re.`dtmREFrom`, re.`dtmRETo`, re.`intREQuantity`, rt.`intReturned`, rt.`intUnreturned` FROM `tblreservationrequest` r INNER JOIN tblreserveequip re ON re.`strReservationID` = r.`strReservationID` INNER JOIN tblreturnequip rt ON rt.strReservationID = re.strReservationID WHERE rt.`strReservationID` = $return;");
+						$query = mysqli_query($con,"SELECT `strRTEquipCode`, `intReturned` + `intUnreturned`, `intReturned`, `intUnreturned` FROM tblreturnequip WHERE `strReservationID` = $return;");
 						
 						while($row = mysqli_fetch_array($query)){
-							$remain = $row[8] - $row[7];
+							
 					?>
-							<tr><td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[3]; ?></td>
-							<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[6]; ?></td>
-							<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><?php echo $row[7]; ?></td>		
+							<tr><td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[0]; ?></td>
+							<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[2]; ?></td>
+							<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><?php echo $row[3]; ?></td>		
 							<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'>
-							<input type='number' min = '0' name = quantity[] value = '0' max = '<?php echo $remain; ?>'</td>
+							<input type='number' min = '0' name = quantity[] value = '0' max = '<?php echo $row[4]; ?>'</td>
 							</tr>							
 					<?php				
 						}?>			
