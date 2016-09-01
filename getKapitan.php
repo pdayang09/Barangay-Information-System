@@ -41,12 +41,12 @@ if($_POST['bid']==2){
 				<?php
 					if($row[6] == "For Approval"){ 	//Personnel and Action if Status = For Approval, Approve ?>	
 						      <td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'>
-								<?php echo"<input type='checkbox' name=Ddisapprove[] value='$row[0]' />"; ?>
+								<?php echo"<input type='checkbox' name=approve[] value='$row[0]' />"; ?>
                              </td>
 				<?php		
 					}else if($row[6] == "Approved"){  //Personnel and Action if Status = Approved, Collect ?>
 							  <td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'>
-								<?php echo"<input type='checkbox' name=Ddisapprove[] value='$row[0]' />"; ?>
+								<?php echo"<input type='checkbox' name=disapprove[] value='$row[0]' />"; ?>
                              </td>
 				<?php		
 					}else if($row[6] == "Paid"){  //Personnel and Action if Status = Approved, Collect ?>
