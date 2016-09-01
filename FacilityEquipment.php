@@ -461,7 +461,7 @@ function finReserve(){
         $.each($("input[name='equipment']:checked"), function(){            
                 equipment.push($(this).val());
             });
-        alert("My Equipments are: " + equipment.join(" "));
+        //alert("My Equipments are: " + equipment.join(" "));
 
         equipment.join(equipment)
 
@@ -469,11 +469,11 @@ function finReserve(){
         $.each($("input[name='quantity']"), function(){            
                 quantity.push($(this).val());
             });
-        alert("My quantity are: " + quantity.join(" "));
+        //alert("My quantity are: " + quantity.join(" "));
 
         quantity.join(quantity)
 
-    document.getElementById("showCheck").innerHTML = a + b + c + resId + resPurpose + num;
+    //document.getElementById("showCheck").innerHTML = a + b + c + resId + resPurpose + num;
 
      $.ajax({
         type: "POST",

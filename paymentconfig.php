@@ -1,6 +1,16 @@
 <?php
 require("connection.php");
 
+if($_SESSION['resFacilityFlag'] == 1){
+
+	$_SESSION['dayresfee'] = "";
+	$_SESSION['NResidentCharge'] = "";
+	$_SESSION['resFacility'] = "";
+	$_SESSION['resFacName'] = "";
+}else{
+	
+}
+
 switch($residency){
 
 	case 1:	
@@ -8,7 +18,7 @@ switch($residency){
 	break;
 	
 	case 2:
-		$resfee = $_SESSION['dayresfee'] + $_SESSION['NResidentCharge'];;
+		$resfee = $_SESSION['dayresfee'] + $_SESSION['NResidentCharge'];
 	break;
 	
 	default;

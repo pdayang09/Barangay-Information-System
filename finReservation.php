@@ -35,6 +35,7 @@ session_start();
        }
       }
 
+        $_SESSION['resFacilityFlag'] = 0;
       }else{
         $_SESSION['resfacno'] = "";
         $_SESSION['resFacility'] = "";
@@ -43,10 +44,13 @@ session_start();
         $_SESSION['dayresfee'] = "";
         $_SESSION['nightresfee'] = "";
         $_SESSION['NResidentCharge'] = "";
+
+        $_SESSION['resFacilityFlag'] = 1;
       }    
 
      //Equipment 
      if(!empty($_POST['equipment'])){
+
         $equipment = $_POST['equipment'];   
      if(isset($_POST['quantity'])){
         $quantity = $_POST['quantity'];                                 
@@ -54,10 +58,15 @@ session_start();
         $_SESSION['equipment'] = $equipment;
         $_SESSION['quantity'] = $quantity;
      }else{
+        
         $_SESSION['equipment'] = "";
         $_SESSION['quantity'] = "";
      }
-     } 
+     }else{
+      
+        $_SESSION['equipment'] = "";
+        $_SESSION['quantity'] = "";
+     }
   
     //Other
     $_SESSION['resFrom'] = $resfrom;

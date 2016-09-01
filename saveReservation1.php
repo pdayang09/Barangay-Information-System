@@ -18,33 +18,48 @@
 		//tblpaymenttrans`
 		//mysqli_query($con, "INSERT INTO `tblpaymenttrans`(`intORNo`, `dtmPaymentDate`, `dblPaymentAmount`, `dblPaidAmount`, `dblRemaining`) VALUES ('',' ','$total','','$total')");
 		
-		if(!empty($resFacility)){
+		if($_SESSION['resFacilityFlag'] ==0){
 			//tblreservefaci`
 			mysqli_query($con,"INSERT INTO `tblreservefaci`(`strReservationID`, `strREFaciCode`, `dtmREFrom`, `dtmRETo`) VALUES ('$resId','$resFacility','$resFrom','$resTo')");
-		}else{
+
+			$_SESSION['resFacilityFlag'] == 0;
+		}else if ($resFacilityFlag == 1){
 			
+			$_SESSION['resFacilityFlag'] == 0;
 		}		
 		
 		//tblreserveequip`
-		if($equipmentF == 1){												
-			for($intCtr = 0; $intCtr < sizeof($equipment); $intCtr++){
-				mysqli_query($con, "INSERT INTO `tblreserveequip`(`strReservationID`, `strREEquipCode`, `dtmREFrom`, `dtmRETo`,`intREQuantity`) VALUES ('$resId','$equipment[$intCtr]','$resFrom','$resTo','$quantity1[$intCtr]')");
+		if($equipmentF == 1){
+
+		$intCtr =0;
+		foreach($equipment as $a){
+			if(!empty($a)){
+	
+				mysqli_query($con, "INSERT INTO `tblreserveequip`(`strReservationID`, `strREEquipCode`, `dtmREFrom`, `dtmRETo`,`intREQuantity`) VALUES ('$resId','$a','$resFrom','$resTo','$quantity1[$intCtr]')");
 			
 				//tblreturnequip`
-				mysqli_query($con, "INSERT INTO `tblreturnequip`(`strReservationID`, `strRTEquipCode`, `datRTDate`, `intReturned`, `intUnreturned`) VALUES ('$resId','$equipment[$intCtr]','$resTo',' ','$quantity1[$intCtr]')");
-			}			
+				mysqli_query($con, "INSERT INTO `tblreturnequip`(`strReservationID`, `strRTEquipCode`, `datRTDate`, `intReturned`, `intUnreturned`) VALUES ('$resId','$a','$resTo','0','$quantity1[$intCtr]')");
+
+				$intCtr++;
+			}
+		}
+
 			$equipmentF =0;
+
 			unset($equipment);
+			unset($equipfee1);
 			unset($quantity);
 			unset($quantity1);
 			unset($resFacility);
+
 			$resFacName = "";
 			$resfee = "";
 			$hours = "";
 			
-			session_destroy();			
+			session_destroy();	
+
 		}else{
-			
+
 		}
 		
 		echo"<script> alert('Your request has been submitted'); </script>";

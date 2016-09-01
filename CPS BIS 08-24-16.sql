@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 31, 2016 at 08:47 AM
+-- Generation Time: Sep 01, 2016 at 12:54 AM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.5.30
 
@@ -441,7 +441,7 @@ CREATE TABLE `tblequipment` (
   `strEquipCategory` varchar(25) NOT NULL,
   `intEquipQuantity` int(11) NOT NULL,
   `dblEquipFee` double NOT NULL,
-  `dblEquipDiscount` double NOT NULL,
+  `dblEquipNResidentCharge` double NOT NULL,
   `strStatus` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -449,7 +449,7 @@ CREATE TABLE `tblequipment` (
 -- Dumping data for table `tblequipment`
 --
 
-INSERT INTO `tblequipment` (`strEquipNo`, `strEquipName`, `strEquipCategory`, `intEquipQuantity`, `dblEquipFee`, `dblEquipDiscount`, `strStatus`) VALUES
+INSERT INTO `tblequipment` (`strEquipNo`, `strEquipName`, `strEquipCategory`, `intEquipQuantity`, `dblEquipFee`, `dblEquipNResidentCharge`, `strStatus`) VALUES
 (1, 'Basketball', '8', 13, 50.51, 10, 'Enabled'),
 (2, 'Volleyball', '8', 10, 50, 0, 'Enabled'),
 (3, 'Tennis Ball', '8', 10, 50, 0, 'Enabled'),
@@ -472,14 +472,14 @@ CREATE TABLE `tblfacility` (
   `strFaciStatus` varchar(45) NOT NULL,
   `dblFaciDayCharge` double DEFAULT NULL,
   `dblFaciNightCharge` double DEFAULT NULL,
-  `dblFaciDiscount` double DEFAULT NULL
+  `dblFaciNResidentCharge` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tblfacility`
 --
 
-INSERT INTO `tblfacility` (`strFaciNo`, `strFaciName`, `strFaciCategory`, `strFaciStatus`, `dblFaciDayCharge`, `dblFaciNightCharge`, `dblFaciDiscount`) VALUES
+INSERT INTO `tblfacility` (`strFaciNo`, `strFaciName`, `strFaciCategory`, `strFaciStatus`, `dblFaciDayCharge`, `dblFaciNightCharge`, `dblFaciNResidentCharge`) VALUES
 (1, 'Basketball Court', '1', 'Good Condition', 250, 300, 500),
 (2, 'Badminton Court', '1', 'Good Condition', 250, 300, 500),
 (3, 'Tennis Court', '1', 'Good Condition', 250, 300, 500),
@@ -589,7 +589,7 @@ CREATE TABLE `tblpaymentdetail` (
   `intNum` int(10) UNSIGNED NOT NULL,
   `strRequestID` varchar(25) NOT NULL,
   `dblReqPayment` double NOT NULL,
-  `intRequestORNo` int(11) NOT NULL
+  `intRequestORNo` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -597,26 +597,26 @@ CREATE TABLE `tblpaymentdetail` (
 --
 
 INSERT INTO `tblpaymentdetail` (`intNum`, `strRequestID`, `dblReqPayment`, `intRequestORNo`) VALUES
-(1, '001', 250, 0),
-(2, '002', 100, 0),
-(3, '003', 600, 0),
-(4, '004', 566.02, 0),
-(5, '005', 1500, 0),
-(6, '006', 625, 0),
-(7, '007', 1650, 0),
-(8, '008', 600, 0),
-(9, '009', 1200, 0),
-(10, '010', 1500, 0),
-(11, '010', 1250, 0),
-(12, '37', 50, 1),
-(13, '39', 50, 1),
-(17, '45', 1500, 0),
-(18, 'RTU 123', 100, 1),
-(19, '46', 50, 1),
-(20, 'UTI 009', 100, 1),
-(27, '19', 999.95, 0),
-(28, '20', 1599.95, 0),
-(29, 'UTI 367', 100, 1);
+(1, '001', 250, '0'),
+(2, '002', 100, '0'),
+(3, '003', 600, '0'),
+(4, '004', 566.02, '0'),
+(5, '005', 1500, '0'),
+(6, '006', 625, '0'),
+(7, '007', 1650, '0'),
+(8, '008', 600, '0'),
+(9, '009', 1200, '0'),
+(10, '010', 1500, '0'),
+(11, '010', 1250, '0'),
+(12, '37', 50, '1'),
+(13, '39', 50, '1'),
+(17, '45', 1500, '0'),
+(18, 'RTU 123', 100, '1'),
+(19, '46', 50, '1'),
+(20, 'UTI 009', 100, '1'),
+(27, '19', 999.95, '0'),
+(28, '20', 1599.95, '0'),
+(29, 'UTI 367', 100, '1');
 
 -- --------------------------------------------------------
 
@@ -625,7 +625,7 @@ INSERT INTO `tblpaymentdetail` (`intNum`, `strRequestID`, `dblReqPayment`, `intR
 --
 
 CREATE TABLE `tblpaymenttrans` (
-  `intORNo` int(11) NOT NULL,
+  `intORNo` varchar(11) NOT NULL,
   `dtmPaymentDate` date NOT NULL,
   `dblPaymentAmount` double NOT NULL,
   `dblPaidAmount` double NOT NULL,
@@ -637,9 +637,9 @@ CREATE TABLE `tblpaymenttrans` (
 --
 
 INSERT INTO `tblpaymenttrans` (`intORNo`, `dtmPaymentDate`, `dblPaymentAmount`, `dblPaidAmount`, `dblRemaining`) VALUES
-(0, '0000-00-00', 0, 0, 0),
-(1, '2016-07-23', 250, 500, 0),
-(2, '2016-07-23', 250, 500, 0);
+('0', '0000-00-00', 0, 0, 0),
+('1', '2016-07-23', 250, 500, 0),
+('2', '2016-07-23', 250, 500, 0);
 
 -- --------------------------------------------------------
 

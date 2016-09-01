@@ -52,15 +52,14 @@
 					while($row = mysqli_fetch_row($query)){
 						$equipfee1[$intCtr] = number_format($row[0],2);
 						//echo $equipfee1[$intCtr];
-						//echo "<br>";
+						//echo "$intCtr";
 					}
 					
 					//echo $equipment[$intCtr];
 					//echo "<br>";
 
 					$intCtr++;
-				}
-				$intCtr =0;					
+				}				
 			}
 
 
@@ -72,9 +71,9 @@
 					//echo $quantity[$intCtr];
 					//echo $quantity1[$intCtr];
 					//echo "<br>";
-				}	
 
-				$intCtr++;				
+				$intCtr++;
+				}					
 			}
 			$equipmentF = 1;
 			
@@ -151,21 +150,24 @@
 
 										if($equipmentF == 1){
 
+										$intCtr =0;
 										foreach($equipment as $a){
-												if(!empty($a)){
+											if(!empty($a)){
 										?>
 
 										<tr>
 											<td> <?php echo $a;?> </td>
-											<td> <?php $quantity?> </td>
-											<td> <?php $equipfee1?></td>
+											<td> <?php echo $quantity1[$intCtr]; ?> </td>
+											<td> <?php echo $equipfee1[$intCtr]; ?></td>
 										</tr>
 
 										<?php 
 											$total = $total + $quantity1[$intCtr] * $equipfee1[$intCtr];
 											$total = number_format($total, 2);
-												}
+												
+											$intCtr++;
 											}
+										}
 											
 										}else{
 										}

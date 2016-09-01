@@ -1,27 +1,14 @@
-<!-- === BEGIN FOOTER === -->
-	<div id="base">
-					<!-- === BEGIN FOOTER === -->
-	<div class="footer">
-				<div>
-					<ul>
-						<li class="selected">
-							<a href="index.php">Home</a>|
-						</li>
-						<li>
-							<a href="about.php">About</a>|
-						</li>
-						<li>
-							<a href="news.php">News</a>|
-						</li>
-						<li>
-							<a href="services.php">Services</a>|
-						</li>
-						<li>
-							<a class="btn"href="login.php">Login</a>|
-						</li>
-						
-					</ul>
-					<p>&#169; Polytechnic University of the Philippines 2016. All Rights Reserved.</p>
-				</div>
-			</div>
-		<!-- === END FOOTER === -->
+<div id="footer">
+        <div id="footer_box1">
+            <p>Copyright 2016. Polytechnic University of the Philippines.<br />
+            <p>All rights reserved. | Barangay Information System. </p>
+        </div>
+        <div id="footer_box2">
+            <a href="http://www.SanIsidroGalas.hostinger.com"><img src="images/f8.png" class="footer_img" alt="" /></a>
+            <a href="mailto:brgy.sanisidrogalasqc@gmail.com"><img src="images/f7.png" class="footer_img" alt="" /></a>
+            <a href="https://www.facebook.com/Barangay-San-Isidro-Galas-Quezon-City-504862119632919"><img src="images/f1.png" class="footer_img" alt="" /></a>
+        </div>
+    </div>
+
+	
+	
