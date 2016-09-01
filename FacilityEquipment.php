@@ -238,6 +238,11 @@
         //Gets Today's Date
         $today = date("Y-m-d"); // displays date today
         $_POST['today'] = $today;
+
+        //Authorization Flags
+        $_SESSION['equipmentF'] = "0";
+        $_SESSION['resFacilityFlag'] = "0";
+        $_SESSION['go'] = "0";
     ?>    
 
     <!-- Page Content -->
@@ -293,12 +298,12 @@
                     $facito = $row[3];
                     
                     echo"<center><h4><span> NOT AVAILABLE </span><span class='label label-warning'> $facifrom - $facito </span></h4></center>";
-                    $_SESSION['go'] = 0;
+                    $_SESSION['go'] = 1;
                   }
                 }else{
 
                     echo"<center><h3><span> AVAILABLE </span><span class='label label-warning'></span></h3></center>";
-                    $_SESSION['go'] = 1;
+                    $_SESSION['go'] = 0;
                 }
 
             ?>          </div>
@@ -354,7 +359,7 @@
                         <p><font face="cambria" size=4 color="grey"> No. of People </font></p>
                         <input class="form-control input-group-lg reg_name" type="number" name="num" title="input name of client" value="<?php if(isset($_POST['num'])){echo $_POST['num'];}else{}?>"><br><br>
                              
-                       <center><button class="btn btn-outline btn-success" type="button" onclick='finReserve()' > Submit Request </button></center>  
+                       <center><button class="btn btn-outline btn-success" type="button" onclick='finReserve(this.value)' value="<?php  echo $_SESSION['go']; ?>"> Submit Request </button></center>  
 
                         </div>                      
                     </div>
@@ -423,13 +428,17 @@
 
 <script>
 function Check(){
+
     var a = document.getElementsByName("From")[0].value;
     var b = document.getElementsByName("To")[0].value;
     var c = $('input[name=resFacility]:checked').val();
-    //var d = document.getElementById("equipment").value;
 
     //document.getElementById("showCheck").innerHTML = a + b + c;
 
+    if(c==null){
+        alert("Select Facility");
+
+    }else{
      $.ajax({
         type: "POST",
         url: "vCheck.php",
@@ -438,7 +447,8 @@ function Check(){
         //alert(data),
         $("#viewCheck").html(data);
         }       
-    });
+    });    
+}   
    
 }
       $(function(){
@@ -448,7 +458,7 @@ function Check(){
 </script>
 
 <script>
-function finReserve(){
+function finReserve(val){
     var a = document.getElementsByName("From")[0].value;
     var b = document.getElementsByName("To")[0].value;
     var c = $('input[name=resFacility]:checked').val();
@@ -475,15 +485,22 @@ function finReserve(){
 
     //document.getElementById("showCheck").innerHTML = a + b + c + resId + resPurpose + num;
 
-     $.ajax({
+    alert(val);
+    if(val == 1){
+
+        alert("Your request date is unavailable !");
+    }else if(val == 0){
+
+        $.ajax({
         type: "POST",
         url: "finReservation.php",
         data: 'fid='+a+'&tid='+b+'&rid='+c+'&did='+resId+'&resPurpose='+resPurpose+'&num='+num+'&equipment='+equipment+'&quantity='+quantity,
         success: function(data){
-        alert(data),
+        //alert(data),
         window.location = 'ReservationPayment1.php';
         }       
     });
+    }
    
 }
       $(function(){
@@ -523,7 +540,6 @@ startDate:  0,
 defaultDate: new Date(),
 defaultTime: '08:00',
 minDate: +new Date(),
-value: +new Date(),
 
 datepicker:true,
     allowTimes:['4:30','5:00','5:30','6:00','6:30','7:00','7:30','8:00','8:30','9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00','20:30','21:00','21:30','22:00','22:30','23:00'],
@@ -537,7 +553,6 @@ startDate:  0,
 defaultDate: new Date(),
 defaultTime: '08:00',
 minDate: +new Date(),
-value: +new Date(),
 
 datepicker:true,
     allowTimes:['4:30','5:00','5:30','6:00','6:30','7:00','7:30','8:00','8:30','9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00','20:30','21:00','21:30','22:00','22:30','23:00'],

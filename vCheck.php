@@ -14,7 +14,7 @@
                         
             <?php                       
                 require("connection.php");
-                $query = mysqli_query($con,"SELECT f.`strFaciNo`, f.`strFaciName`, TIME(r.`dtmREFrom`), TIME(r.`dtmRETo`) FROM tblreservefaci r INNER JOIN tblfacility f ON f.`strFaciNo` = r.`strREFaciCode` WHERE (r.`strREFaciCode`='$resFacility') AND (r.`dtmREFrom` BETWEEN '$resfrom' AND '$resto' OR r.`dtmRETo` BETWEEN '$resfrom' AND '$resto')");
+                $query = mysqli_query($con,"SELECT f.`strFaciNo`, f.`strFaciName`, TIME(r.`dtmREFrom`), TIME(r.`dtmRETo`) FROM tblreservefaci r INNER JOIN tblfacility f ON f.`strFaciNo` = r.`strREFaciCode` INNER JOIN tblreservationrequest rs ON rs.`strReservationID` = r.`strReservationID` WHERE (r.`strREFaciCode`='$resFacility') AND (r.`dtmREFrom` BETWEEN '$resfrom' AND '$resto' OR r.`dtmRETo` BETWEEN '$resfrom' AND '$resto') AND rs.`strRSapprovalStatus` = 'Paid'");
 
                 if(mysqli_num_rows($query) > 0){
                 
@@ -27,12 +27,12 @@
                     $facito = $row[3];
                     
                     echo"<center><h4><span> NOT AVAILABLE </span><span class='label label-warning'> $facifrom - $facito </span></h4></center>";
-                    $_SESSION['go'] = 0;
+                    $_SESSION['go'] = 1;
                   }
                 }else{
 
                 	echo"<center><h3><span> AVAILABLE </span><span class='label label-warning'></span></h3></center>";
-                    $_SESSION['go'] = 1;
+                    $_SESSION['go'] = 0;
                 }
 
             ?>          </div>
@@ -50,18 +50,8 @@
                 <ul id="sortable" class="task-list">
                     <li class="list-primary">
                         <div class="task-title">        
-            <?php                       
-                require("connection.php");
-                $query = mysqli_query($con, "SELECT f.`strEquipName`, TIME(r.`dtmREFrom`), TIME(r.`dtmRETo`), r.`intREQuantity` FROM tblreserveequip r INNER JOIN tblequipment f ON f.`strEquipName` = r.`strREEquipCode` WHERE r.`dtmREFrom` BETWEEN '$resfrom' AND '$resto' OR r.`dtmRETo` BETWEEN '$resfrom' AND '$resto' ORDER BY r.`dtmREFrom`");
+            <?php 
 
-                while($row = mysqli_fetch_row($query)){
-                    $facitemp = $row[0];
-                    $facifrom = $row[1];
-                    $facito = $row[2];
-                    $equipquan = $row[3];
-                    
-                    echo"<h5><span class='task-title-sp'> $facitemp</span><span class='label label-warning'> $facifrom - $facito </span><span class='label label-info'> $equipquan</span></h5>";
-                }
             ?>
                         </div>
                     </li>
@@ -69,5 +59,4 @@
             </div>
         </div>  
     </div>
-    </div><br><br><br><br>
 

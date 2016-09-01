@@ -23,13 +23,33 @@
 			mysqli_query($con,"INSERT INTO `tblreservefaci`(`strReservationID`, `strREFaciCode`, `dtmREFrom`, `dtmRETo`) VALUES ('$resId','$resFacility','$resFrom','$resTo')");
 
 			$_SESSION['resFacilityFlag'] == 0;
+
+			unset($equipment);
+			unset($equipfee1);
+			unset($quantity);
+			unset($quantity1);
+			unset($resFacility);
+
+			$resFacName = "";
+			$resfee = "";
+			$hours = "";
 		}else if ($resFacilityFlag == 1){
 			
 			$_SESSION['resFacilityFlag'] == 0;
+
+			unset($equipment);
+			unset($equipfee1);
+			unset($quantity);
+			unset($quantity1);
+			unset($resFacility);
+
+			$resFacName = "";
+			$resfee = "";
+			$hours = "";
 		}		
 		
 		//tblreserveequip`
-		if($equipmentF == 1){
+		if($_SESSION['equipmentF'] == 1){
 
 		$intCtr =0;
 		foreach($equipment as $a){
@@ -44,7 +64,7 @@
 			}
 		}
 
-			$equipmentF =0;
+			$_SESSION['equipmentF'] =0;
 
 			unset($equipment);
 			unset($equipfee1);
@@ -58,7 +78,19 @@
 			
 			session_destroy();	
 
-		}else{
+		}else if($_SESSION['equipmentF']==0){
+
+			$_SESSION['equipmentF'] =0;
+			
+			unset($equipment);
+			unset($equipfee1);
+			unset($quantity);
+			unset($quantity1);
+			unset($resFacility);
+
+			$resFacName = "";
+			$resfee = "";
+			$hours = "";
 
 		}
 		
