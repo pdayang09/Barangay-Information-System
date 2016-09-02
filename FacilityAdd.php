@@ -13,7 +13,7 @@
 
  <button  class="btn btn-info" onclick="window.location.href='FacilityMaintenance.php'">  <i class="glyphicon glyphicon-hand-left" aria-hidden="true"></i>&nbsp;Back to the Previous Page</button><br><br>
 	
-			<form method = POST>
+			<form method = POST  enctype='multipart/form-data'>
 									
 <div class="col-sm-9 col-md-6 col-lg-6">
   	<div class = 'showback'>
@@ -116,32 +116,28 @@
 		
 		<div class="col-sm-3 col-md-6 col-lg-6">
 			<div class = "showback">
-				<form action='' method='POST' enctype='multipart/form-data'>
-					Image Name
-					<input type='text' name='image_name_1'><br>
-					<br>
-					<input type='file' name='userFile'><br>
-					<input type='submit' name='upload_btn' value='upload'>
-				</form>
+				<br>
+					<input type='file' name='userFile' id = 'userFile'><br>
+					<!-- input type='submit' name='upload_btn' value='upload'>
+				
 				
 				<?php
-					if (isset($_POST['upload_btn'])){
+					//if (isset($_POST['userFile'])){
+						/*echo "<script> alert('asd'); </script>";
+						 $info = pathinfo($_FILES['userFile']['name']);
+			 		 	 $ext = $info['extension']; // get the extension of the file(filename)
+					     $newname = "$dt.".$ext;*/
 						// $ImageName2 = $_POST['image_name_1'];
 
 					//$info = pathinfo($_FILES['userFile']['name']);
 					//$ext = $info['extension']; // get the extension of the file
 
-					$originalname = $_FILES['userFile']['name'];
-					$newname = "$originalname."; 
-
-					$target = 'images/FacilityUpload/'.$newname;
-					move_uploaded_file( $_FILES['userFile']['tmp_name'], $target);
 					//echo $_FILES['userFile']['tmp_name'];
 
-					require('connection.php');
-					mysqli_query($con,"INSERT INTO `tblfacility`( `imageUpload`) VALUES ('$originalname');");
+					/*require('connection.php');
+					mysqli_query($con,"INSERT INTO `tblfacility`( `imageUpload`) VALUES ('$originalname');");*/
 					//echo "<script>alert('Success');</script>";
-							 }
+				//}
 				?>
 			</div>
 		</div>
@@ -152,6 +148,7 @@
 		
 			 <?php
 			 if (isset($_POST['btnAdd'])){
+			 	$dt = date('Ymdhis');
 				 $strcode = $_POST['facId1'];
 				 $strname = $_POST['facName1'];
 				 $strdayprice = (double)$_POST['dayprice'];
@@ -169,12 +166,25 @@
 					 echo "<script>alert('Please Complete the form');</script>";
 				 }
 				 else{
-					
+					 
 					 require('connection.php');
-					 mysqli_query($con,"INSERT INTO `tblfacility`(`strFaciName`, `strFaciCategory`, `strFaciStatus`, `dblFaciDayCharge`, `dblFaciNightCharge`,`dblFaciNResidentCharge`) VALUES ('$strcode','$strname','$strStatus', $strdayprice, $strnightprice,$strresidentprice);");
-					 echo "<script>alert('Success');
-					window.location = 'FacilityMaintenance.php'</script> </script>";
-			 }}
+					 $info = pathinfo($_FILES['userFile']['name']);
+	 		 	 	 $ext = $info['extension']; // get the extension of the file(filename)
+			     	 $newname = "$dt.".$ext;
+					 //echo "<script> alert('$newname') </script>";
+					 $target = 'Images/FacilityUpload/'.$newname;
+					 mysqli_query($con,"INSERT INTO `tblfacility`(`strFaciName`, `strFaciCategory`, `strFaciStatus`, `dblFaciDayCharge`, `dblFaciNightCharge`,`dblFaciNResidentCharge`,`imageUpload`) VALUES ('$strcode','$strname','$strStatus','$strdayprice','$strnightprice','$strresidentprice','$newname');");
+					 //mysqli_query($con,'INSERT INTO `tblfacility`(`strFaciName`, `strFaciCategoryCode`, `strFaciStatus`, `dblFaciFixedChargePerHour`, `dblFaciDayChargePerHour`,`dblFaciNightChargePerHour`,`imageUpload`) VALUES (`EEEE`,`$strcode`,`$strname`,`$strStatus`,`$strdayprice`,`$strnightprice`,`$strresidentprice`,`$newname`)');
+					 /*$a = "INSERT INTO `tblfacility`(`strFaciName`, `strFaciCategoryCode`, `strFaciStatus`, `dblFaciFixedChargePerHour`, `dblFaciDayChargePerHour`,`dblFaciNightChargePerHour`,`imageUpload`) VALUES ('$strcode','$strname','$strStatus','$strdayprice','$strnightprice','$strresidentprice','$newname')";
+*/
+					 $b = 'INSERT INTO tblfacility (strFaciName,strFaciCategoryCode,strFaciStatus,dblFaciFixedChargePerHour,dblFaciDayChargerPerHour,dblFaciNightChargePerHour,imageUpload) VALUES ("$strcode","$strname",`$strStatus`,`$strdayprice`,`$strnightprice`,`$strresidentprice`,`$newname`)';
+					 //echo "<script> alert('INSERT INTO `tblfacility`(`strFaciName`, `strFaciCategory`, `strFaciStatus`, `dblFaciDayCharge`, `dblFaciNightCharge`,`dblFaciNResidentCharge`,`imageUpload`) VALUES ('$strcode','$strname','$strStatus', $strdayprice, $strnightprice,$strresidentprice,$newname)' </script>" ;
+					 move_uploaded_file( $_FILES['userFile']['tmp_name'], $target);
+					 /*echo "<script>alert('Success');
+					window.location = 'FacilityMaintenance.php'</script> </script>";*/
+					 
+				}
+			}
 			 
 			?><br><br></center>
                  
