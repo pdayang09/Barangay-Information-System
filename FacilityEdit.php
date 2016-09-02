@@ -1,12 +1,15 @@
 <!DOCTYPE html>
           <?php session_start();
-		  require('header.php');?>
+		  require('header.php');
+		  
+		
+		  ?>
 		  <?php require('sidebar.php');?>
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
       <!--main content start-->
-
+	
 
      
 <section id="main-content"><br>
@@ -19,7 +22,8 @@
 			
 		<button  class="btn btn-info" onclick= "window.location.href='FacilityMaintenance.php'">  <i class="glyphicon glyphicon-hand-left" aria-hidden="true"></i>&nbsp;Back to the Previous Page</button>
 			<br><br>
-<form method = POST>			
+<form method = POST>	
+<div class="col-sm-9 col-md-6 col-lg-6">		
 	<div class = "showback">
 			<p><font face = "cambria" size = 5 color = "grey"> Facility Name </font></p>
 	
@@ -77,12 +81,30 @@
 					</select>
 				</div>
 			</div><br><br><br><br><br>
-	
+</div>	
 			
 			<?php echo "<script>a();</script>"?>
 	
 				<input type="submit" class="btn btn-info" name = "btnEdit" id = "btnEdit" value = "Save Record" >
 	</div>
+	
+	<div class="col-sm-9 col-md-6 col-lg-6">
+		<div div class = "showback">
+			<?php 
+				$a= $_SESSION['facilityCode'];
+				//echo "<script>alert $a</script>";
+			require('connection.php');
+			$sql = "select imageUpload from tblfacility Where strFaciNo = $a ";
+			$query = mysqli_query($con, $sql);
+			if(mysqli_num_rows($query) > 0){
+			$i = 1;
+			while($row = mysqli_fetch_assoc($query)){?>
+	
+				<img src="Images/FacilityUpload/<?php echo $row['imageUpload']; ?>" width="400px" height="200px">
+			<?php  }}?>
+			</div>
+		</div>
+			
  </form>
 
 		

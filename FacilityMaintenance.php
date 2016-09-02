@@ -80,6 +80,7 @@
 										<td><?php echo $row->strFaciStatus?></td>
 										
 										<td><button type = submit  class="btn btn-primary btn-xs" name = 'btnedit' value = <?php echo $row->strFaciNo ?> ><i class="fa fa-pencil"></i></button></td>
+											
 									</tr>		 
 								</form>  
 					<?php 		}
@@ -92,10 +93,12 @@
 							if(mysqli_num_rows($query)>0){
 								$row = mysqli_fetch_object($query);
 								$_SESSION['fcode'] = $row->strFaciName;
+								$_SESSION['facilityCode'] = $row->strFaciNo;
 								$_SESSION['stat'] = $row->strFaciStatus;
 								$_SESSION['dayprice'] = $row->dblFaciDayCharge;
 								$_SESSION['nightprice'] = $row->dblFaciNightCharge;
 								$_SESSION['residentprice'] = $row->dblFaciNResidentCharge;
+								$_SESSION['image'] = $row->imageUpload;
 								$a = $row->strFaciCategory;
 					
 								$query2 = mysqli_query($con,"Select * from tblcategory where strcategorycode = '$a'");
