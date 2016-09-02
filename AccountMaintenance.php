@@ -8,12 +8,13 @@
       <!--main content start-->
        <section id="main-content">
           <section class="wrapper site-min-height">
-<legend><font face = "cambria" size = 8 color = "grey"> Account Maintenance </font></legend>
-
-				<div class = 'showback'>		
-
-	 &nbsp; &nbsp; &nbsp; &nbsp; <button  class="btn btn-info" onclick = "window.location.href='AddAccount.php'">Add New Account</button><br>
-				<form method = POST><center>
+<legend ><font face = "cambria" size = 8 color = "grey"> Maintenance </font></legend>
+		<h2>Account</h2>
+						
+						<p align="right">
+						<button  class="btn btn-info" onclick="window.location.href='Addaccount.php'"><i class="fa fa-plus"></i> Add New</button>
+						</p>
+					<div class = 'showback'><form method = POST><center>
 <br>
 					 <table class="table table-striped table-bordered table-hover" border = '2' style = 'width:95%'>
 					<thead>
@@ -30,7 +31,7 @@
 					<tbody>
 					<?php
 					require('connection.php');
-				$sql = "SELECT `strOfficerID`,`strUsername`,`strPassword`, concat(strLastName,',',strFirstName,' ',strMiddleName) as 'Name', `dtStart`,`dtEnd` FROM `tblaccount` as a inner join `tblhousemember` as b on b.intMemberNo = a.intForeignMemberNo";
+				$sql = "SELECT `strOfficerID`,`strUsername`,`strPassword`, concat(strLastName,',',strFirstName,' ',strMiddleName) as 'Name', `dtStart`,`dtEnd` FROM `tblaccount` as a inner join `tblhousemember` as b on b.intMemberNo = a.intForeignMemberNo where a.strStatus = 'Enabled'";
 				$query = mysqli_query($con, $sql);
 				if(mysqli_num_rows($query) > 0){
 					$i = 1;
@@ -41,23 +42,26 @@
 					<td><?php echo $row->strPassword?></td>
 					<td><?php echo $row->dtStart?></td>
 					<td><?php echo $row->dtEnd?></td>
-					<td><button type = submit class = "btn btn-info btn-round btn-sm"value = <?php echo $row->strOfficerID?> name = 'Edit' >Edit</button></td>
+					<td><div class="btn-group " role="group" aria-label="..." >	
+										<div class="btn-group " role="group">	
+											<button  class="btn btn-primary btn-xs" type = submit name = "btnEdit" value = <?php echo $row->strOfficerID; ?> ><i class="fa fa-pencil"></i></button>	
+											<button  class="btn btn-danger btn-xs" type = submit name = "btnDelete" onclick = "return confirm('Do you really want to continue?');" value = <?php echo $row->strOfficerID; ?> >Disable</button>
+										</div></td>
 
 					</tr>
 				<?php }}
-					if(isset($_POST['Edit'])){
-						$search = $_POST['Edit'];
-						$query = mysqli_query($con,"Select * from tblaccount where strOfficerID = '$search'");
-						$row = mysqli_fetch_object($query);
+				
+					if(isset($_POST['btnEdit'])){
+						$search = $_POST['btnEdit'];		
 						$_SESSION['ID'] = $search;
-						$_SESSION['Fname'] = $row->strOfficerFname;
-						$_SESSION['Mname'] = $row->strOfficerMname;
-						$_SESSION['Lname'] = $row->strOfficerLname;
-						$_SESSION['User'] = $row->strUsername;
-						$_SESSION['Pass'] = $row->strPassword;
-						$_SESSION['bday'] = $row->datOfficerBirthdate;
 						echo "<script>window.location = 'AccountEdit.php'</script>";
-					}			?></tbody>
+					}			
+					
+					if(isset($_POST['btnDelete'])){
+						$id = $_POST['btnDelete'];
+						mysqli_query($con,"Update tblaccount set strStatus = 'Disabled' where strOfficerID = $id");
+						echo "<script>window.location = 'AccountMaintenance.php';</script>";
+					}?></tbody>
 				</table>
 				</div>
 </center>
