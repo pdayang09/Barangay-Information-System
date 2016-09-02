@@ -7,13 +7,6 @@
               	  <p class="centered"><a href="profile.html"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
               	  <h5 class="centered"> </h5>
               	  	
-                  <li class="mt">
-                      <a href="news.php">
-                          <i class="fa fa-dashboard"></i>
-                          <span>Dashboard</span>
-                      </a>
-                  </li>
-
                   <li class="sub-menu">
                       <a href="javascript:;" >
                           <i class="fa fa-desktop"></i>
@@ -22,16 +15,22 @@
                       <ul class="sub">
 					  
 						   <!--Barangay Official and Document-->
-						  <li><a  href="BusinessMaintenance.php">Business</a></li>
-						  <li><a  href="BusinessCat.php">Business Category</a></li>
+						   <li><a  href="AccountMaintenance.php">Account </a></li>						   
+						  <li><a  href="PositionMaintenance.php">Position </a></li>						  
+						  <li><a  href="Streetmaintenance.php">Street</a></li>		
                           <li><a  href="DocumentMaintenance.php">Document </a></li>
-						  <li><a  href="Streetmaintenance.php">Street</a></li>					  
+						  <li><a  href="BusinessCat.php">Business Category</a></li>	 	
+						  <li><a  href="BusinessMaintenance.php">Business</a></li>	
+						  
 						  <!--Facility and Equipment -->
 						  <li><a  href="EquipmentCat.php">Category</a></li>
 						  <li><a  href="FacilityMaintenance.php">Facility </a></li>
 						  <li><a  href="EquipmentMaintenance.php">Equipment </a></li>
+						  
+						  <!--Other --> 
 						  <li><a  href="TodaMaintenance.php">Toda </a></li>
 						  <li><a  href="VehicleMaintenance.php">Vehicle </a></li>
+						  
                       </ul>
                   </li>
 
@@ -55,26 +54,29 @@
                       </a>
                   </li>
 				  
-				  <li class="sub-menu">
+				          <li class="sub-menu">
                       <a href="javascript:;" >
                           <i class="fa fa-bar-chart-o"></i>
                           <span>Views</span>
                       </a>
                       <ul class="sub">
                           <li><a  href="facilityequipmentl.php">Liason</a></li>
-						  <li><a  href="DocumentRequestL.php">Secretary</a></li>
-						  <li><a  href="reservation_paymentl.php">Treasurer</a></li>
-						  <li><a  href="reservation_kapitanl.php">Kapitan</a></li>
+						               <li><a  href="DocumentRequestL.php">Secretary</a></li>
+						              <li><a  href="reservation_paymentl.php">Treasurer</a></li>
+						              <li><a  href="reservation_kapitanl.php">Kapitan</a></li>
                       </ul>
                   </li>
                   
                   <li class="sub-menu">
                       <a href="javascript:;" >
                           <i class="fa fa-bar-chart-o"></i>
-                          <span>Reports</span>
+                          <span>Query</span>
                       </a>
                       <ul class="sub">
-                          <li><a  href="#">Example Report</a></li>
+                          <li><a  href="QueryHousehold.php">Household</a></li>
+                          <li><a  href="QueryDeceased.php">Deceased</a></li>
+                          <li><a  href="QueryBusiness.php">Business</a></li>
+                          <li><a  href="QueryReservation.php">Reservation</a></li>
                       </ul>
                   </li>
 				  

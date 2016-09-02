@@ -277,7 +277,7 @@
             
     <?php 
             if(isset($_POST['btnCheck'])){
-                include("vCheck.php");
+                include("vCheck1.php");
             }else if(isset($_POST['btnChange'])){
                 $resFrom = $_POST['From'];
                 $resTo = $_POST['To'];

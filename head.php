@@ -1,11 +1,8 @@
-<!-- === BEGIN HEADER === -->
-<!DOCTYPE html>
-<!-- Website template by freewebsitetemplates.com -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta charset="UTF-8">
-	<title>Barangay San Isidro Galas, Quezon City</title>
-	<link rel="stylesheet" href="css/style.css" type="text/css">
-	
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>Barangay San Isidro, Galas</title>
 <meta name="keywords" content="" />
 <meta name="description" content="" />
 <script type="text/javascript" src="jquery/cufon-yui.js"></script>
@@ -15,26 +12,21 @@
     </script>
 <link href="styles.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="nivo-slider.css" type="text/css" media="screen" />
-	
 </head>
 <body>
-	<div class="background">
-		<div class="page">
-			<div class="header">
-				<a href="index.php" id="logo"><img src="images/galaslogo3.jpg" alt="logo"></a>
-				<ul>
-					<li>
-						<a href="index.php">Home</a>
-					</li>
-					<li>
-						<a href="about.php">About</a>
-					</li>
-					<li>
-						<a href="news.php">News</a>
-					</li>
-					<li>
-						<a href="services.php">Services</a>
-					</li>
-				</ul>
-			</div>
-<!-- === END HEADER === -->
+    <div id="main">
+    <!-- header begins -->
+    <div id="header">
+        <div id="logo">
+            <img src="images/galaslogo5.jpg" alt="">
+        </div>
+        <div id="buttons">
+            <a href="index.php" class="but"  title="">Home</a><div class="but_razd"></div>
+            <a href="about_us.php" class="but" title="">About Us</a><div class="but_razd"></div>
+            <a href="news.php"  class="but" title="">News</a><div class="but_razd"></div>
+			<a href="services.php"  class="but" title="">Services</a><div class="but_razd"></div>
+            <a href="contact_us.php" class="but" title="">Contact&nbsp;us</a><div class="but_razd"></div>
+			<a href="login.php" class="but" title="">Log In</a>
+        </div>
+    </div>
+    <!-- header ends -->

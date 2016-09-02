@@ -49,11 +49,10 @@
 		}		
 		
 		//tblreserveequip`
-		if($_SESSION['equipmentF'] == 1){
+		if(!empty($equipment)){
 
 		$intCtr =0;
 		foreach($equipment as $a){
-			if(!empty($a)){
 	
 				mysqli_query($con, "INSERT INTO `tblreserveequip`(`strReservationID`, `strREEquipCode`, `dtmREFrom`, `dtmRETo`,`intREQuantity`) VALUES ('$resId','$a','$resFrom','$resTo','$quantity1[$intCtr]')");
 			
@@ -61,7 +60,6 @@
 				mysqli_query($con, "INSERT INTO `tblreturnequip`(`strReservationID`, `strRTEquipCode`, `datRTDate`, `intReturned`, `intUnreturned`) VALUES ('$resId','$a','$resTo','0','$quantity1[$intCtr]')");
 
 				$intCtr++;
-			}
 		}
 
 			$_SESSION['equipmentF'] =0;
@@ -78,7 +76,7 @@
 			
 			session_destroy();	
 
-		}else if($_SESSION['equipmentF']==0){
+		}else{
 
 			$_SESSION['equipmentF'] =0;
 			

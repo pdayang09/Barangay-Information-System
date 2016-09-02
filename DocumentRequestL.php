@@ -106,38 +106,46 @@
 		<div class="panel panel-default"><!-- Default panel contents -->	
 			<table class="table table-hover" style="height: 40%; overflow: scroll; ">
 				<thead><tr>
-					<th>Full Name</th>					
-					<th>Contact No</th>
-					<th>Purpose</th>
-					<th>Reservation Date</th>
-					<th>Status</th>
+					<th>ID</th>
+					<th>Full Name</th>
+					<th>Total Amount</th>
+					<th>Request Status</th>
 					<th>Action</th>
 				</tr></thead>
 			
 			<tbody>
 			<?php
+			$docReqPaymentSQL = "SELECT Oll.ID, Oll.Name, SUM(Oll.TotalAmount), Oll.Status  FROM ( 
+             SELECT a.intMemberNo as 'ID', CONCAT(a.`strLastName`, ', ', a.`strFirstName`, ' ', a.`strMiddleName`, ' ', a.`strNameExtension`) AS 'Name', p.dblReqPayment as 'TotalAmount', dr.strDocReqStat as Status 
+			FROM tblhousemember a INNER JOIN tbldocumentrequest dr ON a.intMemberNo = dr.strDRapplicantID INNER JOIN tblpaymentdetail p ON dr.strDocRequestID = p.strRequestID INNER JOIN tbldocument d ON d.intDocCode = dr.strDRdocCode  WHERE dr.datDRdateRequested = CURDATE() AND dr.strDocReqStat = 'Unpaid'
+			UNION 
+			SELECT a.intMemberNo as 'ID', CONCAT(a.`strLastName`, ', ', a.`strFirstName`, ' ', a.`strMiddleName`, ' ', a.`strNameExtension`) AS 'Name', p.dblReqPayment as 'TotalAmount', vc.strClearanceStat as Status 
+			FROM tblhousemember a INNER JOIN tblvehicleclearance vc ON a.intMemberNo = vc.strResidentID INNER JOIN tbltru tru ON vc.strVCplateNo = tru.strTRUplateNo INNER JOIN tblpaymentdetail p ON p.strRequestID = tru.strTRUplateNo INNER JOIN tblvehicle v ON v.strVplateNo = tru.strTRUplateNo, tbldocument d
+			WHERE d.strDocName LIKE '%TRU%' AND (vc.datVCStat = CURDATE() AND vc.strClearanceStat = 'Unpaid') AND v.intVehicleType = 1
+			UNION 
+			SELECT a.intMemberNo as 'ID', CONCAT(a.`strLastName`, ', ', a.`strFirstName`, ' ', a.`strMiddleName`, ' ', a.`strNameExtension`) AS 'Name', p.dblReqPayment as 'TotalAmount', vc.strClearanceStat  as Status FROM tblhousemember a INNER JOIN tblhousehold h ON h.intHouseholdNo = a.intForeignHouseholdNo INNER JOIN tblstreet s ON s.intStreetId = h.intForeignStreetId INNER JOIN tblzone z ON z.intZoneId = s.intForeignZoneId INNER JOIN tblvehicleclearance vc ON a.intMemberNo = vc.strResidentID INNER JOIN tblvehicle v ON v.strVplateNo = vc.strVCplateNo INNER JOIN tblpaymentdetail p ON vc.strVCplateNo  = p.strRequestID, tbldocument d WHERE d.strDocName LIKE '%Uti%' AND vc.datVCStat = CURDATE() AND vc.strClearanceStat = 'Unpaid' AND v.intVehicleType = 0
+			UNION 
+			SELECT a.intMemberNo as 'ID', CONCAT(a.`strLastName`, ', ', a.`strFirstName`, ' ', a.`strMiddleName`, ' ', a.`strNameExtension`) AS 'Name', SUM(p.dblReqPayment) as 'TotalAmount', bs.strClearanceStat  as Status FROM tblhousemember a INNER JOIN tblbusinessstat bs ON bs.strBusOwnerID = a.intMemberNo INNER JOIN tblpaymentdetail p ON bs.strBusStatID = p.strRequestID INNER JOIN tblbusiness b ON bs.strBusinessID = b.strBusinessID, tbldocument d
+			WHERE d.strDocName LIKE '%Business%' AND (bs.datBCStat = CURDATE() AND bs.strClearanceStat = 'Unpaid')
+			GROUP BY a.intMemberNo, CONCAT(a.`strLastName`, ', ', a.`strFirstName`, ' ', a.`strMiddleName`, ' ', a.`strNameExtension`)) Oll
+			GROUP BY Oll.ID, Oll.Name, Oll.Status";
 			$approve[] = array();
 			
-			$query = mysqli_query($con,$statement);
+			$query = mysqli_query($con, $docReqPaymentSQL);
 			while($row = mysqli_fetch_array($query)){?>
-				<tr>
-				<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[2]; ?></td>
-				<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[3]; ?></td>
-				<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[4]; ?></td>
-				<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><?php echo $row[5];?></td>
-				<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><?php echo $row[6];?></td>
-				<?php
-					if($row[6] == "2"){	//Personnel and Action if Status = For Approval, Approve	
-						//echo"<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><input type='checkbox' name= approve[] value = '$row[0]' data-toggle='switch' />";
-						
-					}else if($row[6] == "3"){  //Personnel and Action if Status = Approved, Collect
-						//echo"<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><button type = 'submit' name='btnCollect' value = '$row[0]' class='btn btn-success btn-xs'><i class='fa fa-edit'></i></button>";
-						
-					}else if($row[6] == "Paid"){  //Personnel and Action if Status = Paid, Confirm			
-						//echo"<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><button type = 'submit' name='btnConfirm' value = '$row[0]' class='btn btn-primary btn-xs'><i class='fa fa-check'></i></button>";
-					}
-				echo"</tr>";
-			}?>
+				<center><tr>
+				<td><?php echo $row[0]; ?></td>
+				<td><?php echo $row[1]; ?></td>
+				<td><?php echo $row[2]; ?></td>
+				<td><?php echo $row[3]; ?></td>
+				</center>
+				<td><button class='btn btn-success btn-xs' data-toggle='modal' data-target='#myModal' value = "<?php echo $row[0]?>" name= 'btnRenderD'> Render Payment </button></td>
+				<?php  echo"</tr>";
+					
+				?>
+			<?php
+			}
+			//$fullName = $row[1].$row[2];?>
 			
 			</tbody>
 			</table>
@@ -145,31 +153,44 @@
 		
 	</form> 				
 	
-			<?php
-			if(isset($_POST['btnApprove'])){
+			<?php 
 				
-				if(isset($_POST['approve'])){
-					$approve = $_POST['approve'];	
-				}
+			if(isset($_POST['btnRenderD'])){
+				$requestID = "";
+				$requestorID = $_POST['btnRenderD'];
 				
-				for($intCtr = 0; $intCtr < sizeof($approve); $intCtr++){ 		
-					$reservation = $approve[$intCtr];
+				//echo "<script> alert('$docID')</script>";
+				require('connection.php');
+				$regularDocSQL = "SELECT a.intMemberNo as 'ID', CONCAT(a.`strLastName`, ', ', a.`strFirstName`, ' ', a.`strMiddleName`, ' ', a.`strNameExtension`) AS 'Name', SUM(p.dblReqPayment) as 'Total Amount', dr.strDocReqStat as Status 
+			FROM tblhousemember a INNER JOIN tbldocumentrequest dr ON a.intMemberNo = dr.strDRapplicantID INNER JOIN tblpaymentdetail p ON dr.strDocRequestID = p.strRequestID INNER JOIN tbldocument d ON d.intDocCode = dr.strDRdocCode  WHERE dr.datDRdateRequested = CURDATE() AND dr.strDocReqStat = 'Unpaid' AND a.intMemberNo = '$requestorID ' LIMIT 1
+			UNION 
+			SELECT a.intMemberNo as 'ID', CONCAT(a.`strLastName`, ', ', a.`strFirstName`, ' ', a.`strMiddleName`, ' ', a.`strNameExtension`) AS 'Name', SUM(p.dblReqPayment) as 'Total Amount', vc.strClearanceStat as Status 
+			FROM tblhousemember a INNER JOIN tblvehicleclearance vc ON a.intMemberNo = vc.strResidentID INNER JOIN tbltru tru ON vc.strVCplateNo = tru.strTRUplateNo INNER JOIN tblpaymentdetail p ON p.strRequestID = tru.strTRUplateNo INNER JOIN tblvehicle v ON v.strVplateNo = tru.strTRUplateNo, tbldocument d
+			WHERE d.strDocName LIKE '%TRU%' AND (vc.datVCStat = CURDATE() AND vc.strClearanceStat = 'Unpaid') AND v.intVehicleType = 1 AND a.intMemberNo = '$requestorID ' LIMIT 1
+			UNION 
+			SELECT a.intMemberNo as 'ID', CONCAT(a.`strLastName`, ', ', a.`strFirstName`, ' ', a.`strMiddleName`, ' ', a.`strNameExtension`) AS 'Name', SUM(p.dblReqPayment) as 'Total Amount', vc.strClearanceStat  as Status FROM tblhousemember a INNER JOIN tblhousehold h ON h.intHouseholdNo = a.intForeignHouseholdNo INNER JOIN tblstreet s ON s.intStreetId = h.intForeignStreetId INNER JOIN tblzone z ON z.intZoneId = s.intForeignZoneId INNER JOIN tblvehicleclearance vc ON a.intMemberNo = vc.strResidentID INNER JOIN tblvehicle v ON v.strVplateNo = vc.strVCplateNo INNER JOIN tblpaymentdetail p ON vc.strVCplateNo  = p.strRequestID, tbldocument d WHERE d.strDocName LIKE '%Uti%' AND vc.datVCStat = CURDATE() AND vc.strClearanceStat = 'Unpaid' AND v.intVehicleType = 0 AND a.intMemberNo = '$requestorID ' LIMIT 1
+			UNION 
+			SELECT a.intMemberNo as 'ID', CONCAT(a.`strLastName`, ', ', a.`strFirstName`, ' ', a.`strMiddleName`, ' ', a.`strNameExtension`) AS 'Name', SUM(p.dblReqPayment) as 'Total Amount', bs.strClearanceStat  as Status FROM tblhousemember a INNER JOIN tblhousehold h ON h.intHouseholdNo = a.intForeignHouseholdNo INNER JOIN tblstreet s ON s.intStreetId = h.intForeignStreetId INNER JOIN tblzone z ON z.intZoneId = s.intForeignZoneId INNER JOIN tblbusinessstat bs ON bs.strBusOwnerID = a.intMemberNo INNER JOIN tblpaymentdetail p ON bs.strBusStatID = p.strRequestID INNER JOIN tblbusiness b ON bs.strBusinessID = b.strBusinessID, tbldocument d
+			WHERE d.strDocName LIKE '%Business%' AND (bs.datBCStat = CURDATE() AND bs.strClearanceStat = 'Unpaid') AND a.intMemberNo = '$requestorID ' LIMIT 1";
+				
+				$regularDoc = mysqli_query($con, $regularDocSQL);
+				while($row = mysqli_fetch_row($regularDoc))
+				{
 					
-					//echo"<script> alert(' $reservation');</script>";
-					
-					mysqli_query($con, "UPDATE tblreservationrequest SET strrrapprovalstatus = 'Approved' WHERE strreservationid = '$reservation'");
+					$clientID = $row[0];
+					$name = $row[1];
+					$amount = $row[2];
 				}
-
-				foreach ($approve as $i => $temp) {
-					unset($temp[$i]);
-				}
-				
-			}else {
-				
+				$_SESSION['name'] = $name;
+				$_SESSION['clientID'] = $clientID;
+				$_SESSION['amount'] = $amount;
+				//echo "<script>alert('$amount');</script>";
+				echo "<script> window.location = 'Document_Payment.php';</script>";
+			
 			}
+			
 		?>
-		
-								</div> <!-- panel-body -->
+										</div> <!-- panel-body -->
 							</div> <!-- bodybody -->	
 						</div> <!-- col-lg-12 -->
 					</div> <!-- class=row -->

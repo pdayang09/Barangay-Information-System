@@ -52,7 +52,7 @@ session_start();
      if(!empty($_POST['equipment'])){
 
         $equipment = $_POST['equipment'];   
-     if(isset($_POST['quantity'])){
+     if(!empty($_POST['quantity'])){
         $quantity = $_POST['quantity'];                                 
                                          
         $_SESSION['equipment'] = $equipment;

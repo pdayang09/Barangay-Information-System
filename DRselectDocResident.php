@@ -13,7 +13,7 @@
 		$resid = $_SESSION['clientID'];
 		$contactno = $_SESSION['contactno'];
 		$name = $_SESSION['name'];
-		$doc = $_SESSION['document'];
+		//$doc = $_SESSION['document'];
 		
 		//All Documents
 		$certi = "Certification";
@@ -48,12 +48,12 @@
 
 		    <!-- button type='submit' class='showback col-lg-5' name='btnBrgyCertification'>
 			
-			 <table class="table table-bordered table-striped table-condensed">
+\			 <table class="table table-bordered table-striped table-condensed">
                               <thead>
                               <tr>
                                   <th style="background-color:rgb(255,204,0);"><center><span class="glyphicon glyphicon-file" 
-								  style="color:black; font-size:2.5em"></span></center></th>
-								  <th><font face='cambria' size=5 color='black'><center><b><! ?php echo"$certi";?></b></center>
+			\					  style="color:black; font-size:2.5em"></span></center></th>
+						\		  <th><font face='cambria' size=5 color='black'><center><b><! ?php echo"$certi";?></b></center>
 								  </font><span class='glyphicon glyphicon-chevron-right pull-right'></span>
 								  </th>
                               </tr>
@@ -112,13 +112,9 @@
 			
 			<button type='submit' class='showback col-xs-5' name='btnBusClearance'>
 			<img src="images/docicon.ico" style="height:60px;" class="pull-left">
-			<font face='cambria' size=5 color='black'><b><?php echo"$busClear";?></b></font>	
+			<font face='cambri\a' size=5 color='black'><b><?php echo"$busClear";?></b></font>	
 			<span class='glyphicon glyphicon-chevron-right pull-right'></span></button><br>
 			
-
-						  
-
-								  
 
 			
 			
@@ -135,25 +131,20 @@
 					$doc = $_SESSION['document'];
 					
 					$_SESSION['document'] = $busClear;
-					if($resid == NULL)
-					{
-						$_SESSION['clientID'] = $appId;
-					}else
+					$_SESSION['clientID'] = $appId;
 					$_SESSION['clientID'] = $resid;
 					$_SESSION['name'] = $name;
 					$_SESSION['contactno'] = $contactno;
 					$_SESSION['place'] = $add;
-					echo "<script> window.location = 'DRformBusClearanceNew.php';</script>";
+					echo "<script> window.location = 'DRBusinessTable.php';</script>";
 				}
 			?>
 				 
 		
-			<button type='submit' class='showback col-sm-5' name='btnCTC'>
+			<button type='submit' class='showback col-sm-5' name='btnExcavation'>
 			<img src="images/docicon.ico" style="height:60px;" class="pull-left">
-			<font face='cambria' size=5 color='black'><b><?php echo"$CTC";?></b></font>	
-			<span class='glyphicon glyphicon-chevron-right pull-right'></span></button>
-			
-			<div class="col-xs-1"></div>
+			<font face='cambria' size=5 color='black'><b><?php echo"$excav";?></b></font>	
+			<span class='glyphicon glyphicon-chevron-right pull-right'></span></button><br>
 			
 		<?php		if(isset($_POST['btnCTC']))
 				{
@@ -166,10 +157,7 @@
 					echo "<script> window.location = 'DRformCTC.php';</script>";
 				} 
 		?>
-			<button type='submit' class='showback col-sm-5' name='btnExcavation'>
-			<img src="images/docicon.ico" style="height:60px;" class="pull-left">
-			<font face='cambria' size=5 color='black'><b><?php echo"$excav";?></b></font>	
-			<span class='glyphicon glyphicon-chevron-right pull-right'></span></button><br>
+			
 			
 		<?php		if(isset($_POST['btnExcavation']))
 				{
@@ -185,10 +173,12 @@
 					$_SESSION['appId'] = $appId;
 					$_SESSION['name'] = $name;
 					$_SESSION['contactno'] = $contactno;
-					$_SESSION['place'] = $place;
+					$_SESSION['place'] = $add;
 					echo "<script> window.location = 'DRformExcav.php';</script>";
 				} 
 		?>
+		
+			<div class="col-xs-1"></div>
 		
 			<button type='submit' class='showback col-sm-5'name='btnIndigency'>
 			<img src="images/docicon.ico" style="height:60px;" class="pull-left">
@@ -241,12 +231,16 @@
 			} 
 		
 		?>
+		
+			<div class="col-xs-1"></div>
+		
+		
 			<button type='submit' class='showback col-sm-5' name='btnVehicle'>
 			<img src="images/docicon.ico" style="height:60px;" class="pull-left">
 			<font face='cambria' size=5 color='black'><b> <?php echo"Vehicle Clearance";?> </b></font>	
 			<span class='glyphicon glyphicon-chevron-right pull-right'></span></button>
 			
-			<div class="col-xs-1"></div>
+			
 			
 		<?php		if(isset($_POST['btnVehicle']))
 				{
@@ -255,7 +249,7 @@
 					$resId = $_SESSION['clientID'];
 					$contactno = $_SESSION['contactno'];		
 					$name = $_SESSION['name'];
-					$doc = $_SESSION['document'];
+					//$doc = $_SESSION['document'];
 					
 					
 					//$_SESSION['document'] = $TRU;
@@ -263,7 +257,7 @@
 					$_SESSION['appId'] = $appId;
 					$_SESSION['name'] = $name;
 					$_SESSION['contactno'] = $contactno;
-					$_SESSION['place'] = $place;
+					$_SESSION['place'] = $add;
 					
 				echo "<script> window.location = 'DRselectVehicle.php';</script>";
 				} 
@@ -291,7 +285,7 @@
     <script src="assets/js/jquery.ui.touch-punch.min.js"></script>
     <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
     <script src="assets/js/jquery.scrollTo.min.js"></script>
-    <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+    <script src="assets/js/jquery.nicescroll.js" typ\e="text/javascript"></script>
 
 
     <!--common script for all pages-->

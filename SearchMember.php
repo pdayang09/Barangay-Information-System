@@ -81,17 +81,20 @@
 </tr>
 <?php
 $memb = $_SESSION['Memb'];
-$a = $_SESSION['Last'];
+
+
           require('connection.php');
-        $sql = "SELECT concat(b.strLastName,', ',b.strFirstName) as 'Name' , concat(a.strBuildingNo,' ',strStreetName,', ',strZoneName) as 'Address', a.intHouseholdNo as 'No' from tblhousehold as a inner join tblhousemember as b on a.intHouseholdNo = b.intForeignHouseholdNo
+        $sql = "SELECT concat(b.strLastName,', ',b.strFirstName) as 'Name' , concat(a.strBuildingNo,' ',strStreetName,', ',strZoneName) as 'Address', intHouseholdNo  from tblhousehold as a inner join tblhousemember as b on a.intHouseholdNo = b.intForeignHouseholdNo
 		inner join tblstreet as c on a.intForeignStreetId = c.intStreetId inner join tblzone as d on c.intForeignZoneId = d.intZoneId  where b.strStatus = 'Head' ";
         $query = mysqli_query($con, $sql);
         if(mysqli_num_rows($query) > 0){
       
-            while($row = mysqli_fetch_object($query)){?>
+            while($row = mysqli_fetch_object($query)){
+				$Hhold = $row->intHouseholdNo;
+				echo "<script>alert('$Hhold')</script>";?>
           <tr> <td><?php echo $row->Name?></td>
           <td><?php echo $row->Address?></td>
-          <td><button id = 'btn' type = button value = <?php echo $row->No?> name = 'Edit' data-toggle="modal" data-target="#myModal" onclick = "a();">Transfer</button> </td>
+          <td><button id = 'btn' type = button value = '<?php echo $Hhold?>' name = 'Edit' data-toggle="modal" data-target="#myModal" onclick = "a();">Transfer</button> </td>
 
           </tr>
         <?php }}
@@ -128,7 +131,8 @@ $a = $_SESSION['Last'];
   <script>
       //custom select box
 	  function a(){
-	  var x = document.getElementById('btn').value;
+	  var x = document.getElementsByName('Edit').value;
+	  alert(x);
 	  document.getElementById('ID').value = x;
   }
 	  

@@ -242,7 +242,7 @@
         //Authorization Flags
         $_SESSION['equipmentF'] = "0";
         $_SESSION['resFacilityFlag'] = "0";
-        $_SESSION['go'] = "0";
+        $_SESSION['go'] = 1;
     ?>    
 
     <!-- Page Content -->
@@ -298,8 +298,9 @@
                     $facito = $row[3];
                     
                     echo"<center><h4><span> NOT AVAILABLE </span><span class='label label-warning'> $facifrom - $facito </span></h4></center>";
-                    $_SESSION['go'] = 1;
+                    
                   }
+                  $_SESSION['go'] = 1;
                 }else{
 
                     echo"<center><h3><span> AVAILABLE </span><span class='label label-warning'></span></h3></center>";

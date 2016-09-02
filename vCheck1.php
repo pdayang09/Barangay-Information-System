@@ -27,9 +27,8 @@
                     $facito = $row[3];
                     
                     echo"<center><h4><span> NOT AVAILABLE </span><span class='label label-warning'> $facifrom - $facito </span></h4></center>";
-                    
+                    $_SESSION['go'] = 1;
                   }
-                  $_SESSION['go'] = 1;
                 }else{
 
                 	echo"<center><h3><span> AVAILABLE </span><span class='label label-warning'></span></h3></center>";
@@ -40,4 +39,24 @@
                     </li>
                 </ul>
             </div>
+
+    <div id="viewCheckEquip" class="col-sm-3">
+        <div class="showback">
+            <div class="panel-heading">
+                <div class="pull-left"><h4> Reserved Equipment </h4></div><br>
+            </div>
+    
+            <div class="task-content">
+                <ul id="sortable" class="task-list">
+                    <li class="list-primary">
+                        <div class="task-title">        
+            <?php 
+
+            ?>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>  
+    </div>
 

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 01, 2016 at 12:54 AM
+-- Generation Time: Sep 01, 2016 at 11:29 PM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.5.30
 
@@ -111,7 +111,8 @@ INSERT INTO `tblbrgyposition` (`intPositionId`, `strPositionName`, `strView`, `i
 (1, 'Secretary', 'Sec', 1),
 (2, 'Barangay Captain', 'Kap', 1),
 (3, 'Liason', 'Liason', 1),
-(4, 'Administrator', 'Admin', 3);
+(4, 'Administrator', 'Admin', 4),
+(5, 'Clerk', 'Sec', 1);
 
 -- --------------------------------------------------------
 
@@ -451,13 +452,14 @@ CREATE TABLE `tblequipment` (
 
 INSERT INTO `tblequipment` (`strEquipNo`, `strEquipName`, `strEquipCategory`, `intEquipQuantity`, `dblEquipFee`, `dblEquipNResidentCharge`, `strStatus`) VALUES
 (1, 'Basketball', '8', 13, 50.51, 10, 'Enabled'),
-(2, 'Volleyball', '8', 10, 50, 0, 'Enabled'),
-(3, 'Tennis Ball', '8', 10, 50, 0, 'Enabled'),
-(4, 'Shuttlecock', '8', 10, 50, 0, 'Enabled'),
-(5, 'Volleyball Net', '4', 10, 0, 0, 'Enabled'),
-(6, 'Tennis Net', '4', 3, 0, 0, 'Disabled'),
+(2, 'Volleyball', '8', 10, 50, 10, 'Enabled'),
+(3, 'Tennis Ball', '8', 10, 50, 10, 'Enabled'),
+(4, 'Shuttlecock', '8', 10, 50, 10, 'Enabled'),
+(5, 'Volleyball Net', '4', 10, 0, 0, 'Disabled'),
+(6, 'Tennis Net', '4', 3, 0, 0, 'Enabled'),
 (7, 'Digital Scoreboard', '6', 5, 250, 0, 'Enabled'),
-(8, 'Tennis', '5', 90, 20.6, 0, 'Enabled');
+(8, 'Tennis', '5', 90, 20.6, 0, 'Enabled'),
+(9, 'Helmet', '8', 1, 25, 25, 'Enabled');
 
 -- --------------------------------------------------------
 
@@ -472,19 +474,24 @@ CREATE TABLE `tblfacility` (
   `strFaciStatus` varchar(45) NOT NULL,
   `dblFaciDayCharge` double DEFAULT NULL,
   `dblFaciNightCharge` double DEFAULT NULL,
-  `dblFaciNResidentCharge` double DEFAULT NULL
+  `dblFaciNResidentCharge` double DEFAULT NULL,
+  `imageUpload` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tblfacility`
 --
 
-INSERT INTO `tblfacility` (`strFaciNo`, `strFaciName`, `strFaciCategory`, `strFaciStatus`, `dblFaciDayCharge`, `dblFaciNightCharge`, `dblFaciNResidentCharge`) VALUES
-(1, 'Basketball Court', '1', 'Good Condition', 250, 300, 500),
-(2, 'Badminton Court', '1', 'Good Condition', 250, 300, 500),
-(3, 'Tennis Court', '1', 'Good Condition', 250, 300, 500),
-(4, 'Wake Chapel', '3', 'Good Condition', 0, 0, 0),
-(5, 'Multi Purpose Hall', '3', 'Good Condition', 250, 300, 500);
+INSERT INTO `tblfacility` (`strFaciNo`, `strFaciName`, `strFaciCategory`, `strFaciStatus`, `dblFaciDayCharge`, `dblFaciNightCharge`, `dblFaciNResidentCharge`, `imageUpload`) VALUES
+(1, 'Basketball Court', '1', 'Under Maintenance', 250, 300, 500, ''),
+(2, 'Badminton Court', '1', 'Good Condition', 250, 300, 500, ''),
+(3, 'Tennis Court', '1', 'Good Condition', 250, 300, 500, ''),
+(4, 'Wake Chapel', '3', 'Good Condition', 0, 0, 0, ''),
+(5, 'Multi Purpose Hall', '3', 'Good Condition', 250, 300, 500, ''),
+(6, '', '', '', NULL, NULL, NULL, ''),
+(7, 'bahay', '1', 'Good Condition', 250, 300, 400, ''),
+(8, '', '', '', NULL, NULL, NULL, ''),
+(9, 'simbahan', '2', 'Good Condition', 250, 300, 400, '');
 
 -- --------------------------------------------------------
 
@@ -507,7 +514,7 @@ CREATE TABLE `tblhousehold` (
 --
 
 INSERT INTO `tblhousehold` (`intHouseholdNo`, `strBuildingNo`, `intForeignStreetId`, `strHouseholdLname`, `strResidence`, `strOldAddress`, `strStatus`) VALUES
-(1, '21', 1, 'Dayang', 'Owned', '233 Maalikaya Street, Purok 21, Building No 11', 'Disabled'),
+(1, '21', 1, 'Dayang', 'Owned', '233 Maalikaya Street, Purok 21, Building No 11', 'Enabled'),
 (2, '211 Interior', 1, 'Daya', 'Rent', 'J Street, Purok 21, Building No 21', 'Enable'),
 (3, '922', 1, 'Perez', 'Rent', '911 Jan Street, Brgy. Sta ana, Malate, Manila', 'Enable'),
 (4, '88', 1, 'Wu', 'Owned', '891 Maa', 'Enable'),
@@ -563,7 +570,7 @@ INSERT INTO `tblhousemember` (`intMemberNo`, `strFirstName`, `strMiddleName`, `s
 (20, 'dsa', 'sdaa', 'ds', '', 'M', '1992-08-14', '', '', '', '', '', 6, 'Single', 'Head', 'Alive', 'Y', 'N'),
 (21, 'Mary', '', 'Ara', '', 'F', '1995-01-01', '12', 'Sales', '786', '56', '54', 9, 'Single', 'Head', 'Alive', 'Y', 'N'),
 (22, 'Kimmy', '', 'Sista', '', 'F', '1992-08-03', '', '', '', '', '', 10, 'Single', 'Head', 'Alive', 'Y', 'N'),
-(25, 'Maria Rosa', '', 'SpatNa', '', 'F', '1992-01-01', '', '', '', '', '', 2, 'Single', 'Tenant', 'Alive', '', ''),
+(25, 'Maria Rosa', '', 'SpatNa', '', 'F', '1992-01-01', '', '', '', '', '', 1, 'Single', 'Te', 'Alive', '', ''),
 (26, 'Paula', 'Ting', 'Perez', '', 'F', '1996-01-01', '', '', '', '', '', 3, 'Single', 'Spouse', 'Alive', '', ''),
 (27, 'Carl', 'Ting', 'Perez', '', 'M', '2010-01-01', '0129931', 'Student', '', '', '', 3, 'Single', 'Children', 'Alive', '', ''),
 (28, 'Mary Joan', '', 'Meno', '', 'F', '1992-01-01', '09283771829', 'Businesswoman', '', '', '', 3, 'Single', 'Tenant', 'Alive', 'Y', 'N');
@@ -597,26 +604,14 @@ CREATE TABLE `tblpaymentdetail` (
 --
 
 INSERT INTO `tblpaymentdetail` (`intNum`, `strRequestID`, `dblReqPayment`, `intRequestORNo`) VALUES
-(1, '001', 250, '0'),
-(2, '002', 100, '0'),
-(3, '003', 600, '0'),
-(4, '004', 566.02, '0'),
-(5, '005', 1500, '0'),
-(6, '006', 625, '0'),
-(7, '007', 1650, '0'),
-(8, '008', 600, '0'),
-(9, '009', 1200, '0'),
-(10, '010', 1500, '0'),
-(11, '010', 1250, '0'),
-(12, '37', 50, '1'),
-(13, '39', 50, '1'),
-(17, '45', 1500, '0'),
-(18, 'RTU 123', 100, '1'),
-(19, '46', 50, '1'),
-(20, 'UTI 009', 100, '1'),
-(27, '19', 999.95, '0'),
-(28, '20', 1599.95, '0'),
-(29, 'UTI 367', 100, '1');
+(1, '001', 100, '001'),
+(2, '002', 1, '002'),
+(3, '003', 500, '003'),
+(5, '004', 150, '004'),
+(7, '006', 2, '006'),
+(8, '006', 2, '006'),
+(9, '007', 500, '007'),
+(10, '008', 2, '008');
 
 -- --------------------------------------------------------
 
@@ -637,9 +632,12 @@ CREATE TABLE `tblpaymenttrans` (
 --
 
 INSERT INTO `tblpaymenttrans` (`intORNo`, `dtmPaymentDate`, `dblPaymentAmount`, `dblPaidAmount`, `dblRemaining`) VALUES
-('0', '0000-00-00', 0, 0, 0),
-('1', '2016-07-23', 250, 500, 0),
-('2', '2016-07-23', 250, 500, 0);
+('001', '2016-09-01', 100, 100, 0),
+('002', '0000-00-00', 1, 0, 1),
+('003', '2016-09-01', 500, 500, 0),
+('004', '0000-00-00', 150, 0, 150),
+('006', '2016-08-31', 2, 2, 0),
+('008', '0000-00-00', 2, 0, 2);
 
 -- --------------------------------------------------------
 
@@ -700,16 +698,14 @@ CREATE TABLE `tblreservationrequest` (
 --
 
 INSERT INTO `tblreservationrequest` (`strReservationID`, `strRSresidentId`, `strRSapplicantId`, `datRSIssued`, `datRSReserved`, `dtmFrom`, `dtmTo`, `strRSapprovalStatus`, `strRSPurpose`) VALUES
-('001', '', ' app002', '2016-08-10', '2016-08-19', 1471622400000, 1471626000000, 'Approved', 'Practice 1.0'),
-('002', '', '10', '2016-08-10', '2016-08-13', 1471111200000, 1471127400000, 'Paid', 'Practice 2.0'),
-('003', '', '11', '2016-08-10', '2016-08-13', 1471105800000, 1471120200000, 'For Approval', 'Party'),
-('004', '', ' app003', '2016-08-10', '2016-08-15', 1471269600000, 1471280400000, 'For Approval', 'Practice 3.0'),
-('005', '', ' app001', '2016-08-10', '2016-08-25', 1472148000000, 1472158800000, 'For Approval', 'Party 2.0'),
-('006', '', '8', '2016-08-10', '2016-08-15', 1471289400000, 1471298400000, 'For Approval', 'Pa party'),
-('007', '', ' app001', '2016-08-10', '2016-08-23', 1471995000000, 1472005800000, 'For Approval', 'Debut'),
-('008', '', '7', '2016-08-10', '2016-08-30', 1472565600000, 1472572800000, 'For Approval', 'Badminton Tourn'),
-('009', '', ' app002', '2016-08-10', '2016-08-24', 1472065200000, 1472072400000, 'For Approval', 'Tennis Play 1.0'),
-('010', '', '10', '2016-08-10', '2016-08-30', 1472596200000, 1472614200000, 'For Approval', 'Pageant Night');
+('001', '', ' app003', '2016-08-31', '2016-08-31', 1472655600000, 1472655600000, 'Paid', 'Practice'),
+('002', '4', '', '2016-08-31', '2016-08-31', 1472655600000, 1472677200000, 'For Approval', 'Drama'),
+('003', '5', '', '2016-08-31', '2016-08-31', 1472655600000, 1472662800000, 'Paid', 'Practical Test'),
+('004', '3', '', '2016-08-31', '2016-08-31', 1472655600000, 1472662800000, 'For Approval', 'Hiram Bola'),
+('005', '7', '', '2016-08-31', '2016-09-10', 1473525000000, 1473537600000, 'Forfeited', 'Wa lang'),
+('006', '', ' app002', '2016-08-31', '2016-09-13', 1473778800000, 1473786000000, 'Paid', 'Palaro'),
+('007', ' app002', '', '2016-08-31', '2016-09-10', 1473526800000, 1473534000000, 'For Approval', 'nhcka'),
+('008', '', ' app001', '2016-09-01', '2016-09-10', 1473525000000, 1473534000000, 'Approved', 'fjsdofj');
 
 -- --------------------------------------------------------
 
@@ -731,12 +727,9 @@ CREATE TABLE `tblreserveequip` (
 --
 
 INSERT INTO `tblreserveequip` (`strReserveEquipNo`, `strReservationID`, `strREEquipCode`, `dtmREFrom`, `dtmRETo`, `intREQuantity`) VALUES
-(1, '001', 'Tennis Ball', '2016-08-19 09:00:00', '2016-08-19 10:00:00', 0),
-(2, '001', 'Tennis Net', '2016-08-19 09:00:00', '2016-08-19 10:00:00', 0),
-(3, '002', 'Tennis Ball', '2016-08-13 11:00:00', '2016-08-13 15:30:00', 0),
-(4, '002', 'Tennis Net', '2016-08-13 11:00:00', '2016-08-13 15:30:00', 0),
-(5, '004', 'Basketball', '2016-08-15 07:00:00', '2016-08-15 10:00:00', 2),
-(6, '009', 'Tennis Ball', '2016-08-24 12:00:00', '2016-08-24 14:00:00', 0);
+(1, '001', 'Tennis Ball', '2016-08-31 08:00:00', '2016-08-31 08:00:00', 2),
+(2, '003', 'Volleyball Net', '2016-08-31 08:00:00', '2016-08-31 10:00:00', 2),
+(3, '004', 'Volleyball', '2016-08-31 08:00:00', '2016-08-31 10:00:00', 3);
 
 -- --------------------------------------------------------
 
@@ -757,10 +750,11 @@ CREATE TABLE `tblreservefaci` (
 --
 
 INSERT INTO `tblreservefaci` (`strReserveFaciNo`, `strReservationID`, `strREFaciCode`, `dtmREFrom`, `dtmRETo`) VALUES
-(1, '004', '', '2016-08-15 07:00:00', '2016-08-15 10:00:00'),
-(2, '008', '', '2016-08-30 07:00:00', '2016-08-30 09:00:00'),
-(3, '001', '', '2016-08-19 09:00:00', '2016-08-19 10:00:00'),
-(5, '003', '', '2016-08-13 09:30:00', '2016-08-13 13:30:00');
+(2, '002', '5', '2016-08-31 08:00:00', '2016-08-31 14:00:00'),
+(3, '003', '3', '2016-08-31 08:00:00', '2016-08-31 10:00:00'),
+(7, '006', '5', '2016-09-13 08:00:00', '2016-09-13 10:00:00'),
+(9, '007', '2', '2016-09-10 10:00:00', '2016-09-10 12:00:00'),
+(10, '008', '5', '2016-09-10 09:30:00', '2016-09-10 12:00:00');
 
 -- --------------------------------------------------------
 
@@ -782,12 +776,9 @@ CREATE TABLE `tblreturnequip` (
 --
 
 INSERT INTO `tblreturnequip` (`strReturnEquipNo`, `strReservationID`, `strRTEquipCode`, `datRTDate`, `intReturned`, `intUnreturned`) VALUES
-(1, '001', 'Tennis Ball', '2016-08-19', 0, 2),
-(2, '001', 'Tennis Net', '2016-08-19', 0, 1),
-(3, '002', 'Tennis Ball', '2016-08-13', 0, 2),
-(4, '002', 'Tennis Net', '2016-08-13', 0, 1),
-(5, '004', 'Basketball', '2016-08-15', 0, 2),
-(6, '009', 'Tennis Ball', '2016-08-24', 0, 2);
+(1, '001', 'Tennis Ball', '2016-08-31', 0, 2),
+(2, '003', 'Volleyball Net', '2016-08-31', 0, 2),
+(3, '004', 'Volleyball', '2016-08-31', 0, 3);
 
 -- --------------------------------------------------------
 
@@ -882,6 +873,7 @@ CREATE TABLE `tblvehicle` (
   `strMotorNo` varchar(45) NOT NULL,
   `strChassisNo` varchar(45) NOT NULL,
   `strVehicleNo` varchar(45) NOT NULL,
+  `strVehicleColor` varchar(25) NOT NULL,
   `intVehicleType` int(1) NOT NULL,
   `strVehicleStat` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -890,13 +882,13 @@ CREATE TABLE `tblvehicle` (
 -- Dumping data for table `tblvehicle`
 --
 
-INSERT INTO `tblvehicle` (`strVplateNo`, `strOperatorName`, `strOwnerName`, `strVehicleModel`, `strMotorNo`, `strChassisNo`, `strVehicleNo`, `intVehicleType`, `strVehicleStat`) VALUES
-('QWS 123', 'Jan Ala', '', 'Honda 567', 'KMYH 2134', 'KMYH 2134', '098YELLOW', 1, 'Active'),
-('RTU 121', 'Jan Ala', 'Dayang, Paul Aquino ', 'Hyundai 567', 'KMYH 2134', 'KMYH 2134', '098YELLOW', 1, 'Active'),
-('RTU 123', 'Jan Ala', 'Perez, Matteo Ting Jr', 'Hyundai 567', 'KMYH 2134', 'KMYH 2134', '098YELLOW', 1, 'Active'),
-('TW7777', 'Ala', 'Paul Aquino Dayang', 'Kawasaki', 'KC125EEE', 'KC125EEE', '078 / YELLOW', 1, 'Active'),
-('UTI 123', '', 'JAN PHILIP ALA', 'Honda', 'UTI125EEE', 'UTI125EEE', '09', 0, 'Active'),
-('UTI 367', 'Jan Ala', 'Perez, Matteo Ting Jr', 'Hyundai 567', 'KMYH 2134', 'KMYH 2134', '098', 0, 'Active');
+INSERT INTO `tblvehicle` (`strVplateNo`, `strOperatorName`, `strOwnerName`, `strVehicleModel`, `strMotorNo`, `strChassisNo`, `strVehicleNo`, `strVehicleColor`, `intVehicleType`, `strVehicleStat`) VALUES
+('QWS 123', 'Jan Ala', '', 'Honda 567', 'KMYH 2134', 'KMYH 2134', '098YELLOW', '', 1, 'Active'),
+('RTU 121', 'Jan Ala', 'Dayang, Paul Aquino ', 'Hyundai 567', 'KMYH 2134', 'KMYH 2134', '098YELLOW', '', 1, 'Active'),
+('RTU 123', 'Jan Ala', 'Perez, Matteo Ting Jr', 'Hyundai 567', 'KMYH 2134', 'KMYH 2134', '098YELLOW', '', 1, 'Active'),
+('TW7777', 'Ala', 'Paul Aquino Dayang', 'Kawasaki', 'KC125EEE', 'KC125EEE', '078 / YELLOW', '', 1, 'Active'),
+('UTI 123', '', 'JAN PHILIP ALA', 'Honda', 'UTI125EEE', 'UTI125EEE', '09', '', 0, 'Active'),
+('UTI 367', 'Jan Ala', 'Perez, Matteo Ting Jr', 'Hyundai 567', 'KMYH 2134', 'KMYH 2134', '098', '', 0, 'Active');
 
 -- --------------------------------------------------------
 
@@ -1181,7 +1173,7 @@ ALTER TABLE `tblaccount`
 -- AUTO_INCREMENT for table `tblbrgyposition`
 --
 ALTER TABLE `tblbrgyposition`
-  MODIFY `intPositionId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `intPositionId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `tblbusiness`
 --
@@ -1231,12 +1223,12 @@ ALTER TABLE `tbldocumentrequest`
 -- AUTO_INCREMENT for table `tblequipment`
 --
 ALTER TABLE `tblequipment`
-  MODIFY `strEquipNo` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `strEquipNo` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `tblfacility`
 --
 ALTER TABLE `tblfacility`
-  MODIFY `strFaciNo` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `strFaciNo` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `tblhousehold`
 --
@@ -1251,7 +1243,7 @@ ALTER TABLE `tblhousemember`
 -- AUTO_INCREMENT for table `tblpaymentdetail`
 --
 ALTER TABLE `tblpaymentdetail`
-  MODIFY `intNum` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `intNum` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `tblrequirements`
 --
@@ -1261,17 +1253,17 @@ ALTER TABLE `tblrequirements`
 -- AUTO_INCREMENT for table `tblreserveequip`
 --
 ALTER TABLE `tblreserveequip`
-  MODIFY `strReserveEquipNo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `strReserveEquipNo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `tblreservefaci`
 --
 ALTER TABLE `tblreservefaci`
-  MODIFY `strReserveFaciNo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `strReserveFaciNo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `tblreturnequip`
 --
 ALTER TABLE `tblreturnequip`
-  MODIFY `strReturnEquipNo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `strReturnEquipNo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `tblstreet`
 --
