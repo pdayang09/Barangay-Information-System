@@ -50,30 +50,11 @@ function checkdied(){
 	else  if(isset($_POST['Headdec'])){
 		$date = $_POST['dtdied'];
 		$m = $_POST['Headdec'];
-		$new = $_POST['NewHead'];
-		$hno1 = $_POST['question'];
-				if(isset($_POST['question'])){
-						mysqli_query($con,"INSERT INTO `tbldeceased`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `dtDied`) Select `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`,'$date' from tblhousemember as a where a.intMemberNo = '$m'");
-				mysqli_query($con,"Delete from tblhousemember where `intMemberNo` = $m");
-				mysqli_query($con,"Update tblhousemember set strStatus = 'Head' where intMemberNo = '$new'");
-					$sql = mysqli_query($con, "Select * from tblhousemember where intMemberNo = '$new'");
-					$row = mysqli_fetch_object($sql);
-					$newlast = $row->strLastName;
 				
-					mysqli_query($con,"Update tblhousehold set strHouseholdLname = '$newlast' where intHouseholdNo = '$hno1'");
-					echo "<script>alert('$hno1')
-					window.location = 'HholdPersonal.php'</script>;";
-				}
-				else{
-					//echo "<script>alert('$new');</script>";
+					
 					mysqli_query($con,"INSERT INTO `tbldeceased`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `dtDied`) Select `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`,'$date' from tblhousemember as a where a.intMemberNo = '$m'");
-					mysqli_query($con,"Delete from tblhousemember where `intMemberNo` = $m");
-					mysqli_query($con,"Update tblhousemember set strStatus = 'Head' where intMemberNo = '$new'");
-				echo "<script>window.location = 'HholdPersonal.php'</script>";
-				}
-				//echo "<script>alert('$m');</script>";
-		//mysqli_query($con,"INSERT INTO `tbldeceased`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `dtDied`) Select `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`,'$date' from tblhousemember as a where a.intMemberNo = '$m'");
-		//mysqli_query($con,"Delete from tblhousemember where `intMemberNo` = $m");
-		//echo "<script>window.location = 'HholdPersonal.php'</script>";
-		
+					mysqli_query($con,"Update tblhousemember set strLifeStatus = 'Deceased' where intMemberNo = '$m'");
+					echo "<script>window.location = 'HholdPersonal.php'</script>";
+				
+				
 	}?>

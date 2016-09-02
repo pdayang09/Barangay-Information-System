@@ -55,10 +55,10 @@
       				echo "Head of Household: ".$row->strLastName.",".$row->strFirstName." ".$Mid." ".$Ext?>
 					<div class="btn-group " role="group"style="float: right; margin-right: 5cm;"> 
 						<div class="btn-group" role="group"  >
-						<button type = submit  class="btn btn-info btn-round btn-sm"   value = <?php echo $row->intMemberNo?> name = 'Edit' >Edit Head Detail</button>
+						<button type = submit  class="btn btn-info btn-round btn-sm"   value = <?php echo $row->intMemberNo?> name = 'Edit'  <?php if($row->strLifeStatus == 'Deceased'){ echo 'Disabled';}?> >Edit Head Detail</button>
 						</div>
 						<div class="btn-group" role="group">
-						<button type = button  class="btn btn-danger btn-round btn-sm"    onclick = "DecHead(this.value)" data-toggle="modal" data-target="#DeceasedModal"  value = <?php echo $row->intMemberNo?> name = 'HDec' >Deceased</button>
+						<button type = button  class="btn btn-danger btn-round btn-sm"    onclick = "DecHead(this.value)" data-toggle="modal" data-target="#DeceasedModal"  value = <?php echo $row->intMemberNo?> name = 'HDec'  <?php if($row->strLifeStatus == 'Deceased'){ echo 'Disabled';}?> >Deceased</button>
 						</div>
 						</div><br><?php
       				echo "Gender: ".$Gend."<br>";
@@ -68,6 +68,7 @@
       				echo "SSS Number: ".$row->strSSSNo."<br>";
       				echo "TIN Number: ".$row->strTINNo."<br>";
 					echo "Voter's Id: ".$row->strVotersId."<br>";
+					echo "Life Status: ".$row->strLifeStatus."<br>";
       				?>
       				<br><br>
       				<a class="btn btn-info btn-sm" href = 'AddSpouse.php' <?php
