@@ -80,14 +80,17 @@
 						<option> Broken</option>
 					</select>
 				</div>
-			</div><br><br><br><br><br>
+			</div><br><br><br>
+	<center>
+			<input type="submit" class="btn btn-info" name = "btnEdit" id = "btnEdit" value = "Save Record" >
+		</center>
 </div>	
 			
 			<?php echo "<script>a();</script>"?>
 	
-				<input type="submit" class="btn btn-info" name = "btnEdit" id = "btnEdit" value = "Save Record" >
+				
 	</div>
-	
+	<center>
 	<div class="col-sm-9 col-md-6 col-lg-6">
 		<div div class = "showback">
 			<?php 
@@ -103,7 +106,8 @@
 				<img src="Images/FacilityUpload/<?php echo $row['imageUpload']; ?>" width="400px" height="200px">
 			<?php  }}?>
 			</div>
-		</div>
+	</div>
+	</center>
 			
  </form>
 

@@ -20,7 +20,7 @@
 		<legend ><font face = "cambria" size = 8 color = "grey"> Edit Equipment </font></legend>
 
 						
-
+<div class="col-sm-9 col-md-6 col-lg-6">
 		<div class = "showback">	<p><font face = "cambria" size = 5 color = "grey"> Equipment Name </font></p>
 			<div class = "form-group">
 				<div class="col-sm-5">
@@ -79,7 +79,30 @@
 			}
 				
 			 
-			?> </form></div>
+			?> </form>
+			</div>
+			</div>
+			
+			<center>
+	<div class="col-sm-9 col-md-6 col-lg-6">
+		<div div class = "showback">
+			<?php 
+				$a= $_SESSION['equipmentCode'];
+				//echo "<script>alert $a</script>";
+			require('connection.php');
+			$sql = "select imageUpload from tblequipment Where strEquipNo = $a ";
+			$query = mysqli_query($con, $sql);
+			if(mysqli_num_rows($query) > 0){
+			$i = 1;
+			while($row = mysqli_fetch_assoc($query)){?>
+	
+				<img src="Images/EquipmentUpload/<?php echo $row['imageUpload']; ?>" width="400px" height="200px">
+			<?php  }}?>
+			</div>
+	</div>
+	</center>
+			
+			
                                <!-- /#page-content-wrapper -->
 
 			

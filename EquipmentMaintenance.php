@@ -16,7 +16,7 @@
 				
 				<input type= checkbox id = "showdisabled" onclick ="showdis()"> Show Disabled Items<br>
 										<center><br>				
-				<div class = "showback" id = 'tblview'>
+<div class = "showback" id = 'tblview'>
 	<form method = POST>
 				<table class="table table-striped table-bordered table-hover"  border = '3' style = 'width:95%'><!-- Table -->
 					<thead>
@@ -76,7 +76,8 @@
 								</tr>
 		<?php }} ?></tbody>
 				</table>
-                    </form>             			</div><br><br>
+                    </form>             		
+</div><br><br>
 				<?php
 					if(isset($_POST['btnEdit'])){
 						$equipcode = $_POST['btnEdit'];		
@@ -85,8 +86,10 @@
 							$_SESSION['contno'] = $row->strEquipNo;
 							$_SESSION['Name'] = $row->strEquipName;
 							$_SESSION['stat'] = $row->intEquipQuantity;
-							$_SESSION['dblEquipFee'] = $row->dblEquipFee;;
-							$_SESSION['discount'] = $row->dblEquipDiscount;;
+							$_SESSION['dblEquipFee'] = $row->dblEquipFee;
+							$_SESSION['discount'] = $row->dblEquipNResidentCharge;
+							$_SESSION['image'] = $row->imageUpload;
+							$_SESSION['equipmentCode'] = $row->strEquipNo;
 							$query2 = mysqli_query($con,"Select * from tblCategory where strCategoryCode = '$row->strEquipCategory'");
 							$row2 = mysqli_fetch_object($query2);
 							$_SESSION['cat'] = $row2->strCategoryDesc;	
@@ -100,7 +103,7 @@
 				echo "<script>
 					window.location ='EquipmentMaintenance.php';</script>";
 				}	
-if(isset($_POST['btnEnable'])){
+if(isset		($_POST['btnEnable'])){
 						$a = $_POST['btnEnable'];
 					mysqli_query($con,"Update tblEquipment set strStatus = 'Enabled' where strEquipNo = '$a'");
 				echo "<script>

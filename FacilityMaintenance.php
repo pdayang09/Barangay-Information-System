@@ -17,7 +17,7 @@
 	
 				<input type= checkbox id = "showdisabled" onclick ="showdis()"> Show Broken/Under Maintenance Facility
                          <br><br>    
-							 <form method = POST><div class = "showback">
+							 
 								
 				
                                <form method = POST>
