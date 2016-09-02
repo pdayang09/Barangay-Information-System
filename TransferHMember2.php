@@ -15,23 +15,30 @@
 <br><br>
 <p><font face = "cambria" size = 4 color = "grey"> New Address: </font></p>
 	<div class="form-group">				
-           <div class="col-sm-3">
+        
 
-             <input id="FName" class="form-control input-group-lg reg_name" type="text" name="Building" title="Enter first name" placeholder="Building Number" required>
+          <div class="col-sm-3">
+
+             <input id="BuildingID" class="form-control input-group-lg reg_name" type="text" name="Building" title="Enter first name" placeholder="Building Number" required>
            </div> 
-		   <div class="col-sm-3">
-		 
-             <input id="MName" class="form-control input-group-lg reg_name" type="text" name= "Street" title="Enter middle name" placeholder="Street Name"required>
-			 
-           </div>
-           <div class="col-sm-3">
+		  
+			<div class="col-sm-3"> 	
+			
+			<select  name = "Street" id = "StreetId" class="form-control"  >
+			<option> Street Name</option>
+			<?php require('connection.php');
+			$sql = "Select * from tblStreet";
+			$sql1 = mysqli_query($con,$sql);
+			while($row = mysqli_fetch_object($sql1)){
+				?> <option  <?php echo "value =".$row->intStreetId;?>> <?php echo $row->strStreetName." ".$row->strPurok;?></option><?php
+			}?>
+			</select>
 		
-             <input id="LName" class="form-control input-group-lg reg_name" type="text" name= "Purok" title="Enter last name" placeholder="Purok Number" required>
-           </div>
-		   
+
+			</div>
 		     
-	</div><br><br><br>
-  <p><font face = "cambria" size = 4 color = "grey"> New Address: </font></p>
+<br><br><br>
+  <p><font face = "cambria" size = 4 color = "grey"> Residence: </font></p>
   <div class="form-group">        
            <div class="col-sm-3">
 
@@ -50,31 +57,32 @@
 <?php
  include("connection.php");
  
- if(isset($_POST['btnsubmit'])){$t = $_SESSION['transfer'];
+ if(isset($_POST['btnsubmit'])){
+$t = $_SESSION['Memb'];
+
  $Residence = $_POST['Residence'];
  $Lname = "";
  $House = $_POST['Building'];
  $Street = $_POST['Street'];
- $Purok = $_POST['Purok'];
    $sql = "SELECT strLastname FROM `tblhousemember` where intMemberNo = '$t'";
-  $query = mysqli_query($con, $sql);
+ $query = mysqli_query($con, $sql);
   $row = mysqli_fetch_object($query);
-  $Lname = $row->strLastname;
-  
-  $sql = "SELECT concat(strBuildingNo,' ',strStreet,', Purok ',strPurok) as 'Address' from tblhousehold as a Inner Join tblhousemember as b on a.intHouseholdNo = b.intForeignHouseholdNo where b.intMemberNo = '$t'";
-  $query = mysqli_query($con, $sql);
-  $row = mysqli_fetch_object($query);
-  $OldAddress = $row->Address;
-  
-  mysqli_query($con,"INSERT INTO `tblhousehold`(`strStreet`, `strPurok`, `strBuildingNo`, `strHouseholdLname`, `Rstresidence`, `strOldAddress`) VALUES ('$Street','$Purok','$House','$Lname','$Residence','$OldAddress')");
+ $Lname = $row->strLastname;
 
-  $sql = "SELECT `intHouseholdNo` FROM `tblhousehold` ORDER BY intHouseholdNo DESC";
+  $sql = "SELECT concat(strBuildingNo,' ',strStreetName,' ',strPurok) as 'Address' from tblhousehold as a Inner Join tblhousemember as b on a.intHouseholdNo = b.intForeignHouseholdNo inner join tblstreet as c on a.intForeignStreetId = c.intStreetId where b.intMemberNo = '$t'";
+  $query = mysqli_query($con, $sql);
+ $row = mysqli_fetch_object($query);
+ $OldAddress = $row->Address;
+  
+ mysqli_query($con,"INSERT INTO `tblhousehold`(`intForeignStreetId`, `strBuildingNo`, `strHouseholdLname`, `strResidence`, `strOldAddress`,strStatus) VALUES ('$Street','$House','$Lname','$Residence','$OldAddress','Enabled')");
+
+ $sql = "SELECT `intHouseholdNo` FROM `tblhousehold` ORDER BY intHouseholdNo DESC";
   $query = mysqli_query($con, $sql);
   $row = mysqli_fetch_object($query);
-  $new = $row->Householdno;
+  $new = $row->intHouseholdNo;
   
   mysqli_query($con,"UPDATE `tblhousemember` SET `intForeignHouseholdNo`= '$new',`strStatus`= 'Head' WHERE intMemberNo = '$t'");
-  
+  echo "<script>window.location = 'Hholdview.php';</script>";
   }?>
 </form>
                  </center>      

@@ -74,8 +74,9 @@
       				<a class="btn btn-info btn-sm" href = 'AddSpouse.php' <?php
       				$sql = "Select * from tblhousemember where intForeignHouseholdNo = '$Hno' AND strStatus = 'spouse' AND strLifeStatus = 'Alive' Order by intMemberNo desc";
       				$query = mysqli_query($con,$sql);
-      				$row = mysqli_fetch_array($query);
-      				if($row>0){echo "disabled";}
+      				$row2 = mysqli_fetch_array($query);
+					if($row->strLifeStatus == 'Deceased'){ echo 'Disabled';}
+      				else if($row->strLifeStatus == 'Alive' && $row2>0){echo "disabled";}
       				else{}
       					?>>Add Spouse</a>
       				<a class="btn btn-info btn-sm" data-toggle="tooltip" title="Hooray!" href = 'AddChildren.php'>Add Children</a>
