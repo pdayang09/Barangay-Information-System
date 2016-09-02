@@ -39,7 +39,7 @@
 						<tbody>
 							<?php
 							require('connection.php');
-								$sql = "select intStreetId , strStreetName, strZoneName from tblStreet inner join tblZone on intForeignZoneId = intZoneId order by intForeignZoneId , intStreetId desc";
+								$sql = "select intStreetId , strStreetName, strPurok from tblStreet order by intStreetId asc";
 								$query = mysqli_query($con, $sql);
 						
 								if(mysqli_num_rows($query) > 0){
@@ -48,7 +48,7 @@
 									while($row = mysqli_fetch_object($query)){?>
 										<tr> <td><?php echo $row->intStreetId?></td>
 											<td><?php echo $row->strStreetName?>				</td>
-											<td><?php echo $row->strZoneName?></td>
+											<td><?php echo $row->strPurok?></td>
 											<td>
 							
 											<div class="btn-group " role="group">	
