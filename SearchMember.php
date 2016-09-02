@@ -1,6 +1,8 @@
  <?php session_start();?>
 <!DOCTYPE html>
-          <?php require('header.php');?>
+          <?php  //$a = $_SESSION['Memb'];
+		 // echo "<script>alert('$a');</script>";
+		  require('header.php');?>
     <?php require('sidebar.php');?>
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
@@ -58,9 +60,9 @@
 						$memb = $_SESSION['Memb'];
 						$relate = $_POST['relation'];
 						
-						echo "<script>alert('$hno');</script>";
-						echo "<script>alert('$memb');</script>";
-						echo "<script>alert('$relate');</script>";
+					//	echo "<script>alert('$hno');</script>";
+					//	echo "<script>alert('$memb');</script>";
+					//	echo "<script>alert('$relate');</script>";
 						$sql = "UPDATE `tblhousemember` SET `intForeignHouseholdNo`= '$hno',`strStatus`= '$relate' WHERE intMemberNo = '$memb' ";
 						mysqli_query($con,$sql);
 						echo "<script> window.location = 'Hholdview.php'</script>";}?>

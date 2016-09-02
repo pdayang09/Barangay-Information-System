@@ -12,6 +12,7 @@
       <!--main content start-->
       <?php require('Deceasedvalidate.php');?>
       <?php require('Removevalidate.php');?>
+	   <?php require('TransferModal.php');?>
       <section id="main-content">
       	<section class="wrapper site-min-height">		
       		<legend ><font face = "cambria" size = 8 color = "grey"> Resident Module </font></legend>
@@ -121,7 +122,7 @@
       											<button class="btn btn-info btn-sm" type = button value = <?php echo $row->intMemberNo?> onclick = 'Del(this.value);' data-toggle="modal" data-target="#RemoveModal" name = 'Move' >Remove</button>
       										</div>	
       										<div class="btn-group" role="group">
-      											<button class="btn btn-info btn-sm" type = submit  value = <?php echo $row->intMemberNo?> name = 'Transfer' >Transfer</button>
+      											<button class="btn btn-info btn-sm" type = button onclick = "getTrans(this.value)" value = <?php echo $row->intMemberNo?> name = 'Transfer' data-toggle="modal" data-target="#TransferModal" >Transfer</button>
       										</div>	
       										
       										<div class="btn-group" role="group">
@@ -176,7 +177,7 @@
       																	<button class="btn btn-info btn-sm" type = button value = <?php echo $row->intMemberNo?> onclick = 'Del(this.value);' data-toggle="modal" data-target="#RemoveModal" name = 'Move' >Remove</button>
       																</div>	
       																<div class="btn-group" role="group">
-      																	<button class="btn btn-info btn-sm" type = submit  value = <?php echo $row->intMemberNo?> name = 'Transfer' >Transfer</button>
+      																	<button class="btn btn-info btn-sm" type = button  onclick = "getTrans(this.value)" value = <?php echo $row->intMemberNo?> name = 'Transfer' data-toggle="modal" data-target="#TransferModal" >Transfer</button>
       																</div>	
       																
       																<div class="btn-group" role="group">
@@ -194,12 +195,7 @@
       																	$_SESSION['Memb']=$_POST['View'];
       																	echo "<script>window.location = 'Memberview.php';</script>";
       																}
-      																
-      																
-      																if(isset($_POST['Transfer'])){
-      																	$_SESSION['Memb']=$_POST['Transfer'];
-      																	echo "<script>window.location = 'TransM.php';</script>";
-      																}
+      														
       																if(isset($_POST['Edit'])){
       																	$_SESSION['Memb']=$_POST['Edit'];
       																	echo "<script>window.location = 'EditChildren.php';</script>";
@@ -235,6 +231,20 @@
       										<!--script for this page-->
       										
       										<script>
+											function getTrans(value){
+												var x = value;
+												//alert(x);
+												$.ajax({
+      											type: "POST",
+      											url: "TransM.php",
+      											data: 'sid=' + x,
+      											success: function(data){
+      											//alert(data);
+      											$("#Transfer").html(data);
+      										}
+      									});
+												
+											}
 											
       											function DecHead(val){
       											//alert(val);
