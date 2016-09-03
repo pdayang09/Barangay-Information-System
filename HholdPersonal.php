@@ -12,6 +12,7 @@
       <!--main content start-->
       <?php require('Deceasedvalidate.php');?>
       <?php require('Removevalidate.php');?>
+	   <?php require('TransferModal.php');?>
       <section id="main-content">
       	<section class="wrapper site-min-height">		
       		<legend ><font face = "cambria" size = 8 color = "grey"> Resident Module </font></legend>
@@ -55,10 +56,10 @@
       				echo "Head of Household: ".$row->strLastName.",".$row->strFirstName." ".$Mid." ".$Ext?>
 					<div class="btn-group " role="group"style="float: right; margin-right: 5cm;"> 
 						<div class="btn-group" role="group"  >
-						<button type = submit  class="btn btn-info btn-round btn-sm"   value = <?php echo $row->intMemberNo?> name = 'Edit' >Edit Head Detail</button>
+						<button type = submit  class="btn btn-info btn-round btn-sm"   value = <?php echo $row->intMemberNo?> name = 'Edit'  <?php if($row->strLifeStatus == 'Deceased'){ echo 'Disabled';}?> >Edit Head Detail</button>
 						</div>
 						<div class="btn-group" role="group">
-						<button type = button  class="btn btn-danger btn-round btn-sm"    onclick = "DecHead(this.value)" data-toggle="modal" data-target="#DeceasedModal"  value = <?php echo $row->intMemberNo?> name = 'HDec' >Deceased</button>
+						<button type = button  class="btn btn-danger btn-round btn-sm"    onclick = "DecHead(this.value)" data-toggle="modal" data-target="#DeceasedModal"  value = <?php echo $row->intMemberNo?> name = 'HDec'  <?php if($row->strLifeStatus == 'Deceased'){ echo 'Disabled';}?> >Deceased</button>
 						</div>
 						</div><br><?php
       				echo "Gender: ".$Gend."<br>";
@@ -68,13 +69,15 @@
       				echo "SSS Number: ".$row->strSSSNo."<br>";
       				echo "TIN Number: ".$row->strTINNo."<br>";
 					echo "Voter's Id: ".$row->strVotersId."<br>";
+					echo "Life Status: ".$row->strLifeStatus."<br>";
       				?>
       				<br><br>
       				<a class="btn btn-info btn-sm" href = 'AddSpouse.php' <?php
       				$sql = "Select * from tblhousemember where intForeignHouseholdNo = '$Hno' AND strStatus = 'spouse' AND strLifeStatus = 'Alive' Order by intMemberNo desc";
       				$query = mysqli_query($con,$sql);
-      				$row = mysqli_fetch_array($query);
-      				if($row>0){echo "disabled";}
+      				$row2 = mysqli_fetch_array($query);
+					if($row->strLifeStatus == 'Deceased'){ echo 'Disabled';}
+      				else if($row->strLifeStatus == 'Alive' && $row2>0){echo "disabled";}
       				else{}
       					?>>Add Spouse</a>
       				<a class="btn btn-info btn-sm" data-toggle="tooltip" title="Hooray!" href = 'AddChildren.php'>Add Children</a>
@@ -119,7 +122,7 @@
       											<button class="btn btn-info btn-sm" type = button value = <?php echo $row->intMemberNo?> onclick = 'Del(this.value);' data-toggle="modal" data-target="#RemoveModal" name = 'Move' >Remove</button>
       										</div>	
       										<div class="btn-group" role="group">
-      											<button class="btn btn-info btn-sm" type = submit  value = <?php echo $row->intMemberNo?> name = 'Transfer' >Transfer</button>
+      											<button class="btn btn-info btn-sm" type = button onclick = "getTrans(this.value)" value = <?php echo $row->intMemberNo?> name = 'Transfer' data-toggle="modal" data-target="#TransferModal" >Transfer</button>
       										</div>	
       										
       										<div class="btn-group" role="group">
@@ -174,7 +177,7 @@
       																	<button class="btn btn-info btn-sm" type = button value = <?php echo $row->intMemberNo?> onclick = 'Del(this.value);' data-toggle="modal" data-target="#RemoveModal" name = 'Move' >Remove</button>
       																</div>	
       																<div class="btn-group" role="group">
-      																	<button class="btn btn-info btn-sm" type = submit  value = <?php echo $row->intMemberNo?> name = 'Transfer' >Transfer</button>
+      																	<button class="btn btn-info btn-sm" type = button  onclick = "getTrans(this.value)" value = <?php echo $row->intMemberNo?> name = 'Transfer' data-toggle="modal" data-target="#TransferModal" >Transfer</button>
       																</div>	
       																
       																<div class="btn-group" role="group">
@@ -192,12 +195,7 @@
       																	$_SESSION['Memb']=$_POST['View'];
       																	echo "<script>window.location = 'Memberview.php';</script>";
       																}
-      																
-      																
-      																if(isset($_POST['Transfer'])){
-      																	$_SESSION['Memb']=$_POST['Transfer'];
-      																	echo "<script>window.location = 'TransM.php';</script>";
-      																}
+      														
       																if(isset($_POST['Edit'])){
       																	$_SESSION['Memb']=$_POST['Edit'];
       																	echo "<script>window.location = 'EditChildren.php';</script>";
@@ -233,6 +231,20 @@
       										<!--script for this page-->
       										
       										<script>
+											function getTrans(value){
+												var x = value;
+												//alert(x);
+												$.ajax({
+      											type: "POST",
+      											url: "TransM.php",
+      											data: 'sid=' + x,
+      											success: function(data){
+      											//alert(data);
+      											$("#Transfer").html(data);
+      										}
+      									});
+												
+											}
 											
       											function DecHead(val){
       											//alert(val);

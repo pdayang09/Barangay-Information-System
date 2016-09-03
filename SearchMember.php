@@ -1,6 +1,8 @@
  <?php session_start();?>
 <!DOCTYPE html>
-          <?php require('header.php');?>
+          <?php  //$a = $_SESSION['Memb'];
+		 // echo "<script>alert('$a');</script>";
+		  require('header.php');?>
     <?php require('sidebar.php');?>
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
@@ -58,9 +60,9 @@
 						$memb = $_SESSION['Memb'];
 						$relate = $_POST['relation'];
 						
-						echo "<script>alert('$hno');</script>";
-						echo "<script>alert('$memb');</script>";
-						echo "<script>alert('$relate');</script>";
+					//	echo "<script>alert('$hno');</script>";
+					//	echo "<script>alert('$memb');</script>";
+					//	echo "<script>alert('$relate');</script>";
 						$sql = "UPDATE `tblhousemember` SET `intForeignHouseholdNo`= '$hno',`strStatus`= '$relate' WHERE intMemberNo = '$memb' ";
 						mysqli_query($con,$sql);
 						echo "<script> window.location = 'Hholdview.php'</script>";}?>
@@ -84,17 +86,16 @@ $memb = $_SESSION['Memb'];
 
 
           require('connection.php');
-        $sql = "SELECT concat(b.strLastName,', ',b.strFirstName) as 'Name' , concat(a.strBuildingNo,' ',strStreetName,', ',strZoneName) as 'Address', intHouseholdNo  from tblhousehold as a inner join tblhousemember as b on a.intHouseholdNo = b.intForeignHouseholdNo
-		inner join tblstreet as c on a.intForeignStreetId = c.intStreetId inner join tblzone as d on c.intForeignZoneId = d.intZoneId  where b.strStatus = 'Head' ";
+        $sql = "SELECT concat(b.strLastName,', ',b.strFirstName) as 'Name' , concat(a.strBuildingNo,' ',strStreetName,' ',strPurok) as 'Address', intHouseholdNo  from tblhousehold as a inner join tblhousemember as b on a.intHouseholdNo = b.intForeignHouseholdNo
+		inner join tblstreet as c on a.intForeignStreetId = c.intStreetId where b.strStatus = 'Head' ";
         $query = mysqli_query($con, $sql);
         if(mysqli_num_rows($query) > 0){
       
             while($row = mysqli_fetch_object($query)){
-				$Hhold = $row->intHouseholdNo;
-				echo "<script>alert('$Hhold')</script>";?>
+				$Hhold = $row->intHouseholdNo;?>
           <tr> <td><?php echo $row->Name?></td>
           <td><?php echo $row->Address?></td>
-          <td><button id = 'btn' type = button value = '<?php echo $Hhold?>' name = 'Edit' data-toggle="modal" data-target="#myModal" onclick = "a();">Transfer</button> </td>
+          <td><button id = 'btn' type = button value = '<?php echo $Hhold?>' name = 'Edit' data-toggle="modal" data-target="#myModal" onclick = "a(this.value);">Transfer</button> </td>
 
           </tr>
         <?php }}
@@ -130,9 +131,9 @@ $memb = $_SESSION['Memb'];
     
   <script>
       //custom select box
-	  function a(){
-	  var x = document.getElementsByName('Edit').value;
-	  alert(x);
+	  function a(value){
+	  var x = value;
+
 	  document.getElementById('ID').value = x;
   }
 	  

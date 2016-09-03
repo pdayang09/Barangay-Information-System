@@ -15,32 +15,29 @@
 <br><br>
 <p><font face = "cambria" size = 4 color = "grey"> New Address: </font></p>
 	<div class="form-group">	
-	<div class="col-sm-3"> 	
-	        
-			<select  name = "Purok" id = "Purok" class="form-control" onchange= "getId(this.value)" >
-			<option> Purok Name</option>
+	
+	         	
+           <div class="col-sm-3">
+
+             <input id="BuildingID" class="form-control input-group-lg reg_name" type="text" name="Building" title="Enter first name" placeholder="Building Number" required>
+           </div> 
+		  
+			<div class="col-sm-3"> 	
+			
+			<select  name = "Street" id = "StreetId" class="form-control"  >
+			<option> Street Name</option>
 			<?php require('connection.php');
-			$sql = "Select * from tblZone";
+			$sql = "Select * from tblStreet";
 			$sql1 = mysqli_query($con,$sql);
 			while($row = mysqli_fetch_object($sql1)){
-				?> <option  <?php echo "value =".$row->intZoneId;?>> <?php echo $row->strZoneName;?></option><?php
+				?> <option  <?php echo "value =".$row->intStreetId;?>> <?php echo $row->strStreetName." ".$row->strPurok;?></option><?php
 			}?>
 			</select>
 		
 
 			</div>
-		   <div class="col-sm-4">
-		 <select name = "Street" id = "StreetList" class="form-control" required>
-		<option></option>
-			</select>
-			 
-	       </div>
-	      	
-           <div class="col-sm-3">
-
-             <input id="FName" class="form-control input-group-lg reg_name" type="text" name="Building" title="Enter first name" placeholder="Building Number" required>
-           </div> 
-		  
+		 
+	     
 	</div><br><br><br>
 
 
@@ -59,7 +56,7 @@
 		   
 	</div><br><br><br>
 
-<button type = submit  class="btn btn-info" name = "btnsubmit">Submit Record</button>
+<button type = submit  class="btn btn-info" name = "btnsubmit" onclick  = "return check();">Submit Record</button>
 <br><br>
  <?php
  if(isset($_POST['btnsubmit'])){
@@ -68,7 +65,7 @@
  $Building = $_POST['Building'];
  $residence = $_POST['Residence'];
 	 require('connection.php');
-	 $query = "SELECT concat(strBuildingNo,', ',strStreetName,', Zone ', strZoneName) as 'address' FROM `tblhousehold` inner join tblstreet on intStreetId = intForeignStreetId inner join tblzone on intForeignZoneId = intZoneId WHERE intHouseholdNo = $t ";
+	 $query = "SELECT concat(strBuildingNo,', ',strStreetName,' ', strPurok) as 'address' FROM `tblhousehold` inner join tblstreet on intStreetId = intForeignStreetId WHERE intHouseholdNo = $t ";
 	 $sql = mysqli_query($con,$query);
 	 $row = mysqli_fetch_object($sql);
 	 $old = $row->address;
@@ -104,19 +101,14 @@
     
   <script>
       //custom select box
-function getId(val){
-	// alert(val);
-	$.ajax({
-		type: "POST",
-		url: "getdata.php",
-		data: "zid="+val,
-		success: function(data){
-			alert(data);
-			$("#StreetList").html(data);
-		}
-		
-	});
+function check(){
+	var x = document.getElementById('BuildingID').value;
+	var y = document.getElementById('StreetId').value;
+	if(x == ' '|| y == 'Street Name'){
+		alert('Please Complete the form');
+		return false;
 	}
+}
       $(function(){
           $('select.styled').customSelect();
       });

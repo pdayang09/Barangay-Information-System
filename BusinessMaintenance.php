@@ -23,28 +23,28 @@
 						
 						<thead>
 							<tr>
-								<th># Business ID</th>
-								<th><i class="fa fa-bullhorn"></i> Business Name</th>
-								<th><i class="fa fa-bullhorn"></i> Business Description</th>
-								<th><i class="fa fa-bookmark"></i> Business Category</th>
-								<th><i class="fa fa-cog"></i> Contact Person</th>
-								<th><i class="fa fa-cog"></i> Contact Number</th>
-								<th><i class="fa fa-bookmark"></i> Location</th>
-								<th><i class="fa fa-cog"></i> Status</th>
-								<th><i class="fa fa-edit"></i> Action</th>
+								<th>Business ID</th>
+								<th>Business Name</th>
+						
+								<th>Business Category</th>
+								<th>Contact Person</th>
+								<th>Contact Number</th>
+								<th>Location</th>
+								<th>Status</th>
+								<th>Action</th>
 							</tr>
 						</thead>
 						<tfoot>
 							<tr>
-								<th># Business ID</th>
-								<th><i class="fa fa-bullhorn"></i> Business Name</th>
-								<th><i class="fa fa-bullhorn"></i> Business Description</th>
-								<th><i class="fa fa-bookmark"></i> Business Category</th>
-								<th><i class="fa fa-cog"></i> Contact Person</th>
-								<th><i class="fa fa-cog"></i> Contact Number</th>
-								<th><i class="fa fa-bookmark"></i> Location</th>
-								<th><i class="fa fa-cog"></i> Status</th>
-								<th><i class="fa fa-edit"></i> Action</th>
+								<th>Business ID</th>
+								<th>Business Name</th>
+						
+								<th>Business Category</th>
+								<th>Contact Person</th>
+								<th>Contact Number</th>
+								<th>Location</th>
+								<th>Status</th>
+								<th>Action</th>
 							</tr>
 						</tfoot>
 						
@@ -62,7 +62,7 @@
 							<tr> 
 								<td><?php echo $row->strBusinessID?></td>
 								<td><?php echo $row->strBusinessName?></td>
-								<td><?php echo $row->strBusinessDesc?></td>
+								
 								<td><?php 
 										$id = $row->strBusinessID;
 										$sql1 = "SELECT `strBusCateName`FROM tblbusinesscate as a INNER JOIN tblbusiness as b ON b.strBusinessCateID = a.strBusCatergory where strBusinessID ='$id' ";
@@ -108,7 +108,7 @@
 						<?php }}   ?>
 						</tbody>
 					</table>
-							<br><br>
+							
 							
 							<?php
 								if(isset($_POST['btnEdit'])){

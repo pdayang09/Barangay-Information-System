@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 01, 2016 at 11:29 PM
+-- Generation Time: Sep 02, 2016 at 06:51 AM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.5.30
 
@@ -788,7 +788,7 @@ INSERT INTO `tblreturnequip` (`strReturnEquipNo`, `strReservationID`, `strRTEqui
 
 CREATE TABLE `tblstreet` (
   `intStreetId` int(25) NOT NULL,
-  `intForeignZoneId` int(25) NOT NULL,
+  `strPurok` varchar(25) NOT NULL,
   `strStreetName` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -796,8 +796,9 @@ CREATE TABLE `tblstreet` (
 -- Dumping data for table `tblstreet`
 --
 
-INSERT INTO `tblstreet` (`intStreetId`, `intForeignZoneId`, `strStreetName`) VALUES
-(1, 2, 'Carolina Street');
+INSERT INTO `tblstreet` (`intStreetId`, `strPurok`, `strStreetName`) VALUES
+(1, 'Purok 1', 'Carolina Street'),
+(2, 'Purok 2', 'Quezon Street');
 
 -- --------------------------------------------------------
 
@@ -916,25 +917,6 @@ INSERT INTO `tblvehicleclearance` (`intID`, `strVCplateNo`, `strVCvehicleStat`, 
 (4, 'UTI 123', '0', '2016-08-21', '', 1),
 (5, 'RTU 123', 'New', '2016-08-24', 'Unpaid', 3),
 (6, 'UTI 367', 'New', '2016-08-24', 'Unpaid', 3);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tblzone`
---
-
-CREATE TABLE `tblzone` (
-  `intZoneId` int(50) NOT NULL,
-  `strZoneName` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tblzone`
---
-
-INSERT INTO `tblzone` (`intZoneId`, `strZoneName`) VALUES
-(1, '1'),
-(2, 'Dies');
 
 --
 -- Indexes for dumped tables
@@ -1155,12 +1137,6 @@ ALTER TABLE `tblvehicleclearance`
   ADD PRIMARY KEY (`intID`,`strVCplateNo`);
 
 --
--- Indexes for table `tblzone`
---
-ALTER TABLE `tblzone`
-  ADD PRIMARY KEY (`intZoneId`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -1268,7 +1244,7 @@ ALTER TABLE `tblreturnequip`
 -- AUTO_INCREMENT for table `tblstreet`
 --
 ALTER TABLE `tblstreet`
-  MODIFY `intStreetId` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `intStreetId` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `tbltoda`
 --
@@ -1279,11 +1255,6 @@ ALTER TABLE `tbltoda`
 --
 ALTER TABLE `tblvehicleclearance`
   MODIFY `intID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
---
--- AUTO_INCREMENT for table `tblzone`
---
-ALTER TABLE `tblzone`
-  MODIFY `intZoneId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

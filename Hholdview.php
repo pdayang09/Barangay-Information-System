@@ -37,7 +37,7 @@
 </tr>
 <?php
 					require('connection.php');
-				$sql = "SELECT strHouseholdLname, concat(strBuildingNo,' ',strStreetName,',Purok ',strZoneName) as 'Address',strResidence , intHouseholdNo FROM `tblhousehold` inner join `tblstreet` on intStreetId = intForeignStreetId inner join tblzone on intZoneId = intForeignZoneId where !(strStatus = 'Disabled')  ";
+				$sql = "SELECT strHouseholdLname, concat(strBuildingNo,' ',strStreetName,' ',strPurok) as 'Address',strResidence , intHouseholdNo FROM `tblhousehold` inner join `tblstreet` on intStreetId = intForeignStreetId where !(strStatus = 'Disabled') ";
 				$query = mysqli_query($con, $sql);
 				if(mysqli_num_rows($query) > 0){
 			

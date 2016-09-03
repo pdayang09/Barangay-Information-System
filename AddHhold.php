@@ -9,13 +9,13 @@
 	  <!--main content start-->
 	  	   <script>
 function empty() {
-    var x = document.getElementById("Purok").value;
+   
 	var y = document.getElementById("StreetList").value;
 	var lname  =document.getElementById("hidlname").value;
 	var fname = document.getElementById("hidfname").value;
 	var age = getAge(document.getElementById('bday').value);
 	
-    if (x == "Purok Name" || y == "" || lname == 1 || fname == 1 || age<18) {
+    if ( y == "Street Name" || lname == 1 || fname == 1 || age<18) {
         alert("Please Make sure the form is filled out correctly");
         return false;
     }
@@ -145,7 +145,7 @@ var age = getAge(document.getElementById('bday').value);
 	<div class="form-group">				
 	       <div class="col-sm-10">
 
-	         <input id="RFName1" class="form-control input-group-lg reg_name" type= text name="OldAddress" title="Enter first name" required <?php if(isset($_POST["OldAddress"])) echo "value = ".$_POST["OldAddress"]; ?> >
+	         <input id="RFName1" class="form-control input-group-lg reg_name" type= text name="OldAddress" title="Enter first name" required <?php if(isset($_POST["OldAddress"])) echo "value = '".$_POST["OldAddress"]."'"; ?> >
 	       </div> 
 		  
 		   
@@ -155,32 +155,30 @@ var age = getAge(document.getElementById('bday').value);
 
 	<p><font face = "cambria" size = 4 color = "grey"> New Address: </font></p>
 	<div class="form-group">				
+ 
 
-	        <div class="col-sm-3"> 	
+		<div class="col-sm-5">
+
+	         <input id="FName" class="form-control input-group-lg reg_name" type="text" name="Building" title="Enter first name" placeholder="Building Number" required <?php if(isset($_POST["Building"])) echo "value = ".$_POST["Building"]; ?> >
+	       </div> 
+	       
+
+
+		   <div class="col-sm-5"> 	
 	        
-			<select  name = "Purok" id = "Purok" class="form-control" onchange= "getId(this.value)" >
-			<option> Purok Name</option>
+			<select  name = "Street" id = "StreetList" class="form-control"  >
+			<option> Street Name</option>
 			<?php require('connection.php');
-			$sql = "Select * from tblZone";
+			$sql = "Select * from tblStreet group by strPurok";
 			$sql1 = mysqli_query($con,$sql);
 			while($row = mysqli_fetch_object($sql1)){
-				?> <option  <?php echo "value = '".$row->intZoneId."'";?>> <?php echo $row->strZoneName;?></option><?php
+				?> <option  <?php echo "value = '".$row->intStreetId."'";?>> <?php echo $row->strStreetName." ".$row->strPurok;?></option><?php
 			}?>
 			</select>
 		
 
-			</div>
-		   <div class="col-sm-4">
-		 <select name = "Street" id = "StreetList" class="form-control">
-		<option></option>
-			</select>
-			 
-	       </div>
-	      
-		   <div class="col-sm-3">
-
-	         <input id="FName" class="form-control input-group-lg reg_name" type="text" name="Building" title="Enter first name" placeholder="Building Number" required <?php if(isset($_POST["Building"])) echo "value = ".$_POST["Building"]; ?> >
-	       </div> 
+			
+		 
 		     
 	</div><br><br>
 	<legend ></legend >
@@ -303,7 +301,7 @@ var age = getAge(document.getElementById('bday').value);
 	require('connection.php');
 
 			
-	if(isset($_POST['btnsubmit'])){$Hno = $_SESSION['Hno'];
+	if(isset($_POST['btnsubmit'])){
 	$Fname = $_POST['Fname'];
 	$Mname = "";
 	if($_POST['Mname'] == NULL){
@@ -408,19 +406,7 @@ echo("Error description: " . mysqli_error($con));
 	<!--script for this page-->
 
 	<script>
-	function getId(val){
-	// alert(val);
-	$.ajax({
-		type: "POST",
-		url: "getdata.php",
-		data: "zid="+val,
-		success: function(data){
-			alert(data);
-			$("#StreetList").html(data);
-		}
-		
-	});
-	}
+
 	  //custom select box
 
 	  $(function(){
