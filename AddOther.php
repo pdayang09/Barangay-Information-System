@@ -18,6 +18,15 @@ function empty() {
         alert("Please Make sure the form is filled out correctly");
         return false;
     }
+	else{
+		var x = confirm("Do you want to continue?");
+		if(x == true){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 	
 }
 
@@ -115,7 +124,7 @@ function getAge(birthDateString) {
       <section id="main-content">
           <section class="wrapper site-min-height">		<form method = POST>
 		  <!-- Validation flag holders Start-->
-		   <input id = "hidfname" name="hidfname" class="form-control" type="hidden"  <?php if(isset($_POST["hidfname"])) echo "value = ".$_POST["hidfname"]; ?>>
+	<input id = "hidfname" name="hidfname" class="form-control" type="hidden"  <?php if(isset($_POST["hidfname"])) echo "value = ".$_POST["hidfname"]; ?>>
  <input id = "hidlname" name="hidlname" class="form-control" type="hidden" <?php if(isset($_POST["hidlname"])) echo "value = ".$_POST["hidlname"]; ?>>
  <input id = "hidbday" name="hidbday" class="form-control" type="hidden" <?php if(isset($_POST["hidbday"])) echo "value = ".$_POST["hidbday"]; ?>>
 <!-- Validation  flag holders End -->
@@ -246,27 +255,38 @@ function getAge(birthDateString) {
 
 
 <div class="form-group" id = "Vid-div">				
-           <div class="col-sm-5"><p><font face = "cambria" size = 4 color = "grey">Voter's ID(Optional)<font></p>
+           <div class="col-sm-5"><p><font face = "cambria" size = 4 color = "grey">Voter's ID(Optional)</font></p>
 
              <input id="VID" class="form-control input-group-lg reg_name" type= text name="Vid" title="Enter first name" onblur= fnValid(this,"Vid-div","Vid")  <?php if(isset($_POST["Vid"])) echo "value = ".$_POST["Vid"];?>>
            </div> 
 		  
 		   
 		   
-	</div><br><br><br>		  </div>
+	</div><br><br><br>	<br><br>	  </div>
 	<div class="form-group" id = "relation-div">				
-           <div class="col-sm-5"><p><font face = "cambria" size = 4 color = "grey">Relation to the Owner<font></p>
+           <div class="col-sm-5"><p><font face = "cambria" size = 4 color = "grey">Relation to the Owner</font></p>
  <div class="col-sm-10">
- 
-             <input id="RFName1" class="form-control input-group-lg reg_name" type= text name="relation" title="Enter first name" onblur= fnValid(this,"relation-div","relation")  <?php if(isset($_POST["relation"])) echo "value = ".$_POST["relation"];?>>
+ <select name = "relation" class="form-control ">
+ <option value = "Father">Father</option>
+ <option value = "Mother">Mother</option>
+  <option value = "Mother-in-law">Mother-in-law</option>
+   <option value = "Father-in-law">Father-in-law</option>
+ <option value = "Sister">Sister</option>
+ <option value = "Brother">Brother</option>
+ <option value = "Cousin">Cousin</option>
+ <option value = "Relative-Male">Relative-Male</option>
+ <option value = "Relative-Female">Relative-Female</option>
+ <option value = "Tenant">Tenant</option>
+ </select>
+            
            </div> </div> 
 		  
 		   
 		   
-	</div><br><br><br>	
+	</div><br><br><br><br><br><br>	
 		  
 
-<button type = submit  class="btn btn-info" name = "subm">Submit Record</button>
+<button type = submit  class="btn btn-info" name = "subm" onclick = "return empty()">Submit Record</button>
 <br><br></div>
 <?php
 

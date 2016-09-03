@@ -97,7 +97,8 @@
       					</tr>
       					<?php
       					require('connection.php');
-      					$sql = "SELECT concat(strLastname,',',strFirstname,' ',strMiddleName,' ',strNameExtension) as 'Name',charGender,strStatus,intMemberNo FROM `tblhousemember` where intForeignHouseholdNo = '$Hno' AND (strLifeStatus  NOT LIKE 'Moved' AND strLifeStatus NOT LIKE 'Dead') AND !(strStatus = 'Tenant' || strStatus = 'Head' )";
+      					$sql = "SELECT concat(strLastname,',',strFirstname,' ',strMiddleName,' ',strNameExtension) as 'Name',charGender,strStatus,intMemberNo FROM `tblhousemember` where intForeignHouseholdNo = '$Hno' AND (strLifeStatus  NOT LIKE 'Moved' AND strLifeStatus NOT LIKE 'Dead') AND !(strStatus = 'Tenant' || strStatus = 'Head' )
+						order by strStatus = 'Spouse' desc, strStatus = 'Children' desc";
       					$query = mysqli_query($con, $sql);
       					if(mysqli_num_rows($query) > 0){
       						
