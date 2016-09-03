@@ -117,7 +117,11 @@
 		<div class="col-sm-3 col-md-6 col-lg-6">
 			<div class = "showback">
 				<br>
-					<input type='file' name='userFile' id = 'userFile'><br>
+					<input type='file' name='userFile' id = 'userFile' accept="image/*" onchange="loadFile(event)"><br>
+					<img id="output" width="100%" height="150%" />
+					
+					
+					
 					<!-- input type='submit' name='upload_btn' value='upload'>
 				
 				
@@ -218,6 +222,10 @@
           $('select.styled').customSelect();
       });
 
+	  var loadFile = function(event) {
+		var output = document.getElementById('output');
+		output.src = URL.createObjectURL(event.target.files[0]);
+	  };
   </script>
 
   </body>
