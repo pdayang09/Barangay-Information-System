@@ -4,6 +4,7 @@
 	$resfrom = $_POST["fid"];
 	$resto = $_POST["tid"];
 	$resFacility = $_POST["rid"];
+    $go = $_POST['value'];
 
 ?>
 	   
@@ -26,15 +27,18 @@
                     $facifrom = $row[2];
                     $facito = $row[3];
                     
-                    echo"<center><h4><span> NOT AVAILABLE </span><span class='label label-warning'> $facifrom - $facito </span></h4></center>";
+                    echo"<center><h4><span> NOT AVAILABLE</span><span class='label label-warning'> $facifrom - $facito </span></h4></center>";
                     
                   }
-                  $_SESSION['go'] = 1;
+                    $go = 1;
                 }else{
 
                 	echo"<center><h3><span> AVAILABLE </span><span class='label label-warning'></span></h3></center>";
-                    $_SESSION['go'] = 0;
+                    $go = 0;
                 }
+
+                $_SESSION['available']=$go;
+                echo "<script> alert($go)</script>";
 
             ?>          </div>
                     </li>

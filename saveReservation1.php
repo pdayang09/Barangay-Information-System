@@ -1,6 +1,6 @@
 <?php
 	require("connection.php");
-				
+	
 	if($residency == 1){
 		
 		//tblreservationrequest` - Resident
@@ -18,12 +18,10 @@
 		//tblpaymenttrans`
 		//mysqli_query($con, "INSERT INTO `tblpaymenttrans`(`intORNo`, `dtmPaymentDate`, `dblPaymentAmount`, `dblPaidAmount`, `dblRemaining`) VALUES ('',' ','$total','','$total')");
 		
-		if($_SESSION['resFacilityFlag'] ==0){
+		if($facilityF == 1){
 			//tblreservefaci`
 			mysqli_query($con,"INSERT INTO `tblreservefaci`(`strReservationID`, `strREFaciCode`, `dtmREFrom`, `dtmRETo`) VALUES ('$resId','$resFacility','$resFrom','$resTo')");
 
-			$_SESSION['resFacilityFlag'] == 0;
-
 			unset($equipment);
 			unset($equipfee1);
 			unset($quantity);
@@ -33,64 +31,74 @@
 			$resFacName = "";
 			$resfee = "";
 			$hours = "";
-		}else if ($resFacilityFlag == 1){
+
+			$facilityF == 0;
+		}else if ($facilityF == 0){
 			
-			$_SESSION['resFacilityFlag'] == 0;
-
-			unset($equipment);
-			unset($equipfee1);
-			unset($quantity);
-			unset($quantity1);
-			unset($resFacility);
-
-			$resFacName = "";
-			$resfee = "";
-			$hours = "";
+			$facilityF == 0;
 		}		
 		
 		//tblreserveequip`
-		if(!empty($equipment)){
+		if($equipmentF==1){
+
+		//EQUIPMENT
+		$equipment[] = array();
+		$quantity[] = array();		
+		$quantity1[] = array(); //Temporary storage for quantity array	
+		$equipfee1[] = array(); //Equipment Fee
+
+		$temp = explode(",",$_SESSION['equipment']);
+		$equipment = array_merge($equipment, $temp);
+
+		$temp1 = explode(",",$_SESSION['quantity']);
+		$quantity = array_merge($quantity, $temp1);
 
 		$intCtr =0;
-		foreach($equipment as $a){
-	
-				mysqli_query($con, "INSERT INTO `tblreserveequip`(`strReservationID`, `strREEquipCode`, `dtmREFrom`, `dtmRETo`,`intREQuantity`) VALUES ('$resId','$a','$resFrom','$resTo','$quantity1[$intCtr]')");
-			
-				//tblreturnequip`
-				mysqli_query($con, "INSERT INTO `tblreturnequip`(`strReservationID`, `strRTEquipCode`, `datRTDate`, `intReturned`, `intUnreturned`) VALUES ('$resId','$a','$resTo','0','$quantity1[$intCtr]')");
+		foreach($quantity as $i){
+			if(!empty($i)){
+		 	$quantity1[$intCtr] = number_format($i,0);
+									
+			//echo $quantity[$intCtr];
+			//echo $quantity1[$intCtr];
+			//echo "<br>";
 
-				$intCtr++;
+			$intCtr++;
+			}					
 		}
 
-			$_SESSION['equipmentF'] =0;
-
-			unset($equipment);
-			unset($equipfee1);
-			unset($quantity);
-			unset($quantity1);
-			unset($resFacility);
-
-			$resFacName = "";
-			$resfee = "";
-			$hours = "";
-			
-			session_destroy();	
+		$intCtr =0;
+		foreach($equipment as $b){
+	
+			if(!empty($b)){
+				mysqli_query($con, "INSERT INTO `tblreserveequip`(`strReservationID`, `strREEquipCode`, `dtmREFrom`, `dtmRETo`,`intREQuantity`) VALUES ('$resId','$b','$resFrom','$resTo','$quantity1[$intCtr]')");
+							
+				//tblreturnequip`
+				mysqli_query($con, "INSERT INTO `tblreturnequip`(`strReservationID`, `strRTEquipCode`, `datRTDate`, `intReturned`, `intUnreturned`) VALUES ('$resId','$b','$resTo','0','$quantity1[$intCtr]')");
+				
+				$intCtr++;
+			}
+				
+		}
+			$equipmentF =0;
 
 		}else{
 
-			$_SESSION['equipmentF'] =0;
+			$equipmentF =0;
 			
-			unset($equipment);
-			unset($equipfee1);
-			unset($quantity);
-			unset($quantity1);
-			unset($resFacility);
-
-			$resFacName = "";
-			$resfee = "";
-			$hours = "";
 
 		}
+		
+
+		unset($equipment);
+		unset($equipfee1);
+		unset($quantity);
+		unset($quantity1);
+		unset($resFacility);
+
+		$resFacility = "";
+		$resFacName = "";
+		$resfee = "";
+		$hours = "";
 		
 		echo"<script> alert('Your request has been submitted'); </script>";
 		//Refresh Page

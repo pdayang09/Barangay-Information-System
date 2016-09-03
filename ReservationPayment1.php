@@ -21,11 +21,19 @@
 		$resPurpose = $_SESSION['resPurpose'];
 		$num = $_SESSION['num']; 
 
+		$resFacility = $_SESSION['resFacility'];
 		$resFrom = $_SESSION['resFrom']; 
 		$resTo = $_SESSION['resTo']; 
-		$resFacility = $_SESSION['resFacility'];
-		$resFacName = $_SESSION['resFacName'];
-			
+
+		if($resFacility==""){
+
+			$facilityF = 0;
+		}else{
+			$resFacName = $_SESSION['resFacName'];
+
+			$facilityF = 1;
+		}
+
 		//EQUIPMENT
 		$equipment[] = array();
 		$quantity[] = array();		
@@ -128,10 +136,24 @@
 												</tr>
 												</thead>
 											<tbody>
+											<?php if($facilityF ==1){
+											
+											?>
 												<tr><td> <?php echo" $resFacName";?> </td>
 													<td> <?php echo" $resfee";?> </td>
 													<td> <?php echo" $hours";?></td>
 												</tr>
+											<?php
+
+												$total = $total + $resfee * $hours;
+												$total = number_format($total, 2);
+											}else if($facilityF ==0){ ?>
+
+												<tr><td> <?php ?> </td>
+													<td> <?php ?> </td>
+													<td> <?php ?> </td>
+												</tr>
+											<?php } ?>
 											</tbody>
 										</table>	
 										</div><br> <!--col-sm-6-->
@@ -191,7 +213,6 @@
 								</div>
 									
 								<?php 
-									$total = $total + $resfee * $hours;
 									$total = number_format($total, 2);
 								?>
 

@@ -1,7 +1,7 @@
 <?php
 require("connection.php");
 
-if($_SESSION['resFacilityFlag'] == 1){
+if($_SESSION['resFacilityFlag'] == 0){
 
 	$_SESSION['dayresfee'] = "";
 	$_SESSION['NResidentCharge'] = "";

@@ -15,7 +15,7 @@ session_start();
     $_SESSION['num'] = $num;
     
     //Facility 
-     if(!empty($resFacility)){
+     if($resFacility!=""){
 
       require("connection.php");
       $query = mysqli_query($con, "select `strFaciName`,`dblFaciDayCharge`, `dblFaciNightCharge`, `dblFaciNResidentCharge` from tblFacility where `strFaciNo` = '$resFacility'");
@@ -35,8 +35,8 @@ session_start();
        }
       }
 
-        $_SESSION['resFacilityFlag'] = 0;
-      }else{
+        $_SESSION['resFacilityFlag'] = 1;
+      }else if($resFacility==""){
         $_SESSION['resfacno'] = "";
         $_SESSION['resFacility'] = "";
         $_SESSION['resFacName'] = "";
@@ -45,7 +45,7 @@ session_start();
         $_SESSION['nightresfee'] = "";
         $_SESSION['NResidentCharge'] = "";
 
-        $_SESSION['resFacilityFlag'] = 1;
+        $_SESSION['resFacilityFlag'] = 0;
       }    
 
      //Equipment 
@@ -62,6 +62,7 @@ session_start();
         $_SESSION['equipment'] = "";
         $_SESSION['quantity'] = "";
      }
+
      }else{
       
         $_SESSION['equipment'] = "";

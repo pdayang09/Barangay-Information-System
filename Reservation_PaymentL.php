@@ -85,7 +85,7 @@
 		<div class = "showback" id = "tablestreet">	
 			<table class="table table-striped table-bordered table-hover"  border = '3' style = 'width:95%'>
 				<thead><tr>
-					<th>Reservation ID</th>				
+					<th>Name</th>				
 					<th>Payment</th>
 					<th>Balance</th>
 					<th>Action</th>

@@ -239,10 +239,8 @@
         $today = date("Y-m-d"); // displays date today
         $_POST['today'] = $today;
 
-        //Authorization Flags
-        $_SESSION['equipmentF'] = "0";
-        $_SESSION['resFacilityFlag'] = "0";
-        $_SESSION['go'] = 1;
+        $_SESSION['available'] = 1;
+        $go = 1;
     ?>    
 
     <!-- Page Content -->
@@ -274,7 +272,7 @@
                         <p><font face="cambria" size=4 color="grey"> To </font></p>
                         <input name = "To" type="text" id="datetimepicker003" class="form-control input-group-lg reg_name, some_class" value="<?php if(isset($_POST['To'])){echo $_POST['To'];}else{}?>" > <br><br>
 
-                       <center><button class="btn btn-outline btn-success" type="button" onclick='Check()' > Check </button></center>
+                       <center><button class="btn btn-outline btn-success" type="button" onclick="Check(this.value)" value="<?php echo $go;?>"> Check </button></center>
 
                        <p id="showCheck"></p> 
 
@@ -295,16 +293,10 @@
                     $facino = $row[0];
                     $facitemp = $row[1];
                     $facifrom = $row[2];
-                    $facito = $row[3];
-                    
-                    echo"<center><h4><span> NOT AVAILABLE </span><span class='label label-warning'> $facifrom - $facito </span></h4></center>";
-                    
+                    $facito = $row[3];                    
                   }
-                  $_SESSION['go'] = 1;
                 }else{
-
-                    echo"<center><h3><span> AVAILABLE </span><span class='label label-warning'></span></h3></center>";
-                    $_SESSION['go'] = 0;
+                    
                 }
 
             ?>          </div>
@@ -359,8 +351,8 @@
 
                         <p><font face="cambria" size=4 color="grey"> No. of People </font></p>
                         <input class="form-control input-group-lg reg_name" type="number" name="num" title="input name of client" value="<?php if(isset($_POST['num'])){echo $_POST['num'];}else{}?>"><br><br>
-                             
-                       <center><button class="btn btn-outline btn-success" type="button" onclick='finReserve(this.value)' value="<?php  echo $_SESSION['go']; ?>"> Submit Request </button></center>  
+
+                       <center><button class="btn btn-outline btn-success" type="button" onclick='finReserve()'> Submit Request </button></center>  
 
                         </div>                      
                     </div>
@@ -428,13 +420,14 @@
 </style>
 
 <script>
-function Check(){
+function Check(val){
 
     var a = document.getElementsByName("From")[0].value;
     var b = document.getElementsByName("To")[0].value;
     var c = $('input[name=resFacility]:checked').val();
 
     //document.getElementById("showCheck").innerHTML = a + b + c;
+    //alert(val);
 
     if(c==null){
         alert("Select Facility");
@@ -443,14 +436,13 @@ function Check(){
      $.ajax({
         type: "POST",
         url: "vCheck.php",
-        data: 'fid='+a+'&tid='+b+'&rid='+c,
+        data: 'fid='+a+'&tid='+b+'&rid='+c+'&value='+val,
         success: function(data){
-        //alert(data),
+
         $("#viewCheck").html(data);
         }       
     });    
 }   
-   
 }
       $(function(){
           $('select.styled').customSelect();
@@ -459,7 +451,7 @@ function Check(){
 </script>
 
 <script>
-function finReserve(val){
+function finReserve(){
     var a = document.getElementsByName("From")[0].value;
     var b = document.getElementsByName("To")[0].value;
     var c = $('input[name=resFacility]:checked').val();
@@ -471,37 +463,37 @@ function finReserve(val){
     var equipment = [];
         $.each($("input[name='equipment']:checked"), function(){            
                 equipment.push($(this).val());
-            });
-        //alert("My Equipments are: " + equipment.join(" "));
+            });//alert("My Equipments are: " + equipment.join(" "));
 
         equipment.join(equipment)
 
     var quantity = [];
         $.each($("input[name='quantity']"), function(){            
                 quantity.push($(this).val());
-            });
-        //alert("My quantity are: " + quantity.join(" "));
+            });//alert("My quantity are: " + quantity.join(" "));
 
         quantity.join(quantity)
 
-    //document.getElementById("showCheck").innerHTML = a + b + c + resId + resPurpose + num;
+    if(c==null){
+        alert("hi")
+    }
 
-    alert(val);
-    if(val == 1){
-
-        alert("Your request date is unavailable !");
-    }else if(val == 0){
+    //alert(val)
+    //if(val==1){
+    //alert("Your request date is unavailable !");
+    //}else if(val==0){
 
         $.ajax({
         type: "POST",
         url: "finReservation.php",
         data: 'fid='+a+'&tid='+b+'&rid='+c+'&did='+resId+'&resPurpose='+resPurpose+'&num='+num+'&equipment='+equipment+'&quantity='+quantity,
-        success: function(data){
-        //alert(data),
+
+        success: function(data){//alert(data),
+        //alert(data);
         window.location = 'ReservationPayment1.php';
         }       
     });
-    }
+   // }
    
 }
       $(function(){
