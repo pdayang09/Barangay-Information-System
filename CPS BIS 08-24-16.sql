@@ -443,7 +443,8 @@ CREATE TABLE `tblequipment` (
   `intEquipQuantity` int(11) NOT NULL,
   `dblEquipFee` double NOT NULL,
   `dblEquipNResidentCharge` double NOT NULL,
-  `strStatus` varchar(10) NOT NULL
+  `strStatus` varchar(10) NOT NULL,
+  `imageUpload` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --

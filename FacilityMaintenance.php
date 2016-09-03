@@ -25,7 +25,7 @@
 
 							   
 <center> 
-						<table  class="table table-striped table-bordered table-hover" border = '3' style = 'width:95%'>
+						<table id="datatable" class="table table-striped table-bordered table-hover" border = '3' style = 'width:95%'>
 							<thead>
 								<tr>
 									
@@ -99,6 +99,7 @@
 								$_SESSION['nightprice'] = $row->dblFaciNightCharge;
 								$_SESSION['residentprice'] = $row->dblFaciNResidentCharge;
 								$_SESSION['image'] = $row->imageUpload;
+								
 								$a = $row->strFaciCategory;
 					
 								$query2 = mysqli_query($con,"Select * from tblcategory where strcategorycode = '$a'");
@@ -128,7 +129,8 @@
     <script src="assets/js/jquery.scrollTo.min.js"></script>
     <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
 
-
+	<script></script>
+	<script></script>
     <!--common script for all pages-->
     <script src="assets/js/common-scripts.js"></script>
 
