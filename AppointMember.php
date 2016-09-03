@@ -38,7 +38,7 @@ $row3 = mysqli_fetch_object($sql);
 		<?php
 		$sql = mysqli_query($con,"Select intPositionId,strPositionName from tblbrgyposition");
 		while($row = mysqli_fetch_object($sql)){
-			$sql2 = mysqli_query($con,"select intNumber,count(intForeignPositionId) as num from tblaccount as a INNER join tblbrgyposition as b on a.intForeignPositionId = b.intPositionId where intForeignPositionId = ".$row->intPositionId.";");
+			$sql2 = mysqli_query($con,"select intNumber,count(intForeignPositionId) as num from tblaccount as a INNER join tblbrgyposition as b on a.intForeignPositionId = b.intPositionId where intForeignPositionId = ".$row->intPositionId." AND strStatus != 'Disabled' ;");
 			$row2 = mysqli_fetch_object($sql2);
 			if($row2->intNumber != $row2->num){
 			?><option value = '<?php echo $row->intPositionId ?>'><?php echo $row->strPositionName ?></option><?php }
