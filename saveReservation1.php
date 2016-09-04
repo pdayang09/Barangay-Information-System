@@ -32,14 +32,14 @@
 			$resfee = "";
 			$hours = "";
 
-			$facilityF == 0;
+			$facilityF = 0;
 		}else if ($facilityF == 0){
 			
-			$facilityF == 0;
+			$facilityF =0;
 		}		
 		
 		//tblreserveequip`
-		if($equipmentF==1){
+		if($equipmentF == 1){
 
 		//EQUIPMENT
 		$equipment[] = array();
@@ -47,13 +47,6 @@
 		$quantity1[] = array(); //Temporary storage for quantity array	
 		$equipfee1[] = array(); //Equipment Fee
 
-		$temp = explode(",",$_SESSION['equipment']);
-		$equipment = array_merge($equipment, $temp);
-
-		$temp1 = explode(",",$_SESSION['quantity']);
-		$quantity = array_merge($quantity, $temp1);
-
-		$intCtr =0;
 		foreach($quantity as $i){
 			if(!empty($i)){
 		 	$quantity1[$intCtr] = number_format($i,0);
@@ -84,8 +77,6 @@
 		}else{
 
 			$equipmentF =0;
-			
-
 		}
 		
 

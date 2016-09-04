@@ -29,8 +29,8 @@
 
 			$facilityF = 0;
 		}else{
+			
 			$resFacName = $_SESSION['resFacName'];
-
 			$facilityF = 1;
 		}
 
@@ -146,7 +146,6 @@
 											<?php
 
 												$total = $total + $resfee * $hours;
-												$total = number_format($total, 2);
 
 											}else if($facilityF == 0){ ?>
 
@@ -188,7 +187,6 @@
 
 										<?php 
 											$total = $total + $quantity1[$intCtr] * $equipfee1[$intCtr];
-											$total = number_format($total, 2);
 												
 											$intCtr++;
 											}

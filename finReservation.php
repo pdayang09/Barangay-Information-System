@@ -73,6 +73,4 @@ session_start();
     $_SESSION['resFrom'] = $resfrom;
     $_SESSION['resTo'] = $resto;
 
-    
-  echo "<script> alert($go)</script>";
 ?>

@@ -474,13 +474,8 @@ function finReserve(val){
         quantity.join(quantity)
 
     if(c==null){
-        alert("hi")
+        //alert("hi")
     }
-
-    alert(val)
-    //if(val==1){
-    //alert("Your request date is unavailable !");
-    //}else if(val==0){
 
         $.ajax({
         type: "POST",
