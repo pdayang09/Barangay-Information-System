@@ -1,16 +1,16 @@
 
 
 <?php 
-	$resfrom = $_POST["fid"];
-	$resto = $_POST["tid"];
-	$resFacility = $_POST["rid"];
+    $resfrom = $_POST["resfrom"];
+    $resto = $_POST["resto"];
+    $resFacility = $_POST["val"];
 
 ?>
-	   
-            <div id="viewCheck" class="panel panel-panel">
-                <ul id="sortable" class="task-list">
-                    <li class="list-primary">
-                        <div class="task-title">    
+       
+<div id="viewCheck" class="panel panel-panel">
+    <ul id="sortable" class="task-list">
+        <li class="list-primary">
+            <div class="task-title">    
                         
             <?php                       
                 require("connection.php");
@@ -26,37 +26,63 @@
                     $facifrom = $row[2];
                     $facito = $row[3];
                     
-                    echo"<center><h4><span> NOT AVAILABLE </span><span class='label label-warning'> $facifrom - $facito </span></h4></center>";
-                    $_SESSION['go'] = 1;
+                    echo"<center><h4><span> NOT AVAILABLE</span><span class='label label-warning'> $facifrom - $facito </span></h4></center>";
+                    
                   }
+                    $go = 1;
                 }else{
 
-                	echo"<center><h3><span> AVAILABLE </span><span class='label label-warning'></span></h3></center>";
-                    $_SESSION['go'] = 0;
+                    echo"<center><h3><span> AVAILABLE </span><span class='label label-warning'></span></h3></center>";
+                    $go = 0;
                 }
 
-            ?>          </div>
-                    </li>
-                </ul>
-            </div>
+                $_SESSION['available'] = $go;
 
-    <div id="viewCheckEquip" class="col-sm-3">
-        <div class="showback">
-            <div class="panel-heading">
-                <div class="pull-left"><h4> Reserved Equipment </h4></div><br>
-            </div>
-    
-            <div class="task-content">
-                <ul id="sortable" class="task-list">
-                    <li class="list-primary">
-                        <div class="task-title">        
-            <?php 
+            ?>          
 
-            ?>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>  
+
+                </div>
+            </li>
+        </ul>
     </div>
+
+    <?php
+
+        if($_POST['val']==01){
+            $resId = $_POST['resIdC'];            
+
+            if($resfrom!="" AND $resto!=""){
+
+            require("connection.php");
+                mysqli_query($con, "UPDATE `tblreservationrequest` SET `datRSReserved`='$resfrom',`dtmFrom`= UNIX_TIMESTAMP('$resfrom')*1000,`dtmTo`= UNIX_TIMESTAMP('$resto')*1000 WHERE `strReservationID`= '$resId'");
+
+                mysqli_query($con, "UPDATE `tblreservefaci` SET `dtmREFrom`='$resfrom',`dtmRETo`='$resto' WHERE `strReservationID` = $resId");                    
+                mysqli_query($con, "UPDATE `tblreserveequip` SET `dtmREFrom`='$resfrom',`dtmRETo`='$resto' WHERE `strReservationID` = $resId");
+
+                echo "<script> alert('Successfully rescheduled an event');</script>";
+                echo"<script>window.location='reservation_kapitanl.php';</script>";
+                }
+
+        }else if($_POST['val']==02){
+            $resId = $_POST['resIdF'];
+
+            if($resfrom!="" AND $resto!=""){
+
+            require("connection.php");
+            mysqli_query($con, "UPDATE `tblreservationrequest` SET `strRSapprovalStatus`='Forfeited' WHERE `strReservationID`= '$resId'");
+
+            mysqli_query($con, "DELETE FROM `tblreservefaci` WHERE `strReservationID` = $resId");                     
+
+            mysqli_query($con, "DELETE FROM `tblreserveequip` WHERE `strReservationID` = $resId");
+
+            mysqli_query($con, "DELETE FROM `tblpaymentdetail` WHERE `strRequestID` = resId");
+
+            mysqli_query($con, "DELETE FROM `tblreturnequip` WHERE `strReservationID` = $resId");
+
+            echo "<script> alert('Event Successfully Cancelled');</script>";
+            echo"<script>window.location='reservation_kapitanl.php';</script>";
+        }
+
+    }
+?>
 

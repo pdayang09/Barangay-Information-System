@@ -220,6 +220,19 @@
 			}else if(isset($_POST['btnDisapprove'])){
 				$reservation = $_POST['btnDisapprove'];
 
+				$statement = "SELECT eq.`dtmREFrom`, eq.`dtmRETo`, eq.`strREEquipCode` FROM tblreserveequip eq INNER JOIN tblreservationrequest r ON r.strReservationID = eq.strReservationID WHERE eq.`strReservationID` = $reservation UNION SELECT f.`dtmREFrom`, f.`dtmRETo`, f.`strREFaciCode` FROM tblreservefaci f INNER JOIN tblreservationrequest r ON r.strReservationID = f.`strReservationID` WHERE f.`strReservationID` = $reservation";
+
+				$query = mysqli_query($con,$statement);				
+				while($row = mysqli_fetch_array($query)){
+					$resFrom = $row[0];
+					$resTo = $row[1];
+					$facino = $row[2];
+
+					$_SESSION['resFrom'] = $resFrom;
+					$_SESSION['resTo'] = $resTo;
+					$_SESSION['facino'] = $facino;
+				}
+
 				$statement = "SELECT r.`strReservationID`, r.`strRSresidentId`, CONCAT(re.`strLastName`,' ', re.`strFirstName`,', ',re.`strMiddleName`) AS 'Name', re.`strContactNo`, r.`strRSPurpose`, r.`datRSReserved`, r.`strRSapprovalStatus`, p.intrequestorno FROM tblreservationrequest r INNER JOIN tblpaymentdetail p ON p.strrequestid = r.`strReservationID` INNER JOIN tblhousemember re ON re.`intMemberNo` = r.`strRSresidentId` WHERE r.`strReservationID` LIKE ('%$reservation%') UNION SELECT r.`strReservationID`, r.`strRSapplicantId`, CONCAT(a.`strApplicantLName`,' ', a.`strApplicantFName`, ', ', a.`strApplicantMName`) AS 'Name', a.`strApplicantContactNo`, r.`strRSPurpose`, r.`datRSReserved`, r.`strRSapprovalStatus`, p.intrequestorno FROM tblreservationrequest r INNER JOIN tblpaymentdetail p ON p.strrequestid = r.`strReservationID` INNER JOIN tblapplicant a ON a.`strApplicantID` = r.`strRSapplicantId` WHERE r.`strReservationID` LIKE ('%$reservation%')";
 									
 				$query = mysqli_query($con,$statement);				
