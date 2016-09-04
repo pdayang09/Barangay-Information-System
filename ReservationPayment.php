@@ -31,7 +31,6 @@
 
 	?>
 	
-	<form method = "POST">
     <div id="wrapper">
     <!--?php include('Nav.php')?>
 
@@ -43,11 +42,13 @@
                     <legend ><font face = "cambria" size = 8 color = "grey"> Payment Summary </font></legend>
 					   	
 					<div class = "bodybody">	
-						
+
 						<div class = "col-sm-7">	
 							<div class="form-group">
 								<div class = "showback">												
-									<font face = "cambria" size = 5 color = "grey"> Payment Details</font><br><br>								
+									<font face = "cambria" size = 5 color = "grey"> Date :<font face = "cambria" size = 4 color = "grey"> <?php echo" $today"; ?></font><br><br>
+
+									<font face = "cambria" size = 5 color = "grey"> Payment Details <br><br>								
 									<div class="panel panel-default"><!-- Default panel contents -->
 										<table class="table"'><!-- Table -->
 											<thead>
@@ -71,25 +72,30 @@
 						<div class = "col-sm-4">	
 							<div class="form-group">
 								<div class = "showback">												
-									<font face = "cambria" size = 5 color = "grey"> Date
-									<input id="payDate" class="form-control input-group-lg reg_name" type="text"  name="payDate" value = "<?php echo" $today"; ?>" disabled></font>										
 									<font face = "cambria" size = 5 color = "grey"> OR No
-									<input id="payOR" name="payOR" class="form-control input-group-lg reg_name" type="text"  value="<?php if(isset($_POST['payOR'])){echo $_POST['payOR'];}else{echo $payOR;}?>" title="generated brgyId" required></font>	
+									<input id="payOR" name="payOR" class="form-control input-group-lg reg_name" type="text"  value="<?php if(isset($_POST['payOR'])){echo $_POST['payOR'];}else{echo $payOR;}?>" title="generated brgyId" required></font>
 
+								<div id="showBalance">
 									<font face = "cambria" size = 5 color = "grey"> Mode of Payment </font>
-									<select class = "form-control" id = "mode" name = "mode" onchange = "myFunction()">
-										<option value="Full"> Full </option>
-										<option value="Partial"> Partial </option>
-									</select><br>
+									<select id="mode" onchange="showBal(this.value)" class = "form-control">
+										<option value="1" selected="selected"> Full </option>
+										<option value="2"> Partial </option>
+									</select>
+									<font face = "cambria" size = 5 color = "grey"> Balance</font>
 									<center>		
-									<font face = "cambria" size = 7 color = "grey" > <?php echo $balance;?> </font><br>
+									<font id="balance" face = "cambria" size = 7 color = "grey" > <?php echo $balance;?> </font></center><br>
 
 									<font face = "cambria" size = 5 color = "grey"> Amount Render </font>
-									<input name="render" class="form-control put-group-lg reg_name" type="number"  title="generated brgyId" value="<?php if(isset($_POST['render'])){echo $_POST['render'];}else{}?>" min="0">			
+									<input name="render" class="form-control put-group-lg reg_name" type="number"  title="generated brgyId" value="0" min="0">	
 
-									<font face = "cambria" size = 5 color = "grey" > ............................................
+									<font face = "cambria" size = 5 color = "grey"> Change </font>
+									<input name="change" class="form-control put-group-lg reg_name" type="number"  title="generated brgyId" value="0" disabled>			
+								</div>
+
+									<center>
+									<font face = "cambria" size = 5 color = "grey" > ......................................
 									
-									<button type="submit" class="btn btn-outline btn-success" name = "btnPay" value = '<?php echo $resId;?>'> Render Payment </button></center></font>
+									<button class="btn btn-outline btn-success" name = "btnPay" onclick="showBal()" value = '<?php echo $resId;?>'> Render Payment </button></center></font>
 
 									</div><br><br><br><br>							
 							</div>
@@ -104,48 +110,7 @@
 						</div>		
 						
 				</div>
-							
-			<?php if(isset($_POST['btnPay'])){
-				$pay = $_POST['btnPay'];
-
-					$render = $_POST['render'];
-					$payOR = $_POST['payOR'];
-
-				if(isset($_POST['mode'])){
-					$mode = $_POST['mode'];
-
-					if($mode == "Partial"){
-						$total = $total/2;
-						$balance = $total;
-					}else if($mode == "Full"){
-						$total = $total;
-						$balance = 0;
-					}
-				}else{
-					$total = $total;
-					$balance = 0;
-				}
-
-				if($render >= $total && !empty($total)){
-					$change = $render - $total;				
-
-					mysqli_query($con, "UPDATE `tblpaymentdetail` SET `intRequestORNo`= '$payOR' WHERE `strRequestID`= $pay");
-
-					mysqli_query($con, "UPDATE `tblpaymenttrans` SET `intORNo`='$payOR',`dtmPaymentDate`= NOW(),`dblPaidAmount`='$render',`dblRemaining`= '$balance' WHERE `intORNo`= $pay");
-
-				if($balance ==0){
-
-					mysqli_query($con, "UPDATE `tblreservationrequest` SET `strRSapprovalStatus`='Paid' WHERE `strReservationID`= $pay");
-				}else if($balance > 0){
-
-				}
-
-					echo"<script> alert('Your payment has been collected')</script>";
-				}else{
-					echo"<script> alert('You have inserted invalid amount')</script>";
-				}
-
-			}?>							
+										
 									
 						</div><br> <!-- /#bodybody -->
 					</div> <!-- /#col-lg-12 -->
@@ -159,19 +124,29 @@
 		</section><! --/wrapper -->
       </section><!-- /MAIN CONTENT -->
 
+<script>	 
+function showBal(){
+	var mode = document.getElementById('mode').value;
+	var payOR = document.getElementById('payOR').value;
+	var bal = $("font")[13].innerHTML;
+	var change = document.getElementsByName('change')[0].value;
+	var render = document.getElementsByName('render')[0].value;
+	var pay = document.getElementsByName('btnPay')[0].value;
 
-<script>
-	function myFunction() {
-   	var x = document.getElementById("mode").value;
-   	document.getElementById("total").innerHTML = x;
+	$.ajax({
+		type: "POST",
+		url: "showBal.php",
+		data: 'mode=' + mode +'&payOR='+payOR+'&bal='+bal+'&change='+change+'&render='+render+'&pay='+pay,
+		success: function(data){
+			//alert(data);
+			$("#showBalance").html(data);
+		}		
+	});
 }
-</script>
+      $(function(){
+          $('select.styled').customSelect();
+      });
 
-<script>
-function myFunction() {
-    var x = document.getElementById("mySelect").value;
-    document.getElementById("demo").innerHTML = "You selected: " + x;
-}
-</script>
+  </script>
 
 <?php require("footer.php");?>

@@ -27,7 +27,7 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     
-    <?php session_start();?>
+    <?php session_start(); ?>
           
   </head>
 
@@ -352,7 +352,7 @@
                         <p><font face="cambria" size=4 color="grey"> No. of People </font></p>
                         <input class="form-control input-group-lg reg_name" type="number" name="num" title="input name of client" value="<?php if(isset($_POST['num'])){echo $_POST['num'];}else{}?>"><br><br>
 
-                       <center><button class="btn btn-outline btn-success" type="button" onclick='finReserve()'> Submit Request </button></center>  
+                       <center><button class="btn btn-outline btn-success" type="button" onclick='finReserve(this.value)' value="<?php echo$_SESSION['available']; ?>"> Submit Request </button></center>  
 
                         </div>                      
                     </div>
@@ -429,7 +429,7 @@ function Check(val){
     //document.getElementById("showCheck").innerHTML = a + b + c;
     //alert(val);
 
-    if(c==null){
+    if(c==""){
         alert("Select Facility");
 
     }else{
@@ -438,7 +438,6 @@ function Check(val){
         url: "vCheck.php",
         data: 'fid='+a+'&tid='+b+'&rid='+c+'&value='+val,
         success: function(data){
-
         $("#viewCheck").html(data);
         }       
     });    
@@ -451,7 +450,7 @@ function Check(val){
 </script>
 
 <script>
-function finReserve(){
+function finReserve(val){
     var a = document.getElementsByName("From")[0].value;
     var b = document.getElementsByName("To")[0].value;
     var c = $('input[name=resFacility]:checked').val();
@@ -478,7 +477,7 @@ function finReserve(){
         alert("hi")
     }
 
-    //alert(val)
+    alert(val)
     //if(val==1){
     //alert("Your request date is unavailable !");
     //}else if(val==0){

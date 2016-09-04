@@ -136,7 +136,7 @@
 												</tr>
 												</thead>
 											<tbody>
-											<?php if($facilityF ==1){
+											<?php if($facilityF == 1){
 											
 											?>
 												<tr><td> <?php echo" $resFacName";?> </td>
@@ -147,13 +147,16 @@
 
 												$total = $total + $resfee * $hours;
 												$total = number_format($total, 2);
-											}else if($facilityF ==0){ ?>
+
+											}else if($facilityF == 0){ ?>
 
 												<tr><td> <?php ?> </td>
 													<td> <?php ?> </td>
 													<td> <?php ?> </td>
 												</tr>
-											<?php } ?>
+											<?php 
+												$total = 0;	
+											} ?>
 											</tbody>
 										</table>	
 										</div><br> <!--col-sm-6-->
@@ -192,6 +195,12 @@
 										}
 											
 										}else{
+										?>		<tr><td> <?php ?> </td>
+													<td> <?php ?> </td>
+													<td> <?php ?> </td>
+												</tr>
+										<?php 
+											$total =0;
 										}
 
 										?>											
@@ -213,7 +222,7 @@
 								</div>
 									
 								<?php 
-									$total = number_format($total, 2);
+									$total = $total;
 								?>
 
 								<div class="form-group">

@@ -37,7 +37,7 @@
                     $go = 0;
                 }
 
-                $_SESSION['available']=$go;
+                $_SESSION['available'] = $go;
                 echo "<script> alert($go)</script>";
 
             ?>          </div>
