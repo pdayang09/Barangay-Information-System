@@ -146,7 +146,7 @@
  								<div class="form-group">				
  									<div class="col-sm-5">
  										<p><font face = "cambria" size = 4 color = "grey"> Birthday </font></p>
- 										<input id="RFName1" class="form-control input-group-lg reg_name"   max="<?php echo date("Y-m-d"); ?>" <?php echo "value =".$row->dtBirthdate; ?> type= date name="bday" title="Enter first name" disabled required>
+ 										<input id="RFName1" class="form-control input-group-lg reg_name"   max="<?php echo date("Y-m-d"); ?>" <?php echo "value =".$row->dtBirthdate; ?> type= date name="bday" title="Enter first name" readonly required>
  									</div> 
  									
  									

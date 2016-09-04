@@ -282,11 +282,20 @@ function getAge(birthDateString) {
            </div> </div> 
 		  
 		   
+
+	<div class="form-group" id = "bday-div">				
+           <div class="col-sm-5">
+<p><font face = "cambria" size = 4 color = "grey"> Date Entered: </font></p>
+            <input required id="Entered" class="form-control input-group-lg reg_name" type= date name="DateEntered"   max="<?php echo date("Y-m-d"); ?>" onblur= fnValidDate(this,"Enter-div","DateEntered") <?php if(isset($_POST["DateEntered"])) {echo "value = ".$_POST["DateEntered"];} else{echo "value = ".date("Y-m-d"); } ?>>
+           </div> 
+		  
 		   
+		   
+	</div>
 	</div><br><br><br><br><br><br>	
 		  
-
-<button type = submit  class="btn btn-info" name = "subm" onclick = "return empty()">Submit Record</button>
+<center>
+<button type = submit  class="btn btn-info" name = "subm" onclick = "return empty()">Submit Record</button></center>
 <br><br></div>
 <?php
 
@@ -294,6 +303,7 @@ require('connection.php');
 
 if(isset($_POST['subm'])){
 //Getting Value from the from start --
+$Entered = $_POST['DateEntered'];
 $Hno = $_SESSION['Hno'];
 $Fname = $_POST['Fname'];
 $relation = $_POST['relation'];
@@ -337,8 +347,8 @@ if($last == 0&&$birth == 0&&$first == 0){ //-- Checking if a textfield is red(ha
 $_Lname = mysqli_real_escape_string($con,$Lname); //-- For using apostrophe ex. O'Hara
 $_Fname = mysqli_real_escape_string($con,$Fname); //-- For using apostrophe ex. O'Hara
 $_Mname = mysqli_real_escape_string($con,$Mname); //-- For using apostrophe ex. O'Hara
-mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`,strVotersId,charLiterate,charDisable) 
-VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gend','$bday','$contact','$occup','$SSS','$TIN','$Hno','$civil','$relation','Alive','$Vid','Y','N')");
+mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`,strVotersId,charLiterate,charDisable,`dtEntered`) 
+VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gend','$bday','$contact','$occup','$SSS','$TIN','$Hno','$civil','$relation','Alive','$Vid','Y','N','$Entered')");
 echo "<script>window.location = 'HholdPersonal.php'</script>";
 }
 else{

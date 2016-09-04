@@ -14,8 +14,9 @@ function empty() {
 	var lname  =document.getElementById("hidlname").value;
 	var fname = document.getElementById("hidfname").value;
 	var age = getAge(document.getElementById('bday').value);
+	var entered = getAge(document.getElementById('Entered').value);
 	
-    if ( y == "Street Name" || lname == 1 || fname == 1 || age<18) {
+    if ( y == "Street Name" || lname == 1 || fname == 1 || age<18 ) {
         alert("Please Make sure the form is filled out correctly");
         return false;
     }
@@ -145,7 +146,8 @@ var age = getAge(document.getElementById('bday').value);
 	<div class="form-group">				
 	       <div class="col-sm-10">
 
-	         <input id="RFName1" class="form-control input-group-lg reg_name" type= text name="OldAddress" title="Enter first name" required <?php if(isset($_POST["OldAddress"])) echo "value = '".$_POST["OldAddress"]."'"; ?> >
+	         <input id="RFName1" class="form-control input-group-lg reg_name" type= text name="OldAddress" title="Enter first name" required <?php if(isset($_POST["OldAddress"])){ echo "value = '".$_POST["OldAddress"]."'";}
+																																								else{"value = ' '";} ?> >
 	       </div> 
 		  
 		   
@@ -284,7 +286,7 @@ var age = getAge(document.getElementById('bday').value);
 		   
 		   
 	</div></div><br><br><br><br><br>
-	<div class = "form-group">
+
 <div class="form-group">				
  <div class="col-sm-5">	<p><font face = "cambria" size = 4 color = "grey"> Residence: </font></p>
 	<div class="col-sm-10">	
@@ -293,15 +295,27 @@ var age = getAge(document.getElementById('bday').value);
 	<option>Owned</option>
 	</select> 
 	        
-	       </div> 
+	       </div> </div>
 
 
+	
+	
+<div class="form-group" id = "Enter-div">				
+	       <div class="col-sm-5">
+		   <p><font face = "cambria" size = 4 color = "grey">Date Entered:</font></p>
+
+	         <input required id="Entered" class="form-control input-group-lg reg_name" type= date name="DateEntered"   max="<?php echo date("Y-m-d"); ?>" onblur= fnValidDate(this,"Enter-div","DateEntered") <?php if(isset($_POST["DateEntered"])) {echo "value = ".$_POST["DateEntered"];} else{echo "value = ".date("Y-m-d"); }?>>
+	       </div> </div>
+	
+	
+	
 	<br><br></div><br><br><br><br></div>	<center><button type = submit  class="btn btn-info" name = "btnsubmit" onClick="return empty()">Submit Record</button></center>
 	<?php
 	require('connection.php');
 
 			
 	if(isset($_POST['btnsubmit'])){
+	$Entered = $_POST['DateEntered'];
 	$Fname = $_POST['Fname'];
 	$Mname = "";
 	if($_POST['Mname'] == NULL){
@@ -356,8 +370,8 @@ echo("Error description: " . mysqli_error($con));
 	$row = mysqli_fetch_object($query);
 	$no = $row->intHouseholdNo;
 	
-	mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`,`strCivilStatus`, `strStatus`,`strLifeStatus`,charLiterate,charDisable, `strVotersId`) 
-	VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gender','$Birthdate','$Contact','$Occupation','$SSS','$TIN','$no','$Civil','Head','Alive','Y','N','$Vote')");
+	mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`,`strCivilStatus`, `strStatus`,`strLifeStatus`,charLiterate,charDisable, `strVotersId`,`dtEntered`) 
+	VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gender','$Birthdate','$Contact','$Occupation','$SSS','$TIN','$no','$Civil','Head','Alive','Y','N','$Vote','$Entered')");
 	$_SESSION['Hno'] = $no;
 
 	echo "<script>window.location = 'HholdPersonal.php' </script>";
