@@ -261,12 +261,36 @@ function getAge(birthDateString) {
 		  
 		  </div>
 
+		  </div>
 
-<button type = submit id= "subm" class="btn btn-info" name = "subm" onclick = "return empty()">Submit Record</button>
+<div class = "form-group">
+
+
+<div class="form-group" id = "Enter-div">				
+           <div class="col-sm-5">
+	<p><font face = "cambria" size = 4 color = "grey"> Date Entered: </font></p><div class="col-sm-10">
+            <input required id="Entered" class="form-control input-group-lg reg_name" type= date name="DateEntered"   max="<?php echo date("Y-m-d"); ?>" onblur= fnValidDate(this,"Enter-div","DateEntered") <?php if(isset($_POST["DateEntered"])) {echo "value = ".$_POST["DateEntered"];} else{echo "value = ".date("Y-m-d"); }?>>
+           </div> 
+		  </div>
+		   
+		   
+	</div>
+
+
+		   
+		   
+	</div><br><br><br><br><br><br>
+
+		  <center>
+		  
+
+<button type = submit id= "subm" class="btn btn-info" name = "subm" onclick = "return empty()">Submit Record</button></center></div></div>
 <br><br>
 <?php
 require('connection.php');
-if(isset($_POST['subm'])){$Hno = $_SESSION['Hno'];
+if(isset($_POST['subm'])){
+$Entered = $_POST['DateEntered'];
+$Hno = $_SESSION['Hno'];
 $Fname = $_POST['Fname'];
 $Mname = "";
 if($_POST['Mname'] == NULL){
@@ -307,8 +331,8 @@ if($last == 0&&$birth == 0&&$first == 0){
 $_Lname = mysqli_real_escape_string($con,$Lname);
 $_Fname = mysqli_real_escape_string($con,$Fname);
 $_Mname = mysqli_real_escape_string($con,$Mname);
-mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`,`strVotersId`) 
-VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gend','$bday','$contact','$occup','$SSS','$TIN','$Hno','$civil','Children','Alive','$VID')");
+mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`,`strVotersId`,`dtEntered`) 
+VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gend','$bday','$contact','$occup','$SSS','$TIN','$Hno','$civil','Children','Alive','$VID','$Entered')");
 echo "<script>window.location = 'HholdPersonal.php'</script>";
 }
 else{
