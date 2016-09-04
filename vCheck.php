@@ -38,7 +38,6 @@
                 }
 
                 $_SESSION['available'] = $go;
-                echo "<script> alert($go)</script>";
 
             ?>          </div>
                     </li>

@@ -230,10 +230,13 @@
         $_SESSION['resfrom'] = "";
         $_SESSION['resto'] = "";
         
-        //Other
-        $resId = "";
-        $resPrpose = "";
-        $num = "";
+        require("connection.php");
+        $query = mysqli_query($con, "SELECT COUNT(*) from tblreservationrequest");
+
+        while($row = mysqli_fetch_row($query)){
+
+            $count = $row[0];
+        }
 
         //Gets Today's Date
         $today = date("Y-m-d"); // displays date today
@@ -241,6 +244,11 @@
 
         $_SESSION['available'] = 1;
         $go = 1;
+
+        //Other
+        $resId = $count+1;
+        $resPrpose = "";
+        $num = "";
     ?>    
 
     <!-- Page Content -->
@@ -344,7 +352,7 @@
                         <font face = "cambria" size = 4 color = "grey"> Contact </font><?php echo $contactno; ?><br><br>
 
                         <p><font face="cambria" size=4 color="grey"> Reservation ID </font></p>
-                       <input class="form-control input-group-lg reg_name" type="text" name="resId" title="input name of client" value="<?php if(isset($_POST['resId'])){echo $_POST['resId'];}else{}?>">
+                       <input class="form-control input-group-lg reg_name" type="text" name="resId" title="input name of client" value="<?php if(isset($_POST['resId'])){echo $_POST['resId'];}else{ echo $resId;}?>">
 
                         <p><font face="cambria" size=4 color="grey"> Purpose </font></p>
                         <input class="form-control input-group-lg reg_name" type="text" name="resPurpose" title="input name of client" value="<?php if(isset($_POST['resPurpose'])){echo $_POST['resPurpose'];}else{}?>">
@@ -473,21 +481,16 @@ function finReserve(val){
 
         quantity.join(quantity)
 
-    if(c==null){
-        //alert("hi")
-    }
-
         $.ajax({
         type: "POST",
         url: "finReservation.php",
         data: 'fid='+a+'&tid='+b+'&rid='+c+'&did='+resId+'&resPurpose='+resPurpose+'&num='+num+'&equipment='+equipment+'&quantity='+quantity,
 
-        success: function(data){//alert(data),
-        //alert(data);
+        success: function(data){
+
         window.location = 'ReservationPayment1.php';
         }       
     });
-   // }
    
 }
       $(function(){
