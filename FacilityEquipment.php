@@ -229,6 +229,10 @@
         $resto = "";
         $_SESSION['resfrom'] = "";
         $_SESSION['resto'] = "";
+
+        //DisabledDates
+        $arrDisabledDates[] = array();
+        $arrDisabledDates = $_SESSION['arrDisabledDates'];
         
         require("connection.php");
         $query = mysqli_query($con, "SELECT COUNT(*) from tblreservationrequest");
@@ -522,28 +526,34 @@ $("#datetimepicker_format_locale").on("change", function(e){
     $.datetimepicker.setLocale($(e.currentTarget).val());
 });
 
+var datearray = <?php echo json_encode($arrDisabledDates); ?>;
+
 $('#datetimepicker').datetimepicker({
 dayOfWeekStart : 0,
 lang:'en',
+formatDate: 'dd.mm.Y',
 //dateToDisable: ['09.05.2016'],
+disabledDates: datearray,
 startDate:  0,
 defaultDate: new Date(),
 defaultTime: '08:00',
-minDate: +new Date(),
-
+minDate: new Date(),
 datepicker:true,
     allowTimes:['4:30','5:00','5:30','6:00','6:30','7:00','7:30','8:00','8:30','9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00','20:30','21:00','21:30','22:00','22:30','23:00'],
     step:5
 });
+
+var datearray2 = <?php echo json_encode($arrDisabledDates); ?>;
 $('#datetimepicker003').datetimepicker({
 dayOfWeekStart : 0,
 lang:'en',
+formatDate: 'dd.mm.Y',
 //dateToDisable: ['09.05.2016'],
+disabledDates: datearray2,
 startDate:  0,
 defaultDate: new Date(),
 defaultTime: '08:00',
-minDate: +new Date(),
-
+minDate: new Date(),
 datepicker:true,
     allowTimes:['4:30','5:00','5:30','6:00','6:30','7:00','7:30','8:00','8:30','9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00','20:30','21:00','21:30','22:00','22:30','23:00'],
     step:5

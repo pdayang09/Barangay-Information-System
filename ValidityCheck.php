@@ -125,7 +125,7 @@
 				$proceed = $_POST['btnProceed'];
 				
 				$residency =0;
-				if(strstr($proceed, 'app')){
+				if(strstr($proceed, 'nr')){
 					$statement = "SELECT a.`strApplicantID`, CONCAT(a.`strApplicantLName`, ', ', a.`strApplicantFName`, ' ', a.`strApplicantMName`, ' ', a.`strNameExtension`) AS 'Name', a.`strApplicantContactNo`, CONCAT(a.`strApplicantAddress_street`, ' ', a.`strApplicantAddress_brgy`,', ',a.`strApplicantAddress_city`) AS 'Place' FROM tblapplicant a WHERE a.`strApplicantID` = '$proceed'";
 					
 					$residency = 2;
@@ -158,7 +158,7 @@
 				$btnDocument = $_POST['btnDocument'];
 				
 				$residency =0;
-				if(strstr($btnDocument, 'app')){
+				if(strstr($btnDocument, 'nr')){
 					
 					$statement = "SELECT a.`strApplicantID`, CONCAT(a.`strApplicantLName`, ', ', a.`strApplicantFName`, ' ', a.`strApplicantMName`, ' ', a.`strNameExtension`) AS 'Name', a.`strApplicantContactNo`, CONCAT(a.`strApplicantAddress_street`, ' ', a.`strApplicantAddress_brgy`,', ',a.`strApplicantAddress_city`) AS 'Place' FROM tblapplicant a WHERE a.`strApplicantID` = '$btnDocument'";
 					

@@ -71,7 +71,7 @@
 			
 			<tbody>
 			<?php
-				$statement = 'SELECT r.`strReservationID`, r.`strRSPurpose`, r.`datRSReserved`, SUM(rt.`intReturned`), SUM(rt.`intUnreturned`) FROM `tblreservationrequest` r INNER JOIN tblreturnequip rt ON rt.strReservationID = r.strReservationID WHERE r.`strRSapprovalStatus`="Paid" OR r.`strRSapprovalStatus` = "Half Paid" GROUP BY r.`strReservationID`';
+				$statement = 'SELECT r.`strReservationID`, r.`strRSPurpose`, r.`datRSReserved`, SUM(rt.`intReturned`), SUM(rt.`intUnreturned`) FROM `tblreservationrequest` r INNER JOIN tblreturnequip rt ON rt.strReservationID = r.strReservationID WHERE r.`strRSapprovalStatus`="Paid" OR r.`strRSapprovalStatus` ="Half Paid" GROUP BY r.`strReservationID`';
 
 
 			$query = mysqli_query($con,$statement);

@@ -204,43 +204,112 @@
       <!--main content start-->
       <section id="main-content">
         <section class="wrapper site-min-height">
-       <FORM method="POST"> 
-            <div class="form-group">
-                <div class="col-sm-5">
-                    
-                    <p><font face="cambria" size=4 color="grey"> Datatime </font></p>
-                    <input type="text" id="datetimepicker" class="form-control input-group-lg reg_name, some_class" value="<?php if(isset($_POST['resId'])){echo $_POST['From'];}else{}?>" name = "From"/>
-                </div><br><br><br><br><br>
-            </div><br><br><br><br><!-- /#form-group -->     
 
-            <center> <input type="submit" class="btn btn-outline btn-success" name="btnSubmit" value="Add Date"/>
-            </center>
+ <!-- Page Content -->
+ <div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
 
+        <legend ><font face = "cambria" size = 8 color = "grey"> Add Non-Working Days</font></legend>
 
-            <?php 
-            $datearray[] = array();
-            $datearray = $_SESSION['datearray'];             
-            
+<FORM method="POST"> 
 
-            if(isset($_POST['btnSubmit'])){
-                $datetemp = $_POST['From'];
+	<div class="alert alert-warning">
+       <strong>Disable Date</strong> You are about to disable dates. Such dates are non-negotiable.
+    </div>
+
+    <div class="form-grop">
+    	<div class="col-sm-6">
+    		<div class="showback">
+
+        	<p><font face="cambria" size=4 color="grey"> Select Dates </font></p>
+        	<input type="text" id="datetimepicker" class="form-control input-group-lg reg_name, some_class" value="<?php if(isset($_POST['addDate'])){echo $_POST['addDate'];}else{}?>" name = "addDate"/>
+
+        	<center><input type="submit" class="btn btn-outline btn-success" name="btnAdd" value="Add Date" /></center>
+
+        	</div>
+        </div>
+    </div>
+  
+
+        <?php                         
+
+      		$arrDisabledDates[] = array(); 
+        	$arrDisabledDates = $_SESSION['arrDisabledDates'] ;
+
+            if(isset($_POST['btnAdd'])){
+                $datetemp = $_POST['addDate'];
 
                 $datetemp = str_replace('/','-', $datetemp);
                 $datetemp = str_replace('/','.', $datetemp);
                 $datetemp = date('d.m.Y', strtotime($datetemp));
-               array_push($datearray, $datetemp);  
-               print_r($datearray);   
+               array_push($arrDisabledDates, $datetemp);  
+               //print_r($arrDisabledDates);   
+  
+              }
 
-               $_SESSION['datearray'] = $datearray; 
-                 
-                }
-            ?>   
+             $_SESSION['arrDisabledDates'] = $arrDisabledDates; 
+               
+            ?> 
 
-                    </div><!-- /#col-lg-12 -->
-                </div><!-- /#row -->
-            </div><!-- /#container-fluid -->
-        </div><!-- /#page-content-wrapper -->
-    </div><!-- /#wrapper -->
+  	<div id="viewDDate" class="form-grop">
+    	<div class="col-sm-6">
+    		<div class="showback">
+
+        	<table class="table table-hover" style="height: 40%; overflow: scroll; "'>
+				<thead><tr>
+					<th>Date</th>					
+					<th> </th>
+					<th> Action </th>
+				</tr></thead>
+				<tbody>
+			<?php
+				foreach ($arrDisabledDates as $a) {
+
+					if(!empty($a)){
+						echo"<tr><td> $a </td>";
+						echo"<td> </td>";
+						echo"<td> <i type='button' class='glyphicon glyphicon-remove'></i></td></tr>";
+					}
+					
+				}
+			?>	
+				</tbody>
+			</table>
+        	</div>
+        </div>
+    </div> 
+
+                </div><!-- /#col-lg-12 -->
+            </div><!-- /#row -->
+        </div><!-- /#container-fluid -->
+    </div><!-- /#page-content-wrapper -->
+<script>
+function showDDate(){
+
+    var a = document.getElementsByName("addDate")[0].value;
+    var arr = <?php echo json_encode($arrDisabledDates); ?>;
+
+    //document.getElementById("showCheck").innerHTML = a + b + c;
+    //alert(val);
+
+     $.ajax({
+        type: "POST",
+        url: "vDDate.php",
+        data: 'dDate='+a+'&arrDisabledDates='+arr,
+        success: function(data){
+        alert(data);
+        $("#viewDDate").html(data);
+        }       
+    });    
+ 
+}
+      $(function(){
+          $('select.styled').customSelect();
+      });  
+
+</script>
 
 <script src="./jquery.js"></script>
 <script src="build/jquery.datetimepicker.full.js"></script>
@@ -261,7 +330,11 @@ $("#datetimepicker_format_locale").on("change", function(e){
     $.datetimepicker.setLocale($(e.currentTarget).val());
 });
 
-var datearray = <?php echo json_encode($datearray); ?>;
+$("#datetimepicker_format_locale").on("change", function(e){
+    $.datetimepicker.setLocale($(e.currentTarget).val());
+});
+
+var datearray = <?php echo json_encode($arrDisabledDates); ?>;
 
 $('#datetimepicker').datetimepicker({
 dayOfWeekStart : 0,
@@ -276,8 +349,6 @@ minDate: new Date(),
 datepicker:true,
     allowTimes:['4:30','5:00','5:30','6:00','6:30','7:00','7:30','8:00','8:30','9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00','20:30','21:00','21:30','22:00','22:30','23:00'],
     step:5
-});
-$('#datetimepicker').datetimepicker({
 });
 
 $('.some_class').datetimepicker({   
