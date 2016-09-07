@@ -66,8 +66,8 @@
 		  <?php
 		  require('connection.php');
 		  $Gender = "";
-		  $query = "Select concat(strLastName,' ',strNameExtension,', ',strFirstName,' ',strMiddleName) as Name, concat(strBuildingNo,', ',strStreetName,' ',strZoneName) as Address, strOccupation,charGender, timestampdiff(YEAR,dtBirthdate,NOW()) as Age, strCivilStatus from tblhousemember as a inner join 
-		  tblhousehold as b on a.intForeignHouseholdNo = b.intHouseholdNo inner join tblstreet as c on b.intForeignStreetId = c.intStreetId inner join tblzone as d on c.intForeignZoneId = d.intZoneId order by address";
+		  $query = "Select concat(strLastName,' ',strNameExtension,', ',strFirstName,' ',strMiddleName) as Name, concat(strBuildingNo,', ',strStreetName,' ',strPurok )as Address, strOccupation,charGender, timestampdiff(YEAR,dtBirthdate,NOW()) as Age, strCivilStatus from tblhousemember as a inner join 
+		  tblhousehold as b on a.intForeignHouseholdNo = b.intHouseholdNo inner join tblstreet as c on b.intForeignStreetId = c.intStreetId order by address";
 		  $sql = mysqli_query($con,$query);
 		  while($row = mysqli_fetch_object($sql)){
 			 if($row->charGender == 'M'){

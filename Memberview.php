@@ -16,7 +16,7 @@
 <?php
 require('connection.php');
 $Hno = $_SESSION['Memb'];
-$sql = "SELECT * from tblhousemember where intMemberNo = '$Hno'";
+$sql = "SELECT  timestampdiff(YEAR,dtBirthdate,now()) as 'AGE', concat(strFirstName,' ',strMiddleName,' ',strLastName,' ',strNameExtension) as 'Name', `charGender`,`blobImage`,`strCivilStatus`,`strVotersId`,`strTINNo`,`strSSSNo`,`strContactNo`,`strOccupation`,`dtBirthdate` FROM `tblhousemember` where intMemberNo = '$Hno'";
 $query = mysqli_query($con, $sql);
 $row = mysqli_fetch_object($query);
 $Gend = "";
@@ -29,29 +29,165 @@ if($row->charGender == "M"){
 else{
 	$Gend = "Female";
 }
-if($row->strMiddleName == NULL){
-	
-}
-else{
-	$Mid = $row->strMiddleName;
-}
 
-if($row->strNameExtension == NULL){
-	
-}
-else{
-	$Ext = $row->strNameExtension;
-}
 
-echo "Head of Household: ".$row->strLastName.",".$row->strFirstName." ".$Mid." ".$Ext."<br>";
-echo "charGender: ".$Gend."<br>";
-echo "Date of Birth: ".$row->dtBirthdate."<br>";
-echo "Contact Number: ".$row->strContactNo."<br>";
-echo "strOccupation: ".$row->strOccupation."<br>";
-echo "SSS Number: ".$row->strSSSNo."<br>";
-echo "TIN Number: ".$row->strTINNo."<br>";
 
 ?>
+					
+<div class="col-sm-9 col-md-4 col-lg-3">
+<div class = "showback">
+
+		<?php echo'<img width = 350 height = 350 align="left" src = "data:image;base64,'.$row->blobImage.'">';?>
+		
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div>
+		</center></div>
+			<!-- DIV FOR TABLE -->
+		<div class="col-sm-3 col-md-8 col-lg-9">
+		<div class = "showback">
+		
+			<p><font face = "cambria" size = 5 color = "grey"> Full Name </font></p>
+		<div class = "form-group">
+			<div class="col-sm-10">
+				<input id="controlno" name = "StreetName" class="form-control input-group-lg reg_name" type="text" value = "<?php echo $row->Name?>" readonly>			 
+           </div>
+		</div><br><br>
+		
+		
+	<div class = "form-group">
+
+
+
+	       <div class="col-sm-5"><div class="form-group" id = "occup-div">	<p><font face = "cambria" size = 4 color = "grey"> Gender: </font></p>			
+	<div class="col-sm-10">
+	         <input id="RFName1" class="form-control input-group-lg reg_name"  <?php  echo "value = $Gend" ?> readonly>
+	       </div> </div>
+		  
+		   
+		   
+	</div>
+
+
+
+
+	<div class="form-group" id = "SSS-div">				
+	       <div class="col-sm-5">
+		   <p><font face = "cambria" size = 4 color = "grey">Birthday: </font></p>
+				<input id="RFName1" class="form-control input-group-lg reg_name"  <?php  echo "value =".$row->dtBirthdate ?> readonly>
+	       </div> </div>
+		  
+		   
+		   
+	<br><br><br><br><br></div>
+	
+	
+		<div class = "form-group">
+
+
+
+	       <div class="col-sm-5"><div class="form-group" id = "occup-div">	<p><font face = "cambria" size = 4 color = "grey"> Age: </font></p>			
+	<div class="col-sm-10">
+	         <input id="RFName1" class="form-control input-group-lg reg_name" readonly <?php  echo "value =".$row->AGE ?> >
+	       </div> </div>
+		  
+		   
+		   
+	</div>
+
+
+
+
+	<div class="form-group" id = "SSS-div">				
+	       <div class="col-sm-5">
+		<p><font face = "cambria" size = 4 color = "grey"> Contact Number: </font></p>		
+				 <input id="RFName1" class="form-control input-group-lg reg_name" readonly <?php  echo "value =".$row->strContactNo ?> >
+	       </div> </div>
+		  
+		   
+		   
+	<br><br><br><br><br></div>
+	
+	
+	
+	
+		<div class = "form-group">
+
+
+
+	       <div class="col-sm-5"><div class="form-group" id = "occup-div">	<p><font face = "cambria" size = 4 color = "grey"> SSS Number: </font></p>			
+	<div class="col-sm-10">
+	         <input id="RFName1" class="form-control input-group-lg reg_name" readonly <?php  echo "value =".$row->strSSSNo ?> >
+	       </div> </div>
+		  
+		   
+		   
+	</div>
+
+
+
+
+	<div class="form-group" id = "SSS-div">				
+	       <div class="col-sm-5">
+		   <p><font face = "cambria" size = 4 color = "grey">TIN Number: </font></p>
+				<input id="RFName1" class="form-control input-group-lg reg_name"  readonly <?php  echo "value =".$row->strTINNo ?> >
+	       </div> </div>
+		  
+		   
+		   
+	<br><br><br><br><br></div>
+	
+	
+		<div class = "form-group">
+
+
+
+	       <div class="col-sm-5"><div class="form-group" id = "occup-div">	<p><font face = "cambria" size = 4 color = "grey"> Voter's ID: </font></p>			
+	<div class="col-sm-10">
+	         <input id="RFName1" class="form-control input-group-lg reg_name" readonly <?php  echo "value =".$row->strVotersId ?> >
+	       </div> </div>
+		  
+		   
+		   
+	</div>
+
+
+
+
+	<div class="form-group" id = "SSS-div">				
+	       <div class="col-sm-5">
+		   <p><font face = "cambria" size = 4 color = "grey">Civil Status: </font></p>
+				<input id="RFName1" class="form-control input-group-lg reg_name"  readonly <?php  echo "value =".$row->strCivilStatus ?> >
+	       </div> </div>
+		  
+		   
+		   
+	<br><br><br><br><br></div>
+	
+	
+		<div class = "form-group">
+
+  <div class="col-sm-5"><p><font face = "cambria" size = 4 color = "grey">Occupation: </font></p>	
+	<div class="col-sm-10">
+	       			<input id="RFName1" class="form-control input-group-lg reg_name"  readonly <?php  echo "value =".$row->strOccupation ?> >
+	       </div> </div>
+		  
+		   
+		   
+	</div>
+
+	 
+		  
+		  
+
+
+
+
+		  
+		   
+	<br><br><br><br><br></div>
+<br><br><br>
+	<br><br><br>	
+		
+		</div>
 </form>
                  </center>      
                     </div>

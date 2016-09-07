@@ -146,6 +146,7 @@
       										<h4>Tenant/s of the Household</h4>
       										<table class="table table-striped table-bordered table-hover" border = '2' style = 'width:95%'>
       											<tr>
+												
       												<th>Name</th>
       												<th>Gender</th>
       												<th>Relation to the Owner</th>
@@ -232,6 +233,10 @@
       										<!--script for this page-->
       										
       										<script>
+											
+											
+											
+											
 											function getTrans(value){
 												var x = value;
 												//alert(x);

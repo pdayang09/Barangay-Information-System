@@ -122,21 +122,25 @@ function getAge(birthDateString) {
     </script>
 	<!-- Validation Code Javascript End -->
       <section id="main-content">
-          <section class="wrapper site-min-height">		<form method = POST>
-		  <!-- Validation flag holders Start-->
-	<input id = "hidfname" name="hidfname" class="form-control" type="hidden"  <?php if(isset($_POST["hidfname"])) echo "value = ".$_POST["hidfname"]; ?>>
- <input id = "hidlname" name="hidlname" class="form-control" type="hidden" <?php if(isset($_POST["hidlname"])) echo "value = ".$_POST["hidlname"]; ?>>
- <input id = "hidbday" name="hidbday" class="form-control" type="hidden" <?php if(isset($_POST["hidbday"])) echo "value = ".$_POST["hidbday"]; ?>>
-<!-- Validation  flag holders End -->
- </form>
+          <section class="wrapper site-min-height">		
+
 <legend ><font face = "cambria" size = 8 color = "grey"> Resident Module </font></legend>
 <button  class="btn btn-info" onclick="window.location.href='Hholdpersonal.php'">  <i class="glyphicon glyphicon-hand-left" aria-hidden="true"></i>&nbsp;Back to the Previous Page</button>
 	<br>
 	<br><div class = "showback">
 <legend ><p><font face = "cambria" size = 5 color = "grey"> Add Other Member </font></p></legend >
 
-	<form method = POST>
+	<form method = POST  enctype = "multipart/form-data">
+		  <!-- Validation flag holders Start-->
+	<input id = "hidfname" name="hidfname" class="form-control" type="hidden"  <?php if(isset($_POST["hidfname"])) echo "value = ".$_POST["hidfname"]; ?>>
+ <input id = "hidlname" name="hidlname" class="form-control" type="hidden" <?php if(isset($_POST["hidlname"])) echo "value = ".$_POST["hidlname"]; ?>>
+ <input id = "hidbday" name="hidbday" class="form-control" type="hidden" <?php if(isset($_POST["hidbday"])) echo "value = ".$_POST["hidbday"]; ?>>
+<!-- Validation  flag holders End -->
 
+			Upload an Image:<br>
+					<input type = "file" name = "image" id="imgInp">
+        <img id="blah" height = 250 width = 250 src="#" alt="your image" />
+		<br>
 
 <p><font face = "cambria" size = 4 color = "grey"> Full Name: </font></p>
 	<div class="form-group">				
@@ -347,9 +351,35 @@ if($last == 0&&$birth == 0&&$first == 0){ //-- Checking if a textfield is red(ha
 $_Lname = mysqli_real_escape_string($con,$Lname); //-- For using apostrophe ex. O'Hara
 $_Fname = mysqli_real_escape_string($con,$Fname); //-- For using apostrophe ex. O'Hara
 $_Mname = mysqli_real_escape_string($con,$Mname); //-- For using apostrophe ex. O'Hara
+/*mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`,strVotersId,charLiterate,charDisable,`dtEntered`) 
+VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gend','$bday','$contact','$occup','$SSS','$TIN','$Hno','$civil','$relation','Alive','$Vid','Y','N','$Entered')");
+echo "<script>window.location = 'HholdPersonal.php'</script>";*/
+
+
+
+if(getimagesize($_FILES['image']['tmp_name']) == FALSE){
+
 mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`,strVotersId,charLiterate,charDisable,`dtEntered`) 
 VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gend','$bday','$contact','$occup','$SSS','$TIN','$Hno','$civil','$relation','Alive','$Vid','Y','N','$Entered')");
 echo "<script>window.location = 'HholdPersonal.php'</script>";
+}
+else{
+
+
+$image = addslashes($_FILES['image']['tmp_name']);
+$name = addslashes($_FILES['image']['name']);
+$image = file_get_contents($image);
+$image = base64_encode($image);
+
+mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`,strVotersId,charLiterate,charDisable,`dtEntered`,`blobImage`) 
+VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gend','$bday','$contact','$occup','$SSS','$TIN','$Hno','$civil','$relation','Alive','$Vid','Y','N','$Entered','$image')");
+echo "<script>window.location = 'HholdPersonal.php'</script>";
+}
+
+
+
+
+
 }
 else{
 	
@@ -385,7 +415,23 @@ else{
     
   <script>
       //custom select box
+  function readURL(input) {
+  	if (input.files && input.files[0]) {
+  		var reader = new FileReader();
+  		
+  		reader.onload = function (e) {
+  			$('#blah').attr('src', e.target.result);
+  		}
+  		
+  		reader.readAsDataURL(input.files[0]);
+  	}
+  }
 
+  $("#imgInp").change(function(){
+  	readURL(this);
+  });
+  
+   
       $(function(){
           $('select.styled').customSelect();
       });

@@ -107,16 +107,26 @@ var age = getAge(document.getElementById('bday').value);
 	
 	</script>
 	  <section id="main-content">
-	      <section class="wrapper site-min-height">		<form method = POST><br>	 
-		  <input id = "hidfname" name="hidfname" class="form-control" type="hidden"  <?php if(isset($_POST["hidfname"])) echo "value = ".$_POST["hidfname"]; ?>>
-			<input id = "hidlname" name="hidlname" class="form-control" type="hidden" <?php if(isset($_POST["hidlname"])) echo "value = ".$_POST["hidlname"]; ?>>
-			<input id = "hidbday" name="hidbday" class="form-control" type="hidden" <?php if(isset($_POST["hidbday"])) echo "value = ".$_POST["hidbday"]; ?>>
+	      <section class="wrapper site-min-height">			 
+		
+			
+			
+			
 	<legend ><font face = "cambria" size = 8 color = "grey"> Resident Module </font></legend>
 	<button  class="btn btn-info" onclick="window.location.href='Hholdview.php'">  <i class="glyphicon glyphicon-hand-left" aria-hidden="true"></i>&nbsp;Back to the Previous Page</button><legend></legend>
 	<div class = "showback">
 	<legend ><p><font face = "cambria" size = 5 color = "grey"> General Information </font></p></legend >
 
-	<form method = POST>
+<form method = POST enctype = "multipart/form-data">
+
+	Upload an Image:<br>
+					<input type = "file" name = "image"id="imgInp">
+        <img id="blah" height = 250 width = 250 src="#" alt="your image" />
+		<br>
+	
+	  <input id = "hidfname" name="hidfname" class="form-control" type="hidden"  <?php if(isset($_POST["hidfname"])) echo "value = ".$_POST["hidfname"]; ?>>
+			<input id = "hidlname" name="hidlname" class="form-control" type="hidden" <?php if(isset($_POST["hidlname"])) echo "value = ".$_POST["hidlname"]; ?>>
+			<input id = "hidbday" name="hidbday" class="form-control" type="hidden" <?php if(isset($_POST["hidbday"])) echo "value = ".$_POST["hidbday"]; ?>>
 	<p><font face = "cambria" size = 4 color = "grey"> Household Head Name: </font></p>
 	<div class="form-group">				
 	      <div class="col-sm-3">
@@ -357,13 +367,16 @@ var age = getAge(document.getElementById('bday').value);
 	$last = $_POST['hidlname'];
 	$first = $_POST['hidfname'];
 	$birth = $_POST['hidbday'];
-	if($age>=18){
+	
 	if($last == 0&&$birth == 0&&$first == 0){
 	$_Lname = mysqli_real_escape_string($con,$Lname);
 	$_Fname = mysqli_real_escape_string($con,$Fname);
 	$_Mname = mysqli_real_escape_string($con,$Mname);
 
-	$mysqli = mysqli_query($con,"INSERT INTO `tblhousehold`( `intForeignStreetId`, `strBuildingNo`, `strHouseholdLname`,`strResidence`,`strOldAddress`,`strStatus`) VALUES ($Street,'$Building','$_Lname','$Residence','$Old','Enabled')");
+	
+	if(getimagesize($_FILES['image']['tmp_name']) == FALSE){
+
+$mysqli = mysqli_query($con,"INSERT INTO `tblhousehold`( `intForeignStreetId`, `strBuildingNo`, `strHouseholdLname`,`strResidence`,`strOldAddress`,`strStatus`) VALUES ($Street,'$Building','$_Lname','$Residence','$Old','Enabled')");
 echo("Error description: " . mysqli_error($con));
 	$query = mysqli_query($con,"Select intHouseholdNo from tblhousehold order by intHouseholdNo desc");
 
@@ -374,19 +387,52 @@ echo("Error description: " . mysqli_error($con));
 	VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gender','$Birthdate','$Contact','$Occupation','$SSS','$TIN','$no','$Civil','Head','Alive','Y','N','$Vote','$Entered')");
 	$_SESSION['Hno'] = $no;
 
-	echo "<script>window.location = 'HholdPersonal.php' </script>";
+	echo "<script>window.location = 'HholdPersonal.php'</script>";
+	
+	/*mysqli_query($con,"INSERT INTO `tblhousemember`( `FirstName`, `MiddleName`, `LastName`, `NameExtension`, `Gender`, `Birthdate`, `ContactNo`, `Occupation`, `SSSNo`, `TINNo`, `ForeignHouseholdNo`, `CivilStatus`, `Status`, `LifeStatus`) 
+	VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gend','$bday','$contact','$occup','$SSS','$TIN','$Hno','$civil','Spouse','Alive')");
+	echo "<script>window.location = 'HholdPersonal.php'</script>";*/
+	
 
-	//mysqli_query($con,"INSERT INTO `tblhousemember`( `FirstName`, `MiddleName`, `LastName`, `NameExtension`, `Gender`, `Birthdate`, `ContactNo`, `Occupation`, `SSSNo`, `TINNo`, `ForeignHouseholdNo`, `CivilStatus`, `Status`, `LifeStatus`) 
-	//VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gend','$bday','$contact','$occup','$SSS','$TIN','$Hno','$civil','Spouse','Alive')");
-	//echo "<script>window.location = 'HholdPersonal.php'</script>";
+}
+else{
+	
+$mysqli = mysqli_query($con,"INSERT INTO `tblhousehold`( `intForeignStreetId`, `strBuildingNo`, `strHouseholdLname`,`strResidence`,`strOldAddress`,`strStatus`) VALUES ($Street,'$Building','$_Lname','$Residence','$Old','Enabled')");
+
+	$query = mysqli_query($con,"Select intHouseholdNo from tblhousehold order by intHouseholdNo desc");
+
+	$row = mysqli_fetch_object($query);
+	$no = $row->intHouseholdNo;
+	
+	
+$image = addslashes($_FILES['image']['tmp_name']);
+$name = addslashes($_FILES['image']['name']);
+$image = file_get_contents($image);
+$image = base64_encode($image);
+	
+	mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`,`strCivilStatus`, `strStatus`,`strLifeStatus`,charLiterate,charDisable, `strVotersId`,`dtEntered`,`blobImage`) 
+	VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gender','$Birthdate','$Contact','$Occupation','$SSS','$TIN','$no','$Civil','Head','Alive','Y','N','$Vote','$Entered','$image')");
+	$_SESSION['Hno'] = $no;
+	echo "<script>window.location = 'HholdPersonal.php'</script>";
+
+
+	
+}
+
+
+	
+	
+	
+	
+	
+	
+	
 	}
 	else{
 
 	echo "<script>alert('Please input valid values!');</script>";
-	}}
-	else{
-		echo "<script>alert('Please input valid Birthdate!');</script>";
 	}
+	
 	}
 
 
@@ -422,7 +468,21 @@ echo("Error description: " . mysqli_error($con));
 	<script>
 
 	  //custom select box
+function readURL(input) {
+  	if (input.files && input.files[0]) {
+  		var reader = new FileReader();
+  		
+  		reader.onload = function (e) {
+  			$('#blah').attr('src', e.target.result);
+  		}
+  		
+  		reader.readAsDataURL(input.files[0]);
+  	}
+  }
 
+  $("#imgInp").change(function(){
+  	readURL(this);
+  });
 	  $(function(){
 	      $('select.styled').customSelect();
 	  });
