@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 04, 2016 at 12:30 PM
+-- Generation Time: Sep 07, 2016 at 09:20 AM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.5.30
 
@@ -349,8 +349,8 @@ INSERT INTO `tbldocument` (`intDocCode`, `strDocName`, `dblDocFee`, `strStatus`,
 (3, 'Business Clearance New', 100, 'Enabled', ''),
 (4, 'Indigency', 95.95, 'Enabled', ''),
 (5, 'Excavation', 1500, 'Enabed', ''),
-(6, 'Street Permit', 0, 'Enabled', ''),
-(7, 'Business Clearance Renewal', 0, 'Enabled', ''),
+(6, 'Street Permit', 100, 'Enabled', ''),
+(7, 'Business Clearance Renewal', 111111111111110, 'Enabled', ''),
 (8, 'TRU Clearance', 100, 'Enabled', ''),
 (9, 'Utility Clearance', 100, 'Enabled', '');
 
@@ -371,11 +371,13 @@ CREATE TABLE `tbldocumentpurpose` (
 --
 
 INSERT INTO `tbldocumentpurpose` (`intDocPurposeID`, `strPurposeName`, `dblPrice`) VALUES
-(1, 'for whatever purpose', 0),
-(2, 'Funeral', 0),
+(1, 'for whatever purpose', 200),
+(2, 'Funeral', 300),
 (3, 'Local Employment', 50),
-(4, 'Scholarship', 0),
-(5, 'PAO', 150);
+(4, 'Scholarship', 2000000000),
+(5, 'PAO', 150),
+(6, 'CCIS', 0),
+(7, 'Gagaanda ka', 0);
 
 -- --------------------------------------------------------
 
@@ -433,6 +435,18 @@ INSERT INTO `tbldocumentrequest` (`strDocRequestID`, `strDRdocCode`, `strDRappli
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbldocumenttemplate`
+--
+
+CREATE TABLE `tbldocumenttemplate` (
+  `intTemplate_ID` int(11) NOT NULL,
+  `strTemplate_Name` varchar(50) NOT NULL,
+  `strTemplate_Path` varchar(100) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tblequipment`
 --
 
@@ -452,15 +466,12 @@ CREATE TABLE `tblequipment` (
 --
 
 INSERT INTO `tblequipment` (`strEquipNo`, `strEquipName`, `strEquipCategory`, `intEquipQuantity`, `dblEquipFee`, `dblEquipNResidentCharge`, `strStatus`, `imageUpload`) VALUES
-(1, 'Basketball', '8', 13, 50.51, 10, 'Enabled', ''),
-(2, 'Volleyball', '8', 10, 50, 10, 'Enabled', ''),
-(3, 'Tennis Ball', '8', 10, 50, 10, 'Enabled', ''),
-(4, 'Shuttlecock', '8', 10, 50, 10, 'Enabled', ''),
-(5, 'Volleyball Net', '4', 10, 0, 0, 'Disabled', ''),
-(6, 'Tennis Net', '4', 3, 0, 0, 'Enabled', ''),
-(7, 'Digital Scoreboard', '6', 5, 250, 0, 'Enabled', ''),
-(8, 'Tennis', '5', 90, 20.6, 0, 'Enabled', ''),
-(9, 'Helmet', '8', 1, 25, 25, 'Enabled', '');
+(11, 'Badminton Racket', '5', 5, 30, 50, 'Enabled', '20160907050708.JPG'),
+(12, 'Tennis Racket', '5', 3, 30, 50, 'Enabled', '20160907050734.jpg'),
+(13, 'Basketball', '7', 4, 40, 70, 'Enabled', '20160907050809.png'),
+(14, 'Shuttlecock', '8', 10, 20, 30, 'Enabled', '20160907050836.jpeg'),
+(15, 'Tennis ball', '7', 10, 20, 30, 'Enabled', '20160907050928.jpg'),
+(16, 'Digital Score Board', '6', 2, 100, 120, 'Enabled', '20160907050952.jpg');
 
 -- --------------------------------------------------------
 
@@ -484,15 +495,10 @@ CREATE TABLE `tblfacility` (
 --
 
 INSERT INTO `tblfacility` (`strFaciNo`, `strFaciName`, `strFaciCategory`, `strFaciStatus`, `dblFaciDayCharge`, `dblFaciNightCharge`, `dblFaciNResidentCharge`, `imageUpload`) VALUES
-(1, 'Basketball Court', '1', 'Under Maintenance', 250, 300, 500, ''),
-(2, 'Badminton Court', '1', 'Good Condition', 250, 300, 500, ''),
-(3, 'Tennis Court', '1', 'Good Condition', 250, 300, 500, ''),
-(4, 'Wake Chapel', '3', 'Good Condition', 0, 0, 0, ''),
-(5, 'Multi Purpose Hall', '3', 'Good Condition', 250, 300, 500, ''),
-(6, '', '', '', NULL, NULL, NULL, ''),
-(7, 'bahay', '1', 'Good Condition', 250, 300, 400, ''),
-(8, '', '', '', NULL, NULL, NULL, ''),
-(9, 'simbahan', '2', 'Good Condition', 250, 300, 400, '');
+(13, 'Basketball Court', '1', 'Good Condition', 300, 350, 400, '20160907045531.jpg'),
+(14, 'Badminton Court', '1', 'Good Condition', 300, 350, 400, '20160907045602.jpg'),
+(15, 'Multi-Purpose Hall', '3', 'Good Condition', 400, 450, 500, '20160907045628.jpg'),
+(16, 'Tennis Court', '2', 'Good Condition', 250, 300, 350, '20160907045655.jpg');
 
 -- --------------------------------------------------------
 
@@ -522,8 +528,7 @@ INSERT INTO `tblhousehold` (`intHouseholdNo`, `strBuildingNo`, `intForeignStreet
 (5, '677', 1, 'Tedder', 'Owned', '672 jads aada', 'Enable'),
 (6, '844 Interior 29', 1, 'Marquez', 'Rent', 'Pasig', 'Enabled'),
 (9, '321', 1, 'Ara', 'Rent', 'New', 'Enabled'),
-(10, '312', 1, 'Sista', 'Rent', 'sda', 'Enabled'),
-(11, '223 Exterior 2', 2, 'Panem', 'Rent', 'Sta. Monica, Bulacan', 'Enabled');
+(10, '312', 1, 'Sista', 'Rent', 'sda', 'Enabled');
 
 -- --------------------------------------------------------
 
@@ -558,29 +563,25 @@ CREATE TABLE `tblhousemember` (
 --
 
 INSERT INTO `tblhousemember` (`intMemberNo`, `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `strVotersId`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`, `charLiterate`, `charDisable`, `dtEntered`) VALUES
-(1, 'Paul', 'Aquino', 'Dayang', '', 'M', '1996-05-12', '0920947581', 'Company Driver', '00010101', '', '09', 1, '', 'Head', 'Alive', 'Y', 'N', '0000-00-00'),
-(2, 'Pingris', 'Santos', 'Daya', 'Jr', 'M', '1992-01-01', '09132321321', 'Dancer', '', 'ads', 'e3qeaaa', 2, '', 'Head', 'Alive', 'Y', 'N', '0000-00-00'),
-(3, 'Matteo', 'Ting', 'Perez', 'Jr', 'M', '1980-05-21', '09123321243', 'Sales', '6543213', '331231', '232qe2qe', 2, 'Single', 'Spouse', 'Dead', 'Y', 'N', '0000-00-00'),
-(4, 'Mikhael', 'Castro', 'Daya', '', 'M', '2016-05-04', '', '', '', '', '', 2, 'Single', 'Children', 'Moved', 'Y', 'N', '0000-00-00'),
-(5, 'Gema', 'Peng', 'Gutierez', '', 'F', '1996-12-27', '02313321', 'Sales Clerk', '', 'sad', 'qe23', 2, 'Single', 'Cousin', 'Moved', 'Y', 'N', '0000-00-00'),
-(7, 'Lola', 'Ting', 'Dayang', '', 'F', '1990-03-08', '09890930943', 'Sales Clerk', '', 'dd', '2qwewwe', 1, 'Single', 'Sister', 'Alive', 'Y', 'N', '0000-00-00'),
-(8, 'Jenna', 'Alie', 'Dayang', '', 'F', '1989-07-06', '09999999', '', '', '', 'weewq', 1, 'Married', 'Spouse', 'Alive', 'Y', 'N', '0000-00-00'),
-(9, 'Paulo', 'Ting', 'Perez', 'Jr', 'M', '1980-05-21', '09123321243', 'Sales Clerk', '', '331231', 'weewq', 3, 'Single', 'Head', 'Alive', 'Y', 'N', '0000-00-00'),
-(10, 'Jenny', '', 'Wu', '', 'F', '1981-06-21', '09238472912', 'Accountant', '98121921', '921081', 'weewqeqw', 4, 'Single', 'Head', 'Alive', 'Y', 'Y', '0000-00-00'),
-(11, 'Ryan', 'Saludo', 'Tedder', '', 'M', '1989-09-04', '0921384913', 'Singer', '92192913', '12121', '12313', 5, '', 'Head', 'Alive', 'Y', 'N', '0000-00-00'),
-(12, 'Angel', '', 'Marquez', '', 'M', '1986-01-01', '', '', '', '', 'weqeq', 6, 'Single', 'Head', 'Alive', 'N', 'N', '0000-00-00'),
-(13, 'Kimmy', '', 'Marquez', '', 'F', '1982-01-01', '', '', '', '', '', 6, 'Married', 'Spouse', 'Dead', 'Y', 'Y', '0000-00-00'),
-(20, 'dsa', 'sdaa', 'ds', '', 'M', '1992-08-14', '', '', '', '', '', 6, 'Single', 'Head', 'Alive', 'Y', 'N', '0000-00-00'),
-(21, 'Mary', '', 'Ara', '', 'F', '1995-01-01', '12', 'Sales', '786', '56', '54', 9, 'Single', 'Head', 'Alive', 'Y', 'N', '0000-00-00'),
-(22, 'Kimmy', '', 'Sista', '', 'F', '1992-08-03', '', '', '', '', '', 10, 'Single', 'Head', 'Alive', 'Y', 'N', '0000-00-00'),
-(25, 'Maria Rosa', '', 'SpatNa', '', 'F', '1992-01-01', '', '', '', '', '', 1, 'Single', 'Te', 'Alive', '', '', '0000-00-00'),
-(26, 'Paula', 'Ting', 'Perez', '', 'F', '1996-01-01', '', '', '', '', '', 3, 'Single', 'Spouse', 'Alive', '', '', '0000-00-00'),
-(27, 'Carl', 'Ting', 'Perez', '', 'M', '2010-01-01', '0129931', 'Student', '', '', '', 3, 'Single', 'Children', 'Alive', '', '', '0000-00-00'),
-(28, 'Mary Joan', '', 'Meno', '', 'F', '1992-01-01', '09283771829', 'Businesswoman', '', '', '', 3, 'Single', 'Tenant', 'Alive', 'Y', 'N', '0000-00-00'),
-(29, 'Kyle Andrews', 'Andres', 'Panem', '', 'M', '1996-09-01', '09289806787', 'Construction Foreman', '121120', '1212', '121212', 11, 'Single', 'Head', 'Alive', 'Y', 'N', '2015-09-09'),
-(30, 'Genevieve', '', 'Tedder', '', 'F', '1994-02-25', '09839122112', 'Store Manager', '0912120', '032192', '231321', 5, 'Married', 'Spouse', 'Alive', '', '', '2012-09-04'),
-(31, 'Copeland Cruz', '', 'Tedder', '', 'M', '2016-09-01', '', '', '', '', '', 5, 'Single', 'Children', 'Alive', '', '', '2016-09-04'),
-(32, 'Rita Anne', '', 'Tedder', '', 'F', '1976-01-01', '', '', '', '', '', 5, 'Single', 'Mother', 'Alive', 'Y', 'N', '2016-09-04');
+(1, 'Paul', 'Aquino', 'Dayang', '', 'M', '1996-05-12', '0920947581', 'Company Driver', '00010101', '', '09', 1, '', 'Head', 'Alive', 'Y', 'N', '2015-09-07'),
+(2, 'Pingris', 'Santos', 'Daya', 'Jr', 'M', '1992-01-01', '09132321321', 'Dancer', '', 'ads', 'e3qeaaa', 2, '', 'Head', 'Alive', 'Y', 'N', '2015-09-07'),
+(3, 'Matteo', 'Ting', 'Perez', 'Jr', 'M', '1980-05-21', '09123321243', 'Sales', '6543213', '331231', '232qe2qe', 2, 'Single', 'Spouse', 'Dead', 'Y', 'N', '2015-09-07'),
+(4, 'Mikhael', 'Castro', 'Daya', '', 'M', '2016-05-04', '', '', '', '', '', 2, 'Single', 'Children', 'Moved', 'Y', 'N', '2015-09-07'),
+(5, 'Gema', 'Peng', 'Gutierez', '', 'F', '1996-12-27', '02313321', 'Sales Clerk', '', 'sad', 'qe23', 2, 'Single', 'Cousin', 'Moved', 'Y', 'N', '2015-09-07'),
+(7, 'Lola', 'Ting', 'Dayang', '', 'F', '1990-03-08', '09890930943', 'Sales Clerk', '', 'dd', '2qwewwe', 1, 'Single', 'Sister', 'Alive', 'Y', 'N', '2015-09-07'),
+(8, 'Jenna', 'Alie', 'Dayang', '', 'F', '1989-07-06', '09999999', '', '', '', 'weewq', 1, 'Married', 'Spouse', 'Alive', 'Y', 'N', '2015-09-07'),
+(9, 'Paulo', 'Ting', 'Perez', 'Jr', 'M', '1980-05-21', '09123321243', 'Sales Clerk', '', '331231', 'weewq', 3, 'Single', 'Head', 'Alive', 'Y', 'N', '2015-09-07'),
+(10, 'Jenny', '', 'Wu', '', 'F', '1981-06-21', '09238472912', 'Accountant', '98121921', '921081', 'weewqeqw', 4, 'Single', 'Head', 'Alive', 'Y', 'Y', '2015-09-07'),
+(11, 'Ryan Benjamin', 'Saludo', 'Tedder', '', 'M', '1979-06-26', '0921384913', 'Singer', '92192913', '12121', 'ewqeewq', 5, 'Single', 'Head', 'Alive', 'Y', 'N', '2015-09-07'),
+(12, 'Angel', '', 'Marquez', '', 'M', '1986-01-01', '', '', '', '', 'weqeq', 6, 'Single', 'Head', 'Alive', 'N', 'N', '2015-09-07'),
+(13, 'Kimmy', '', 'Marquez', '', 'F', '1982-01-01', '', '', '', '', '', 6, 'Married', 'Spouse', 'Dead', 'Y', 'Y', '2015-09-07'),
+(20, 'dsa', 'sdaa', 'ds', '', 'M', '1992-08-14', '', '', '', '', '', 6, 'Single', 'Head', 'Alive', 'Y', 'N', '2015-09-07'),
+(21, 'Mary', '', 'Ara', '', 'F', '1995-01-01', '12', 'Sales', '786', '56', '54', 9, 'Single', 'Head', 'Alive', 'Y', 'N', '2015-09-07'),
+(22, 'Kimmy', '', 'Sista', '', 'F', '1992-08-03', '', '', '', '', '', 10, 'Single', 'Head', 'Alive', 'Y', 'N', '2015-09-07'),
+(25, 'Maria Rosa', '', 'SpatNa', '', 'F', '1992-01-01', '', '', '', '', '', 1, 'Single', 'Te', 'Alive', '', '', '2015-09-07'),
+(26, 'Paula', 'Ting', 'Perez', '', 'F', '1996-01-01', '', '', '', '', '', 3, 'Single', 'Spouse', 'Alive', '', '', '2015-09-07'),
+(27, 'Carl', 'Ting', 'Perez', '', 'M', '2010-01-01', '0129931', 'Student', '', '', '', 3, 'Single', 'Children', 'Alive', '', '', '2015-09-07'),
+(28, 'Mary Joan', '', 'Meno', '', 'F', '1992-01-01', '09283771829', 'Businesswoman', '', '', '', 3, 'Single', 'Tenant', 'Alive', 'Y', 'N', '2015-09-07');
 
 -- --------------------------------------------------------
 
@@ -1026,6 +1027,12 @@ ALTER TABLE `tbldocumentrequest`
   ADD KEY `strDRdocCode_idx` (`strDRdocCode`);
 
 --
+-- Indexes for table `tbldocumenttemplate`
+--
+ALTER TABLE `tbldocumenttemplate`
+  ADD PRIMARY KEY (`intTemplate_ID`);
+
+--
 -- Indexes for table `tblequipment`
 --
 ALTER TABLE `tblequipment`
@@ -1196,32 +1203,37 @@ ALTER TABLE `tbldocument`
 -- AUTO_INCREMENT for table `tbldocumentpurpose`
 --
 ALTER TABLE `tbldocumentpurpose`
-  MODIFY `intDocPurposeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `intDocPurposeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `tbldocumentrequest`
 --
 ALTER TABLE `tbldocumentrequest`
   MODIFY `strDocRequestID` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 --
+-- AUTO_INCREMENT for table `tbldocumenttemplate`
+--
+ALTER TABLE `tbldocumenttemplate`
+  MODIFY `intTemplate_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+--
 -- AUTO_INCREMENT for table `tblequipment`
 --
 ALTER TABLE `tblequipment`
-  MODIFY `strEquipNo` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `strEquipNo` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `tblfacility`
 --
 ALTER TABLE `tblfacility`
-  MODIFY `strFaciNo` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `strFaciNo` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `tblhousehold`
 --
 ALTER TABLE `tblhousehold`
-  MODIFY `intHouseholdNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `intHouseholdNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `tblhousemember`
 --
 ALTER TABLE `tblhousemember`
-  MODIFY `intMemberNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `intMemberNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 --
 -- AUTO_INCREMENT for table `tblpaymentdetail`
 --
