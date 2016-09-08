@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 08, 2016 at 02:53 PM
+-- Generation Time: Sep 08, 2016 at 03:23 PM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.5.30
 
@@ -575,7 +575,9 @@ INSERT INTO `tblhousemember` (`intMemberNo`, `strFirstName`, `strMiddleName`, `s
 (12, 'Juan', 'San Luis', 'Marue', 'Jr', 'M', '1996-09-01', '', '', '', '', '', 8, 'Married', 'Spouse', 'Alive', '', '', '2016-09-08', 'Images/BarangayPics/Juan San Luis Marue Jr.jpg'),
 (13, 'Luis', '', 'Marue', '', 'M', '2016-01-01', '', '', '', '', '', 8, 'Single', 'Children', 'Alive', '', '', '2016-09-08', ''),
 (14, 'Jenna', 'Jodi', 'Santa Maria', '', 'F', '1992-01-09', '09984573827', 'Psychologist', '0000', '0000', '00000', 8, 'Single', 'Tenant', 'Alive', 'Y', 'N', '2016-09-08', 'Images/BarangayPics/Jenna Jodi Santa Maria .jpg'),
-(15, 'Reynaldo', 'Manalo', 'Durias', 'Jr', 'M', '1994-01-01', '09235567876', 'It Consultant', '00912', '098923', '3211231', 14, 'Single', 'Head', 'Alive', 'Y', 'N', '2016-09-08', 'Images/BarangayPics/Reynaldo Manalo Durias Jr.jpg');
+(15, 'Reynaldo', 'Manalo', 'Durias', 'Jr', 'M', '1994-01-01', '09235567876', 'It Consultant', '00912', '098923', '3211231', 14, 'Single', 'Head', 'Alive', 'Y', 'N', '2016-09-08', 'Images/BarangayPics/Reynaldo Manalo Durias Jr.jpg'),
+(16, 'Shine', '', 'Marue', '', 'F', '2009-01-01', '', '', '', '', '', 8, '', 'Children', 'Alive', '', '', '2016-09-08', 'Images/BarangayPics/Shine  Marue -2009-01-01.jpg'),
+(17, 'Eva', 'Maria', 'Durias', '', 'F', '1997-02-02', '09232323232', 'Nurse', '0912912', '21321', '912912', 14, 'Married', 'Spouse', 'Alive', '', '', '2016-09-08', 'Images/BarangayPics/Eva Maria Durias -1997-02-02.jpg');
 
 -- --------------------------------------------------------
 
@@ -1227,7 +1229,7 @@ ALTER TABLE `tblhousehold`
 -- AUTO_INCREMENT for table `tblhousemember`
 --
 ALTER TABLE `tblhousemember`
-  MODIFY `intMemberNo` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `intMemberNo` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `tblpaymentdetail`
 --
