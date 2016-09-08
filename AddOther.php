@@ -351,6 +351,9 @@ if($last == 0&&$birth == 0&&$first == 0){ //-- Checking if a textfield is red(ha
 $_Lname = mysqli_real_escape_string($con,$Lname); //-- For using apostrophe ex. O'Hara
 $_Fname = mysqli_real_escape_string($con,$Fname); //-- For using apostrophe ex. O'Hara
 $_Mname = mysqli_real_escape_string($con,$Mname); //-- For using apostrophe ex. O'Hara
+
+
+$dt = $_Fname.' '.$_Mname.' '.$_Lname.' '.$Ename;
 /*mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`,strVotersId,charLiterate,charDisable,`dtEntered`) 
 VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gend','$bday','$contact','$occup','$SSS','$TIN','$Hno','$civil','$relation','Alive','$Vid','Y','N','$Entered')");
 echo "<script>window.location = 'HholdPersonal.php'</script>";*/
@@ -365,14 +368,14 @@ echo "<script>window.location = 'HholdPersonal.php'</script>";
 }
 else{
 
+					$info = pathinfo($_FILES['image']['name']);
+	 		 	 	 $ext = $info['extension']; // get the extension of the file(filename)
+			     	 $newname = "$dt.".$ext;
+					 $target = 'Images/BarangayPics/'.$newname;
 
-$image = addslashes($_FILES['image']['tmp_name']);
-$name = addslashes($_FILES['image']['name']);
-$image = file_get_contents($image);
-$image = base64_encode($image);
-
-mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`,strVotersId,charLiterate,charDisable,`dtEntered`,`blobImage`) 
-VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gend','$bday','$contact','$occup','$SSS','$TIN','$Hno','$civil','$relation','Alive','$Vid','Y','N','$Entered','$image')");
+mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`,strVotersId,charLiterate,charDisable,`dtEntered`,`strImage`) 
+VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gend','$bday','$contact','$occup','$SSS','$TIN','$Hno','$civil','$relation','Alive','$Vid','Y','N','$Entered','$target')");
+					move_uploaded_file( $_FILES['image']['tmp_name'], $target);
 echo "<script>window.location = 'HholdPersonal.php'</script>";
 }
 

@@ -16,7 +16,7 @@
 <?php
 require('connection.php');
 $Hno = $_SESSION['Memb'];
-$sql = "SELECT  timestampdiff(YEAR,dtBirthdate,now()) as 'AGE', concat(strFirstName,' ',strMiddleName,' ',strLastName,' ',strNameExtension) as 'Name', `charGender`,`blobImage`,`strCivilStatus`,`strVotersId`,`strTINNo`,`strSSSNo`,`strContactNo`,`strOccupation`,`dtBirthdate` FROM `tblhousemember` where intMemberNo = '$Hno'";
+$sql = "SELECT  strImage,timestampdiff(YEAR,dtBirthdate,now()) as 'AGE', concat(strFirstName,' ',strMiddleName,' ',strLastName,' ',strNameExtension) as 'Name', `charGender`,`strCivilStatus`,`strVotersId`,`strTINNo`,`strSSSNo`,`strContactNo`,`strOccupation`,`dtBirthdate` FROM `tblhousemember` where intMemberNo = '$Hno'";
 $query = mysqli_query($con, $sql);
 $row = mysqli_fetch_object($query);
 $Gend = "";
@@ -37,7 +37,8 @@ else{
 <div class="col-sm-9 col-md-4 col-lg-3">
 <div class = "showback">
 
-		<?php echo'<img width = 350 height = 350 align="left" src = "data:image;base64,'.$row->blobImage.'">';?>
+		
+		<?php echo'<img width = 350 height = 350 align="left" src = "'.$row->strImage.'">';?>
 		
 		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div>
 		</center></div>
