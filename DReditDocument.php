@@ -73,7 +73,18 @@
 		</div>
 		<div id="section-to-print">
 		
-			<img src= "Images/TemplateUpload/<?php echo $_SESSION['template']; ?>" />
+			<?php 
+							$a= $_SESSION['path'];
+							//echo "<script>alert $a</script>";
+						require('connection.php');
+						$sql = "select strTemplate_Path from tbldocumenttemplate Where intTemplate_ID = $a ";
+						$query = mysqli_query($con, $sql);
+						if(mysqli_num_rows($query) > 0){
+						$i = 1;
+						while($row = mysqli_fetch_assoc($query)){?>
+				
+							<img src="Images/TemplateUpload/<?php echo $row['strTemplate_Path']; ?>" width="400px" height="200px">
+						<?php  }}?>
 			
 		</div>
 	</body>

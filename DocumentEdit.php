@@ -32,6 +32,24 @@
 					</div><center>
 	  
 					<input type="submit" class="btn btn-info" name = "btnEdit" id = "btnEdit" value = "Edit Record" >
+					<input type="submit" class="btn btn-info" name = "Proceed" id = "Proceed" value = "Proceed" >
+				</div>
+				
+				<div class="col-sm-9 col-md-6 col-lg-6">
+					<div div class = "showback">
+						<?php 
+							$a= $_SESSION['path'];
+							//echo "<script>alert $a</script>";
+						require('connection.php');
+						$sql = "select strTemplate_Path from tbldocumenttemplate Where intTemplate_ID = $a ";
+						$query = mysqli_query($con, $sql);
+						if(mysqli_num_rows($query) > 0){
+						$i = 1;
+						while($row = mysqli_fetch_assoc($query)){?>
+				
+							<img src="Images/TemplateUpload/<?php echo $row['strTemplate_Path']; ?>" width="400px" height="200px">
+						<?php  }}?>
+					</div>
 				</div>
 			
 	
@@ -40,7 +58,7 @@
 				<?php if(isset($_POST['btnEdit'])){
 					 $strDocC = $_POST['DocumentC'];
 					 $strDocN = $_POST['DocumentN'];
-					$strPrice = (double)$_POST['Price'];
+					  $strPrice = (double)$_POST['Price'];
 					if($strDocC == NULL ||$strDocN == NULL ){
 						echo "<script>alert('Please Complete the form');</script>";
 					}
@@ -54,6 +72,8 @@
 						else{}
 					}				
 				}
+				
+				
 			 	 
 				 
 				if(isset($_POST['btnCancel'])){

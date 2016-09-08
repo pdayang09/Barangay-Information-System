@@ -56,6 +56,7 @@
 										<div class="btn-group " role="group">	
 											<button  class="btn btn-primary btn-xs" type = submit name = "btnEdit" value = <?php echo $row->intDocCode; ?> ><i class="fa fa-pencil"></i></button>	
 											<button  class="btn btn-danger btn-xs" type = submit name = "btnDelete" onclick = "return confirm('Do you really want to continue?');" value = <?php echo $row->intDocCode; ?> >Disable</button>
+											<button  class="btn btn-primary btn-xs" type = submit name = "Proceed" value = <?php echo $row->intDocCode; ?> >Document</button>	
 										</div>
 									</div>
 									</td>
@@ -71,6 +72,12 @@
                        </form>
                        
                     </div>
+					
+			<?php 
+				
+							
+			?>
+					
 			<?php 		if(isset($_POST['btnEdit'])){
 								$search = $_POST['btnEdit'];
 								$query= mysqli_query($con,"Select * from tbldocument where intDocCode = '$search'");
@@ -79,9 +86,24 @@
 									$_SESSION['id'] = $row->intDocCode;
 									$_SESSION['name'] = $row->strDocName;
 									$_SESSION['price'] = $row->dblDocFee;
+									$_SESSION['path'] = $row->strDocTemplate;
 									//echo "<script>alert('". $row->strDocName."');</script>";
 									echo "<script> window.location= 'DocumentEdit.php';</script>";
 							}
+							
+						if(isset($_POST['Proceed'])){
+							$search = $_POST['Proceed'];
+							$query= mysqli_query($con,"Select * from tbldocument where intDocCode = '$search'");
+							if(mysqli_num_rows($query)>0)
+								$row = mysqli_fetch_object($query);
+									$_SESSION['id'] = $row->intDocCode;
+									$_SESSION['name'] = $row->strDocName;
+									$_SESSION['price'] = $row->dblDocFee;
+									$_SESSION['path'] = $row->strDocTemplate;
+									//echo "<script>alert('". $row->strDocName."');</script>";
+									echo "<script> window.location= 'DReditDocument.php';</script>";
+							}
+						
 							
 							if(isset($_POST['btnDelete'])){
 								$a = $_POST['btnDelete'];

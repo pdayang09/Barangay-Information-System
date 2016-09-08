@@ -17,7 +17,8 @@
 						   <!--Barangay Official and Document-->
 						   <li><a  href="AccountMaintenance.php">Account </a></li>						   
 						  <li><a  href="PositionMaintenance.php">Position </a></li>						  
-						  <li><a  href="Streetmaintenance.php">Street</a></li>		
+						  <li><a  href="Streetmaintenance.php">Street</a></li>
+						  <li><a  href="TemplateMaintenance.php">Template </a></li>
                           <li><a  href="DocumentMaintenance.php">Document </a></li>
 						  <li><a  href="documentPurpose.php">Document Purpose </a></li>
 						  <li><a  href="BusinessCat.php">Business Category</a></li>	 	

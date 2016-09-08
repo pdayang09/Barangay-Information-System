@@ -30,23 +30,7 @@
 			</div> <br><br>
 			<center> <button  class="btn btn-info" name = "btnAdd" id = "btnAdd"  value = "Save Record"  >Save Record </button>  
 	</div>
-	<div class="split-para"><font face = "cambria" size = 5 color = "grey"> Select Template</font></p>
-					<div class="col-sm-12">		
-					<select class="form-control input-group-lg reg_name" id = "equip" name = "equip">
-						<option>Select Category</option>
-						<?php
-									require('connection.php');
-										$sql = "select * from tbldocumenttemplate";
-										$query = mysqli_query($con, $sql);
-							
-										if(mysqli_num_rows($query) > 0){
-											$i = 1;
-											while($row = mysqli_fetch_object($query)){?>
-												<option value=<?php echo $row->intTemplate_ID ?>><?php echo $row->strTemplate_Name ?></option>
-												<?php }} ?>
-					</select>
-					</div>
-				</div><br><br
+	
 	
 	<div class = "showback">
 				<br>
@@ -64,7 +48,8 @@
 					<thead>
 						<th> ID</th>
 						<th> Template Name</th>
-						<th> Template</th>
+						<th>Template</th>
+					
 				
 					</thead>
 				
@@ -79,7 +64,23 @@
 								<tr> 
 								<td><?php echo $row->intTemplate_ID?></td>
 								<td><?php echo $row->strTemplate_Name?></td>
-								<!-- td><img src="Images/TemplateUpload/ <?php echo $row['strTemplate_Path'] ?> width="400px" height="200px"/></td -->
+								<td><?php 
+								require('connection.php');
+						$sql = "select strTemplate_Path from tbldocumenttemplate";
+						$query = mysqli_query($con, $sql);
+						if(mysqli_num_rows($query) > 0){
+						$i = 1;
+						while($row = mysqli_fetch_assoc($query)){
+							?>
+				
+							<img src="Images/TemplateUpload/<?php echo $row['strTemplate_Path']; ?>" width="200px" height="200px">
+						<?php  }}?>
+								
+								</td>
+								</tr>
+								<!-- ?php  echo "<td><img src='Images/TemplateUpload/".$row['strTemplate_Path']."'></td>";?>
+								</tr>
+								<!-- td><img src="Images/TemplateUpload/ <!?php echo $row['strTemplate_Path'] ?> width="400px" height="200px"/></td -->
 							
 							
 							<?php }}?>
@@ -140,11 +141,11 @@
 			     	 $newname = "$dt.".$ext;
 					 //echo "<script> alert('$newname') </script>";
 					 $target = 'Images/TemplateUpload/'.$newname;
-					 mysqli_query($con,"INSERT INTO `tbldocumenttemplate`(`strTemplate_Name`,`strTemplate_Path`) VALUES ('$strName','$info');");
+					 mysqli_query($con,"INSERT INTO `tbldocumenttemplate`(`strTemplate_Name`,`strTemplate_Path`) VALUES ('$strName','$newname');");
 					 //mysqli_query($con,'INSERT INTO `tblfacility`(`strFaciName`, `strFaciCategoryCode`, `strFaciStatus`, `dblFaciFixedChargePerHour`, `dblFaciDayChargePerHour`,`dblFaciNightChargePerHour`,`imageUpload`) VALUES (`EEEE`,`$strcode`,`$strname`,`$strStatus`,`$strdayprice`,`$strnightprice`,`$strresidentprice`,`$newname`)');
 					 /*$a = "INSERT INTO `tblfacility`(`strFaciName`, `strFaciCategoryCode`, `strFaciStatus`, `dblFaciFixedChargePerHour`, `dblFaciDayChargePerHour`,`dblFaciNightChargePerHour`,`imageUpload`) VALUES ('$strcode','$strname','$strStatus','$strdayprice','$strnightprice','$strresidentprice','$newname')";
 */
-					 $b = 'INSERT INTO `tbldocumenttemplate`(`strTemplate_Name`,`strTemplate_Path`) VALUES ("$strName","$info");';
+					 $b = 'INSERT INTO `tbldocumenttemplate`(`strTemplate_Name`,`strTemplate_Path`) VALUES ("$strName","$newname");';
 					 //echo "<script> alert('INSERT INTO `tblfacility`(`strFaciName`, `strFaciCategory`, `strFaciStatus`, `dblFaciDayCharge`, `dblFaciNightCharge`,`dblFaciNResidentCharge`,`imageUpload`) VALUES ('$strcode','$strname','$strStatus', $strdayprice, $strnightprice,$strresidentprice,$newname)' </script>" ;
 					 move_uploaded_file( $_FILES['userFile']['tmp_name'], $target);
 					 /*echo "<script>alert('Success');

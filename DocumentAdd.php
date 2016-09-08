@@ -33,9 +33,6 @@
 				
 		</div>
 	</div>
-		
-		
-		
 
 
 		<!-- DIV FOR TABLE -->
@@ -63,21 +60,32 @@
 					</select>
 					</div>
 				</div>
-				<font face = "cambria" size = 5 color = "grey"> OR</font>
-				<br><br>
-					<font face = "cambria" size = 5 color = "grey"> Upload New</font>
-					<input type="file" accept="image/*" onchange="loadFile(event)" name="Picture">
-					<img name="output" id="output" width="100%" height="150%" />
-					<?php 
-					
-					
-					?>
+				
 <!-- DIV END-->
 		
 		
 
 	<?php
 		 if (isset($_POST['btnAdd'])){
+				
+					$documentName = $_POST['controlno'];
+					$strImagePath = $_POST['Template'];
+					$dblPrice = $_POST['Price'];
+					if($dblPrice == NULL){
+					 $dblPrice = 0;
+				 }
+				 
+				 if($documentName == NULL){
+				 echo "<script>alert('Please Complete the form');</script>";
+				}
+				 else {
+					 require('connection.php');
+					 mysqli_query($con, "INSERT INTO `tbldocument`(`strDocName`, `dblDocFee`, `strStatus`, `strDocTemplate`) 
+					 VALUES ('$documentName','$dblPrice','Enabled','$strImagePath');");
+					 
+				 }
+			 
+			 
 			 
 			  
 				//make sure you have created the **upload** directory
@@ -87,13 +95,13 @@
 				//move_uploaded_file($filename, $destination); //save uploaded picture in your directory
 
 				//$search = $_FILES["picture"]["tmp_name"];;		
-				$_SESSION['template'] = $search;
+				//$_SESSION['template'] = $search;
 				
 				//$_SESSION['] = $destination;
 
 			
 			 
-				echo "<script>window.location = 'DReditDocument.php'</script>";
+				//echo "<script>window.location = 'DReditDocument.php'</script>";
 			 
 			 
 			 
