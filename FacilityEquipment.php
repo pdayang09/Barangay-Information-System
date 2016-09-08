@@ -27,7 +27,8 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     
-    <?php session_start(); ?>
+    <?php session_start(); 
+    ?>
           
   </head>
 
