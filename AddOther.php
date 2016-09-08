@@ -353,7 +353,7 @@ $_Fname = mysqli_real_escape_string($con,$Fname); //-- For using apostrophe ex. 
 $_Mname = mysqli_real_escape_string($con,$Mname); //-- For using apostrophe ex. O'Hara
 
 
-$dt = $_Fname.' '.$_Mname.' '.$_Lname.' '.$Ename;
+$dt = $_Fname.' '.$_Mname.' '.$_Lname.' '.$Ename.'-'.$bday;
 /*mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`,strVotersId,charLiterate,charDisable,`dtEntered`) 
 VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gend','$bday','$contact','$occup','$SSS','$TIN','$Hno','$civil','$relation','Alive','$Vid','Y','N','$Entered')");
 echo "<script>window.location = 'HholdPersonal.php'</script>";*/
