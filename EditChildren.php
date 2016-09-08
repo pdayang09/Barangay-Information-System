@@ -120,23 +120,23 @@ $row = mysqli_fetch_object($query);?>
 						<div class="form-group">				
 							<div class="col-sm-3">
 								<div class="form-group" id = "fname-div">
-									<input id="FName" class="form-control input-group-lg reg_name" type="text" name="Fname" title="Enter first name" placeholder="First name" onblur= fnFirstn(this,"fname-div","Fname") required <?php echo "value =".$row->strFirstName; ?>>
+									<input id="FName" class="form-control input-group-lg reg_name" type="text" name="Fname" title="Enter first name" placeholder="First name" onblur= fnFirstn(this,"fname-div","Fname") required <?php echo "value = '".$row->strFirstName."'"; ?>>
 								</div>
 							</div> 
 							<div class="col-sm-3">
 								<div class="form-group" id = "mname-div">
-									<input id="MName" class="form-control input-group-lg reg_name" type="text" name= "Mname" title="Enter middle name" placeholder="Middle name"  onblur= fnMiddletn(this,"mname-div","Mname") <?php echo "value =".$row->strMiddleName; ?>>
+									<input id="MName" class="form-control input-group-lg reg_name" type="text" name= "Mname" title="Enter middle name" placeholder="Middle name"  onblur= fnMiddletn(this,"mname-div","Mname") <?php echo "value ='".$row->strMiddleName."'"; ?>>
 								</div>
 							</div>
 							<div class="col-sm-3">
 								<div class="form-group" id = "lname-div">
-									<input id="LName" class="form-control input-group-lg reg_name" type="text" name= "Lname" title="Enter last name" placeholder="Last name" onblur= fnLastn(this,"lname-div","Lname") required <?php echo "value =".$row->strLastName; ?>>
+									<input id="LName" class="form-control input-group-lg reg_name" type="text" name= "Lname" title="Enter last name" placeholder="Last name" onblur= fnLastn(this,"lname-div","Lname") required <?php echo 'value = '.$row->strLastName; ?>>
 								</div>
 							</div>
 							<div class="form-group" id = "ename-div">
 								<div class="col-sm-1">
 									
-									<input id="EName" class="form-control input-group-lg reg_name" type="text" name= "Ename" title="name extension(Optional)" placeholder="name extension(Optional)"   onblur= fnValid(this,"ename-div","Ename") <?php echo "value =".$row->strNameExtension; ?>>
+									<input id="EName" class="form-control input-group-lg reg_name" type="text" name= "Ename" title="name extension(Optional)" placeholder="name extension(Optional)"   onblur= fnValid(this,"ename-div","Ename") <?php echo "value ='".$row->strNameExtension."'"; ?>>
 								</div></div>
 							</div><br><br><br>
 							<div class = "form-group">
@@ -299,26 +299,28 @@ $row = mysqli_fetch_object($query);?>
 						$_Lname = mysqli_real_escape_string($con,$Lname);
 						$_Fname = mysqli_real_escape_string($con,$Fname);
 						$_Mname = mysqli_real_escape_string($con,$Mname);
-						$dt = $_Fname.' '.$_Mname.' '.$_Lname.' '.$Ename.'-'.$bday;
+						$dt = $_Fname.' '.$Mname.' '.$_Lname.' '.$Ename.'-'.$bday;
 						//mysqli_query($con,"UPDATE `tblhousemember` SET `strFirstName`= '$_Fname',`strMiddleName`= '$_Mname',`strLastName`= '$_Lname',`strNameExtension`= '$Ename',`charGender`= '$Gend',`dtBirthdate`= '$bday',`strContactNo`= '$contact',`strOccupation`= '$occup',`strSSSNo`= '$SSS',`strTINNo`= '$TIN' ,`strCivilStatus`= '$civil',`strVotersId`= '$Vid' WHERE `intMemberNo`= '$Hno'");
 						//echo "<script>window.location = 'HholdPersonal.php'</script>";
 
-
-						
+				
+						$dt = stripslashes($dt);
+					    $dt = str_replace("'", '', $dt);
 						if(getimagesize($_FILES['image']['tmp_name']) == FALSE){
 						mysqli_query($con,"UPDATE `tblhousemember` SET `strFirstName`= '$_Fname',`strMiddleName`= '$_Mname',`strLastName`= '$_Lname',`strNameExtension`= '$Ename',`charGender`= '$Gend',`dtBirthdate`= '$bday',`strContactNo`= '$contact',`strOccupation`= '$occup',`strSSSNo`= '$SSS',`strTINNo`= '$TIN' ,`strCivilStatus`= '$civil',`strVotersId`= '$Vid' WHERE `intMemberNo`= '$Hno'");
-						echo "<script>window.location = 'HholdPersonal.php'</script>";
+					//	echo "<script>window.location = 'HholdPersonal.php'</script>";
 					}
 					else{
 
-					$info = pathinfo($_FILES['image']['name']);
-					$ext = $info['extension']; // get the extension of the file(filename)
-					$newname = "$dt.".$ext;
-					$target = 'Images/BarangayPics/'.$newname;
-					mysqli_query($con,"UPDATE `tblhousemember` SET `strFirstName`= '$_Fname',`strMiddleName`= '$_Mname',`strLastName`= '$_Lname',`strNameExtension`= '$Ename',`charGender`= '$Gend',`dtBirthdate`= '$bday',`strContactNo`= '$contact',`strOccupation`= '$occup',`strSSSNo`= '$SSS',`strTINNo`= '$TIN' ,`strCivilStatus`= '$civil',`strVotersId`= '$Vid',`strImage` = '$target' WHERE `intMemberNo`= '$Hno'");
-					unlink($_FILES['image']['tmp_name'], $target);
-					move_uploaded_file( $_FILES['image']['tmp_name'], $target);
-					echo "<script>window.location = 'HholdPersonal.php'</script>";
+				$info = pathinfo($_FILES['image']['name']);
+				$ext = $info['extension']; // get the extension of the file(filename)
+				$newname = "$dt.".$ext;
+				$target = 'Images/BarangayPics/'.$newname;
+				mysqli_query($con,"UPDATE `tblhousemember` SET `strFirstName`= '$_Fname',`strMiddleName`= '$_Mname',`strLastName`= '$_Lname',`strNameExtension`= '$Ename',`charGender`= '$Gend',`dtBirthdate`= '$bday',`strContactNo`= '$contact',`strOccupation`= '$occup',`strSSSNo`= '$SSS',`strTINNo`= '$TIN' ,`strCivilStatus`= '$civil',`strVotersId`= '$Vid',`strImage` = '$target' WHERE `intMemberNo`= '$Hno'");
+				unlink($target);
+				move_uploaded_file( $_FILES['image']['tmp_name'], $target);
+				echo "<script>window.location = 'HholdPersonal.php'</script>";
+				echo $dt;
 				}
 			}
 			else{
