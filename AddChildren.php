@@ -298,6 +298,8 @@ function fnValid(obj,strdiv,strSpanName){
 					<?php
 					require('connection.php');
 					if(isset($_POST['subm'])){
+						
+					
 					$Entered = $_POST['DateEntered'];
 					$Hno = $_SESSION['Hno'];
 					$Fname = $_POST['Fname'];
@@ -336,12 +338,15 @@ $civil = $_POST['civil'];
 $last = $_POST['hidlname'];
 $first = $_POST['hidfname'];
 $birth = $_POST['hidbday'];
+
+
+
 if($last == 0&&$birth == 0&&$first == 0){
 $_Lname = mysqli_real_escape_string($con,$Lname);
 $_Fname = mysqli_real_escape_string($con,$Fname);
 $_Mname = mysqli_real_escape_string($con,$Mname);
 
-
+$dt = $_Fname.' '.$_Mname.' '.$_Lname.' '.$Ename;
 
 
 /*mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`,`strVotersId`,`dtEntered`) 
@@ -358,12 +363,13 @@ echo "<script>window.location = 'HholdPersonal.php'</script>";
 else{
 
 
-$image = addslashes($_FILES['image']['tmp_name']);
-$name = addslashes($_FILES['image']['name']);
-$image = file_get_contents($image);
-$image = base64_encode($image);
-mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`,`strVotersId`,`dtEntered`,`blobImage`) 
-VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gend','$bday','$contact','$occup','$SSS','$TIN','$Hno','$civil','Children','Alive','$VID','$Entered','$image')");
+					$info = pathinfo($_FILES['image']['name']);
+	 		 	 	 $ext = $info['extension']; // get the extension of the file(filename)
+			     	 $newname = "$dt.".$ext;
+					 $target = 'Images/BarangayPics/'.$newname;
+mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`,`strVotersId`,`dtEntered`,`strImage`) 
+VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gend','$bday','$contact','$occup','$SSS','$TIN','$Hno','$civil','Children','Alive','$VID','$Entered','$target')");
+move_uploaded_file( $_FILES['image']['tmp_name'], $target);
 echo "<script>window.location = 'HholdPersonal.php'</script>";
 }
 

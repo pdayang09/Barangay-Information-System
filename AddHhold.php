@@ -373,6 +373,7 @@ var age = getAge(document.getElementById('bday').value);
 	$_Fname = mysqli_real_escape_string($con,$Fname);
 	$_Mname = mysqli_real_escape_string($con,$Mname);
 
+	$dt = $_Fname.' '.$_Mname.' '.$_Lname.' '.$Ename;
 	
 	if(getimagesize($_FILES['image']['tmp_name']) == FALSE){
 
@@ -404,14 +405,13 @@ $mysqli = mysqli_query($con,"INSERT INTO `tblhousehold`( `intForeignStreetId`, `
 	$row = mysqli_fetch_object($query);
 	$no = $row->intHouseholdNo;
 	
-	
-$image = addslashes($_FILES['image']['tmp_name']);
-$name = addslashes($_FILES['image']['name']);
-$image = file_get_contents($image);
-$image = base64_encode($image);
-	
-	mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`,`strCivilStatus`, `strStatus`,`strLifeStatus`,charLiterate,charDisable, `strVotersId`,`dtEntered`,`blobImage`) 
-	VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gender','$Birthdate','$Contact','$Occupation','$SSS','$TIN','$no','$Civil','Head','Alive','Y','N','$Vote','$Entered','$image')");
+					$info = pathinfo($_FILES['image']['name']);
+	 		 	 	 $ext = $info['extension']; // get the extension of the file(filename)
+			     	 $newname = "$dt.".$ext;
+					 $target = 'Images/BarangayPics/'.$newname;
+	mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`,`strCivilStatus`, `strStatus`,`strLifeStatus`,charLiterate,charDisable, `strVotersId`,`dtEntered`,`strImage`) 
+	VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gender','$Birthdate','$Contact','$Occupation','$SSS','$TIN','$no','$Civil','Head','Alive','Y','N','$Vote','$Entered','$target')");
+	move_uploaded_file( $_FILES['image']['tmp_name'], $target);
 	$_SESSION['Hno'] = $no;
 	echo "<script>window.location = 'HholdPersonal.php'</script>";
 
