@@ -130,7 +130,7 @@ $row = mysqli_fetch_object($query);?>
 							</div>
 							<div class="col-sm-3">
 								<div class="form-group" id = "lname-div">
-									<input id="LName" class="form-control input-group-lg reg_name" type="text" name= "Lname" title="Enter last name" placeholder="Last name" onblur= fnLastn(this,"lname-div","Lname") required <?php echo 'value = '.$row->strLastName; ?>>
+									<input id="LName" class="form-control input-group-lg reg_name" type="text" name= "Lname" title="Enter last name" placeholder="Last name" onblur= fnLastn(this,"lname-div","Lname") required <?php echo 'value = "'.$row->strLastName.'"'; ?>>
 								</div>
 							</div>
 							<div class="form-group" id = "ename-div">
@@ -308,7 +308,7 @@ $row = mysqli_fetch_object($query);?>
 					    $dt = str_replace("'", '', $dt);
 						if(getimagesize($_FILES['image']['tmp_name']) == FALSE){
 						mysqli_query($con,"UPDATE `tblhousemember` SET `strFirstName`= '$_Fname',`strMiddleName`= '$_Mname',`strLastName`= '$_Lname',`strNameExtension`= '$Ename',`charGender`= '$Gend',`dtBirthdate`= '$bday',`strContactNo`= '$contact',`strOccupation`= '$occup',`strSSSNo`= '$SSS',`strTINNo`= '$TIN' ,`strCivilStatus`= '$civil',`strVotersId`= '$Vid' WHERE `intMemberNo`= '$Hno'");
-					//	echo "<script>window.location = 'HholdPersonal.php'</script>";
+						echo "<script>window.location = 'HholdPersonal.php'</script>";
 					}
 					else{
 
@@ -316,11 +316,12 @@ $row = mysqli_fetch_object($query);?>
 				$ext = $info['extension']; // get the extension of the file(filename)
 				$newname = "$dt.".$ext;
 				$target = 'Images/BarangayPics/'.$newname;
+				
 				mysqli_query($con,"UPDATE `tblhousemember` SET `strFirstName`= '$_Fname',`strMiddleName`= '$_Mname',`strLastName`= '$_Lname',`strNameExtension`= '$Ename',`charGender`= '$Gend',`dtBirthdate`= '$bday',`strContactNo`= '$contact',`strOccupation`= '$occup',`strSSSNo`= '$SSS',`strTINNo`= '$TIN' ,`strCivilStatus`= '$civil',`strVotersId`= '$Vid',`strImage` = '$target' WHERE `intMemberNo`= '$Hno'");
 				unlink($target);
 				move_uploaded_file( $_FILES['image']['tmp_name'], $target);
 				echo "<script>window.location = 'HholdPersonal.php'</script>";
-				echo $dt;
+				//echo $dt;
 				}
 			}
 			else{
