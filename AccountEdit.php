@@ -44,7 +44,7 @@ MAIN CONTENT
 						<div class="col-sm-5">
 							<p><font face = "cambria" size = 4 color = "grey"> Username </font></p>
 
-							<input id="controlno" name = "StreetName" class="form-control input-group-lg reg_name" value = "<?php echo $row->strUsername?>"  type="text"  readonly>	
+							<input id="controlno" name = "UserN" class="form-control input-group-lg reg_name" value = "<?php echo $row->strUsername?>"  type="text"  readonly>	
 						</div> </div> <br><br><br><br><br></div>			 
 						
 						
@@ -155,11 +155,12 @@ MAIN CONTENT
 											if(isset($_POST['btnAdd'])){
 											$password = $_POST['Pass'];
 											$position = $_POST['Position'];
+											$username = $_POST['UserN'];
 											$Email = $_POST['Email'];
 											$start = $_POST['Sdate'];
 											$end = $_POST['Edate'];
 											$_pass = mysqli_real_escape_string($con,$password);
-										
+											$_User = mysqli_real_escape_string($con,$username);
 											
 											
 											$dt = $_User;
@@ -182,7 +183,9 @@ MAIN CONTENT
 										$newname = "$dt.".$ext;
 										$target = 'Images/OfficerSign/'.$newname;
 										mysqli_query($con,"Update tblaccount set strPassword = '$_pass', intForeignPositionId = '$position', strEmailAdd = '$Email', dtStart = '$start', dtEnd = ' $end',`strSign` = '$target' where strOfficerID = $id");
+										unlink($target);
 										move_uploaded_file( $_FILES['image']['tmp_name'], $target);
+									
 										echo "<script>alert('Successfully Inserted!');
 										window.location = 'AccountMaintenance.php';</script>";
 									}

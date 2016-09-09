@@ -242,7 +242,64 @@ $row = mysqli_fetch_object($query);?>
 													
 												</div>
 
-												
+													
+
+								<div class="form-group">				
+									<div class="col-sm-5">	<p><font face = "cambria" size = 4 color = "grey"> Are you a person with disability: </font></p>
+										<div class="col-sm-10">	
+											<input type = radio value = "Y" name = "Disabled" <?php if($row->charDisable == "Y"){ echo "checked";}?>> Yes
+											<input type = radio value = "N" name = "Disabled" <?php if($row->charDisable == "N"){ echo "checked";}?>> No
+											
+										</div> </div>
+										
+										
+												<div class="form-group" id = "Enter-div">				
+												<div class="col-sm-5">
+													<script>
+														function c(value){
+															if(value == "No Educational Attainment"){
+																document.getElementById('Educ').disabled = true;
+															}
+															else if(value == "Currently Studying"){
+																document.getElementById('Educ').disabled = false;
+															}
+															else if(value == "Undergraduate"){
+																document.getElementById('Educ').disabled = false;
+															}
+															else if(value == "Graduated"){
+																document.getElementById('Educ').disabled = true;
+															}
+														}
+													</script>
+													
+													
+													
+													<p><font face = "cambria" size = 4 color = "grey">Educational Attainment:</font></p>
+													<input type = radio value = "No Educational Attainment" onclick = "c(this.value)" name = "EducAttain" id = "chk" <?php if($row->strLiterate == "No Educational Attainment"){ echo "checked";}?>> No Educational Attainment
+													<input type = radio value = "Currently Studying" onclick = "c(this.value)" id = "chk" name = "EducAttain" <?php if($row->strLiterate == "Currently Studying"){ echo "checked";}?>> Currently Studying
+													<input type = radio value = "Undergraduate" onclick = "c(this.value)" id = "chk" name = "EducAttain" <?php if($row->strLiterate == "Undergraduate"){ echo "checked";}?> > Undergraduate
+													<input type = radio value = "Graduated" onclick = "c(this.value)" id = "chk" name = "EducAttain" <?php if($row->strLiterate == "Graduated"){ echo "checked";}?>> Graduated
+													<select id = "Educ" name = "Educa" class = "form-control" <?php if($row->strLiterate == "No Educational Attainment" || $row->strLiterate == "Graduated"){ echo "disabled";}?>>
+														<option <?php if($row->strLiterate == "No Educational Attainment" || (($row->strLiterate=="Currently Studying" || $row->strLiterate == "Undergraduate")&& $row->strEdStatus == "Kinder")){echo "Selected";}?>>Kinder</option>
+														<option <?php if(($row->strLiterate=="Currently Studying" || $row->strLiterate == "Undergraduate") && $row->strEdAttain == "Preparatory"){ echo "Selected";} ?>>Preparatory</option>
+														<option <?php if(($row->strLiterate=="Currently Studying" || $row->strLiterate == "Undergraduate") && $row->strEdAttain == "Grade 1"){ echo "Selected";} ?>>Grade 1</option>
+														<option <?php if(($row->strLiterate=="Currently Studying" || $row->strLiterate == "Undergraduate") && $row->strEdAttain == "Grade 2"){ echo "Selected";} ?>>Grade 2</option>
+														<option <?php if(($row->strLiterate=="Currently Studying" || $row->strLiterate == "Undergraduate") && $row->strEdAttain == "Grade 3"){ echo "Selected";} ?>>Grade 3</option>
+														<option <?php if(($row->strLiterate=="Currently Studying" || $row->strLiterate == "Undergraduate") && $row->strEdAttain == "Grade 4"){ echo "Selected";} ?>>Grade 4</option>
+														<option <?php if(($row->strLiterate=="Currently Studying" || $row->strLiterate == "Undergraduate") && $row->strEdAttain == "Grade 5"){ echo "Selected";} ?>>Grade 5</option>	
+														<option <?php if(($row->strLiterate=="Currently Studying" || $row->strLiterate == "Undergraduate") && $row->strEdAttain == "Grade 6"){ echo "Selected";} ?>>Grade 6</option>
+														<option <?php if(($row->strLiterate=="Currently Studying" || $row->strLiterate == "Undergraduate") && $row->strEdAttain == "Grade 7"){ echo "Selected";} ?>>Grade 7</option>
+														<option <?php if(($row->strLiterate=="Currently Studying" || $row->strLiterate == "Undergraduate") && $row->strEdAttain == "Grade 8"){ echo "Selected";} ?>>Grade 8</option>
+														<option <?php if(($row->strLiterate=="Currently Studying" || $row->strLiterate == "Undergraduate") && $row->strEdAttain == "Grade 9"){ echo "Selected";} ?>>Grade 9</option>
+														<option <?php if(($row->strLiterate=="Currently Studying" || $row->strLiterate == "Undergraduate") && $row->strEdAttain == "Grade 10"){ echo "Selected";} ?>>Grade 10</option>
+														<option <?php if(($row->strLiterate=="Currently Studying" || $row->strLiterate == "Undergraduate") && $row->strEdAttain == "Grade 11"){ echo "Selected";} ?>>Grade 11</option>
+														<option <?php if($row->strLiterate == "Graduated" ||(($row->strLiterate=="Currently Studying" || $row->strLiterate == "Undergraduate") && $row->strEdAttain == "Grade 12")){ echo "Selected";} ?>>Grade 12</option>
+														
+														
+													</select>
+													
+												</div> </div>
+									</div><br><br><br><br>	
 
 												
 
@@ -255,9 +312,22 @@ $row = mysqli_fetch_object($query);?>
 
 												require('connection.php');
 												if(isset($_SESSION['Memb'])){
+													
+				
+													
 												echo "<script>a();</script>";
 											}
 											if(isset($_POST['subm'])){
+												
+											$Heduc = $_POST['EducAttain'];
+											$Educa = "";
+											if($Heduc == 'No Educational Attainment'){
+											$Educa = "None";}
+											else if($Heduc == 'Currently Studying' || $Heduc == 'Undergraduate'){
+											$Educa = $_POST['Educa'];}
+											else if($Heduc == 'Graduated'){
+											$Educa = "Grade 12";}	
+											$Disability = $_POST['Disabled'];
 											$Hno = $_SESSION['Memb'];
 											$Fname = $_POST['Fname'];
 											$Mname = "";
@@ -307,7 +377,7 @@ $row = mysqli_fetch_object($query);?>
 						$dt = stripslashes($dt);
 					    $dt = str_replace("'", '', $dt);
 						if(getimagesize($_FILES['image']['tmp_name']) == FALSE){
-						mysqli_query($con,"UPDATE `tblhousemember` SET `strFirstName`= '$_Fname',`strMiddleName`= '$_Mname',`strLastName`= '$_Lname',`strNameExtension`= '$Ename',`charGender`= '$Gend',`dtBirthdate`= '$bday',`strContactNo`= '$contact',`strOccupation`= '$occup',`strSSSNo`= '$SSS',`strTINNo`= '$TIN' ,`strCivilStatus`= '$civil',`strVotersId`= '$Vid' WHERE `intMemberNo`= '$Hno'");
+						mysqli_query($con,"UPDATE `tblhousemember` SET `strFirstName`= '$_Fname',`strMiddleName`= '$_Mname',`strLastName`= '$_Lname',`strNameExtension`= '$Ename',`charGender`= '$Gend',`dtBirthdate`= '$bday',`strContactNo`= '$contact',strLiterate = '$Heduc',strEdAttain = '$Educa',`charDisable` = '$Disability',`strOccupation`= '$occup',`strSSSNo`= '$SSS',`strTINNo`= '$TIN' ,`strCivilStatus`= '$civil',`strVotersId`= '$Vid' WHERE `intMemberNo`= '$Hno'");
 						echo "<script>window.location = 'HholdPersonal.php'</script>";
 					}
 					else{
@@ -317,7 +387,7 @@ $row = mysqli_fetch_object($query);?>
 				$newname = "$dt.".$ext;
 				$target = 'Images/BarangayPics/'.$newname;
 				
-				mysqli_query($con,"UPDATE `tblhousemember` SET `strFirstName`= '$_Fname',`strMiddleName`= '$_Mname',`strLastName`= '$_Lname',`strNameExtension`= '$Ename',`charGender`= '$Gend',`dtBirthdate`= '$bday',`strContactNo`= '$contact',`strOccupation`= '$occup',`strSSSNo`= '$SSS',`strTINNo`= '$TIN' ,`strCivilStatus`= '$civil',`strVotersId`= '$Vid',`strImage` = '$target' WHERE `intMemberNo`= '$Hno'");
+				mysqli_query($con,"UPDATE `tblhousemember` SET `strFirstName`= '$_Fname',`strMiddleName`= '$_Mname',`strLastName`= '$_Lname',`strNameExtension`= '$Ename',strLiterate = '$Heduc',strEdAttain = '$Educa',`charGender`= '$Gend',`dtBirthdate`= '$bday',`strContactNo`= '$contact',`strOccupation`= '$occup',`strSSSNo`= '$SSS',`strTINNo`= '$TIN',`charDisable` = '$Disability' ,`strCivilStatus`= '$civil',`strVotersId`= '$Vid',`strImage` = '$target' WHERE `intMemberNo`= '$Hno'");
 				unlink($target);
 				move_uploaded_file( $_FILES['image']['tmp_name'], $target);
 				echo "<script>window.location = 'HholdPersonal.php'</script>";
