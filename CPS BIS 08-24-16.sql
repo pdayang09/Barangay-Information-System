@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 08, 2016 at 03:23 PM
+-- Generation Time: Sep 09, 2016 at 10:39 AM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.5.30
 
@@ -507,7 +507,7 @@ INSERT INTO `tblfacility` (`strFaciNo`, `strFaciName`, `strFaciCategory`, `strFa
 --
 
 CREATE TABLE `tblhousehold` (
-  `intHouseholdNo` int(255) NOT NULL,
+  `intHouseholdNo` int(11) NOT NULL,
   `strBuildingNo` varchar(100) DEFAULT NULL,
   `intForeignStreetId` int(25) NOT NULL,
   `strHouseholdLname` varchar(100) NOT NULL,
@@ -521,12 +521,14 @@ CREATE TABLE `tblhousehold` (
 --
 
 INSERT INTO `tblhousehold` (`intHouseholdNo`, `strBuildingNo`, `intForeignStreetId`, `strHouseholdLname`, `strResidence`, `strOldAddress`, `strStatus`) VALUES
-(1, '221 Interior 9', 1, 'Morcilla', 'Rent', 'Antipolo City', 'Enabled'),
-(8, '220 Interor', 1, 'Marue', 'Rent', 'Antipolo City', 'Enabled'),
-(9, '229 Interior 3', 2, 'Tatum', 'Rent', 'Antipolo City', 'Enabled'),
-(12, 'Blk 74 Lot 15 ', 1, 'Morcilla', 'Rent', 'Blk 74 Lot 15 Juniper St  Robinsons Homes East Subdivision', 'Enabled'),
-(13, '221 Exterior', 1, 'Soriano', 'Rent', '287 San Jose', 'Enabled'),
-(14, '01 Interior', 2, 'Durias', 'Owned', 'Antipolo City', 'Enabled');
+(1, '21', 1, 'Dayang', 'Owned', '233 Maalikaya Street, Purok 21, Building No 11', 'Enabled'),
+(2, '211 Interior', 1, 'Daya', 'Rent', 'J Street, Purok 21, Building No 21', 'Enable'),
+(3, '922', 1, 'Perez', 'Rent', '911 Jan Street, Brgy. Sta ana, Malate, Manila', 'Enable'),
+(4, '88', 1, 'Wu', 'Owned', '891 Maa', 'Enable'),
+(5, '677', 1, 'Tedder', 'Owned', '672 jads aada', 'Enable'),
+(6, '844 Interior 29', 1, 'Marquez', 'Rent', 'Pasig', 'Enabled'),
+(9, '321', 1, 'Ara', 'Rent', 'New', 'Enabled'),
+(10, '312', 1, 'Sista', 'Rent', 'sda', 'Enabled');
 
 -- --------------------------------------------------------
 
@@ -535,7 +537,7 @@ INSERT INTO `tblhousehold` (`intHouseholdNo`, `strBuildingNo`, `intForeignStreet
 --
 
 CREATE TABLE `tblhousemember` (
-  `intMemberNo` int(255) NOT NULL,
+  `intMemberNo` int(11) NOT NULL,
   `strFirstName` varchar(100) NOT NULL,
   `strMiddleName` varchar(100) DEFAULT NULL,
   `strLastName` varchar(100) NOT NULL,
@@ -553,7 +555,6 @@ CREATE TABLE `tblhousemember` (
   `strLifeStatus` varchar(10) NOT NULL,
   `charLiterate` char(1) NOT NULL,
   `charDisable` char(1) NOT NULL,
-  `dtEntered` date NOT NULL,
   `strImage` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -561,23 +562,26 @@ CREATE TABLE `tblhousemember` (
 -- Dumping data for table `tblhousemember`
 --
 
-INSERT INTO `tblhousemember` (`intMemberNo`, `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `strVotersId`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`, `charLiterate`, `charDisable`, `dtEntered`, `strImage`) VALUES
-(1, 'Judy Mae', 'Zafra', 'Morcilla', '', 'F', '1986-01-01', '', '', '', '', '', 1, 'Single', 'Head', 'Alive', 'Y', 'N', '2016-09-07', ''),
-(2, 'Jackie', '', 'Marue', '', 'F', '1971-02-02', '', '', '', '', '', 8, 'Single', 'Head', 'Alive', 'Y', 'N', '2016-09-07', ''),
-(3, 'Jenna Dewan', '', 'Tatum', '', 'F', '1967-09-09', '', '', '', '', '', 9, 'Single', 'Head', 'Alive', 'Y', 'N', '2016-09-07', ''),
-(4, 'Julius Rei', '', 'Morcilla', '', 'M', '1996-07-25', '09062759022', '', '', '', '', 12, 'Single', 'Head', 'Alive', 'Y', 'N', '2016-09-07', ''),
-(5, 'Ceejae Anne', '', 'Soriano', '', 'F', '1992-01-01', '', '', '', '', '', 13, 'Married', 'Head', 'Alive', 'Y', 'N', '2016-09-07', ''),
-(6, 'Donnell', '', 'Lazaro', '', 'M', '1985-09-08', '', '', '', '', '', 13, 'Married', 'Spouse', 'Alive', '', '', '2016-09-07', ''),
-(7, 'Invinzor', '', 'Lazaro', '', 'M', '2006-02-02', '', '', '', '', '', 13, 'Single', 'Children', 'Alive', '', '', '2016-09-07', ''),
-(8, 'Allison Elizabeth', '', 'Harvard-O''hara', '', 'M', '1982-02-02', '09921321323', 'Model', '21312', '213123', '231213', 13, 'Single', 'Tenant', 'Alive', 'Y', 'N', '2016-09-07', ''),
-(9, 'Elma', '', 'Muros', '', 'F', '1978-01-09', '', '', '', '', '', 13, 'Single', 'Tenant', 'Alive', 'Y', 'N', '2016-09-07', ''),
-(11, 'Gina', '', 'Lazaro', '', 'F', '2008-02-02', '', '', '', '', '', 13, 'Single', 'Children', 'Alive', '', '', '2016-09-08', 'Images/BarangayPics/Gina  Lazaro .jpg'),
-(12, 'Juan', 'San Luis', 'Marue', 'Jr', 'M', '1996-09-01', '', '', '', '', '', 8, 'Married', 'Spouse', 'Alive', '', '', '2016-09-08', 'Images/BarangayPics/Juan San Luis Marue Jr.jpg'),
-(13, 'Luis', '', 'Marue', '', 'M', '2016-01-01', '', '', '', '', '', 8, 'Single', 'Children', 'Alive', '', '', '2016-09-08', ''),
-(14, 'Jenna', 'Jodi', 'Santa Maria', '', 'F', '1992-01-09', '09984573827', 'Psychologist', '0000', '0000', '00000', 8, 'Single', 'Tenant', 'Alive', 'Y', 'N', '2016-09-08', 'Images/BarangayPics/Jenna Jodi Santa Maria .jpg'),
-(15, 'Reynaldo', 'Manalo', 'Durias', 'Jr', 'M', '1994-01-01', '09235567876', 'It Consultant', '00912', '098923', '3211231', 14, 'Single', 'Head', 'Alive', 'Y', 'N', '2016-09-08', 'Images/BarangayPics/Reynaldo Manalo Durias Jr.jpg'),
-(16, 'Shine', '', 'Marue', '', 'F', '2009-01-01', '', '', '', '', '', 8, '', 'Children', 'Alive', '', '', '2016-09-08', 'Images/BarangayPics/Shine  Marue -2009-01-01.jpg'),
-(17, 'Eva', 'Maria', 'Durias', '', 'F', '1997-02-02', '09232323232', 'Nurse', '0912912', '21321', '912912', 14, 'Married', 'Spouse', 'Alive', '', '', '2016-09-08', 'Images/BarangayPics/Eva Maria Durias -1997-02-02.jpg');
+INSERT INTO `tblhousemember` (`intMemberNo`, `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `strVotersId`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`, `charLiterate`, `charDisable`, `strImage`) VALUES
+(1, 'Paul', 'Aquino', 'Dayang', '', 'M', '1996-05-12', '0920947581', 'Company Driver', '00010101', '', '09', 1, '', 'Head', 'Alive', 'Y', 'N', ''),
+(2, 'Pingris', 'Santos', 'Daya', 'Jr', 'M', '1992-01-01', '09132321321', 'Dancer', '', 'ads', 'e3qeaaa', 2, '', 'Head', 'Alive', 'Y', 'N', ''),
+(3, 'Matteo', 'Ting', 'Perez', 'Jr', 'M', '1980-05-21', '09123321243', 'Sales', '6543213', '331231', '232qe2qe', 2, 'Single', 'Spouse', 'Dead', 'Y', 'N', ''),
+(4, 'Mikhael', 'Castro', 'Daya', '', 'M', '2016-05-04', '', '', '', '', '', 2, 'Single', 'Children', 'Moved', 'Y', 'N', ''),
+(5, 'Gema', 'Peng', 'Gutierez', '', 'F', '1996-12-27', '02313321', 'Sales Clerk', '', 'sad', 'qe23', 2, 'Single', 'Cousin', 'Moved', 'Y', 'N', ''),
+(7, 'Lola', 'Ting', 'Dayang', '', 'F', '1990-03-08', '09890930943', 'Sales Clerk', '', 'dd', '2qwewwe', 1, 'Single', 'Sister', 'Alive', 'Y', 'N', ''),
+(8, 'Jenna', 'Alie', 'Dayang', '', 'F', '1989-07-06', '09999999', '', '', '', 'weewq', 1, 'Married', 'Spouse', 'Alive', 'Y', 'N', ''),
+(9, 'Paulo', 'Ting', 'Perez', 'Jr', 'M', '1980-05-21', '09123321243', 'Sales Clerk', '', '331231', 'weewq', 3, 'Single', 'Head', 'Alive', 'Y', 'N', ''),
+(10, 'Jenny', '', 'Wu', '', 'F', '1981-06-21', '09238472912', 'Accountant', '98121921', '921081', 'weewqeqw', 4, 'Single', 'Head', 'Alive', 'Y', 'Y', ''),
+(11, 'Ryan Benjamin', 'Saludo', 'Tedder', '', 'M', '1979-06-26', '0921384913', 'Singer', '92192913', '12121', 'ewqeewq', 5, 'Single', 'Head', 'Alive', 'Y', 'N', ''),
+(12, 'Angel', '', 'Marquez', '', 'M', '1986-01-01', '', '', '', '', 'weqeq', 6, 'Single', 'Head', 'Alive', 'N', 'N', ''),
+(13, 'Kimmy', '', 'Marquez', '', 'F', '1982-01-01', '', '', '', '', '', 6, 'Married', 'Spouse', 'Dead', 'Y', 'Y', ''),
+(20, 'dsa', 'sdaa', 'ds', '', 'M', '1992-08-14', '', '', '', '', '', 6, 'Single', 'Head', 'Alive', 'Y', 'N', ''),
+(21, 'Mary', '', 'Ara', '', 'F', '1995-01-01', '12', 'Sales', '786', '56', '54', 9, 'Single', 'Head', 'Alive', 'Y', 'N', ''),
+(22, 'Kimmy', '', 'Sista', '', 'F', '1992-08-03', '', '', '', '', '', 10, 'Single', 'Head', 'Alive', 'Y', 'N', ''),
+(25, 'Maria Rosa', '', 'SpatNa', '', 'F', '1992-01-01', '', '', '', '', '', 2, 'Single', 'Tenant', 'Alive', '', '', 'Images/BarangayPics/Maria Rosa  SpatNa -1992-01-01.jpg'),
+(26, 'Paula', 'Ting', 'Perez', '', 'F', '1996-01-01', '', '', '', '', '', 3, 'Single', 'Spouse', 'Alive', '', '', 'Images/BarangayPics/Paula Ting Perez -1996-01-01.jpg'),
+(27, 'Carl', 'Ting', 'Perez', '', 'M', '2010-01-01', '0129931', 'Student', '', '', '', 3, 'Single', 'Children', 'Alive', '', '', 'Images/BarangayPics/Carl Ting Perez -2010-01-01.jpg'),
+(28, 'Mary Joan', '', 'Meno', '', 'F', '1992-01-01', '09283771829', 'Businesswoman', '', '', '', 3, 'Single', 'Tenant', 'Alive', 'Y', 'N', '');
 
 -- --------------------------------------------------------
 
@@ -1224,12 +1228,12 @@ ALTER TABLE `tblfacility`
 -- AUTO_INCREMENT for table `tblhousehold`
 --
 ALTER TABLE `tblhousehold`
-  MODIFY `intHouseholdNo` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `intHouseholdNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `tblhousemember`
 --
 ALTER TABLE `tblhousemember`
-  MODIFY `intMemberNo` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `intMemberNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 --
 -- AUTO_INCREMENT for table `tblpaymentdetail`
 --
