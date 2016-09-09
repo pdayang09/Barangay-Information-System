@@ -83,11 +83,10 @@
                           <li><a  href="QueryReservation.php">Reservation</a></li>
                       </ul>
                   </li>
-				  
-				  <li class="sub-menu">
-                      <a href="#" >
+				 <li class="sub-menu">
+                      <a href="changeSettings.php" >
                           <i class="fa fa-bar-chart-o"></i>
-                          <span>Utilities</span>
+                          <span>Settings</span>
                       </a>
                   </li>
                   

@@ -5,14 +5,27 @@
         <div class="top_img">
 		
 		   <div id="slider-wrapper">        
-            <div id="slider" class="nivoSlider">
-                <img src="images/slider/top_img.jpg" alt="" />
-                <img src="images/slider/top_img2.jpg" alt=""/>
-                <img src="images/slider/top_img3.jpg" alt="" />
-				<img src="images/slider/top_img4.jpg" alt="" />
-				<img src="images/slider/top_img5.jpg" alt="" />
-            </div>        
+		   <div id="slider" class="nivoSlider">
+    <?php
+	$cn = mysql_connect("localhost","root","");
+	$db = mysql_select_db("brgydb");
+	$sql = mysql_query("SELECT * FROM tbimage ORDER BY image DESC LIMIT 5") or die (mysql_error());
+	while($row = mysql_fetch_array($sql)){
+		$id = $row['id'];
+		$name = $row['name'];
+		?>
+		<img width="1034px" height="268px" src="data:image/jpg;base64,<?php echo base64_encode($row['image']) ?>">
+		
+		
+		<?php
+		
+	}
+	?>    
+	</div>
         </div>
+		
+		
+		
 
 <script type="text/javascript" src="jquery/jquery-1.4.3.min.js"></script>
     <script type="text/javascript" src="jquery/jquery.nivo.slider.pack.js"></script>
