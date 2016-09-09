@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 09, 2016 at 11:26 AM
+-- Generation Time: Sep 09, 2016 at 08:02 PM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.5.30
 
@@ -35,19 +35,16 @@ CREATE TABLE `tblaccount` (
   `strEmailAdd` varchar(25) NOT NULL,
   `dtStart` date NOT NULL,
   `dtEnd` date NOT NULL,
-  `strStatus` varchar(25) NOT NULL
+  `strStatus` varchar(25) NOT NULL,
+  `strSign` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tblaccount`
 --
 
-INSERT INTO `tblaccount` (`strOfficerID`, `intForeignMemberNo`, `strUsername`, `strPassword`, `intForeignPositionId`, `strEmailAdd`, `dtStart`, `dtEnd`, `strStatus`) VALUES
-(1, 1, 'dayang_paul', 'pauldayang', 1, ' ', '2016-08-29', '2018-08-29', 'Enabled'),
-(2, 10, 'wu_jenny', 'jennywu', 2, 'JennyWu@yahoo.com', '2016-08-29', '2018-08-29', 'Enabled'),
-(3, 21, 'ara_mary', 'maryara', 4, 'MariaAra@gmail.com', '2016-08-29', '2018-08-29', 'Enabled'),
-(4, 2, 'perez_paula', 'paulaperez', 4, '', '2016-08-30', '2018-08-30', 'Enabled'),
-(5, 3, 'perez_matteo', '12345', 4, '', '2016-08-30', '2018-08-30', 'Enabled');
+INSERT INTO `tblaccount` (`strOfficerID`, `intForeignMemberNo`, `strUsername`, `strPassword`, `intForeignPositionId`, `strEmailAdd`, `dtStart`, `dtEnd`, `strStatus`, `strSign`) VALUES
+(1, 3, 'o''hara_donnell', '123456789', 1, '', '2016-09-09', '2019-09-09', 'Enabled', 'Images/OfficerSign/ohara_donnell.jpg');
 
 -- --------------------------------------------------------
 
@@ -521,8 +518,9 @@ CREATE TABLE `tblhousehold` (
 --
 
 INSERT INTO `tblhousehold` (`intHouseholdNo`, `strBuildingNo`, `intForeignStreetId`, `strHouseholdLname`, `strResidence`, `strOldAddress`, `strStatus`) VALUES
-(1, '2210', 1, 'Daya', 'Owned', 'Antipolo City', 'Enabled'),
-(2, '2202', 1, 'O''hara', 'Rent', 'Nsad', 'Enabled');
+(1, '554 Interior 1', 1, 'O''Hara', 'Owned', '221 Marie Street, Brgy Santo', 'Enabled'),
+(2, 'Blk 74 Lot 15 ', 1, 'Boleche', 'Rent', 'Blk 74 Lot 15 Juniper St., Robinsons Homes East Subdivision', 'Enabled'),
+(3, 'Blk 74 Lot 15 ', 2, 'Morcilla', 'Owned', 'Blk 74 Lot 15 Juniper St., Robinsons Homes East Subdivision', 'Enabled');
 
 -- --------------------------------------------------------
 
@@ -547,11 +545,31 @@ CREATE TABLE `tblhousemember` (
   `strCivilStatus` varchar(20) NOT NULL,
   `strStatus` varchar(10) NOT NULL,
   `strLifeStatus` varchar(10) NOT NULL,
-  `charLiterate` char(1) NOT NULL,
+  `strLiterate` varchar(25) NOT NULL,
+  `strEdAttain` varchar(100) NOT NULL,
   `charDisable` char(1) NOT NULL,
   `dtEntered` date NOT NULL,
   `strImage` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tblhousemember`
+--
+
+INSERT INTO `tblhousemember` (`intMemberNo`, `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `strVotersId`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`, `strLiterate`, `strEdAttain`, `charDisable`, `dtEntered`, `strImage`) VALUES
+(1, 'Eva', 'Sta Maria', 'O''Hara', '', 'F', '1984-01-01', '09121231312', 'Accountant', '23181', '321321', '122342', 1, 'Single', 'Head', 'Alive', 'Y', '', 'N', '2016-09-09', 'Images/BarangayPics/Eva Sta Maria OHara -1984-01-01.jpg'),
+(2, 'Carl John', '', 'O''hara', '', 'M', '2014-01-01', '', '', '', '', '', 1, 'Single', 'Children', 'Alive', '', '', '', '2016-09-09', 'Images/BarangayPics/Carl John  Ohara -2014-01-01.jpg'),
+(3, 'Donnell', '', 'O''hara', '', 'M', '1983-02-02', '09213212121', 'Business Executive', '32123', '213', '1231123', 1, 'Married', 'Spouse', 'Alive', '', '', '', '2016-09-09', 'Images/BarangayPics/Donnell  Ohara -1983-02-02.JPG'),
+(4, 'Lolita', 'Esteban', 'Scar''o-San Luis', '', 'F', '1993-02-02', '', '', '', '', '', 1, 'Single', 'Tenant', 'Alive', 'Y', '', 'N', '2016-09-09', 'Images/BarangayPics/Lolita Esteban Scaro-San Luis -1993-02-02.jpg'),
+(5, 'Kimmy', '', 'O''hara', '', 'F', '2011-01-01', '', '', '', '', '', 1, 'Single', 'Children', 'Alive', '', '', '', '2016-09-09', ''),
+(6, 'Mae Ann', '', 'Boleche', '', 'M', '1985-09-21', '09062759022', '', '', '', '', 2, 'Single', 'Head', 'Alive', 'Y', '', 'N', '2016-09-09', 'Images/BarangayPics/Mae Ann  Boleche Julie Grace Morcilla-1985-09-21.jpg'),
+(7, 'Mark', '', 'Boleche', '', 'M', '1978-01-01', '', '', '', '', '', 2, 'Single', 'Spouse', 'Alive', '', '', 'N', '2016-09-09', 'Images/BarangayPics/Mark  Boleche -1978-01-01.jpg'),
+(8, 'Mark Anthony', '', 'Boleche', '', 'M', '2016-01-01', '', '', '', '', '', 2, 'Single', 'Children', 'Alive', '', '', 'N', '2016-09-09', 'Images/BarangayPics/Mark Anthony  Boleche -2016-01-01.jpg'),
+(9, 'Jennica', '', 'Martinez', '', 'F', '1992-01-01', '09321432432', 'Waitress', '213', '123', '123', 2, 'Single', 'Tenant', 'Alive', 'Y', '', 'N', '2016-09-09', 'Images/BarangayPics/Jennica  Martinez -1992-01-01.jpg'),
+(10, 'Delia', 'Zafra', 'Morcilla', '', 'M', '1957-01-01', '09062759022', '', '', '', '', 3, 'Single', 'Head', 'Alive', 'Undergraduate', 'Grade 9', 'N', '2016-09-09', 'Images/BarangayPics/Delia Zafra Morcilla -1957-01-01.jpg'),
+(11, 'Mark', '', 'Morcilla', '', 'F', '1992-01-01', '', '', '', '', '', 3, 'Single', 'Spouse', 'Alive', 'Graduated', 'Grade 12', 'N', '2016-09-09', 'Images/BarangayPics/Mark  Morcilla -1992-01-01.png'),
+(12, 'Jenny', '', 'Morcilla', '', 'F', '2005-01-01', '', '', '', '', '', 3, 'Single', 'Children', 'Alive', 'Currently Studying', 'Grade 11', 'Y', '2016-09-09', 'Images/BarangayPics/Jenny  Morcilla -2005-01-01.JPG'),
+(13, 'Sierra', 'Trece', 'Martinez', '', 'F', '1987-01-01', '', 'Vendor', '', '', '', 3, 'Widower/Widow', 'Tenant', 'Alive', 'No Educational Attainment', 'None', 'N', '2016-09-09', 'Images/BarangayPics/Sierra Trece Martinez -1987-01-01.PNG');
 
 -- --------------------------------------------------------
 
@@ -1128,7 +1146,7 @@ ALTER TABLE `tblvehicleclearance`
 -- AUTO_INCREMENT for table `tblaccount`
 --
 ALTER TABLE `tblaccount`
-  MODIFY `strOfficerID` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `strOfficerID` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `tblbrgyposition`
 --
@@ -1198,12 +1216,12 @@ ALTER TABLE `tblfacility`
 -- AUTO_INCREMENT for table `tblhousehold`
 --
 ALTER TABLE `tblhousehold`
-  MODIFY `intHouseholdNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `intHouseholdNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `tblhousemember`
 --
 ALTER TABLE `tblhousemember`
-  MODIFY `intMemberNo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `intMemberNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `tblpaymentdetail`
 --
