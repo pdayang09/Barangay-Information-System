@@ -4,7 +4,7 @@ require('connection.php');
 
 $id = $_SESSION['ID'];
 
-$sql = "SELECT `strOfficerID`,`strUsername`,`strPassword`,`intForeignPositionId` ,`strEmailAdd`, concat(strLastName,',',strFirstName,' ',strMiddleName) as 'Name',concat(strBuildingNo,' , ',strStreetName,' ',strPurok) as 'Street', `dtStart`,`dtEnd` 
+$sql = "SELECT `strSign`,`strOfficerID`,`strUsername`,`strPassword`,`intForeignPositionId` ,`strEmailAdd`, concat(strLastName,',',strFirstName,' ',strMiddleName) as 'Name',concat(strBuildingNo,' , ',strStreetName,' ',strPurok) as 'Street', `dtStart`,`dtEnd` 
 FROM `tblaccount` as a inner join `tblhousemember` as b on b.intMemberNo = a.intForeignMemberNo inner join tblhousehold as d on b.intForeignHouseholdNo = d.intHouseholdNo inner join tblstreet as c on d.intForeignStreetId = c.intStreetId where strOfficerID = $id";
 $query = mysqli_query($con,$sql);
 $row = mysqli_fetch_object($query);
@@ -19,7 +19,7 @@ MAIN CONTENT
 	<br>
 	<section class="wrapper site-min-height">
 		<button class="btn btn-theme" onclick="window.location.href='AccountMaintenance.php'">Back to the Previous Page</button>
-		<form method = POST>
+		<form method = POST enctype = "multipart/form-data">
 			<legend ><font face = "cambria" size = 8 color = "grey"> Edit Account </font></legend><br>
 			<div class = "showback" >
 				
@@ -30,7 +30,7 @@ MAIN CONTENT
 
 					<div class="col-sm-5"><div class="form-group" id = "occup-div">	<p><font face = "cambria" size = 4 color = "grey"> Resident's Full Name: </font></p>			
 						<div class="col-sm-10">
-							<input id="controlno" name = "StreetName" class="form-control input-group-lg reg_name" type="text"  value = '<?php echo $row->Name?>' readonly>		
+							<input id="controlno" name = "StreetName" class="form-control input-group-lg reg_name" type="text"  value = "<?php echo $row->Name?>" readonly>		
 						</div> </div>
 						
 						
@@ -44,7 +44,7 @@ MAIN CONTENT
 						<div class="col-sm-5">
 							<p><font face = "cambria" size = 4 color = "grey"> Username </font></p>
 
-							<input id="controlno" name = "StreetName" class="form-control input-group-lg reg_name" value = '<?php echo $row->strUsername?>'  type="text"  readonly>	
+							<input id="controlno" name = "StreetName" class="form-control input-group-lg reg_name" value = "<?php echo $row->strUsername?>"  type="text"  readonly>	
 						</div> </div> <br><br><br><br><br></div>			 
 						
 						
@@ -88,110 +88,153 @@ MAIN CONTENT
 												$row2 = mysqli_fetch_object($sql2);
 												if(($row2->intNumber != $row2->num)||($row->intForeignPositionId == $row1->intPositionId)){
 												?><option value = <?php echo "'".$row1->intPositionId."' ";
-																	if ($row->intForeignPositionId == $row1->intPositionId){
-																		echo "selected";
-																	}?> ><?php echo $row1->strPositionName; ?></option><?php }
-											}
-											
-											?>
-										</select>
-									</div> </div>
-									
-									
-									
-								</div>
+												if ($row->intForeignPositionId == $row1->intPositionId){
+												echo "selected";
+											}?> ><?php echo $row1->strPositionName; ?></option><?php }
+										}
+										
+										?>
+									</select>
+								</div> </div>
+								
+								
+								
+							</div>
 
 
 
 
-								<div class="form-group" id = "SSS-div">				
-									<div class="col-sm-5">
-										<p><font face = "cambria" size = 4 color = "grey"> Email Address </font></p>
+							<div class="form-group" id = "SSS-div">				
+								<div class="col-sm-5">
+									<p><font face = "cambria" size = 4 color = "grey"> Email Address </font></p>
 
-										<input id="controlno" name = "Email" class="form-control input-group-lg reg_name" type="text" value = '<?php echo $row->strEmailAdd?>'  >		
-									</div> </div> <br><br><br><br><br></div>		
-									
-									
-									
-									<div class = "form-group">
-
-
-
-										<div class="col-sm-5"><div class="form-group" id = "occup-div">	<p><font face = "cambria" size = 4 color = "grey">Start Date: </font></p>			
-											<div class="col-sm-10">
-												<input id="controlno" name = "Sdate" class="form-control input-group-lg reg_name" type="date"  value = '<?php echo $row->dtStart?>' required>	
-											</div> </div>
-											
-											
-											
-										</div>
+									<input id="controlno" name = "Email" class="form-control input-group-lg reg_name" type="text" value = '<?php echo $row->strEmailAdd?>'  >		
+								</div> </div> <br><br><br><br><br></div>		
+								
+								
+								
+								<div class = "form-group">
 
 
 
+									<div class="col-sm-5"><div class="form-group" id = "occup-div">	<p><font face = "cambria" size = 4 color = "grey">Start Date: </font></p>			
+										<div class="col-sm-10">
+											<input id="controlno" name = "Sdate" class="form-control input-group-lg reg_name" type="date"  value = '<?php echo $row->dtStart?>' required>	
+										</div> </div>
+										
+										
+										
+									</div>
 
-										<div class="form-group" id = "SSS-div">				
-											<div class="col-sm-5">
-												<p><font face = "cambria" size = 4 color = "grey"> End Date </font></p>
 
-												<input id="controlno" name = "Edate" class="form-control input-group-lg reg_name" type="date"  value = '<?php echo $row->dtEnd?>' min = <?php echo date('Y-m-d');?> required>			
-											</div> </div> <br><br><br><br><br></div>			
-											
-											
-											
-											
-											
-											
-											
-							
-											
-											<center> <input type="submit" class="btn btn-info" name = "btnAdd" id = "btnAdd"  value = "Save Record" onclick = "return check();" > </div>
+
+
+									<div class="form-group" id = "SSS-div">				
+										<div class="col-sm-5">
+											<p><font face = "cambria" size = 4 color = "grey"> End Date </font></p>
+
+											<input id="controlno" name = "Edate" class="form-control input-group-lg reg_name" type="date"  value = '<?php echo $row->dtEnd?>' min = <?php echo date('Y-m-d');?> required>			
+										</div> </div> <br><br><br><br><br></div>			
+										<p><p><font face = "cambria" size = 4 color = "grey"> Upload Signature: </font></p>			
+										<input type = "file" name = "image" id="imgInp">
+										<img id="blah" height = 75 width = 250 src='<?php echo $row->strSign?>' alt="your image" />
+										<br><br><br><br>
+
+										
+										
+										
+										
+										
+										
+										
+										
+										
+										<center> <input type="submit" class="btn btn-info" name = "btnAdd" id = "btnAdd"  value = "Save Record" onclick = "return check();" > </div>
 											
 											<?php
 											if(isset($_POST['btnAdd'])){
-												$password = $_POST['Pass'];
-												$position = $_POST['Position'];
-												$Email = $_POST['Email'];
-												$start = $_POST['Sdate'];
-												$end = $_POST['Edate'];
-												$_pass = mysqli_real_escape_string($con,$password);
-												mysqli_query($con,"Update tblaccount set strPassword = '$_pass', intForeignPositionId = '$position', strEmailAdd = '$Email', dtStart = '$start', dtEnd = ' $end' where strOfficerID = $id");
-												
-												echo "<script> window.location = 'AccountMaintenance.php'; </script>";
-											
-												
-											}?>
+											$password = $_POST['Pass'];
+											$position = $_POST['Position'];
+											$Email = $_POST['Email'];
+											$start = $_POST['Sdate'];
+											$end = $_POST['Edate'];
+											$_pass = mysqli_real_escape_string($con,$password);
 										
-												
-			</center><br><br>
-			<!-- /#page-content-wrapper -->
-		</form>
-
-	</section><! --/wrapper -->
-</section><!-- /MAIN CONTENT -->
-
-<!--main content end-->
-
-</section>
-
-<!-- js placed at the end of the document so the pages load faster -->
-<script src="assets/js/jquery.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/jquery-ui-1.9.2.custom.min.js"></script>
-<script src="assets/js/jquery.ui.touch-punch.min.js"></script>
-<script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
-<script src="assets/js/jquery.scrollTo.min.js"></script>
-<script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+											
+											
+											$dt = $_User;
+											$dt = stripslashes($dt);
+											$dt = str_replace("'", '', $dt);
+											
+											if(getimagesize($_FILES['image']['tmp_name']) == FALSE){
 
 
-<!--common script for all pages-->
-<script src="assets/js/common-scripts.js"></script>
+											mysqli_query($con,"Update tblaccount set strPassword = '$_pass', intForeignPositionId = '$position', strEmailAdd = '$Email', dtStart = '$start', dtEnd = ' $end' where strOfficerID = $id");
+											
+											echo "<script>alert('Successfully Inserted!');
+											window.location = 'AccountMaintenance.php';</script>";
+											
+										}
 
-<!--script for this page-->
+										else{
+										$info = pathinfo($_FILES['image']['name']);
+										$ext = $info['extension']; // get the extension of the file(filename)
+										$newname = "$dt.".$ext;
+										$target = 'Images/OfficerSign/'.$newname;
+										mysqli_query($con,"Update tblaccount set strPassword = '$_pass', intForeignPositionId = '$position', strEmailAdd = '$Email', dtStart = '$start', dtEnd = ' $end',`strSign` = '$target' where strOfficerID = $id");
+										move_uploaded_file( $_FILES['image']['tmp_name'], $target);
+										echo "<script>alert('Successfully Inserted!');
+										window.location = 'AccountMaintenance.php';</script>";
+									}
+									
+								}?>
+								
+								
+							</center><br><br>
+							<!-- /#page-content-wrapper -->
+						</form>
 
-<script>
+					</section><! --/wrapper -->
+				</section><!-- /MAIN CONTENT -->
+
+				<!--main content end-->
+
+			</section>
+
+			<!-- js placed at the end of the document so the pages load faster -->
+			<script src="assets/js/jquery.js"></script>
+			<script src="assets/js/bootstrap.min.js"></script>
+			<script src="assets/js/jquery-ui-1.9.2.custom.min.js"></script>
+			<script src="assets/js/jquery.ui.touch-punch.min.js"></script>
+			<script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
+			<script src="assets/js/jquery.scrollTo.min.js"></script>
+			<script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+
+
+			<!--common script for all pages-->
+			<script src="assets/js/common-scripts.js"></script>
+
+			<!--script for this page-->
+
+			<script>
 //custom select box
 
 
+function readURL(input) {
+	if (input.files && input.files[0]) {
+		var reader = new FileReader();
+		
+		reader.onload = function (e) {
+			$('#blah').attr('src', e.target.result);
+		}
+		
+		reader.readAsDataURL(input.files[0]);
+	}
+}
+
+$("#imgInp").change(function(){
+	readURL(this);
+});
 
 
 

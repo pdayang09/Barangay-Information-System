@@ -1,7 +1,7 @@
 <?php
 include('connection.php');
 $id =  $_POST['sid'];
-$query = "SELECT distinct Lcase(concat(strLastName,'_',Replace(strFirstName,' ',''))) as 'user', intMemberNo ,concat(strLastName,' ,',strFirstName) as 'Name', strLastName,strFirstName, concat(strBuildingNo,' , ',strStreetName) as 'Street',Timestampdiff(YEAR,dtBirthdate,NOW()) as Age FROM `tblhousemember` as a inner join `tblhousehold` as b on a.intForeignHouseholdNo = b.intHouseholdNo inner join tblaccount as c on !(a.intMemberNo = c.intForeignMemberNo) inner join tblstreet as d on b.intForeignStreetId = d.intStreetId where intMemberNo = $id";
+$query = "SELECT distinct Lcase(concat(strLastName,'_',Replace(strFirstName,' ',''))) as 'user', intMemberNo ,concat(strLastName,' ,',strFirstName) as 'Name', strLastName,strFirstName, concat(strBuildingNo,' , ',strStreetName) as 'Street',Timestampdiff(YEAR,dtBirthdate,NOW()) as Age FROM `tblhousemember` as a inner join `tblhousehold` as b on a.intForeignHouseholdNo = b.intHouseholdNo inner join tblstreet as d on b.intForeignStreetId = d.intStreetId where intMemberNo = $id";
 $sql = mysqli_query($con,$query);
 $row3 = mysqli_fetch_object($sql);
 ?>
@@ -10,7 +10,7 @@ $row3 = mysqli_fetch_object($sql);
 		<p><font face = "cambria" size = 5 color = "grey"> Resident's Full Name </font></p>
 		<div class = "form-group">
 			<div class="col-sm-12">
-				<input id="controlno" name = "StreetName" class="form-control input-group-lg reg_name" type="text" value = '<?php echo $row3->Name?>' readonly>			 
+				<input id="controlno" name = "StreetName" class="form-control input-group-lg reg_name" type="text" value = "<?php echo $row3->Name?>" readonly>			 
            </div>
 		</div><br><br><br>
 		
@@ -22,7 +22,7 @@ $row3 = mysqli_fetch_object($sql);
 	<br><br><br>	
   <div class="split-para"><font face = "cambria" size = 5 color = "grey"> Username</font></p>
 			<div class="col-sm-12">		
-			<input id="controlno" name = "UserN" class="form-control input-group-lg reg_name" value = '<?php echo $row3->user;?>'type="text" readonly>	
+			<input id="controlno" name = "UserN" class="form-control input-group-lg reg_name" value = "<?php echo $row3->user;?>" type="text" readonly>	
 			</div>
 		</div>
 	<br><br><br>	
@@ -67,4 +67,31 @@ $row3 = mysqli_fetch_object($sql);
 			</div>
 		</div>
 	<br><br><br>	
+	
+		<p><font face = "cambria" size = 5 color = "grey">Upload Image</font></p>
+		<input type = "file" name = "image" id="imgInp">
+        <img id="blah" height = 75 width = 250 src="#" alt="your image" />
+		<br><br><br><br>
+	
 		<center> <button type="submit" class="btn btn-info" name = "btnAdd" id = "btnAdd" = value = '<?php echo $row3->intMemberNo?>' > Save Record</button></div>
+		
+		   
+  <script>
+  
+  
+    function readURL(input) {
+  	if (input.files && input.files[0]) {
+  		var reader = new FileReader();
+  		
+  		reader.onload = function (e) {
+  			$('#blah').attr('src', e.target.result);
+  		}
+  		
+  		reader.readAsDataURL(input.files[0]);
+  	}
+  }
+
+  $("#imgInp").change(function(){
+  	readURL(this);
+  });
+  </script>
