@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 09, 2016 at 10:39 AM
+-- Generation Time: Sep 09, 2016 at 11:26 AM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.5.30
 
@@ -521,14 +521,8 @@ CREATE TABLE `tblhousehold` (
 --
 
 INSERT INTO `tblhousehold` (`intHouseholdNo`, `strBuildingNo`, `intForeignStreetId`, `strHouseholdLname`, `strResidence`, `strOldAddress`, `strStatus`) VALUES
-(1, '21', 1, 'Dayang', 'Owned', '233 Maalikaya Street, Purok 21, Building No 11', 'Enabled'),
-(2, '211 Interior', 1, 'Daya', 'Rent', 'J Street, Purok 21, Building No 21', 'Enable'),
-(3, '922', 1, 'Perez', 'Rent', '911 Jan Street, Brgy. Sta ana, Malate, Manila', 'Enable'),
-(4, '88', 1, 'Wu', 'Owned', '891 Maa', 'Enable'),
-(5, '677', 1, 'Tedder', 'Owned', '672 jads aada', 'Enable'),
-(6, '844 Interior 29', 1, 'Marquez', 'Rent', 'Pasig', 'Enabled'),
-(9, '321', 1, 'Ara', 'Rent', 'New', 'Enabled'),
-(10, '312', 1, 'Sista', 'Rent', 'sda', 'Enabled');
+(1, '2210', 1, 'Daya', 'Owned', 'Antipolo City', 'Enabled'),
+(2, '2202', 1, 'O''hara', 'Rent', 'Nsad', 'Enabled');
 
 -- --------------------------------------------------------
 
@@ -555,33 +549,9 @@ CREATE TABLE `tblhousemember` (
   `strLifeStatus` varchar(10) NOT NULL,
   `charLiterate` char(1) NOT NULL,
   `charDisable` char(1) NOT NULL,
+  `dtEntered` date NOT NULL,
   `strImage` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tblhousemember`
---
-
-INSERT INTO `tblhousemember` (`intMemberNo`, `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `strVotersId`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`, `charLiterate`, `charDisable`, `strImage`) VALUES
-(1, 'Paul', 'Aquino', 'Dayang', '', 'M', '1996-05-12', '0920947581', 'Company Driver', '00010101', '', '09', 1, '', 'Head', 'Alive', 'Y', 'N', ''),
-(2, 'Pingris', 'Santos', 'Daya', 'Jr', 'M', '1992-01-01', '09132321321', 'Dancer', '', 'ads', 'e3qeaaa', 2, '', 'Head', 'Alive', 'Y', 'N', ''),
-(3, 'Matteo', 'Ting', 'Perez', 'Jr', 'M', '1980-05-21', '09123321243', 'Sales', '6543213', '331231', '232qe2qe', 2, 'Single', 'Spouse', 'Dead', 'Y', 'N', ''),
-(4, 'Mikhael', 'Castro', 'Daya', '', 'M', '2016-05-04', '', '', '', '', '', 2, 'Single', 'Children', 'Moved', 'Y', 'N', ''),
-(5, 'Gema', 'Peng', 'Gutierez', '', 'F', '1996-12-27', '02313321', 'Sales Clerk', '', 'sad', 'qe23', 2, 'Single', 'Cousin', 'Moved', 'Y', 'N', ''),
-(7, 'Lola', 'Ting', 'Dayang', '', 'F', '1990-03-08', '09890930943', 'Sales Clerk', '', 'dd', '2qwewwe', 1, 'Single', 'Sister', 'Alive', 'Y', 'N', ''),
-(8, 'Jenna', 'Alie', 'Dayang', '', 'F', '1989-07-06', '09999999', '', '', '', 'weewq', 1, 'Married', 'Spouse', 'Alive', 'Y', 'N', ''),
-(9, 'Paulo', 'Ting', 'Perez', 'Jr', 'M', '1980-05-21', '09123321243', 'Sales Clerk', '', '331231', 'weewq', 3, 'Single', 'Head', 'Alive', 'Y', 'N', ''),
-(10, 'Jenny', '', 'Wu', '', 'F', '1981-06-21', '09238472912', 'Accountant', '98121921', '921081', 'weewqeqw', 4, 'Single', 'Head', 'Alive', 'Y', 'Y', ''),
-(11, 'Ryan Benjamin', 'Saludo', 'Tedder', '', 'M', '1979-06-26', '0921384913', 'Singer', '92192913', '12121', 'ewqeewq', 5, 'Single', 'Head', 'Alive', 'Y', 'N', ''),
-(12, 'Angel', '', 'Marquez', '', 'M', '1986-01-01', '', '', '', '', 'weqeq', 6, 'Single', 'Head', 'Alive', 'N', 'N', ''),
-(13, 'Kimmy', '', 'Marquez', '', 'F', '1982-01-01', '', '', '', '', '', 6, 'Married', 'Spouse', 'Dead', 'Y', 'Y', ''),
-(20, 'dsa', 'sdaa', 'ds', '', 'M', '1992-08-14', '', '', '', '', '', 6, 'Single', 'Head', 'Alive', 'Y', 'N', ''),
-(21, 'Mary', '', 'Ara', '', 'F', '1995-01-01', '12', 'Sales', '786', '56', '54', 9, 'Single', 'Head', 'Alive', 'Y', 'N', ''),
-(22, 'Kimmy', '', 'Sista', '', 'F', '1992-08-03', '', '', '', '', '', 10, 'Single', 'Head', 'Alive', 'Y', 'N', ''),
-(25, 'Maria Rosa', '', 'SpatNa', '', 'F', '1992-01-01', '', '', '', '', '', 2, 'Single', 'Tenant', 'Alive', '', '', 'Images/BarangayPics/Maria Rosa  SpatNa -1992-01-01.jpg'),
-(26, 'Paula', 'Ting', 'Perez', '', 'F', '1996-01-01', '', '', '', '', '', 3, 'Single', 'Spouse', 'Alive', '', '', 'Images/BarangayPics/Paula Ting Perez -1996-01-01.jpg'),
-(27, 'Carl', 'Ting', 'Perez', '', 'M', '2010-01-01', '0129931', 'Student', '', '', '', 3, 'Single', 'Children', 'Alive', '', '', 'Images/BarangayPics/Carl Ting Perez -2010-01-01.jpg'),
-(28, 'Mary Joan', '', 'Meno', '', 'F', '1992-01-01', '09283771829', 'Businesswoman', '', '', '', 3, 'Single', 'Tenant', 'Alive', 'Y', 'N', '');
 
 -- --------------------------------------------------------
 
@@ -1228,12 +1198,12 @@ ALTER TABLE `tblfacility`
 -- AUTO_INCREMENT for table `tblhousehold`
 --
 ALTER TABLE `tblhousehold`
-  MODIFY `intHouseholdNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `intHouseholdNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `tblhousemember`
 --
 ALTER TABLE `tblhousemember`
-  MODIFY `intMemberNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `intMemberNo` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `tblpaymentdetail`
 --
