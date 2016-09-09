@@ -374,6 +374,8 @@ var age = getAge(document.getElementById('bday').value);
 	$_Mname = mysqli_real_escape_string($con,$Mname);
 
 $dt = $_Fname.' '.$_Mname.' '.$_Lname.' '.$Ename.'-'.$Birthdate;
+$dt = stripslashes($dt);
+$dt = str_replace("'", '', $dt);
 	if(getimagesize($_FILES['image']['tmp_name']) == FALSE){
 
 $mysqli = mysqli_query($con,"INSERT INTO `tblhousehold`( `intForeignStreetId`, `strBuildingNo`, `strHouseholdLname`,`strResidence`,`strOldAddress`,`strStatus`) VALUES ($Street,'$Building','$_Lname','$Residence','$Old','Enabled')");

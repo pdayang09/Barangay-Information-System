@@ -348,7 +348,8 @@ $_Mname = mysqli_real_escape_string($con,$Mname);
 
 $dt = $_Fname.' '.$_Mname.' '.$_Lname.' '.$Ename.'-'.$bday;
 
-
+$dt = stripslashes($dt);
+$dt = str_replace("'", '', $dt);
 /*mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`,`strVotersId`,`dtEntered`) 
 VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gend','$bday','$contact','$occup','$SSS','$TIN','$Hno','$civil','Children','Alive','$VID','$Entered')");
 echo "<script>window.location = 'HholdPersonal.php'</script>";*/
