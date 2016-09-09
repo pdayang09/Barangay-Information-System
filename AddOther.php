@@ -267,6 +267,68 @@ function getAge(birthDateString) {
 		   
 		   
 	</div><br><br><br>	<br><br>	  </div>
+	
+	<div class="form-group">				
+										<div class="col-sm-5">	<p><font face = "cambria" size = 4 color = "grey"> Are you a person with disability: </font></p>
+											<div class="col-sm-10">	
+												<input type = radio value = "Y" name = "Disabled" checked> Yes
+												<input type = radio value = "N" name = "Disabled"> No
+												
+											</div> </div>
+											
+											<div class="form-group" id = "Enter-div">				
+												<div class="col-sm-5">
+													<script>
+														function c(value){
+															if(value == "No Educational Attainment"){
+																document.getElementById('Educ').disabled = true;
+															}
+															else if(value == "Currently Studying"){
+																document.getElementById('Educ').disabled = false;
+															}
+															else if(value == "Undergraduate"){
+																document.getElementById('Educ').disabled = false;
+															}
+															else if(value == "Graduated"){
+																document.getElementById('Educ').disabled = true;
+															}
+														}
+													</script>
+													
+													
+													
+													<p><font face = "cambria" size = 4 color = "grey">Educational Attainment:</font></p>
+													<input type = radio value = "No Educational Attainment" onclick = "c(this.value)" name = "EducAttain" id = "chk" checked> No Educational Attainment
+													<input type = radio value = "Currently Studying" onclick = "c(this.value)" id = "chk" name = "EducAttain"> Currently Studying
+													<input type = radio value = "Undergraduate" onclick = "c(this.value)" id = "chk" name = "EducAttain"> Undergraduate
+													<input type = radio value = "Graduated" onclick = "c(this.value)" id = "chk" name = "EducAttain"> Graduated
+													<select id = "Educ" name = "Educa" disabled class = "form-control">
+														<option>Kinder</option>
+														<option>Preparatory</option>
+														<option>Grade 1</option>
+														<option>Grade 2</option>
+														<option>Grade 3</option>
+														<option>Grade 4</option>
+														<option>Grade 5</option>	
+														<option>Grade 5</option>
+														<option>Grade 6</option>
+														<option>Grade 7</option>
+														<option>Grade 8</option>
+														<option>Grade 9</option>
+														<option>Grade 10</option>
+														<option>Grade 11</option>
+														<option>Grade 12</option>
+														
+														
+													</select>
+													
+												</div> </div>
+												
+												
+												
+											</div><br><br><br><br><br>
+	
+	
 	<div class="form-group" id = "relation-div">				
            <div class="col-sm-5"><p><font face = "cambria" size = 4 color = "grey">Relation to the Owner</font></p>
  <div class="col-sm-10">
@@ -296,7 +358,8 @@ function getAge(birthDateString) {
 		   
 		   
 	</div>
-	</div><br><br><br><br><br><br>	
+	</div><br><br><br><br>	
+
 		  
 <center>
 <button type = submit  class="btn btn-info" name = "subm" onclick = "return empty()">Submit Record</button></center>
@@ -306,7 +369,20 @@ function getAge(birthDateString) {
 require('connection.php');
 
 if(isset($_POST['subm'])){
+	
 //Getting Value from the from start --
+																								$Heduc = $_POST['EducAttain'];
+																		$Educa = "";
+																		if($Heduc == 'No Educational Attainment'){
+																			$Educa = "None";
+																		}
+																		else if($Heduc == 'Currently Studying' || $Heduc == 'Undergraduate'){
+																			$Educa = $_POST['Educa'];
+																		}
+																		else if($Heduc == 'Graduated'){
+																			$Educa = "Grade 12";
+																		}
+$Disability = $_POST['Disabled'];
 $Entered = $_POST['DateEntered'];
 $Hno = $_SESSION['Hno'];
 $Fname = $_POST['Fname'];
@@ -365,8 +441,8 @@ echo "<script>window.location = 'HholdPersonal.php'</script>";*/
 
 if(getimagesize($_FILES['image']['tmp_name']) == FALSE){
 
-mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`,strVotersId,charLiterate,charDisable,`dtEntered`) 
-VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gend','$bday','$contact','$occup','$SSS','$TIN','$Hno','$civil','$relation','Alive','$Vid','Y','N','$Entered')");
+mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`,strVotersId,strLiterate,strEdAttain,charDisable,`dtEntered`) 
+VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gend','$bday','$contact','$occup','$SSS','$TIN','$Hno','$civil','$relation','Alive','$Vid','$Heduc','$Educa','$Disability','$Entered')");
 echo "<script>window.location = 'HholdPersonal.php'</script>";
 }
 else{
@@ -376,8 +452,8 @@ else{
 			     	 $newname = "$dt.".$ext;
 					 $target = 'Images/BarangayPics/'.$newname;
 
-mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`,strVotersId,charLiterate,charDisable,`dtEntered`,`strImage`) 
-VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gend','$bday','$contact','$occup','$SSS','$TIN','$Hno','$civil','$relation','Alive','$Vid','Y','N','$Entered','$target')");
+mysqli_query($con,"INSERT INTO `tblhousemember`( `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `strContactNo`, `strOccupation`, `strSSSNo`, `strTINNo`, `intForeignHouseholdNo`, `strCivilStatus`, `strStatus`, `strLifeStatus`,strVotersId,strLiterate,strEdAttain,charDisable,`dtEntered`,`strImage`) 
+VALUES ('$_Fname','$_Mname','$_Lname','$Ename','$Gend','$bday','$contact','$occup','$SSS','$TIN','$Hno','$civil','$relation','Alive','$Vid','$Heduc','$Educa','$Disability','$Entered','$target')");
 					move_uploaded_file( $_FILES['image']['tmp_name'], $target);
 echo "<script>window.location = 'HholdPersonal.php'</script>";
 }
