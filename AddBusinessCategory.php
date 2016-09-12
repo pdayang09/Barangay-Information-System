@@ -48,6 +48,7 @@
 				 }
 				 else{
 					 require('connection.php');
+					  	mysqli_query($con,"Set @a = 2;");
 					 mysqli_query($con,"INSERT INTO `tblBusinessCate`( `strBusCateName`, `dblAmount`,`strStatus`) VALUES ('$strPD','$strtype','Enabled');");
 					 echo "<script>alert('Success');
 					 window.location = 'BusinessCat.php'</script>";

@@ -59,6 +59,7 @@
 						 }
 						 else{
 							 require('connection.php');
+							  	mysqli_query($con,"Set @a = 2;");
 							 mysqli_query($con,"INSERT INTO `tbldocumentpurpose`( `strPurposeName`, `dblPrice`) VALUES ('$strDocN','$strPrice');");
 							 echo "<script>alert('Success');</script>";
 							 //window.location = 'DocumentMaintenance.php'</script>";

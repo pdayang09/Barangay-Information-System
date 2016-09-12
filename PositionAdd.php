@@ -52,6 +52,8 @@
 						 }
 						 else{
 							 require('connection.php');
+							 
+							  mysqli_query($con,"Set @a = 2;");
 							 mysqli_query($con,"insert into tblbrgyposition(`strPositionName`, `intNumber`,`strView`) values ('$strDocN',$strPrice,'$strView');");
 							 echo "<script>alert('Success');
 							 window.location = 'PositionMaintenance.php'</script>";

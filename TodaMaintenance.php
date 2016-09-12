@@ -55,6 +55,7 @@
 				 }
 				 else{
 					 require('connection.php');
+					 	mysqli_query($con,"Set @a = 2;");
 					 mysqli_query($con,"INSERT INTO `tbltoda`(`strTODAName`,`strTODADesc`) VALUES ('$strTodaNM','$strTodaDescription');");
 					 //echo "INSERT INTO `tbltoda`(`strTODAName`,`strTODADesc`) VALUES ('$strTodaNM','$strTodaDescription');";
 					 echo "<script>alert('Success');</script>";
@@ -107,6 +108,7 @@
 				<?php }}
 				if(isset($_POST['del'])){
 					$a = $_POST['del'];
+						mysqli_query($con,"Set @a = 2;");
 					mysqli_query($con,"Delete From tblToda where `intTODAID` = '$a'");
 					echo "<script>alert('Successful!');
 					window.location ='TodaMaintenance.php';</script>";
