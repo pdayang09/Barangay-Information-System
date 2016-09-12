@@ -177,11 +177,12 @@
 			     	 $newname = "$dt.".$ext;
 					 //echo "<script> alert('$newname') </script>";
 					 $target = 'Images/FacilityUpload/'.$newname;
+					 mysqli_query($con,"Set @a = 2;");
 					 mysqli_query($con,"INSERT INTO `tblfacility`(`strFaciName`, `strFaciCategory`, `strFaciStatus`, `dblFaciDayCharge`, `dblFaciNightCharge`,`dblFaciNResidentCharge`,`imageUpload`) VALUES ('$strcode','$strname','$strStatus','$strdayprice','$strnightprice','$strresidentprice','$newname');");
 					 //mysqli_query($con,'INSERT INTO `tblfacility`(`strFaciName`, `strFaciCategoryCode`, `strFaciStatus`, `dblFaciFixedChargePerHour`, `dblFaciDayChargePerHour`,`dblFaciNightChargePerHour`,`imageUpload`) VALUES (`EEEE`,`$strcode`,`$strname`,`$strStatus`,`$strdayprice`,`$strnightprice`,`$strresidentprice`,`$newname`)');
 					 /*$a = "INSERT INTO `tblfacility`(`strFaciName`, `strFaciCategoryCode`, `strFaciStatus`, `dblFaciFixedChargePerHour`, `dblFaciDayChargePerHour`,`dblFaciNightChargePerHour`,`imageUpload`) VALUES ('$strcode','$strname','$strStatus','$strdayprice','$strnightprice','$strresidentprice','$newname')";
 */
-					 $b = 'INSERT INTO tblfacility (strFaciName,strFaciCategoryCode,strFaciStatus,dblFaciFixedChargePerHour,dblFaciDayChargerPerHour,dblFaciNightChargePerHour,imageUpload) VALUES ("$strcode","$strname",`$strStatus`,`$strdayprice`,`$strnightprice`,`$strresidentprice`,`$newname`)';
+					// $b = 'INSERT INTO tblfacility (strFaciName,strFaciCategoryCode,strFaciStatus,dblFaciFixedChargePerHour,dblFaciDayChargerPerHour,dblFaciNightChargePerHour,imageUpload) VALUES ("$strcode","$strname",`$strStatus`,`$strdayprice`,`$strnightprice`,`$strresidentprice`,`$newname`)';
 					 //echo "<script> alert('INSERT INTO `tblfacility`(`strFaciName`, `strFaciCategory`, `strFaciStatus`, `dblFaciDayCharge`, `dblFaciNightCharge`,`dblFaciNResidentCharge`,`imageUpload`) VALUES ('$strcode','$strname','$strStatus', $strdayprice, $strnightprice,$strresidentprice,$newname)' </script>" ;
 					 move_uploaded_file( $_FILES['userFile']['tmp_name'], $target);
 					 /*echo "<script>alert('Success');

@@ -46,6 +46,7 @@
 					}
 					else{
 						require('connection.php');
+						 	mysqli_query($con,"Set @a = 2;");
 						$g = mysqli_query($con,"UPDATE tbldocumentPurpose SET strPurposeName ='$strDocN',dblPrice ='$strPrice' where intDocPurposeID = '$strDocC'");
 						if($g==true){
 						session_destroy();

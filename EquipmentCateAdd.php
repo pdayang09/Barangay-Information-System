@@ -72,6 +72,7 @@
 				 }
 				 else{
 					 require('connection.php');
+					   	mysqli_query($con,"Set @a = 2;");
 					 mysqli_query($con,"INSERT INTO `tblcategory`(`strCategoryDesc`, `strCategoryType`) VALUES ('$strPD','$strtype');");
 					 echo "<script>alert('Success');
 					 window.location = 'EquipmentCat.php'</script>";

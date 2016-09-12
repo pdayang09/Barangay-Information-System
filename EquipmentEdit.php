@@ -68,6 +68,7 @@
 				 $Price = $_POST['price'];
 				 $discount= $_POST['discount'];
 				require('connection.php');
+				  	mysqli_query($con,"Set @a = 2;");
 				 $g = mysqli_query($con,"UPDATE tblequipment SET intEquipQuantity = '$intquantity', dblEquipFee = $Price , dblEquipNResidentCharge = $discount WHERE strEquipNo = '$strcont'");
 				
 				if($g == true){

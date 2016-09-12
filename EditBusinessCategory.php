@@ -53,6 +53,7 @@
 				 }
 				 else{
 					 require('connection.php');
+					  	mysqli_query($con,"Set @a = 2;");
 					 mysqli_query($con,"update tblBusinessCate set strBusCateName = '$strPD', dblAmount = $strtype where strBusCatergory= '$a'");
 					 echo "<script>alert('Success');
 					 window.location = 'BusinessCat.php'</script>";

@@ -75,8 +75,11 @@
 			 }
 			 else{
 				 require('connection.php');
+				 mysqli_query($con,"Set @a = 2;");
+				
 			
 				mysqli_query($con,"INSERT INTO `tblStreet`(`strStreetName`, `strPurok`) VALUES ('$strStreet','$strPurok');");
+				
 					 echo "<script>alert('Success');
 					 window.location = 'StreetMaintenance.php';</script>";
 			 }

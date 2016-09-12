@@ -168,8 +168,8 @@ MAIN CONTENT
 											$dt = str_replace("'", '', $dt);
 											
 											if(getimagesize($_FILES['image']['tmp_name']) == FALSE){
-
-
+		
+												mysqli_query($con,"Set @a = 2;");	
 											mysqli_query($con,"Update tblaccount set strPassword = '$_pass', intForeignPositionId = '$position', strEmailAdd = '$Email', dtStart = '$start', dtEnd = ' $end' where strOfficerID = $id");
 											
 											echo "<script>alert('Successfully Inserted!');
@@ -182,6 +182,7 @@ MAIN CONTENT
 										$ext = $info['extension']; // get the extension of the file(filename)
 										$newname = "$dt.".$ext;
 										$target = 'Images/OfficerSign/'.$newname;
+											mysqli_query($con,"Set @a = 2;");
 										mysqli_query($con,"Update tblaccount set strPassword = '$_pass', intForeignPositionId = '$position', strEmailAdd = '$Email', dtStart = '$start', dtEnd = ' $end',`strSign` = '$target' where strOfficerID = $id");
 										unlink($target);
 										move_uploaded_file( $_FILES['image']['tmp_name'], $target);
