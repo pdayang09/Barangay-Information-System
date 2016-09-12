@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 09, 2016 at 08:21 PM
+-- Generation Time: Sep 12, 2016 at 01:03 PM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.5.30
 
@@ -44,7 +44,37 @@ CREATE TABLE `tblaccount` (
 --
 
 INSERT INTO `tblaccount` (`strOfficerID`, `intForeignMemberNo`, `strUsername`, `strPassword`, `intForeignPositionId`, `strEmailAdd`, `dtStart`, `dtEnd`, `strStatus`, `strSign`) VALUES
-(1, 3, 'o''hara_donnell', '123456789', 1, '', '2016-09-09', '2019-09-09', 'Enabled', 'Images/OfficerSign/ohara_donnell.jpg');
+(1, 3, 'o''hara_donnell', '123456', 1, 'aa@gmail.com', '2016-09-09', '2019-09-09', 'Enabled', 'Images/OfficerSign/ohara_donnell.jpg'),
+(2, 1, 'o''hara_eva', '45678', 2, 'gg@gmail.com', '2016-09-12', '2019-09-12', 'Enabled', 'Images/OfficerSign/ohara_eva.PNG'),
+(9, 9, 'martinez_jennica', '768905', 3, '', '2016-09-12', '2019-09-12', 'Enabled', 'Images/OfficerSign/martinez_jennica.PNG');
+
+--
+-- Triggers `tblaccount`
+--
+DELIMITER $$
+CREATE TRIGGER `account_add` AFTER INSERT ON `tblaccount` FOR EACH ROW BEGIN
+DECLARE name varchar(100);
+Set @name = (Select concat(strFirstName,' ',strMiddleName,' ',strLastName,' ',strNameExtension) as 'Name' from tblhouseMember as a inner join tblaccount as b on a.intMemberNo = b.intForeignMemberNo where strOfficerId =  @a);
+
+Insert into `tblaudittrail`(strEmployee,strChange,strTable,dtDate) values(@name,'Insert','tblAccount',NOW());
+
+
+
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `account_edit` AFTER UPDATE ON `tblaccount` FOR EACH ROW BEGIN
+DECLARE name varchar(100);
+Set @name = (Select concat(strFirstName,' ',strMiddleName,' ',strLastName,' ',strNameExtension) as 'Name' from tblhouseMember as a inner join tblaccount as b on a.intMemberNo = b.intForeignMemberNo where strOfficerId =  @a);
+
+Insert into `tblaudittrail`(strEmployee,strChange,strTable,dtDate) values(@name,'Update','tblAccount',NOW());
+
+
+
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -77,15 +107,38 @@ INSERT INTO `tblapplicant` (`strApplicantID`, `strResidentId`, `strApplicantFNam
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tblbrgyofficial`
+-- Table structure for table `tblaudittrail`
 --
 
-CREATE TABLE `tblbrgyofficial` (
-  `intBrgyOfficialNum` int(11) NOT NULL,
-  `strOfficerID` varchar(25) DEFAULT NULL,
-  `dtmStartofTerm` date DEFAULT NULL,
-  `dtmEndofTerm` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `tblaudittrail` (
+  `intAuditNo` int(11) NOT NULL,
+  `strEmployee` varchar(100) NOT NULL,
+  `strChange` varchar(100) NOT NULL,
+  `strTable` varchar(100) NOT NULL,
+  `dtDate` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tblaudittrail`
+--
+
+INSERT INTO `tblaudittrail` (`intAuditNo`, `strEmployee`, `strChange`, `strTable`, `dtDate`) VALUES
+(1, 'Eva Sta Maria O''Hara ', 'Update', 'tblbrgyPosition', '2016-09-12 17:19:50'),
+(2, 'Eva Sta Maria O''Hara ', 'Update', 'tblStreet', '2016-09-12 17:20:43'),
+(3, 'Eva Sta Maria O''Hara ', 'Insert', 'tblStreet', '2016-09-12 17:21:02'),
+(4, 'Eva Sta Maria O''Hara ', 'Insert', 'tblAccount', '2016-09-12 17:30:07'),
+(5, 'Eva Sta Maria O''Hara ', 'Insert', 'tblAccount', '2016-09-12 17:33:18'),
+(6, 'Eva Sta Maria O''Hara ', 'Insert', 'tblAccount', '2016-09-12 17:34:14'),
+(7, 'Eva Sta Maria O''Hara ', 'Update', 'tblAccount', '2016-09-12 17:38:31'),
+(8, 'Eva Sta Maria O''Hara ', 'Update', 'tblAccount', '2016-09-12 17:39:14'),
+(9, 'Eva Sta Maria O''Hara ', 'Update', 'tblAccount', '2016-09-12 17:39:31'),
+(10, 'Eva Sta Maria O''Hara ', 'Update', 'tblbrgyPosition', '2016-09-12 17:40:27'),
+(11, 'Eva Sta Maria O''Hara ', 'Insert', 'tbldocumenttemplate', '2016-09-12 17:43:07'),
+(12, 'Eva Sta Maria O''Hara ', 'Insert', 'tbldocumenttemplate', '2016-09-12 17:45:04'),
+(13, 'Eva Sta Maria O''Hara ', 'Update', 'tblbusinesscate', '2016-09-12 17:56:31'),
+(14, 'Eva Sta Maria O''Hara ', 'Update', 'tblbusinesscate', '2016-09-12 17:56:38'),
+(15, 'Eva Sta Maria O''Hara ', 'Insert', 'tblbusinesscate', '2016-09-12 17:57:00'),
+(16, 'Eva Sta Maria O''Hara ', 'Update', 'tblbusinesssignage', '2016-09-12 18:01:49');
 
 -- --------------------------------------------------------
 
@@ -105,11 +158,41 @@ CREATE TABLE `tblbrgyposition` (
 --
 
 INSERT INTO `tblbrgyposition` (`intPositionId`, `strPositionName`, `strView`, `intNumber`) VALUES
-(1, 'Secretary', 'Sec', 1),
+(1, 'Secretary', 'Kap', 1),
 (2, 'Barangay Captain', 'Kap', 1),
-(3, 'Liason', 'Liason', 1),
+(3, 'Laiason', 'Liason', 1),
 (4, 'Administrator', 'Admin', 4),
-(5, 'Clerk', 'Sec', 1);
+(5, 'Clerk', 'Sec', 1),
+(6, 'Treasurer', 'Liason', 1),
+(7, 'Engineer', 'Sec', 1);
+
+--
+-- Triggers `tblbrgyposition`
+--
+DELIMITER $$
+CREATE TRIGGER `position_add` AFTER INSERT ON `tblbrgyposition` FOR EACH ROW BEGIN
+DECLARE name varchar(100);
+Set @name = (Select concat(strFirstName,' ',strMiddleName,' ',strLastName,' ',strNameExtension) as 'Name' from tblhouseMember as a inner join tblaccount as b on a.intMemberNo = b.intForeignMemberNo where strOfficerId =  @a);
+
+Insert into `tblaudittrail`(strEmployee,strChange,strTable,dtDate) values(@name,'Insert','tblbrgyPosition',NOW());
+
+
+
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `position_edit` AFTER UPDATE ON `tblbrgyposition` FOR EACH ROW BEGIN
+DECLARE name varchar(100);
+Set @name = (Select concat(strFirstName,' ',strMiddleName,' ',strLastName,' ',strNameExtension) as 'Name' from tblhouseMember as a inner join tblaccount as b on a.intMemberNo = b.intForeignMemberNo where strOfficerId =  @a);
+
+Insert into `tblaudittrail`(strEmployee,strChange,strTable,dtDate) values(@name,'Update','tblbrgyPosition',NOW());
+
+
+
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -157,9 +240,38 @@ CREATE TABLE `tblbusinesscate` (
 
 INSERT INTO `tblbusinesscate` (`strBusCatergory`, `strBusCateName`, `dblAmount`, `strStatus`) VALUES
 (1, 'Hardware', 1000, 'Enabled'),
-(3, 'Pet Shop', 1000, 'Enabled'),
-(5, 'Clean', 800.05, 'Disabled'),
-(6, 'Restaurant', 999.95, 'Enable');
+(3, 'Pet Shop', 1000, 'Disabled'),
+(5, 'Clean', 800.05, 'Enabled'),
+(6, 'Restaurant', 999.95, 'Enable'),
+(7, 'Bookstore', 190, 'Enabled');
+
+--
+-- Triggers `tblbusinesscate`
+--
+DELIMITER $$
+CREATE TRIGGER `businesscategory_add` AFTER INSERT ON `tblbusinesscate` FOR EACH ROW BEGIN
+DECLARE name varchar(100);
+Set @name = (Select concat(strFirstName,' ',strMiddleName,' ',strLastName,' ',strNameExtension) as 'Name' from tblhouseMember as a inner join tblaccount as b on a.intMemberNo = b.intForeignMemberNo where strOfficerId =  @a);
+
+Insert into `tblaudittrail`(strEmployee,strChange,strTable,dtDate) values(@name,'Insert','tblbusinesscate',NOW());
+
+
+
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `businesscategory_edit` AFTER UPDATE ON `tblbusinesscate` FOR EACH ROW BEGIN
+DECLARE name varchar(100);
+Set @name = (Select concat(strFirstName,' ',strMiddleName,' ',strLastName,' ',strNameExtension) as 'Name' from tblhouseMember as a inner join tblaccount as b on a.intMemberNo = b.intForeignMemberNo where strOfficerId =  @a);
+
+Insert into `tblaudittrail`(strEmployee,strChange,strTable,dtDate) values(@name,'Update','tblbusinesscate',NOW());
+
+
+
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -178,8 +290,24 @@ CREATE TABLE `tblbusinesssignage` (
 --
 
 INSERT INTO `tblbusinesssignage` (`ID`, `strSignageType`, `strSignagePrice`) VALUES
-(1, 'Single-faced', 30),
+(1, 'Single-faced', 40),
 (2, 'Double-faced', 50);
+
+--
+-- Triggers `tblbusinesssignage`
+--
+DELIMITER $$
+CREATE TRIGGER `signage_edit` AFTER UPDATE ON `tblbusinesssignage` FOR EACH ROW BEGIN
+DECLARE name varchar(100);
+Set @name = (Select concat(strFirstName,' ',strMiddleName,' ',strLastName,' ',strNameExtension) as 'Name' from tblhouseMember as a inner join tblaccount as b on a.intMemberNo = b.intForeignMemberNo where strOfficerId =  @a);
+
+Insert into `tblaudittrail`(strEmployee,strChange,strTable,dtDate) values(@name,'Update','tblbusinesssignage',NOW());
+
+
+
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -230,7 +358,36 @@ INSERT INTO `tblcategory` (`strCategoryCode`, `strCategoryDesc`, `strCategoryTyp
 (5, 'Racket', 'Equipment'),
 (6, 'Scoreboard', 'Equipment'),
 (7, 'Ball', 'Equipment'),
-(8, 'Other', 'Equipment');
+(8, 'Other Things', 'Equipment'),
+(9, 'Electronics', 'Equipment');
+
+--
+-- Triggers `tblcategory`
+--
+DELIMITER $$
+CREATE TRIGGER `category_add` AFTER INSERT ON `tblcategory` FOR EACH ROW BEGIN
+DECLARE name varchar(100);
+Set @name = (Select concat(strFirstName,' ',strMiddleName,' ',strLastName,' ',strNameExtension) as 'Name' from tblhouseMember as a inner join tblaccount as b on a.intMemberNo = b.intForeignMemberNo where strOfficerId =  @a);
+
+Insert into `tblaudittrail`(strEmployee,strChange,strTable,dtDate) values(@name,'Insert','tblcategory',NOW());
+
+
+
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `category_edit` AFTER UPDATE ON `tblcategory` FOR EACH ROW BEGIN
+DECLARE name varchar(100);
+Set @name = (Select concat(strFirstName,' ',strMiddleName,' ',strLastName,' ',strNameExtension) as 'Name' from tblhouseMember as a inner join tblaccount as b on a.intMemberNo = b.intForeignMemberNo where strOfficerId =  @a);
+
+Insert into `tblaudittrail`(strEmployee,strChange,strTable,dtDate) values(@name,'Update','tblcategory',NOW());
+
+
+
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -357,7 +514,36 @@ INSERT INTO `tbldocumentpurpose` (`intDocPurposeID`, `strPurposeName`, `dblPrice
 (4, 'Scholarship', 2000000000),
 (5, 'PAO', 150),
 (6, 'CCIS', 0),
-(7, 'Gagaanda ka', 0);
+(7, 'Hos', 0),
+(8, 'House', 20);
+
+--
+-- Triggers `tbldocumentpurpose`
+--
+DELIMITER $$
+CREATE TRIGGER `purpose_add` AFTER INSERT ON `tbldocumentpurpose` FOR EACH ROW BEGIN
+DECLARE name varchar(100);
+Set @name = (Select concat(strFirstName,' ',strMiddleName,' ',strLastName,' ',strNameExtension) as 'Name' from tblhouseMember as a inner join tblaccount as b on a.intMemberNo = b.intForeignMemberNo where strOfficerId =  @a);
+
+Insert into `tblaudittrail`(strEmployee,strChange,strTable,dtDate) values(@name,'Insert','tbldocumentpurpose',NOW());
+
+
+
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `purpose_edit` AFTER UPDATE ON `tbldocumentpurpose` FOR EACH ROW BEGIN
+DECLARE name varchar(100);
+Set @name = (Select concat(strFirstName,' ',strMiddleName,' ',strLastName,' ',strNameExtension) as 'Name' from tblhouseMember as a inner join tblaccount as b on a.intMemberNo = b.intForeignMemberNo where strOfficerId =  @a);
+
+Insert into `tblaudittrail`(strEmployee,strChange,strTable,dtDate) values(@name,'Update','tbldocumentpurpose',NOW());
+
+
+
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -425,6 +611,34 @@ INSERT INTO `tblequipment` (`strEquipNo`, `strEquipName`, `strEquipCategory`, `i
 (15, 'Tennis ball', '7', 10, 20, 30, 'Enabled', '20160907050928.jpg'),
 (16, 'Digital Score Board', '6', 2, 100, 120, 'Enabled', '20160907050952.jpg');
 
+--
+-- Triggers `tblequipment`
+--
+DELIMITER $$
+CREATE TRIGGER `equipment_add` AFTER INSERT ON `tblequipment` FOR EACH ROW BEGIN
+DECLARE name varchar(100);
+Set @name = (Select concat(strFirstName,' ',strMiddleName,' ',strLastName,' ',strNameExtension) as 'Name' from tblhouseMember as a inner join tblaccount as b on a.intMemberNo = b.intForeignMemberNo where strOfficerId =  @a);
+
+Insert into `tblaudittrail`(strEmployee,strChange,strTable,dtDate) values(@name,'Insert','tblEquipment',NOW());
+
+
+
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `equipment_edit` AFTER UPDATE ON `tblequipment` FOR EACH ROW BEGIN
+DECLARE name varchar(100);
+Set @name = (Select concat(strFirstName,' ',strMiddleName,' ',strLastName,' ',strNameExtension) as 'Name' from tblhouseMember as a inner join tblaccount as b on a.intMemberNo = b.intForeignMemberNo where strOfficerId =  @a);
+
+Insert into `tblaudittrail`(strEmployee,strChange,strTable,dtDate) values(@name,'Update','tblEquipment',NOW());
+
+
+
+END
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -451,6 +665,34 @@ INSERT INTO `tblfacility` (`strFaciNo`, `strFaciName`, `strFaciCategory`, `strFa
 (14, 'Badminton Court', '1', 'Good Condition', 300, 350, 400, '20160907045602.jpg'),
 (15, 'Multi-Purpose Hall', '3', 'Good Condition', 400, 450, 500, '20160907045628.jpg'),
 (16, 'Tennis Court', '2', 'Good Condition', 250, 300, 350, '20160907045655.jpg');
+
+--
+-- Triggers `tblfacility`
+--
+DELIMITER $$
+CREATE TRIGGER `facility_add` AFTER INSERT ON `tblfacility` FOR EACH ROW BEGIN
+DECLARE name varchar(100);
+Set @name = (Select concat(strFirstName,' ',strMiddleName,' ',strLastName,' ',strNameExtension) as 'Name' from tblhouseMember as a inner join tblaccount as b on a.intMemberNo = b.intForeignMemberNo where strOfficerId =  @a);
+
+Insert into `tblaudittrail`(strEmployee,strChange,strTable,dtDate) values(@name,'Insert','tblFacility',NOW());
+
+
+
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `facility_edit` AFTER UPDATE ON `tblfacility` FOR EACH ROW BEGIN
+DECLARE name varchar(100);
+Set @name = (Select concat(strFirstName,' ',strMiddleName,' ',strLastName,' ',strNameExtension) as 'Name' from tblhouseMember as a inner join tblaccount as b on a.intMemberNo = b.intForeignMemberNo where strOfficerId =  @a);
+
+Insert into `tblaudittrail`(strEmployee,strChange,strTable,dtDate) values(@name,'Update','tblfacility',NOW());
+
+
+
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -525,17 +767,6 @@ INSERT INTO `tblhousemember` (`intMemberNo`, `strFirstName`, `strMiddleName`, `s
 (11, 'Mark', '', 'Morcilla', '', 'F', '1992-01-01', '', '', '', '', '', 3, 'Single', 'Spouse', 'Alive', 'Graduated', 'Grade 12', 'N', '2016-09-09', 'Images/BarangayPics/Mark  Morcilla -1992-01-01.png'),
 (12, 'Jenny', '', 'Morcilla', '', 'F', '2005-01-01', '', '', '', '', '', 3, 'Single', 'Children', 'Alive', 'Currently Studying', 'Grade 11', 'Y', '2016-09-09', 'Images/BarangayPics/Jenny  Morcilla -2005-01-01.JPG'),
 (13, 'Sierra', 'Trece', 'Martinez', '', 'F', '1987-01-01', '', 'Vendor', '', '', '', 3, 'Widower/Widow', 'Tenant', 'Alive', 'No Educational Attainment', 'None', 'N', '2016-09-09', 'Images/BarangayPics/Sierra Trece Martinez -1987-01-01.PNG');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tblofficialposition`
---
-
-CREATE TABLE `tblofficialposition` (
-  `strPositionName` varchar(45) NOT NULL,
-  `strOfficerID` varchar(25) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -748,8 +979,45 @@ CREATE TABLE `tblstreet` (
 --
 
 INSERT INTO `tblstreet` (`intStreetId`, `strPurok`, `strStreetName`) VALUES
-(1, 'Purok 1', 'Carolina Street'),
-(2, 'Purok 2', 'Quezon Street');
+(1, 'Purok 2', 'Carolinas Street'),
+(2, 'Purok 2', 'Quezona Street'),
+(4, 'Purok 1', 'Manyaman Street'),
+(5, 'Purok 2', 'Markama Street'),
+(6, 'Purok 3', 'Yemen Street'),
+(7, 'Purok 3', 'Sanchez Street'),
+(8, 'Purok 3', 'Cruz Street'),
+(10, 'Purok 3', 'Lazaro Street'),
+(11, 'Purok 1', 'Sta Ana Street'),
+(12, 'Purok 1', 'Sta Cruz Street'),
+(13, 'Purok 1', 'Martinez Street');
+
+--
+-- Triggers `tblstreet`
+--
+DELIMITER $$
+CREATE TRIGGER `street_add` AFTER INSERT ON `tblstreet` FOR EACH ROW BEGIN
+DECLARE name varchar(100);
+Set @name = (Select concat(strFirstName,' ',strMiddleName,' ',strLastName,' ',strNameExtension) as 'Name' from tblhouseMember as a inner join tblaccount as b on a.intMemberNo = b.intForeignMemberNo where strOfficerId =  @a);
+
+Insert into `tblaudittrail`(strEmployee,strChange,strTable,dtDate) values(@name,'Insert','tblStreet',NOW());
+
+
+
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `street_edit` AFTER UPDATE ON `tblstreet` FOR EACH ROW BEGIN
+DECLARE name varchar(100);
+Set @name = (Select concat(strFirstName,' ',strMiddleName,' ',strLastName,' ',strNameExtension) as 'Name' from tblhouseMember as a inner join tblaccount as b on a.intMemberNo = b.intForeignMemberNo where strOfficerId =  @a);
+
+Insert into `tblaudittrail`(strEmployee,strChange,strTable,dtDate) values(@name,'Update','tblStreet',NOW());
+
+
+
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -788,7 +1056,36 @@ CREATE TABLE `tbltoda` (
 
 INSERT INTO `tbltoda` (`intTODAID`, `strTODAName`, `strTODADesc`) VALUES
 (1, 'VISAYAN TODA', ''),
-(2, 'SLRTODA', 'San Lorenzo Ruiz TODA');
+(2, 'SLRTODA', 'San Lorenzo Ruiz TODA'),
+(3, 'RHEHAI', 'Robinson Homes TODA');
+
+--
+-- Triggers `tbltoda`
+--
+DELIMITER $$
+CREATE TRIGGER `toda_add` AFTER INSERT ON `tbltoda` FOR EACH ROW BEGIN
+DECLARE name varchar(100);
+Set @name = (Select concat(strFirstName,' ',strMiddleName,' ',strLastName,' ',strNameExtension) as 'Name' from tblhouseMember as a inner join tblaccount as b on a.intMemberNo = b.intForeignMemberNo where strOfficerId =  @a);
+
+Insert into `tblaudittrail`(strEmployee,strChange,strTable,dtDate) values(@name,'Insert','tblToda',NOW());
+
+
+
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `toda_delete` AFTER DELETE ON `tbltoda` FOR EACH ROW BEGIN
+DECLARE name varchar(100);
+Set @name = (Select concat(strFirstName,' ',strMiddleName,' ',strLastName,' ',strNameExtension) as 'Name' from tblhouseMember as a inner join tblaccount as b on a.intMemberNo = b.intForeignMemberNo where strOfficerId =  @a);
+
+Insert into `tblaudittrail`(strEmployee,strChange,strTable,dtDate) values(@name,'Delete','tblToda',NOW());
+
+
+
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -878,11 +1175,10 @@ ALTER TABLE `tblapplicant`
   ADD PRIMARY KEY (`strApplicantID`);
 
 --
--- Indexes for table `tblbrgyofficial`
+-- Indexes for table `tblaudittrail`
 --
-ALTER TABLE `tblbrgyofficial`
-  ADD PRIMARY KEY (`intBrgyOfficialNum`),
-  ADD KEY `strbrgyofficial_idx` (`strOfficerID`);
+ALTER TABLE `tblaudittrail`
+  ADD PRIMARY KEY (`intAuditNo`);
 
 --
 -- Indexes for table `tblbrgyposition`
@@ -994,13 +1290,6 @@ ALTER TABLE `tblhousemember`
   ADD PRIMARY KEY (`intMemberNo`);
 
 --
--- Indexes for table `tblofficialposition`
---
-ALTER TABLE `tblofficialposition`
-  ADD PRIMARY KEY (`strPositionName`),
-  ADD KEY `strOfficeriD_idx` (`strOfficerID`);
-
---
 -- Indexes for table `tblpaymentdetail`
 --
 ALTER TABLE `tblpaymentdetail`
@@ -1094,12 +1383,17 @@ ALTER TABLE `tblvehicleclearance`
 -- AUTO_INCREMENT for table `tblaccount`
 --
 ALTER TABLE `tblaccount`
-  MODIFY `strOfficerID` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `strOfficerID` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+--
+-- AUTO_INCREMENT for table `tblaudittrail`
+--
+ALTER TABLE `tblaudittrail`
+  MODIFY `intAuditNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `tblbrgyposition`
 --
 ALTER TABLE `tblbrgyposition`
-  MODIFY `intPositionId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `intPositionId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `tblbusiness`
 --
@@ -1109,7 +1403,7 @@ ALTER TABLE `tblbusiness`
 -- AUTO_INCREMENT for table `tblbusinesscate`
 --
 ALTER TABLE `tblbusinesscate`
-  MODIFY `strBusCatergory` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `strBusCatergory` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `tblbusinesssignage`
 --
@@ -1124,7 +1418,7 @@ ALTER TABLE `tblbusinessstat`
 -- AUTO_INCREMENT for table `tblcategory`
 --
 ALTER TABLE `tblcategory`
-  MODIFY `strCategoryCode` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `strCategoryCode` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `tbldeceased`
 --
@@ -1139,7 +1433,7 @@ ALTER TABLE `tbldocument`
 -- AUTO_INCREMENT for table `tbldocumentpurpose`
 --
 ALTER TABLE `tbldocumentpurpose`
-  MODIFY `intDocPurposeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `intDocPurposeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `tbldocumentrequest`
 --
@@ -1199,12 +1493,12 @@ ALTER TABLE `tblreturnequip`
 -- AUTO_INCREMENT for table `tblstreet`
 --
 ALTER TABLE `tblstreet`
-  MODIFY `intStreetId` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `intStreetId` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `tbltoda`
 --
 ALTER TABLE `tbltoda`
-  MODIFY `intTODAID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `intTODAID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `tblvehicleclearance`
 --
