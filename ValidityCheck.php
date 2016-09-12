@@ -33,6 +33,7 @@
 	$unreturned =0;
 	
 	$searchtemp =0;
+	$preApp = $_SESSION['preApp'];
 ?>
 
     <div id="wrapper">
@@ -104,7 +105,7 @@
 				<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[2]; ?></td>
 				<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)' ><?php echo $row[3]; ?></td>
 				<?php
-				if(strstr($row[0], 'app')){
+				if(strstr($row[0], $preApp)){
 												
 						echo"<td onmouseover='highlightCells(this.parentNode)' onmouseout='unhighlightCells(this.parentNode)'><button type = 'submit' name='btnProceed' value = '$row[0]' class='btn btn-success btn-xs'><i class='fa fa-calendar'></i></button><button type = 'submit' name='btnDocument' value = '$row[0]' class='btn btn-success btn-xs'><i class='fa fa-file'></i></button></td>";
 						
@@ -125,7 +126,7 @@
 				$proceed = $_POST['btnProceed'];
 				
 				$residency =0;
-				if(strstr($proceed, 'nr')){
+				if(strstr($proceed, $preApp)){
 					$statement = "SELECT a.`strApplicantID`, CONCAT(a.`strApplicantLName`, ', ', a.`strApplicantFName`, ' ', a.`strApplicantMName`, ' ', a.`strNameExtension`) AS 'Name', a.`strApplicantContactNo`, CONCAT(a.`strApplicantAddress_street`, ' ', a.`strApplicantAddress_brgy`,', ',a.`strApplicantAddress_city`) AS 'Place' FROM tblapplicant a WHERE a.`strApplicantID` = '$proceed'";
 					
 					$residency = 2;
@@ -158,7 +159,7 @@
 				$btnDocument = $_POST['btnDocument'];
 				
 				$residency =0;
-				if(strstr($btnDocument, 'nr')){
+				if(strstr($btnDocument, $preApp)){
 					
 					$statement = "SELECT a.`strApplicantID`, CONCAT(a.`strApplicantLName`, ', ', a.`strApplicantFName`, ' ', a.`strApplicantMName`, ' ', a.`strNameExtension`) AS 'Name', a.`strApplicantContactNo`, CONCAT(a.`strApplicantAddress_street`, ' ', a.`strApplicantAddress_brgy`,', ',a.`strApplicantAddress_city`) AS 'Place' FROM tblapplicant a WHERE a.`strApplicantID` = '$btnDocument'";
 					

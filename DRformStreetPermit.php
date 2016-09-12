@@ -90,7 +90,7 @@
 								value = "<?php if(isset($_POST['DRdocReqby'])){echo $_POST['DRdocReqby'];}else{} ?>" disabled>		
 							</div>
 							<div class="col-sm-9">
-								<p><font face="cambria" size=5 color="grey"> Street </font></p>
+								<p><font face="cambria" size=5 color="grey"> Address </font></p>
 								<input id='SPstreet' class='form-control input-group-lg reg_name' type='text' name="SPstreet" title='system-generated' 
 								value = '<?php echo $add; ?>' disabled>
 							</div>
@@ -106,7 +106,7 @@
 								<input id="DRpurpose" class="form-control input-group-lg reg_name" type="text" name="DRpurpose" title="system-generated" placeholder="Purpose" disabled required>
 								<br>
 							</div><br><br><br><br><br><br><br><br><br><br><br>
-							<center><input type="submit" class="btn btn-success" name = "btnSubmit" id="btnSubmit" value = "Submit" disabled></center>
+							<center><input type="submit" class="btn btn-success" onclick = "return confirm('Do you want to save?')" name = "btnSubmit" id="btnSubmit" value = "Submit" disabled></center>
 							
 						</div>
 						<script language="javascript">
@@ -195,27 +195,22 @@
 					//Execute
 					$saveRequest = mysqli_query($con, $saveCertiSQL);
 					
-					$lastID = mysqli_query($con, "SELECT strDocRequestID FROM `tbldocumentrequest` WHERE 1 ORDER BY `strDocRequestID` DESC LIMIT 1");
-						while($row = mysqli_fetch_row($lastID))
-						{
-							$docIDLast = $row[0];
-						}
-					$saveStreetSQL = "INSERT INTO `tblstreetpermit` (`strSPdocReqID`, `strSPstreet`) VALUES ('$docIDLast', '$SPstreet');";
 					$saveStreet = mysqli_query($con, $saveStreetSQL);
 					
-					if($saveRequest == true && $saveStreet == true){
+					if($saveRequest == true){
 						echo"<script> alert('Request Saved.')</script>";
-						
-	
 						$_SESSION['clientID'] = $resid;
 						$_SESSION['name'] = $name;
+						$_SESSION['place'] = $add;
 						$_SESSION['contactno'] = $contactno;
 						$_SESSION['place'] = $add;
 						$_SESSION['document']  = $doc;//Type of document
-					
+						$_SESSION['docPurpose']  = $docPurpose;
+						$_SESSION['DRdocReq']  = $DRdocReq;
+						$_SESSION['purposePrice']  = $purposePrice;
+						echo"<script> alert('Request Saved.')</script>";
 						
-						//echo"<script> alert('Free')</script>";
-						
+						echo "<script> window.location = 'DRformSummary.php';</script>";
 					}//if($saveRequest == true)
 					
 				}//else

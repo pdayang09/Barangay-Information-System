@@ -65,9 +65,9 @@
                       </a>
                       <ul class="sub">
                           <li><a  href="facilityequipmentl.php">Liason</a></li>
-						               <li><a  href="DocumentRequestL.php">Secretary</a></li>
-						              <li><a  href="reservation_paymentl.php">Treasurer</a></li>
-						              <li><a  href="reservation_kapitanl.php">Kapitan</a></li>
+						               <li><a  href="view_Secretary.php">Secretary</a></li>
+						              <li><a  href="view_Treasurer.php">Treasurer</a></li>
+						              <li><a  href="view_Kapitan.php">Kapitan</a></li>
                       </ul>
                   </li>
                   

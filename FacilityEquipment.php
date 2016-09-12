@@ -211,6 +211,7 @@
 
     <!-- Retrieve Personal Data -->
     <?php 
+        require_once("AddDisabledDates.php");
 
         //Personal Details
         $residency = $_SESSION['residency'];
@@ -251,7 +252,11 @@
         $go = 1;
 
         //Other
-        $resId = $count+1;
+        $count = $count+1;
+        $_SESSION['preRes']="res-";
+        $preRes = $_SESSION['preRes'];
+
+        $resId = $preRes.$count;
         $resPrpose = "";
         $num = "";
     ?>    

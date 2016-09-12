@@ -1,6 +1,7 @@
 <?php
 	require("connection.php");
 	
+	echo"<script> alert('$clientID')</script>";
 	if($residency == 1){
 		
 		//tblreservationrequest` - Resident

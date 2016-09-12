@@ -132,7 +132,7 @@
 								<input id="vehicleColor" class="form-control input-group-lg reg_name" type="text" name="vehicleColor" title="system-generated" disabled required>
 							</div>
 							<br><br><br><br><br><br><br><br><br><br><br><br><br>
-							<center><input id="btnSubmit" type="submit" class="btn btn-success" name = "btnSubmit" value = "Submit" disabled></center>
+							<center><input id="btnSubmit" type="submit" class="btn btn-success" onclick = "return confirm('Do you want to save?')" name = "btnSubmit" value = "Submit" disabled></center>
 
 						
 						<script language="javascript">
@@ -284,7 +284,7 @@
 							$vehicleStatSave = mysqli_query($con, $vehicleStatSQL);
 							if($vehicleStatSave == true)
 							{
-								echo "<script>alert('1.');</script>";
+								//echo "<script>alert('1.');</script>";
 								mysqli_query($con, "INSERT INTO `tblpaymentdetail` (`intNum`, `strRequestID`, `dblReqPayment`, `intRequestORNo`) VALUES (NULL, '$plateNo', '$docPrice', '01');");
 								$_SESSION['clientID'] = $resid;
 								$_SESSION['name'] = $name;

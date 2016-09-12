@@ -1,12 +1,15 @@
 <?php
 
+if($_SESSION['on']==null){
+
 	$holidays[] = array();
-	$arrDisabledDates[] = array();
 	$holidays = ['25.12.2016', '26.12.2016'];
 	
-	$arrDisabledDates = array_merge($arrDisabledDates, $holidays); 
-	//$_SESSION['arrDisabledDates'] = $arrDisabledDates;
-	
+	$arrDisabledDates = $holidays;
+	$_SESSION['arrDisabledDates'] = $arrDisabledDates;
+	$_SESSION['arrTemp'] = [''];
 	//unset($arrDisabledDates);
 	//unset($holidays);
+}
+	$_SESSION['on']=1;
 ?>
