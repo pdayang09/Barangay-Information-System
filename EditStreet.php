@@ -57,8 +57,11 @@ echo "<script> search(); </script>";}?>
 			 }
 			 else{
 				 require('connection.php');
-			
+	
+				
+				 mysqli_query($con,"Set @a = 2;");
 				mysqli_query($con,"Update tblStreet set strStreetName = '$strStreet', strPurok = '$strPurok' where intStreetId = $street");
+				
 					 echo "<script>alert('Success');
 					 window.location = 'StreetMaintenance.php';</script>";
 			 }

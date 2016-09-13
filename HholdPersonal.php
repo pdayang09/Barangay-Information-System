@@ -52,24 +52,26 @@
       				else{
       					$Ext = $row->strNameExtension;
       				}
-
-      				echo "Head of Household: ".$row->strLastName.",".$row->strFirstName." ".$Mid." ".$Ext?>
+					echo'<img width = 195 height = 195 border= 8 align="left" hspace="10" src = "'.$row->strImage.'">';
+      				echo "<font size = 3><strong>Head of Household:</strong></font><font size = 3> ".$row->strFirstName.",".$Mid." ".$row->strLastName." ".$Ext."</font>"?>
 					<div class="btn-group " role="group"style="float: right; margin-right: 5cm;"> 
 						<div class="btn-group" role="group"  >
 						<button type = submit  class="btn btn-info btn-round btn-sm"   value = <?php echo $row->intMemberNo?> name = 'Edit'  <?php if($row->strLifeStatus == 'Deceased'){ echo 'Disabled';}?> >Edit Head Detail</button>
 						</div>
+					     <div class="btn-group" role="group"> 
+      					<button class="btn btn-primary btn-round btn-sm" type = submit  value = <?php echo $row->intMemberNo?>  name = 'View' >View</button>
+      					</div>	
+
 						<div class="btn-group" role="group">
 						<button type = button  class="btn btn-danger btn-round btn-sm"    onclick = "DecHead(this.value)" data-toggle="modal" data-target="#DeceasedModal"  value = <?php echo $row->intMemberNo?> name = 'HDec'  <?php if($row->strLifeStatus == 'Deceased'){ echo 'Disabled';}?> >Deceased</button>
 						</div>
 						</div><br><?php
-      				echo "Gender: ".$Gend."<br>";
-      				echo "Date of Birth: ".$row->dtBirthdate."<br>";
-      				echo "Contact Number: ".$row->strContactNo."<br>";
-      				echo "Occupation: ".$row->strOccupation."<br>";
-      				echo "SSS Number: ".$row->strSSSNo."<br>";
-      				echo "TIN Number: ".$row->strTINNo."<br>";
-					echo "Voter's Id: ".$row->strVotersId."<br>";
-					echo "Life Status: ".$row->strLifeStatus."<br>";
+      				echo "<font size = 3><strong>Gender:</strong></font><font size = 3> ".$Gend."</font><br>";
+      				echo "<font size = 3><strong>Date of Birth:</strong></font><font size = 3> ".$row->dtBirthdate."</font><br>";
+      				echo "<font size = 3><strong>Contact Number:</strong></font><font size = 3> ".$row->strContactNo."</font><br>";
+      				echo "<font size = 3><strong>Occupation:</strong></font><font size = 3> ".$row->strOccupation."</font><br>";
+					echo "<font size = 3><strong>Voter's Id:</strong></font><font size = 3> ".$row->strVotersId."</font><br>";
+					echo "<font size = 3><strong>Life Status:</strong></font><font size = 3> ".$row->strLifeStatus."</font><br><br>";
       				?>
       				<br><br>
       				<a class="btn btn-info btn-sm" href = 'AddSpouse.php' <?php

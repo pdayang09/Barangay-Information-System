@@ -130,8 +130,7 @@
   								$dt = str_replace("'", '', $dt);
   	
   								if(getimagesize($_FILES['image']['tmp_name']) == FALSE){
-
-
+									mysqli_query($con,"Set @a = 2;");
   								mysqli_query($con,"INSERT INTO `tblaccount`(`intForeignMemberNo`, `strUsername`, `strPassword`, `intForeignPositionId`, `strEmailAdd`, `dtStart`, `dtEnd`, `strStatus`) VALUES ('$id','$_User','$pass','$pos','$Email','$start','$end','Enabled')");
   								
   								echo "<script>alert('Successfully Inserted!');
@@ -140,10 +139,12 @@
   							}
 
   							else{
+							
   							$info = pathinfo($_FILES['image']['name']);
   							$ext = $info['extension']; // get the extension of the file(filename)
   							$newname = "$dt.".$ext;
   							$target = 'Images/OfficerSign/'.$newname;
+							mysqli_query($con,"Set @a = 2;");
   							mysqli_query($con,"INSERT INTO `tblaccount`(`intForeignMemberNo`, `strUsername`, `strPassword`, `intForeignPositionId`, `strEmailAdd`, `dtStart`, `dtEnd`, `strStatus`,`strSign`) VALUES ('$id','$_User','$pass','$pos','$Email','$start','$end','Enabled','$target')");
   							move_uploaded_file( $_FILES['image']['tmp_name'], $target);
   								echo "<script>alert('Successfully Inserted!');

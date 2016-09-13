@@ -63,7 +63,7 @@
 									?>
 								
 								<div class="checkbox">
-								<label><input type="checkbox" value="" name = "requirement" onclick="sample(this.checked, 'DRpurpose', 'DRdocReq', 'btnSubmit')">
+								<label><input type="checkbox" value="" name = "requirement" onclick="sample(this.checked, DRpurpose', 'DRdocReq', 'btnSubmit')">
 								<font face="cambria" size=4.5 color="black"><?php echo "$row->strRequirementName"?></label>
 								</div>
 								<?php
@@ -94,6 +94,11 @@
 									<input class="form-control input-group-lg reg_name" type="text" name="DRdocReq" title="system-generated" id='DRdocReq'  placeholder = "Family" value="<?php if(isset($_POST['DRdocReq'])){echo $_POST['DRdocReq'];}else{} ?>" disabled>
 									
 							</div>
+							<div class="col-sm-5">
+									<p><font face="cambria" size=5 color="grey"> Address </font></p>			
+									<input class="form-control input-group-lg reg_name" type="text" name="DRdocReq" title="system-generated" id='DRdocReq'  placeholder = "Family" value="<?php echo "$add"; ?>" disabled>
+									
+							</div>
 							<div class='col-sm-5'>
 								<?php
 								echo "<p><font face='cambria' size=5 color='grey'> Document Purpose </font></p>								
@@ -112,7 +117,7 @@
 							</div>
 							
 							<br><br><br><br><br><br><br><br>
-							<center><input type="submit" class="btn btn-success" name = "btnSubmit" id="btnSubmit" value = "Submit" disabled></center>
+							<center><input type="submit" class="btn btn-success" onclick = "return confirm('Do you want to save?')" name = "btnSubmit" id="btnSubmit" value = "Submit" disabled></center>
 							      	
 						
 						
@@ -137,7 +142,7 @@
 								}else{
 									document.getElementById(DRpurpose).disabled = true;
 									document.getElementById(DRdocReq).disabled = true;
-									document.getElementById(btnSubmit).disabled = true;
+									document.getElementById(btnSubmit).disabled = true;	
 								}
 							}
 							function sample2(bEnable,DRpurpose,DRdocReq, btnSubmit){
@@ -223,7 +228,7 @@
 								}
 									mysqli_query($con, "INSERT INTO `tblpaymentdetail` (`intNum`, `strRequestID`, `dblReqPayment`, `intRequestORNo`) VALUES (NULL, '$docIDPayment', '$purposePrice', '01');");
 									
-									echo "<script> window.location = 'DocumentRequestL.php';</script>";
+									//echo "<script> window.location = 'DocumentRequestL.php';</script>";
 							
 							}//if($saveRequest == true)
 							else{
@@ -244,9 +249,13 @@
 					
 						$_SESSION['clientID'] = $resid;
 						$_SESSION['name'] = $name;
-						$_SESSION['contactno'] = $contactno;
 						$_SESSION['place'] = $add;
+						$_SESSION['contactno'] = $contactno;
 						$_SESSION['document']  = $doc;//Type of document
+						$_SESSION['docPurpose']  = $docPurpose;
+						$_SESSION['DRdocReq']  = $DRdocReq;
+						$_SESSION['purposePrice']  = $purposePrice;
+						echo "<script> window.location = 'DRformSummary.php';</script>";
 				//echo Another module
 			}//IF(ISSET)
 		?>

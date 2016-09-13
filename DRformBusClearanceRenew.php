@@ -42,6 +42,8 @@
 		  $BusCateSQL = "SELECT strBusCatergory, strBusCateName, dblAmount FROM tblbusinesscate";
 		  $BusCateResult = mysqli_query($con, $BusCateSQL);
 		  
+		  $businessSignage = mysqli_query($con, "SELECT `strBusinessID`, `intSingleSignage`, `intSingleSize`, `intDoubleSignage`, `intDoubleSize` FROM `tblbusiness` WHERE `strBusinessID` = '$busID'");
+		  
 		?>
 	<section id="main-content">
 		<section class="wrapper site-min-height">
@@ -53,7 +55,7 @@
 					<form method = "POST" >
 			<div class="showback">
 				<font face="cambria" size=5 color="grey"><center><b>REQUIREMENTS</b></center></font>
-				<label><input type="checkbox" value="" id= "requirements" onclick="sample2(this.checked, 'contactPerson', 'contactNo', 'busDesc', 'btnSubmitU','SignageCheck', 'busLocation')">
+				<label><input type="checkbox" value="" id= "requirements" onclick="sample2(this.checked, 'contactPerson', 'contactNo', 'busDesc', 'btnSubmitU', 'busLocation','signSingle','signDouble')">
 							<font face="cambria" size=4.5 color="red"><?php echo " Select All"?></label>
 				
 						<form method="POST">
@@ -61,11 +63,11 @@
 							
 							<?php
 
-								$query = mysqli_query($con, "Select strRequirementName,intReqID from tbldocRequirements as a, tblrequirements as b,tblDocument where strReqId = intReqId and strDocName = 'Business Clearance New' and strDocId = intDocCode;");
+								$query = mysqli_query($con, "Select strRequirementName,intReqID from tbldocRequirements as a, tblrequirements as b,tblDocument where strReqId = intReqId and strDocName = 'Business Clearance Renewal' and strDocId = intDocCode;");
 								while($row = mysqli_fetch_object($query)){
 									?>
 									<div class="checkbox">
-								<label><input type="checkbox" value="" name = "requirement" onclick="sample(this.checked, 'contactPerson', 'contactNo',,'busDesc', 'btnSubmitU', 'SignageCheck', 'busLocation')">
+								<label><input type="checkbox" value="" name = "requirement" onclick="sample(this.checked, 'contactPerson', 'contactNo',,'busDesc', 'btnSubmitU', 'busLocation','signSingle','signDouble')">
 								<font face="cambria" size=4.5 color="black"><?php echo "$row->strRequirementName"?></label>
 								</div>
 								<?php
@@ -136,37 +138,97 @@
 							
 							<br><br><br><br><br><br><br><br><br><br>
 							<div class="col-sm-12">
-								 <label><br>
-									<p><b><input type="checkbox"  id="SignageCheck" value="" disabled onclick = "withSignage(this.checked, 'signSingle','signDouble','signageSize')"><font face="cambria" size=4.5 
-									color="grey" name="SignageCheck" > With Signage</b></font></p> 
-								  </label>	
-							</div>
-							<div id="hidden"> 	
-								<div class="col-sm-1"></div>
+								<table class="table">
+								<thead>
+								<tr>
+								<th><font face="cambria" size=4 color="grey">Signage Type</font></th>				
+								<th><font face="cambria" size=4 color="grey">Signage Size</font></th>
+								</tr></thead>
+			
+								<tbody>
+								<tr>
+								<td>
+								<?php
+									while($row = mysqli_fetch_row($businessSignage))
+									{
+										$intSingle = $row[1];
+										$singleSize = $row[2];
+										$intDouble = $row[3];
+									$doubleSize = $row[4];
+									}
+									
+								?>
 								
-								<div class="form-inline" role="form">
-									<p><font face="cambria" size=4 color="grey">Signage Type: &nbsp;&nbsp;&nbsp;&nbsp;</font>
-										<font size=3>
-											<label class="radio-inline">
-											<input type="radio" name="Signage" id="signSingle" value="Single-faced" disabled>Single-faced</label>&nbsp;&nbsp;&nbsp;&nbsp;
-											<label class="radio-inline">
-											<input type="radio" name="Signage" id="signDouble" value="Double-faced" disabled >Double-faced</label><br>
-										</font>
-									<div class="col-sm-1"></div>
-									<p><font face="cambria" size=4 color="grey">Signage Size: &nbsp;&nbsp;&nbsp;&nbsp;</font>
-									<input id="signageSize" class="form-control input-group-lg reg_name" type="number" name="signageSized" 
-									title="system-generated" placeholder="Square foot" id="signageSize"disabled><br>
-								</div>
+								<label class="radio-inline">
+								<input type="checkbox"  id="signSingle" value="s" name="signSingle" onchange = "SignageSingle(this.checked,'signageSingleSize')" disabled <?php if($intSingle==1) echo "checked"; else{}?>><font face="cambria" size=4.5 
+									color="grey" >Single-faced</label>
+									
+								</td>
+								<td>
+								
+								
+								<div class="col-sm-5">
+								<input id="signageSingleSize" class="form-control input-group-lg reg_name" type="number" name="signageSingleSize" title="system-generated" placeholder="Square foot" value="<?php echo "$singleSize";?>" <?php if($intSingle==1){}  else{echo "disabled";}?> >
+								
+								</div></td>
+								</tr>
+								<?php
+								while($row = mysqli_fetch_row($businessSignage))
+								{
+									
+								}
+								?>
+								
+								<tr>
+								<td>
+								<label class="radio-inline">
+								<input type="checkbox"  id="signDouble" value="d" name="signDouble" onclick = "SignageDouble(this.checked,'signageDoubleSize')" disabled <?php if($intDouble==1) echo "checked"; else{}?>><font face="cambria" size=4.5 
+									color="grey">Double-faced</label>
+								</td>
+								<td>
+								<div class="col-sm-5">
+								<input id="signageDoubleSize" class="form-control input-group-lg reg_name" type="number" name="signageDoubleSize" 
+									title="system-generated" placeholder="Square foot" id="signageSize" min="1" value="<?php echo "$doubleSize";?>" <?php if($intDouble==1){}  else{echo "disabled";}?>>
+								</div></td>
+								</tr>
+								
+								</tbody>
+								</table>	
 							</div>
+							<script language="javascript">
+							function withSignage(bEnable, signSingle,signDouble)
+							{
+
+								document.getElementById(signSingle).disabled = !bEnable;
+								document.getElementById(signDouble).disabled = !bEnable;
+								
+							}
+							function SignageSingle(bEnable, signageSingleSize)
+							{
+
+								document.getElementById(signageSingleSize).disabled = !bEnable;
+								document.getElementById(signageSingleSize).value = 0;
+								
+							}
+							function SignageDouble(bEnable, signageDoubleSize)
+							{
+
+								document.getElementById(signageDoubleSize).disabled = !bEnable;
+								document.getElementById(signageDoubleSize).value = 0;
+								
+							}
+							</script>
+							
 							<div class="col-sm-12"> <!-- text area -->
 								<p><font face="cambria" size=5 color="grey"> Description </font></p>			
 								<textarea class="form-control" rows="4" id="busDesc" name="busDesc" value = "<?php if(isset($_POST['busDesc'])){echo $_POST['busDesc'];}else{} ?>" disabled></textarea><br>
 							</div><br>
 							
-							<center><input type="submit" disabled id = "btnSubmitU" class="btn btn-success" name = "btnSubmit" value = "Submit"></center>
+							<center><input type="submit" disabled id = "btnSubmitU" class="btn btn-success" name = "btnSubmit" value = "Submit"onclick = "return confirm('Do you want to save?')"></center>
 							
 							<!-- Javascript for checkbox in Location-->
 							<script language="javascript">
+							
 								function enableDisable(bEnable, busLoc)
 								{
 									document.getElementById(busLoc).disabled = !bEnable;
@@ -181,7 +243,8 @@
 								document.getElementById(signageSize).disabled = !bEnable;
 								
 							}//'contactPerson', 'contactNo', 'busDesc', 'btnSubmitU','chkAdd','SignageCheck', 'busLocation'
-							function sample(bEnable,contactPerson,contactNo, busDesc,btnSubmitU, SignageCheck, busLocation){
+							
+							function sample(bEnable,contactPerson,contactNo, busDesc,btnSubmitU, busLocation, signSingle,signDouble){
 								var isSelected = 0;
 								var o = document.getElementById("Form1").getElementsByTagName("input");
 								var max = o.length;
@@ -197,8 +260,9 @@
 									document.getElementById(contactNo).disabled = !bEnable;
 									document.getElementById(btnSubmitU).disabled = !bEnable;
 									document.getElementById(busDesc).disabled = !bEnable;
-									document.getElementById(SignageCheck).disabled = !bEnable;
 									document.getElementById(busLocation).disabled = !bEnable;
+									document.getElementById(signSingle).disabled = !bEnable;
+									document.getElementById(signDouble).disabled = !bEnable;
 									
 									
 									  
@@ -207,12 +271,13 @@
 									document.getElementById(contactNo).disabled = true;
 									document.getElementById(busDesc).disabled = true;
 									document.getElementById(btnSubmitU).disabled = true;
-									document.getElementById(busDesc).disabled = true;
-									document.getElementById(SignageCheck).disabled = true;
+									document.getElementById(signSingle).disabled = true;
 									document.getElementById(busLocation).disabled = true;
+									document.getElementById(signDouble).disabled = true;
+									
 								}
 							}
-							function sample2(bEnable,contactPerson,contactNo, busDesc,btnSubmitU, SignageCheck, busLocation){
+							function sample2(bEnable,contactPerson,contactNo, busDesc,btnSubmitU, busLocation, signSingle,signDouble){
 								var o = document.getElementById("Form1").getElementsByTagName("input");
 								var max = o.length;
 								if(bEnable){
@@ -226,8 +291,9 @@
 									document.getElementById(contactNo).disabled = !bEnable;
 									document.getElementById(btnSubmitU).disabled = !bEnable;
 									document.getElementById(busDesc).disabled = !bEnable;
-									document.getElementById(SignageCheck).disabled = !bEnable;
 									document.getElementById(busLocation).disabled = !bEnable;
+									document.getElementById(signSingle).disabled = !bEnable;
+									document.getElementById(signDouble).disabled = !bEnable;
 								})();
 
 								}else{
@@ -244,8 +310,10 @@
 									document.getElementById(busDesc).disabled = true;
 									document.getElementById(btnSubmitU).disabled = true;
 									document.getElementById(busDesc).disabled = true;
-									document.getElementById(SignageCheck).disabled = true;
+									document.getElementById(signSingle).disabled = true;
 									document.getElementById(busLocation).disabled = true;
+									document.getElementById(signDouble).disabled = true;
+									
 								}
 							}
 						</script>
@@ -292,8 +360,57 @@
 						require("connection.php");
 						
 						//Update tblbusiness first
-						$saveBusinessSQL = "UPDATE `tblbusiness` SET `strBusinessDesc` = '$busDesc', `strBusinessLocation` = '$busLoc', `strBusinessContactPerson` = '$contactPerson', `strContactNum` = '$contactNo' WHERE `tblbusiness`.`strBusinessID` = '$busID';";
-					
+						// `intSingleSignage` = '11', `intSingleSize` = '101', `intDoubleSize` = '101' WHERE `tblbusiness`.`strBusinessID` = 5;
+						 $BusCatePriceSQL = "SELECT strBusCatergory, strBusCateName, dblAmount FROM tblbusinesscate WHERE strBusCatergory = '$busCategory'";
+						$BusCatePrice = mysqli_query($con, $BusCatePriceSQL);
+						while($row = mysqli_fetch_row($BusCatePrice))
+						{
+								$busCatePrice = $row[2];
+						}
+						$saveBusinessSQL = "UPDATE `tblbusiness` SET `strBusinessDesc` = '$busDesc', `strBusinessLocation` = 'Carolina Street, Purok 2', `strBusinessContactPerson` = '$contactPerson', `strContactNum` = '$contactNo', ';";
+						
+						if (isset($_POST['signSingle']) && ($_POST['signSingle'] == "s") && $signageSingleSize != NULL) 
+							{
+								$getSinglePrice = mysqli_query($con, "SELECT `strSignagePrice` FROM `tblbusinesssignage` WHERE `strSignageType` = 'Single-faced'");
+								while($row = mysqli_fetch_row($getSinglePrice))
+								{
+									$SinglePrice = $row[0];
+								}
+								$finalSingle = $SinglePrice * $signageSingleSize;
+								$saveBusinessSQL .= "`intSingleSignage` = '1', `intSingleSize` = '".$signageSingleSize."', ";
+								echo"<script> alert('$finalSingle')</script>";
+							} else 
+							{
+								$saveBusinessSQL .= "'0', '0', ";
+								$finalSingle = 0;
+								//echo"<script> alert('!S')</script>";
+							}
+							
+							if (isset($_POST['signDouble']) && ($_POST['signDouble'] == "d") && ($signageDoubleSize != NULL )) 
+							{
+								$getDoublePrice = mysqli_query($con, "SELECT `strSignagePrice` FROM `tblbusinesssignage` WHERE `strSignageType` = 'Double-faced'");
+								while($row = mysqli_fetch_row($getDoublePrice))
+								{
+									$DoublePrice = $row[0];
+								}
+								$finalDouble = $DoublePrice * $signageDoubleSize;
+								$saveBusinessSQL .= "'1', '".$signageDoubleSize."');";
+								//echo"<script> alert('$finalDouble')</script>";
+							} else {
+								$saveBusinessSQL .= "'0', '');";
+								$finalDouble = 0;
+								//echo"<script> alert('!D')</script>";
+							}
+							/*if((($_POST['signSingle'] != "s") && $signageSingleSize == NULL)  && (($_POST['signDouble'] != "d") && $signageDoubleSize == NULL))
+							{
+								$getbusPrice = $busCatePrice;
+							}*/
+						$busPrice = $busCatePrice + $finalSingle + $finalDouble;
+						//echo"<script> alert('$busPrice')</script>";
+						
+						
+						
+						
 						//Save business details
 						$saveBusiness = mysqli_query($con, $saveBusinessSQL);
 					
@@ -308,7 +425,7 @@
 					{
 						
 						//Update tblbusinessstat
-						$saveBusStatSQL = "INSERT INTO `tblbusinessstat` (`strBusStatID`, `strBusinessID`, `strBSbusinessStat`, `strBusOwnerID`, `datBCStat`, `strClearanceStat`) VALUES (NULL, '$busID', 'Renewal', '$clientId', NOW(), 'Unpaid' );";
+						$saveBusStatSQL = "INSERT INTO `tblbusinessstat` (`strBusStatID`, `strBusinessID`, `strBSbusinessStat`, `intBusinessDoc`, `strBusOwnerID`, `datBCStat`, `strClearanceStat`) VALUES (NULL, '$busID', 'Renewal', '7', '$clientId', NOW(), 'Unpaid' );";
 						$saveBusStat = mysqli_query($con, $saveBusStatSQL);
 						
 						
@@ -355,6 +472,9 @@
 							$_SESSION['document']  = $doc;//Type of document
 							echo "<script> window.location = 'DocumentRequestL.php';</script>";
 						}
+					}
+					else{
+						echo"<script> alert('Not save')</script>";
 					}
 				
 			}//IF(ISSET)

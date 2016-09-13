@@ -117,7 +117,7 @@
 							</div>
 							
 							<br><br><br><br><br><br><br><br><br><br><br>
-							<center><input id="btnSubmit" type="submit" class="btn btn-success" name = "btnSubmit" value = "Submit" disabled></center>
+							<center><input id="btnSubmit" type="submit" class="btn btn-success" onclick = "return confirm('Do you want to save?')" name = "btnSubmit" value = "Submit" disabled></center>
 
 						
 						<script language="javascript">

@@ -89,6 +89,13 @@
 							</div>
 							<br><br>
 							<div class='col-sm-6'>
+								<font face="cambria" size=5 color="grey">Address
+							</font>					
+								<input id='' class='form-control input-group-lg reg_name' type='text' name="DRpurpose" title='system-generated' placeholder="Purpose" value = "<?php echo "$add"; ?>" disabled required>
+							 </p>
+							 
+							</div>
+							<div class='col-sm-6'>
 								<font face="cambria" size=5 color="grey"> Purpose 
 							</font>					
 								<input id='DRpurpose' class='form-control input-group-lg reg_name' type='text' name="DRpurpose" title='system-generated' placeholder="Purpose" value = "" disabled required>
@@ -146,7 +153,7 @@
 						</script>
 						</div>
 						<br><br><br><br>
-						<center><input type="submit" class="btn btn-success" name = "btnSubmit" id="btnSubmit" value = "Submit" disabled></center>
+						<center><input type="submit" class="btn btn-success" onclick = "return confirm('Do you want to save?')" name = "btnSubmit" id="btnSubmit" value = "Submit" disabled></center>
 						</form>
 						
 					</div>
@@ -187,19 +194,24 @@
 					
 					mysqli_query($con, "INSERT INTO `tblpaymentdetail`(`strRequestID`, `dblReqPayment`, `intRequestORNo`) VALUES ('$docIDPayment','$purposePrice', '0');");
 					
-					echo "<script> window.location = 'DocumentRequestL.php';</script>";
+					//echo "<script> window.location = 'DocumentRequestL.php';</script>";
 					}else
 						echo "<script>alert('".mysqli_error($con)."');</script>";
 					
 					
-					$_SESSION['clientID'] = $resid;
-					$_SESSION['name'] = $name;
-					$_SESSION['contactno'] = $contactno;
-					$_SESSION['place'] = $add;
-					$_SESSION['document']  = $doc;//Type of document
+					
 					
 				}//else
-					
+					$_SESSION['clientID'] = $resid;
+						$_SESSION['name'] = $name;
+						$_SESSION['contactno'] = $contactno;
+						$_SESSION['place'] = $add;
+						$_SESSION['document']  = $doc;//Type of document
+						$_SESSION['docPurpose']  = $docPurpose;
+						$_SESSION['DRdocReq']  = $DRdocReq;
+						$_SESSION['purposePrice']  = $purposePrice;
+						echo "<script>alert('Request Saved.');</script>";
+						echo "<script> window.location = 'DRformSummary.php';</script>";
 					
 				//echo Another module
 			}//IF(ISSET)

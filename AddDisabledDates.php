@@ -315,6 +315,7 @@
   
 
         <?php 
+            require_once("refHolidays.php");
       		$arrDisabledDates[] = array(); 
             $arrTemp[] = array();
             //$arrDisabledDates = [''];   

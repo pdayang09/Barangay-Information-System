@@ -49,15 +49,18 @@
 			  <?php
 				if(isset($_POST['btnAdd'])){
 					 $strPrice = (double)$_POST['Price'];
+					 $ID = $_POST['btnAdd'];
 					if($strPrice == NULL ){
 						$strPrice = 0;
 					}
 					else{
 						require('connection.php');
-						$g = mysqli_query($con,"UPDATE `tblbusinesssignage` SET `strSignagePrice`='$strPrice' WHERE tblbusinesssignage = 'ID'");
+						  	mysqli_query($con,"Set @a = 2;");
+						$g = mysqli_query($con,"UPDATE `tblbusinesssignage` SET `strSignagePrice`='$strPrice' WHERE ID = '$ID'");
 						
 						
-						echo "<script>alert('Success');</script>";
+						echo "<script>alert('Success');
+						window.location = 'SignageMaintenance.php';</script>";
 						}
 						
 					}				

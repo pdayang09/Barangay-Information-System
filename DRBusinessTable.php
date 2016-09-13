@@ -76,10 +76,7 @@
 			
 			<tbody>
 			<?php
-			$docReqPaymentSQL = "SELECT BALL.strBusinessID, BALL.strBusinessName, BALL.strBusCateName, BALL.strBusinessLocation, BALL.strBSbusinessStat, BALL.datBCStat FROM (SELECT b.strBusinessID, b.strBusinessName, bc.strBusCateName, b.strBusinessLocation, bs.strBSbusinessStat, bs.datBCStat FROM tblbusiness b INNER JOIN tblbusinesscate bc ON b.strBusinessCateID = bc.strBusCatergory INNER JOIN tblbusinessstat bs ON b.strBusinessID = bs.strBusinessID WHERE bs.`strBusOwnerID` = '$resId'
-			UNION
-			SELECT b.strBusinessID, b.strBusinessName, bc.strBusCateName, b.strBusinessLocation, bs.strBSbusinessStat, bs.datBCStat FROM tblbusiness b INNER JOIN tblbusinesscate bc ON b.strBusinessCateID = bc.strBusCatergory INNER JOIN tblbusinessstat bs ON b.strBusinessID = bs.strBusinessID INNER JOIN tblapplicant a ON a.strApplicantID = bs.strBusOwnerID WHERE bs.`strBusOwnerID` LIKE '%$resId%') BALL
-			GROUP BY BALL.strBusinessID, BALL.strBusinessName, BALL.strBusCateName, BALL.strBusinessLocation, BALL.strBSbusinessStat, BALL.datBCStat";
+			$docReqPaymentSQL = "SELECT b.strBusinessID, b.strBusinessName, bc.strBusCateName, b.strBusinessLocation, bs.strBSbusinessStat, bs.datBCStat FROM tblbusiness b INNER JOIN tblbusinesscate bc ON b.strBusinessCateID = bc.strBusCatergory INNER JOIN tblbusinessstat bs ON b.strBusinessID = bs.strBusinessID WHERE bs.`strBusOwnerID` = '$resId' AND bs.strBusStatID = (SELECT `strBusStatID` FROM `tblbusinessstat` WHERE 1 ORDER BY `strBusStatID` DESC LIMIT 1)";
 			
 			$docReqPayment = mysqli_query($con, $docReqPaymentSQL);
 			while($row = mysqli_fetch_array($docReqPayment)){?>

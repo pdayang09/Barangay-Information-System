@@ -86,12 +86,14 @@
 				}				
 				if(isset($_POST['btnDelete'])){
 					$a = $_POST['btnDelete'];
+					 	mysqli_query($con,"Set @a = 2;");
 					mysqli_query($con,"Update tblBusinessCate set strStatus = 'Disabled' where strBusCatergory = '$a'");
 				echo "<script>
 					window.location ='BusinessCat.php';</script>";
 				}
 		if(isset($_POST['btnEnable'])){
 				$a = $_POST['btnEnable'];
+				 	mysqli_query($con,"Set @a = 2;");
 				mysqli_query($con,"Update tblBusinessCate set strStatus = 'Enabled' where strBusCatergory = '$a'");
 				echo "<script>
 					window.location ='BusinessCat.php';</script>";

@@ -1,18 +1,6 @@
- <?php session_start();?>
-<!DOCTYPE html>
-    <?php require('header.php');?>
-    <?php require('sidebar.php');?>
-      
-      <!-- **********************************************************************************************************************************************************
-      MAIN CONTENT
-      *********************************************************************************************************************************************************** -->
-      <!--main content start-->
-      <section id="main-content">
-        <section class="wrapper site-min-height">
-		
-		
-		<?php
-		
+
+	<?php
+	require("connection.php");	
 	//Initialize variables
 	
 	//Gets Today's Date
@@ -36,24 +24,7 @@
 	$payment = 0;
 	$balance =0;
 ?>
-
-    <div id="wrapper">
-    <!--?php include('Nav.php')?>
-
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <div class="container-fluid">
-			
-                <div class="row">
-                    <div class="col-lg-12">
-					
-							<div class = "bodybody">	
-								<div class="panel-body">
-		
-		
-		
-		<legend ><font face = "cambria" size = 10 color = "grey">  </font></legend>
-		
+	
 		<!-- Search Section-->
 		<div class="form-group">
 			<div class="col-sm-3">
@@ -135,75 +106,6 @@
 				 
 			}
 ?>
-					
-								</div> <!-- panel-body -->
 								
-	</form> 
-							</div> <!-- bodybody -->			
-						</div> <!-- col-lg-12 -->
-					</div> <!-- class=row -->
-				</div> <!-- container-fluid -->
-			</div> <!-- page-content-wrapper -->
-		</div> <!-- wrapper -->
+	</form> 	
 		
-		
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
-    <!-- Menu Toggle Script -->
-    <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-    </script>
-
-		
-		</section><! --/wrapper -->
-      </section><!-- /MAIN CONTENT -->
-
-<script>	 
-function search(val){
-	var a = document.getElementById('searchr').value;
-
-	$.ajax({
-		type: "POST",
-		url: "gettable1.php",
-		data: 'sid=' + a +'&bid='+val,
-		success: function(data){
-			//alert(data);
-			$("#tablestreet").html(data);
-		}		
-	});
-}
-      $(function(){
-          $('select.styled').customSelect();
-      });
-
-  </script>
-  
- 	<script>
-      //custom select box
-function select(val){
-	var a = document.getElementById('searchr').value;
-
-	$.ajax({
-		type: "POST",
-		url: "getTreasurer.php",
-		data: 'sid=' + a +'&bid='+val,
-		success: function(data){
-			//alert(data);
-			$("#tablestreet").html(data);
-		}		
-	});
-}
-      $(function(){
-          $('select.styled').customSelect();
-      });
-
-  </script>
-
-<?php require("footer.php"); ?>

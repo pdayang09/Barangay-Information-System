@@ -34,7 +34,7 @@
 					<form method = "POST" >
 			<div class="showback">
 				<font face="cambria" size=5 color="grey"><center><b>REQUIREMENTS</b></center></font>
-				<label><input type="checkbox" value="" id= "requirements" onclick="sample2(this.checked,'busName', 'contactPerson', 'contactNo','busCategoryID','busDesc', 'btnSubmitU','SignageCheck', 'busLocation')">
+				<label><input type="checkbox" value="" id= "requirements" onclick="sample2(this.checked,'busName', 'contactPerson', 'contactNo','busCategoryID','busDesc', 'btnSubmitU', 'busLocation', 'signSingle','signDouble')">
 							<font face="cambria" size=4.5 color="red"><?php echo " Select All"?></label>
 				
 						<form method="POST">
@@ -46,7 +46,7 @@
 								while($row = mysqli_fetch_object($query)){
 									?>
 									<div class="checkbox">
-								<label><input type="checkbox" value="" name = "requirement" onclick="sample(this.checked,'busName', 'contactPerson', 'contactNo','busCategoryID','busDesc', 'btnSubmitU', 'SignageCheck', 'busLocation')">
+								<label><input type="checkbox" value="" name = "requirement" onclick="sample(this.checked,'busName', 'contactPerson', 'contactNo','busCategoryID','busDesc', 'btnSubmitU', 'busLocation', 'signSingle','signDouble')">
 								<font face="cambria" size=4.5 color="black"><?php echo "$row->strRequirementName"?></label>
 								</div>
 								<?php
@@ -115,10 +115,7 @@
 							
 							<br><br><br><br>
 							<div class="col-sm-12">
-								 <label><br>
-									<p><b><input type="checkbox"  id="SignageCheck" value="" disabled onclick = "withSignage(this.checked, 'signSingle','signDouble')"><font face="cambria" size=4.5 
-									color="grey" name="SignageCheck" > With Signage</b></font></p> 
-								  </label>	
+								 
 								  <table class="table">
 								<thead>
 								<tr>
@@ -131,7 +128,7 @@
 								<td>
 								
 								<label class="radio-inline">
-								<input type="checkbox"  id="signSingle" value="1" name="signSingle" onclick = "SignageSingle(this.checked,'signageSingleSize')" disabled ><font face="cambria" size=4.5 
+								<input type="checkbox"  id="signSingle" value="s" name="signSingle" onclick = "SignageSingle(this.checked,'signageSingleSize')" disabled ><font face="cambria" size=4.5 
 									color="grey">Single-faced</label></td>
 								<td>
 								<div class="col-sm-5">
@@ -143,7 +140,7 @@
 								<tr>
 								<td>
 								<label class="radio-inline">
-								<input type="checkbox"  id="signDouble" value="1" name="signDouble" onclick = "SignageDouble(this.checked,'signageDoubleSize')" disabled ><font face="cambria" size=4.5 
+								<input type="checkbox"  id="signDouble" value="d" name="signDouble" onclick = "SignageDouble(this.checked,'signageDoubleSize')" disabled ><font face="cambria" size=4.5 
 									color="grey">Double-faced</label>
 								</td>
 								<td>
@@ -152,7 +149,7 @@
 									title="system-generated" placeholder="Square foot" id="signageSize" min="1" disabled>
 								</div></td>
 								</tr>
-		
+								
 								</tbody>
 								</table>
 							</div>
@@ -187,7 +184,7 @@
 								<textarea class="form-control" rows="4" id="busDesc" name="busDesc" disabled></textarea><br>
 							</div><br><br><br><br>
 							
-							<center><input type="submit" disabled id = "btnSubmitU" class="btn btn-success" name = "btnSubmit" value = "Submit"></center>
+							<center><input type="submit" disabled id = "btnSubmitU" onclick = "return confirm('Do you want to save?')" class="btn btn-success" name = "btnSubmit" value = "Submit"></center>
 							
 
 							
@@ -196,14 +193,8 @@
 							<script language="javascript">
 								
 								
-							function withSignage(bEnable, signSingle,signDouble,signageSize)
-							{
-
-								document.getElementById(signSingle).disabled = !bEnable;
-								document.getElementById(signDouble).disabled = !bEnable;
-								
-							}
-							function sample(bEnable,busName,contactPerson,contactNo,busCategoryID, busDesc, btnSubmitU, SignageCheck, busLocation){ 
+							
+							function sample(bEnable,busName,contactPerson,contactNo,busCategoryID, busDesc, btnSubmitU, busLocation,signSingle,signDouble){ 
 								var isSelected = 0;
 								var o = document.getElementById("Form1").getElementsByTagName("input");
 								var max = o.length;
@@ -221,9 +212,9 @@
 									document.getElementById(busCategoryID).disabled = !bEnable;
 									document.getElementById(btnSubmitU).disabled = !bEnable;
 									document.getElementById(busDesc).disabled = !bEnable;
-									document.getElementById(SignageCheck).disabled = !bEnable;
 									document.getElementById(busLocation).disabled = !bEnable;
-									
+									document.getElementById(signSingle).disabled = !bEnable;
+									document.getElementById(signDouble).disabled = !bEnable;
 									
 									  
 								}else{
@@ -233,12 +224,12 @@
 									document.getElementById(busCategoryID).disabled = true;
 									document.getElementById(busDesc).disabled = true;
 									document.getElementById(btnSubmitU).disabled = true;
-									document.getElementById(busDesc).disabled = true;
-									document.getElementById(SignageCheck).disabled = true;
 									document.getElementById(busLocation).disabled = true;
+									document.getElementById(signSingle).disabled = true;
+									document.getElementById(signDouble).disabled = true;
 								}
 							}
-							function sample2(bEnable,busName,contactPerson,contactNo,busCategoryID,busDesc,btnSubmitU,SignageCheck, busLocation){
+							function sample2(bEnable,busName,contactPerson,contactNo,busCategoryID,busDesc,btnSubmitU, busLocation,signSingle,signDouble){
 								var o = document.getElementById("Form1").getElementsByTagName("input");
 								var max = o.length;
 								if(bEnable){
@@ -254,8 +245,8 @@
 									document.getElementById(busCategoryID).disabled = !bEnable;
 									document.getElementById(btnSubmitU).disabled = !bEnable;
 									document.getElementById(busDesc).disabled = !bEnable;
-									document.getElementById(SignageCheck).disabled = !bEnable;
-									document.getElementById(busLocation).disabled = !bEnable;
+									document.getElementById(signSingle).disabled = !bEnable;
+									document.getElementById(signDouble).disabled = !bEnable;
 								})();
 
 								}else{
@@ -273,9 +264,9 @@
 									document.getElementById(busCategoryID).disabled = true;
 									document.getElementById(busDesc).disabled = true;
 									document.getElementById(btnSubmitU).disabled = true;
-									document.getElementById(busDesc).disabled = true;
-									document.getElementById(SignageCheck).disabled = true;	
 									document.getElementById(busLocation).disabled = true;
+									document.getElementById(signSingle).disabled = true;	
+									document.getElementById(signDouble).disabled = true;
 								}
 							}
 						</script>
@@ -295,8 +286,9 @@
 				//$Signage = $signageSize = "";
 				//Para walang error sa declaration ng mga variables :(
 				$busDesc = $_POST['busDesc'];
-				$signageSingleSize = isset($_POST['Signage']) ? $_POST['Signage'] : '';
-				$signageDoubleSize = isset($_POST['Signage']) ? $_POST['Signage'] : '';
+				$signageSingleSize = isset($_POST['signageSingleSize']) ? $_POST['signageSingleSize'] : '';
+				$signageDoubleSize = isset($_POST['signageDoubleSize']) ? $_POST['signageDoubleSize'] : '';
+				
 				//$Signage= isset($_POST['Signage']) ? $_POST['Signage'] : '';
 				//$signageSize = isset($_POST['signageSized']) ? $_POST['signageSized'] : '';
 				$contactPerson = isset($_POST['contactPerson']) ? $_POST['contactPerson'] : '';
@@ -326,109 +318,90 @@
 						$saveBusiness = "";
 						//Getting the price of bus category + SIGNAGE IF MERON
 						$BusCatePriceSQL = "SELECT strBusCatergory, strBusCateName, dblAmount FROM tblbusinesscate WHERE strBusCatergory = '$busCategory'";
-							$BusCatePrice = mysqli_query($con, $BusCatePriceSQL);
-							while($row = mysqli_fetch_row($BusCatePrice))
-							{
-									$busCatePrice = $row[2];
-							}
-							//if may signage
-							if($signageSingleSize == NULL && $signageDoubleSize == NULL)
-							{
-								$busPrice = $busCatePrice;
-								
-							}/*
-							else if($signageSingleSize != NULL && $signageDoubleSize == NULL)
-							{
-								$signageTypeSQL = "SELECT `strSignagePrice` FROM `tblbusinessSignage` WHERE `strSignageType` LIKE '%Single%';";
-								$signageType = mysqli_query($con, $signageTypeSQL);
-								while($row = mysqli_fetch_row($signageType))
-								{
-									$signagePrice = $row[0];
-								}
-								$signagePriceSum = $signageSingleSize * $signagePrice;
-								$busPrice = $signagePriceSum + $busCatePrice;
-								echo"<script> alert('$busPrice')</script>";
-							}
-							else if($signageSingleSize == NULL && $signageDoubleSize != NULL)
-							{
-								//if (nakacheck ung wth signage)
-								$signageTypeSQL = "SELECT `strSignagePrice` FROM `tblbusinessSignage` WHERE `strSignageType` LIKE '%Double%';";
-								$signageType = mysqli_query($con, $signageTypeSQL);
-								while($row = mysqli_fetch_row($signageType))
-								{
-									$signagePrice = $row[0];
-								}
-								$signagePriceSum = $signageDoubleSize * $signagePrice;
-								$busPrice = $signagePriceSum + $busCatePrice;
-								echo"<script> alert('$busPrice')</script>";
-							}
-							else if($signageSingleSize != NULL && $signageDoubleSize != NULL)
-							{
-								$signageSingleQL = "SELECT `strSignagePrice` FROM `tblbusinessSignage` WHERE `strSignageType` LIKE '%Single%';";
-								$singlePrice = mysqli_query($con, $signageSingleQL);
-								while($row = mysqli_fetch_row($singlePrice))
-								{
-									$signageSinglePrice = $row[0];
-								}
-								$signageDoubleSQL = "SELECT `strSignagePrice` FROM `tblbusinessSignage` WHERE `strSignageType` LIKE '%Double%';";
-								$doublePrice = mysqli_query($con, $signageDoubleSQL);
-								while($row = mysqli_fetch_row($doublePrice))
-								{
-									$signageDoublePrice = $row[0];
-								}
-								$totalSingle = $signageSinglePrice * $signageSingleSize;
-								
-								$totalDouble = $signageDoubleSize * $signageDoublePrice;
-								$totalSignage = $totalSingle + $totalDouble;
-								$busPrice = $totalSignage + $busCatePrice;
-								echo"<script> alert('$busPrice')</script>";
-							}
-							else{}
-							*/
+						$BusCatePrice = mysqli_query($con, $BusCatePriceSQL);
+						while($row = mysqli_fetch_row($BusCatePrice))
+						{
+								$busCatePrice = $row[2];
+						}
+							
+						//$busPrice = $busCatePrice;
 						
+						//s = 1500 d = 2500 b= 1000$signageSingleSize = $_POST['signageSingleSize'];$signageDoubleSize = $_POST['signageDoubleSize'];
+						$saveBusinessSQL = "INSERT INTO `tblbusiness` (`strBusinessID`, `strBusinessName`, `strBusinessCateID`, `strBusinessDesc`, `strBusinessLocation`, `strBusinessContactPerson`, `strContactNum`, `intSingleSignage`, `intSingleSize`, `intDoubleSignage`, `intDoubleSize`) VALUES (NULL, '$busName', '$busCategory', '$busDesc', '$busLoc', '$contactPerson', '$contactNo',";
+						//".$sqlSingle.",".$sqlDouble.");";
 						
-						
-						
+						if (isset($_POST['signSingle']) && ($_POST['signSingle'] == "s") && $signageSingleSize != NULL) 
+							{
+								$getSinglePrice = mysqli_query($con, "SELECT `strSignagePrice` FROM `tblbusinesssignage` WHERE `strSignageType` = 'Single-faced'");
+								while($row = mysqli_fetch_row($getSinglePrice))
+								{
+									$SinglePrice = $row[0];
+								}
+								$finalSingle = $SinglePrice * $signageSingleSize;
+								$saveBusinessSQL .= "'1', '".$signageSingleSize."', ";
+								echo"<script> alert('$finalSingle')</script>";
+							} else 
+							{
+								$saveBusinessSQL .= "'0', '', ";
+								$finalSingle = 0;
+								//echo"<script> alert('!S')</script>";
+							}
+							
+							if (isset($_POST['signDouble']) && ($_POST['signDouble'] == "d") && ($signageDoubleSize != NULL )) 
+							{
+								$getDoublePrice = mysqli_query($con, "SELECT `strSignagePrice` FROM `tblbusinesssignage` WHERE `strSignageType` = 'Double-faced'");
+								while($row = mysqli_fetch_row($getDoublePrice))
+								{
+									$DoublePrice = $row[0];
+								}
+								$finalDouble = $DoublePrice * $signageDoubleSize;
+								$saveBusinessSQL .= "'1', '".$signageDoubleSize."');";
+								//echo"<script> alert('$finalDouble')</script>";
+							} else {
+								$saveBusinessSQL .= "'0', '');";
+								$finalDouble = 0;
+								//echo"<script> alert('!D')</script>";
+							}
+							/*if((($_POST['signSingle'] != "s") && $signageSingleSize == NULL)  && (($_POST['signDouble'] != "d") && $signageDoubleSize == NULL))
+							{
+								$getbusPrice = $busCatePrice;
+							}*/
+						$busPrice = $busCatePrice + $finalSingle + $finalDouble;
+						//echo"<script> alert('$busPrice')</script>";
+						//if may signage
+							
+							
+							/*
+						/*
 						//Update tblbusiness first
-						/*$saveBusinessSQL = INSERT INTO `tblbusiness` (`strBusinessID`, `strBusinessName`, `strBusinessCateID`, `strBusinessDesc`, `strBusinessLocation`, `strBusinessContactPerson`, `strContactNum`, `intSignageSingle`, `intSingleSize`, `intSignageDouble`, `intDoubleSize`) VALUES (NULL, 'GG COFFEE SHOP', '1', '', 'Carolina Street, Dies', 'Ala', '798456', '";
-						if (isset($_POST['signSingle']) && ($signageSingleSize != NULL )) {
-						$saveBusinessSQL .= "'1','".$signageSingleSize.",";
-						} else {
-						$saveBusinessSQL .= "'0','',";
-						}
-						if (isset($_POST['signDouble']) && ($signageDoubleSize != NULL )) {
-						$saveBusinessSQL .= "'1','".$signageDoubleSize.");";
-						} else {
-						$saveBusinessSQL .= "'0','');";
-						}
-						$saveBusinessSQL .= "'1', '20', '1', '20');*/
+						/*$saveBusinessSQL = INSERT INTO `tblbusiness` (`strBusinessID`, `strBusinessName`, `strBusinessCateID`, `strBusinessDesc`, `strBusinessLocation`, `strBusinessContactPerson`, `strContactNum`, `intSingleSignage`, `intSingleSize`, `intDoubleSignage`, `intDoubleSize`) VALUES (NULL, '$busName', '$busCategory', '', '$busLoc', '$contactPerson', '$contactNo', ".$sqlSingle.$sqlDouble.");
+						INSERT INTO `tblbusiness` (`strBusinessID`,`strBusinessName`, `strBusinessCateID`, `strBusinessDesc`, `strBusinessLocation`, `strBusinessContactPerson`, `strContactNum`) VALUES (NULL, '$busName', '$busCategory', '$busDesc', '$busLoc', '$contactPerson', '$contactNo');*/
 						
-						$saveBusinessSQL = "INSERT INTO `tblbusiness` (`strBusinessID`,`strBusinessName`, `strBusinessCateID`, `strBusinessDesc`, `strBusinessLocation`, `strBusinessContactPerson`, `strContactNum`) VALUES (NULL, '$busName', '$busCategory', '$busDesc', '$busLoc', '$contactPerson', '$contactNo');";
-					
+						
+					//echo"<script> alert('$saveBusinessSQL')</script>";
 						//Save business details
 						$saveBusiness = mysqli_query($con, $saveBusinessSQL);
 						if($saveBusiness == true)//if nagsave go here
 						{
-						//Get last busID
-						$lastID = mysqli_query($con, "SELECT `strBusinessID` FROM `tblbusiness` WHERE 1 ORDER BY `strBusinessID` DESC LIMIT 1");
-						while($row = mysqli_fetch_row($lastID))
-						{
-							$lastBusID = $row[0];
-						}
+							//Get last busID
+							$lastID = mysqli_query($con, "SELECT `strBusinessID` FROM `tblbusiness` WHERE 1 ORDER BY `strBusinessID` DESC LIMIT 1");
+							while($row = mysqli_fetch_row($lastID))
+							{
+								$lastBusID = $row[0];
+							}
 						
-						//Update tblbusinessstat
-						$saveBusStatSQL = "INSERT INTO `tblbusinessstat` (`strBusStatID`, `strBusinessID`, `strBSbusinessStat`, `strBusOwnerID`, `datBCStat`, `strClearanceStat`) VALUES (NULL, '$lastBusID', 'New', '$clientId', NOW(), 'Unpaid' );";
-						$saveBusStat = mysqli_query($con, $saveBusStatSQL);
-						
-						
-						//echo"<script> alert('$busPrice')</script>"; 
+							//Update tblbusinessstat
+							$saveBusStatSQL = "INSERT INTO `tblbusinessstat` (`strBusStatID`, `strBusinessID`, `strBSbusinessStat`, `intBusinessDoc`, `strBusOwnerID`, `datBCStat`, `strClearanceStat`) VALUES (NULL, '$lastBusID', 'New', '3', '$clientId', NOW(), 'Unpaid' );";
+							$saveBusStat = mysqli_query($con, $saveBusStatSQL);
 						
 						
+							 
 						
-						if($saveBusStat == true)
-						{
-							
-							echo"<script> alert('$busCatePrice')</script>";
+						
+						
+							if($saveBusStat == true)
+							{
+								echo"<script> alert('$busCatePrice')</script>";
 								//Payment Details
 								//SELECT `strBusStatID` FROM `tblbusinessstat` WHERE 1 ORDER BY `strBusStatID` DESC LIMIT 1
 								$lastReqID = mysqli_query($con, "SELECT `strBusStatID` FROM `tblbusinessstat` WHERE 1 ORDER BY `strBusStatID` DESC LIMIT 1");
@@ -443,13 +416,23 @@
 							$_SESSION['contactno'] = $contactno;
 							$_SESSION['place'] = $add;
 							$_SESSION['document']  = $doc;//Type of document
-							echo "<script> window.location = 'DocumentRequestL.php';</script>";
-						}
-					}else
-					{
-						echo "<script>alert('".mysqli_error($con)."');</script>";
+							$_SESSION['busName'] = $busName;
+							$_SESSION['busCategory'] = $busCategory;
+							$_SESSION['document'] = $busDesc;
+							$_SESSION['busDesc'] = $busLoc;
+							$_SESSION['contactPerson'] = $contactPerson;
+							$_SESSION['contactNo'] = $contactNo;
+							$_SESSION['signageSingleSize'] = $signageSingleSize;
+							$_SESSION['signageDoubleSize'] = $signageDoubleSize;
+							$_SESSION['busPrice'] = $busPrice;
+							//echo"<script> alert('$signageSingleSize')</script>";
+							echo"<script> alert('Request Saved!')</script>";
+							echo "<script> window.location = 'DRformBusClearanceSummary.php';</script>";
+						}//if($saveBusStat == true)
+						}else{
+							echo "<script>alert('Error!');</script>";
 
-					}
+						}
 						
 					}//else ng if ( preg_match('/[\^
 				

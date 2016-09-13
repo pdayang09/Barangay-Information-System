@@ -93,6 +93,11 @@
 									<input class="form-control input-group-lg reg_name" type="text" name="DRdocReq" title="system-generated" id='DRdocReq'  placeholder = "Family" value="<?php if(isset($_POST['DRdocReq'])){echo $_POST['DRdocReq'];}else{} ?>" disabled>
 									
 							</div>
+							<div class="col-sm-6">
+									<p><font face="cambria" size=5 color="grey"> Address</font></p>			
+									<input class="form-control input-group-lg reg_name" type="text" name="DRdocReq" title="system-generated" id=''  placeholder = "Family" value="<?php echo "$add";?>" disabled>
+									
+							</div>
 							<div class='col-sm-6'>
 								<p><font face='cambria' size=5 color='grey'>Purpose </font></p>
 							</font>					
@@ -162,7 +167,7 @@
 							}
 						</script>
 						</div>
-						<center><input type="submit" class="btn btn-success" name = "btnSubmit" id="btnSubmit" value = "Submit" disabled></center>
+						<center><input type="submit" class="btn btn-success" name = "btnSubmit" onclick = "return confirm('Do you want to save?')" id="btnSubmit" value = "Submit" disabled></center>
 						
 						</form>
 					</div>
@@ -198,12 +203,17 @@
 						echo"<script> alert('Request Saved.')</script>";						
 						$_SESSION['clientID'] = $resid;
 						$_SESSION['name'] = $name;
+						$_SESSION['place'] = $add;
 						$_SESSION['contactno'] = $contactno;
 						$_SESSION['place'] = $add;
 						$_SESSION['document']  = $doc;//Type of document
+						$_SESSION['docPurpose']  = $docPurpose;
+						$_SESSION['DRdocReq']  = $DRdocReq;
+						$_SESSION['purposePrice']  = $purposePrice;
 					
-						echo"<script> alert('Free')</script>";
+						echo"<script> alert('Request Saved.')</script>";
 						
+						echo "<script> window.location = 'DRformSummary.php';</script>";
 					}
 					else
 						echo "<script>alert('".mysqli_error($con)."');</script>";

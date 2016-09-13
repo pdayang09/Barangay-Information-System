@@ -15,8 +15,8 @@ $val = $_POST['sid'];
 		 <tbody><?php
 		 if($val == ""){
 			 $Gender = "";
-		  $query = "Select strOccupation,concat(strLastName,' ',strNameExtension,', ',strFirstName,' ',strMiddleName) as Name, concat(strBuildingNo,', ',strStreetName,' ',strZoneName) as Address, charGender, timestampdiff(YEAR,dtBirthdate,NOW()) as Age, strCivilStatus from tblhousemember as a inner join 
-		  tblhousehold as b on a.intForeignHouseholdNo = b.intHouseholdNo inner join tblstreet as c on b.intForeignStreetId = c.intStreetId inner join tblzone as d on c.intForeignZoneId = d.intZoneId order by address";
+		  $query = "Select strOccupation,concat(strLastName,' ',strNameExtension,', ',strFirstName,' ',strMiddleName) as Name, concat(strBuildingNo,', ',strStreetName,' ',strPurok) as Address, charGender, timestampdiff(YEAR,dtBirthdate,NOW()) as Age, strCivilStatus from tblhousemember as a inner join 
+		  tblhousehold as b on a.intForeignHouseholdNo = b.intHouseholdNo inner join tblstreet as c on b.intForeignStreetId = c.intStreetId order by address";
 		  $sql = mysqli_query($con,$query);
 		  while($row = mysqli_fetch_object($sql)){
 			 if($row->charGender == 'M'){
@@ -32,8 +32,8 @@ $val = $_POST['sid'];
 		  <?php }}
 		  else{
 			  $Gender = "";
-		  $query = "Select strOccupation, concat(strLastName,' ',strNameExtension,', ',strFirstName,' ',strMiddleName) as Name, concat(strBuildingNo,', ',strStreetName,' ',strZoneName) as Address, charGender, timestampdiff(YEAR,dtBirthdate,NOW()) as Age, strCivilStatus from tblhousemember as a inner join 
-		  tblhousehold as b on a.intForeignHouseholdNo = b.intHouseholdNo inner join tblstreet as c on b.intForeignStreetId = c.intStreetId inner join tblzone as d on c.intForeignZoneId = d.intZoneId
+		  $query = "Select strOccupation, concat(strLastName,' ',strNameExtension,', ',strFirstName,' ',strMiddleName) as Name, concat(strBuildingNo,', ',strStreetName,' ',strPurok) as Address, charGender, timestampdiff(YEAR,dtBirthdate,NOW()) as Age, strCivilStatus from tblhousemember as a inner join 
+		  tblhousehold as b on a.intForeignHouseholdNo = b.intHouseholdNo inner join tblstreet as c on b.intForeignStreetId = c.intStreetId 
 		  where ".$val." order by address";
 		  echo "<script>alert($query)</script>";
 		  $sql = mysqli_query($con,$query);

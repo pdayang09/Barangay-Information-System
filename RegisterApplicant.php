@@ -22,7 +22,23 @@
 		$street = "";
 		$brgy = "";
 		$city = "";
-	?>
+
+		require("connection.php");
+        $query = mysqli_query($con, "SELECT COUNT(*) from tblapplicant");
+
+        while($row = mysqli_fetch_row($query)){
+
+            $count = $row[0];
+        }
+        $count = $count + 1;
+
+        //Initialize pre defined Applicant ID - partial smart counter
+        $_SESSION['preApp']="app-";
+        $preApp = $_SESSION['preApp'];
+
+        $appId = $preApp.$count;
+
+        ?>
 
     <div id="wrapper">
         <!-- Page Content -->
@@ -37,7 +53,7 @@
 					<div class="col-md-6">
 						<div class="showback">						
 							<p><font face="cambria" size=5 color="grey"> Applicant ID</font></p>			
-							<input id="appId" class="form-control input-group-lg reg_name" type="text" name="appId"  value=" <?php echo"$appId"?>">
+							<input id="appId" class="form-control input-group-lg reg_name" type="text" name="appId"  value="<?php if(isset($_POST['appId'])){echo $_POST['appId'];}else{ echo $appId;}?>">
 						
 							<p><font face="cambria" size=5 color="grey"> Firstname</font></p>			
 							<input id="fname" class="form-control input-group-lg reg_name" type="text" name="fname"  value=" <?php echo"$fname"?>">

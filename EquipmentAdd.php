@@ -146,19 +146,21 @@
 					 $target = 'Images/EquipmentUpload/'.$newname;
 				 
 					
-				
+				mysqli_query($con,"Set @a = 2;");
 				mysqli_query($con,"INSERT INTO `tblequipment`(`strEquipName`, `strEquipCategory`, `intEquipQuantity`, `dblEquipFee`, `dblEquipNResidentCharge`, `imageUpload`,`strStatus`) 
 					VALUES ('$strcont', '$strcategory', '$intquantity', '$fee', '$intDisc', '$newname', 'Enabled');");
 					
-					$b= 'INSERT INTO `tblequipment`(`strEquipName`, `strEquipCategory`, `intEquipQuantity`, `dblEquipFee`, `dblEquipNResidentCharge`, `imageUpload`,`strStatus`) 
-					VALUES ("$strcont","$strcategory","$intquantity","$fee","$intDisc","$newname","Enabled")';
+				//	$b= 'INSERT INTO `tblequipment`(`strEquipName`, `strEquipCategory`, `intEquipQuantity`, `dblEquipFee`, `dblEquipNResidentCharge`, `imageUpload`,`strStatus`) 
+					//VALUES ("$strcont","$strcategory","$intquantity","$fee","$intDisc","$newname","Enabled")';
 					move_uploaded_file( $_FILES['userFile']['tmp_name'], $target);
 					
-					/* echo "INSERT INTO `tblequipment`(`strEquipName`, `strEquipCategory`, `intEquipQuantity`, `dblEquipFee`, `dblEquipNResidentCharge`, `strStatus`) 
+					// echo "INSERT INTO `tblequipment`(`strEquipName`, `strEquipCategory`, `intEquipQuantity`, `dblEquipFee`, `dblEquipNResidentCharge`, `strStatus`) 
 					//VALUES ('$strcont','$strcategory','$intquantity','$fee','$intDisc','Enabled')";
-					 echo "<script>alert('Success');
-					 
-					 </script>";*/
+					
+
+					echo "<script>alert('Success');
+					 window.location = 'EquipmentAdd.php';
+					 </script>";
 			 }
 		}
 		?><br><br></center>

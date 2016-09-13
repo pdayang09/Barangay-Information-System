@@ -74,6 +74,7 @@ if(selectobject.options[i].value == zone){
 				 }
 				 else{
 					 require('connection.php');
+					   	mysqli_query($con,"Set @a = 2;");
 					 mysqli_query($con,"Update tblcategory set strCategoryType = '$strtype', strCategoryDesc = '$strPD' where strCategoryCode = '$a' ");
 					 echo "<script>alert('Success');
 					 window.location = 'EquipmentCat.php'</script>";

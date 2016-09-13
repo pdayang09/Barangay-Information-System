@@ -65,6 +65,7 @@
 				}		
 				if(isset($_POST['del'])){
 					$a = $_POST['del'];
+					  	mysqli_query($con,"Set @a = 2;");
 					mysqli_query($con,"Delete From tblCategory where strCategoryCode = '$a'");
 					echo "<script>alert('Successful!');
 					window.location ='EquipmentCat.php';</script>";

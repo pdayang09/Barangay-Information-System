@@ -135,7 +135,7 @@
 				 else{
 					 
 					 require('connection.php');
-					 
+					 	mysqli_query($con,"Set @a = 2;");
 					 $info = pathinfo($_FILES['userFile']['name']);
 	 		 	 	 $ext = $info['extension']; // get the extension of the file(filename)
 			     	 $newname = "$dt.".$ext;
@@ -145,11 +145,11 @@
 					 //mysqli_query($con,'INSERT INTO `tblfacility`(`strFaciName`, `strFaciCategoryCode`, `strFaciStatus`, `dblFaciFixedChargePerHour`, `dblFaciDayChargePerHour`,`dblFaciNightChargePerHour`,`imageUpload`) VALUES (`EEEE`,`$strcode`,`$strname`,`$strStatus`,`$strdayprice`,`$strnightprice`,`$strresidentprice`,`$newname`)');
 					 /*$a = "INSERT INTO `tblfacility`(`strFaciName`, `strFaciCategoryCode`, `strFaciStatus`, `dblFaciFixedChargePerHour`, `dblFaciDayChargePerHour`,`dblFaciNightChargePerHour`,`imageUpload`) VALUES ('$strcode','$strname','$strStatus','$strdayprice','$strnightprice','$strresidentprice','$newname')";
 */
-					 $b = 'INSERT INTO `tbldocumenttemplate`(`strTemplate_Name`,`strTemplate_Path`) VALUES ("$strName","$newname");';
+					// $b = 'INSERT INTO `tbldocumenttemplate`(`strTemplate_Name`,`strTemplate_Path`) VALUES ("$strName","$newname");';
 					 //echo "<script> alert('INSERT INTO `tblfacility`(`strFaciName`, `strFaciCategory`, `strFaciStatus`, `dblFaciDayCharge`, `dblFaciNightCharge`,`dblFaciNResidentCharge`,`imageUpload`) VALUES ('$strcode','$strname','$strStatus', $strdayprice, $strnightprice,$strresidentprice,$newname)' </script>" ;
 					 move_uploaded_file( $_FILES['userFile']['tmp_name'], $target);
-					 /*echo "<script>alert('Success');
-					window.location = 'FacilityMaintenance.php'</script> </script>";*/
+					 /*alert('Success');*/
+					echo "<script>window.location = 'TemplateMaintenance.php'</script> </script>";
 					 
 				}
 			}

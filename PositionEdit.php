@@ -77,10 +77,12 @@ function a(){
 					}
 					else{
 						require('connection.php');
+						mysqli_query($con,"Set @a = 2;");
 						$g = mysqli_query($con,"UPDATE tblbrgyposition SET strPositionName ='$strDocN',intNumber ='$strPrice', strView = '$strView' where intPositionId = '$strDocC'");
 						if($g==true){
 						session_destroy();
 						echo "<script>alert('Success');</script>";
+					
 						echo "<script> window.location = 'PositionMaintenance.php' </script> ";}
 						else{}
 					}				

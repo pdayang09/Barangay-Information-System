@@ -27,8 +27,8 @@
 			
 			<select id = "Age">
 			<option>Age</option>
-			<option value = "timestampdiff(YEAR,dtBirthdate,NOW())<18">17 years old and Below </option>
-			<option  value = "timestampdiff(YEAR,dtBirthdate,NOW())>17 AND timestampdiff(YEAR,dtBirthdate,NOW())<60">18 to 59 years old</option>
+			<option value = "timestampdiff(YEAR,dtBirthdate,NOW())<21">20 years old and Below </option>
+			<option  value = "timestampdiff(YEAR,dtBirthdate,NOW())>21 AND timestampdiff(YEAR,dtBirthdate,NOW())<60">18 to 59 years old</option>
 			<option  value = "timestampdiff(YEAR,dtBirthdate,NOW())>59">60 and above</option></select>
 			
 			<select id = 'Employment'>

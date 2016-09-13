@@ -101,12 +101,14 @@
 					
 					if(isset($_POST['btnDelete'])){
 						$a = $_POST['btnDelete'];
+						  	mysqli_query($con,"Set @a = 2;");
 					mysqli_query($con,"Update tblEquipment set strStatus = 'Disabled' where strEquipNo = '$a'");
 				echo "<script>
 					window.location ='EquipmentMaintenance.php';</script>";
 				}	
 if(isset		($_POST['btnEnable'])){
 						$a = $_POST['btnEnable'];
+						  	mysqli_query($con,"Set @a = 2;");
 					mysqli_query($con,"Update tblEquipment set strStatus = 'Enabled' where strEquipNo = '$a'");
 				echo "<script>
 					window.location ='EquipmentMaintenance.php';</script>";
