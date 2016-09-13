@@ -6,7 +6,7 @@
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
 
-      
+
 
 
       <!--main content start-->
@@ -82,7 +82,7 @@
       				else if($row->strLifeStatus == 'Alive' && $row2>0){echo "disabled";}
       				else{}
       					?>>Add Spouse</a>
-      				<a class="btn btn-info btn-sm" data-toggle="tooltip" title="Hooray!" href = 'AddChildren.php'>Add Children</a>
+      				<a class="btn btn-info btn-sm" href = 'AddChildren.php'>Add Children</a>
       				<a class="btn btn-info btn-sm" href = 'AddOther.php'>Add Other Member of the Household</a>
       			</div>
       			<br>
@@ -90,13 +90,13 @@
       			<div class="showback">                            
       				<h4>Member/s of the Household</h4>
 
-      				<table class="table table-striped table-bordered table-hover" border = '2' style = 'width:95%'>
-      					<tr>
+      				<table class="table table-striped table-bordered table-hover" id = "dataTable"  border = '2' style = 'width:95%'>
+      					<thead><tr>
       						<th>Name</th>
       						<th>Gender</th>
       						<th>Relation to the Owner</th>
       						<th>Action</th>
-      					</tr>
+      					</tr></thead><tbody>
       					<?php
       					require('connection.php');
       					$sql = "SELECT concat(strLastname,',',strFirstname,' ',strMiddleName,' ',strNameExtension) as 'Name',charGender,strStatus,intMemberNo FROM `tblhousemember` where intForeignHouseholdNo = '$Hno' AND (strLifeStatus  NOT LIKE 'Moved' AND strLifeStatus NOT LIKE 'Dead') AND !(strStatus = 'Tenant' || strStatus = 'Head' )
@@ -112,6 +112,7 @@
       							else{
       								$Gend = "Male";
       							}?>
+								
       							<tr> <td><?php echo $row->Name?></td>
       								<td><?php echo $Gend?></td>
       								<td><?php echo $row->strStatus?></td>
@@ -139,21 +140,21 @@
 
       										</tr>
       										<?php }}?>
-
+										</tbody>
       									</table>
       								</div></form>
       								<br>
       								<form method = POST>
       									<div class="showback">                         
       										<h4>Tenant/s of the Household</h4>
-      										<table class="table table-striped table-bordered table-hover" border = '2' style = 'width:95%'>
-      											<tr>
+      										<table class="table table-striped table-bordered table-hover" id = "dataTable2" border = '2' style = 'width:95%'>
+      											<thead><tr>
 												
       												<th>Name</th>
       												<th>Gender</th>
       												<th>Relation to the Owner</th>
       												<th>Action</th>
-      											</tr>
+      											</tr></thead><tbody>
       											<?php
       											require('connection.php');
       											$sql = "SELECT concat(strLastname,',',strFirstname,' ',strMiddleName,' ',strNameExtension) as 'Name',charGender,strStatus,intMemberNo FROM `tblhousemember` where intForeignHouseholdNo = '$Hno' AND strStatus = 'Tenant'";
@@ -205,7 +206,7 @@
       																	echo "<script>window.location = 'EditChildren.php';</script>";
       																}
       																?>
-
+																</tbody>
       															</table></div>
       														</form>
       														
@@ -227,7 +228,10 @@
       										<script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
       										<script src="assets/js/jquery.scrollTo.min.js"></script>
       										<script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
-
+											<script src="dataTables/jquery.dataTables.js"></script>
+    
+											<script src="dataTables/dataTables.bootstrap.js"></script>	
+	
 
       										<!--common script for all pages-->
       										<script src="assets/js/common-scripts.js"></script>
@@ -237,6 +241,13 @@
       										<script>
 											
 											
+
+												$(document).ready(function() {
+		  
+												$('#dataTable').dataTable();		  
+												$('#dataTable2').dataTable();	
+															});
+								
 											
 											
 											function getTrans(value){
