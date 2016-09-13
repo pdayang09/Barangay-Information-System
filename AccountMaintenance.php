@@ -1,7 +1,9 @@
  <?php session_start();?>
 <!DOCTYPE html>
-          <?php require('header.php');?>
+    <?php require('header.php');?>
     <?php require('sidebar.php');?>
+	
+<link href="datTables/dataTables.bootstrap.css" rel="stylesheet" />
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
@@ -15,8 +17,8 @@
 						<button  class="btn btn-info" onclick="window.location.href='Addaccount.php'"><i class="fa fa-plus"></i> Add New</button>
 						</p>
 					<div class = 'showback'><form method = POST><center>
-<br>
-					 <table class="table table-striped table-bordered table-hover" border = '2' style = 'width:95%'>
+					<br>
+					 <table class="table table-striped table-bordered table-hover" border = '2' style = 'width:95%' id="dataTable">
 					<thead>
 					<tr>
 					<th>Account ID</th>
@@ -28,6 +30,20 @@
 					<th>Action</th>
 					</tr>
 					</thead>
+					
+					<tfoot>
+					<tr>
+					<th>Account ID</th>
+					<th>Employee Name</th>
+					<th>Username</th>
+					<th>Password</th>
+					<th>Date Start</th>
+					<th>Date End</th>
+					<th>Action</th>
+					</tr>
+					</tfoot>
+					
+					
 					<tbody>
 					<?php
 					require('connection.php');
@@ -85,7 +101,15 @@
     <script src="assets/js/jquery.scrollTo.min.js"></script>
     <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
 
+	<script src="dataTables/jquery.dataTables.js"></script>
+	<script src="dataTables/dataTables.bootstrap.js"></script>	
 
+	<script>
+		$(document).ready(function() {
+		$('#dataTable').dataTable();	
+		});
+	</script>
+	
     <!--common script for all pages-->
     <script src="assets/js/common-scripts.js"></script>
 

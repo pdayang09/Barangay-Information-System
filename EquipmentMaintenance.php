@@ -2,6 +2,8 @@
 <!DOCTYPE html>
     <?php require('header.php');?>
     <?php require('sidebar.php');?>
+	
+<link href="datTables/dataTables.bootstrap.css" rel="stylesheet" />
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
@@ -18,7 +20,7 @@
 										<center><br>				
 <div class = "showback" id = 'tblview'>
 	<form method = POST>
-				<table class="table table-striped table-bordered table-hover"  border = '3' style = 'width:95%'><!-- Table -->
+				<table class="table table-striped table-bordered table-hover"  border = '3' style = 'width:95%' id="dataTable"><!-- Table -->
 					<thead>
 						<tr>
 							<th><i class="fa fa-question-circle"></i> Equipment </th>
@@ -127,7 +129,22 @@ if(isset		($_POST['btnEnable'])){
     <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
     <script src="assets/js/jquery.scrollTo.min.js"></script>
     <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+	
+<!--DATA TABLES-->
+	<script src="dataTables/jquery.dataTables.js"></script>
+    
+	<script src="dataTables/dataTables.bootstrap.js"></script>	
 
+	<script>
+	  
+		$(document).ready(function() {
+		  
+		$('#dataTable').dataTable();		  
+	  
+		});
+
+	</script>
+	
 
     <!--common script for all pages-->
     <script src="assets/js/common-scripts.js"></script>

@@ -1,7 +1,9 @@
  <?php session_start();?>
 <!DOCTYPE html>
-          <?php require('header.php');?>
+    <?php require('header.php');?>
     <?php require('sidebar.php');?>
+	
+<link href="datTables/dataTables.bootstrap.css" rel="stylesheet" />
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
@@ -17,7 +19,7 @@
 	 <p>                                                 
 <center>
 <br><div class = "showback">
-					<table   class="table table-striped table-bordered table-hover"  border = '2' style = 'width:95%'>
+					<table   class="table table-striped table-bordered table-hover"  border = '2' style = 'width:95%' id="dataTable">
 						<thead>
 							<tr>
 								<th># Category ID</th>
@@ -88,6 +90,21 @@
     <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
     <script src="assets/js/jquery.scrollTo.min.js"></script>
     <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+	
+	<!--DATA TABLES-->
+	<script src="dataTables/jquery.dataTables.js"></script>
+    
+	<script src="dataTables/dataTables.bootstrap.js"></script>	
+
+	<script>
+	  
+		$(document).ready(function() {
+		  
+		$('#dataTable').dataTable();		  
+	  
+		});
+
+	</script>
 
 
     <!--common script for all pages-->

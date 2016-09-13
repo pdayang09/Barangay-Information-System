@@ -5,6 +5,7 @@
  <?php require('header.php');?>
  <?php require('sidebar.php');?>
  
+  <link href="datTables/dataTables.bootstrap.css" rel="stylesheet" />
 
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
@@ -28,7 +29,7 @@
 	<center>
 	<br>
 	<div class = "showback" id = "tblview" >
-		<table   class="table table-striped table-bordered table-hover" id="tableView" border = '2' style = 'width:95%'>
+		<table   class="table table-striped table-bordered table-hover" id="dataTable" border = '2' style = 'width:95%'>
 			<thead>
 				<tr>
 					<th><i class="fa fa-bullhorn"></i> Vehicle Plate No.</th>
@@ -132,9 +133,21 @@
 
     <!--common script for all pages-->
     <script src="assets/js/common-scripts.js"></script>
+	
+	<!--DATA TABLES-->
+	<script src="dataTables/jquery.dataTables.js"></script>
+    
+	<script src="dataTables/dataTables.bootstrap.js"></script>	
 
-	<!-- -->
+	<script>
+	  
+		$(document).ready(function() {
+		  
+		$('#dataTable').dataTable();		  
+	  
+		});
 
+	</script>
 	
     <!--script for this page-->
   <script>

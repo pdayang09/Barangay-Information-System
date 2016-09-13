@@ -1,0 +1,15 @@
+//link   ->> <link href="datTables/dataTables.bootstrap.css" rel="stylesheet" />
+
+
+	<script src="dataTables/jquery.dataTables.js"></script>
+    
+	<script src="dataTables/dataTables.bootstrap.js"></script>	
+
+<script>
+	  
+$(document).ready(function() {
+		  
+$('#dataTable').dataTable();		  
+	  
+});
+</script>

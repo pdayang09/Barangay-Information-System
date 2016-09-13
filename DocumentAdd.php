@@ -29,7 +29,7 @@
 						</div>
 					</div><br><br><br><br><br>					
 		  
-						<center> <Button type="submit" class="btn btn-info" name = "btnAdd" id = "btnAdd"  value = ""  >Proceed</button>
+						<center> <Button type="submit" class="btn btn-info" name = "btnAdd" id = "btnAdd"  value = ""  >Submit</button>
 				
 		</div>
 	</div>
@@ -82,44 +82,30 @@
 					 require('connection.php');
 					 mysqli_query($con, "INSERT INTO `tbldocument`(`strDocName`, `dblDocFee`, `strStatus`, `strDocTemplate`) 
 					 VALUES ('$documentName','$dblPrice','Enabled','$strImagePath');");
+					 echo "<script>alert('Success!');</script>";
 					 
-				 }
-			 
-			 
-			 
-			  
+				 }			 			 		 			  
 				//make sure you have created the **upload** directory
 
 				//$filename    = $_FILES["picture"]["tmp_name"];
 				//$destination = "Images/" . $_FILES["picture"]["name"]; 
 				//move_uploaded_file($filename, $destination); //save uploaded picture in your directory
-
 				//$search = $_FILES["picture"]["tmp_name"];;		
-				//$_SESSION['template'] = $search;
-				
-				//$_SESSION['] = $destination;
-
-			
-			 
-				//echo "<script>window.location = 'DReditDocument.php'</script>";
-			 
-			 
-			 
-			 	}
+				//$_SESSION['template'] = $search;				
+				//$_SESSION['] = $destination;	
+				//echo "<script>window.location = 'DReditDocument.php'</script>";		 
+			 	
 			/* $dt = date('Ymdhis');
 			 $strcont = $_POST['controlno'];
 			 $intDisc = $_POST['disc'];
 			 $strcategory = $_POST['equip'];
 			 $intquantity = $_POST['quantity'];
 			 $fee = $_POST['fee'];
-			 
-			 
-			
+
 			/*if($intquantity == NULL || $fee == NULL ){
 					 $intquantity = 0;
 					 $fee = 0;
 				 }
-
 				
 			 if($strcont == NULL ||  $strcategory == 'Select Category' ){
 				 echo "<script>alert('Please Complete the form');</script>";
@@ -130,9 +116,7 @@
 	 		 	 	 $ext = $info['extension']; // get the extension of the file(filename)
 			     	 $newname = "$dt.".$ext;
 					 $target = 'Images/EquipmentUpload/'.$newname;
-				 
-					
-				
+			
 				mysqli_query($con,"INSERT INTO `tblequipment`(`strEquipName`, `strEquipCategory`, `intEquipQuantity`, `dblEquipFee`, `dblEquipNResidentCharge`, `imageUpload`,`strStatus`) 
 					VALUES ('$strcont', '$strcategory', '$intquantity', '$fee', '$intDisc', '$newname', 'Enabled');");
 					
@@ -146,7 +130,7 @@
 					 
 					 </script>";
 			 }*/
-	
+	}
 		?><br><br></center>
                     
 	</form>		
