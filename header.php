@@ -16,7 +16,8 @@
     <!-- Custom styles for this template -->
     <link href="assets/css/style.css" rel="stylesheet">
     <link href="assets/css/style-responsive.css" rel="stylesheet">
-	
+	<link href="dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+
 	<?php require('connection.php');?>
 		  
   </head>

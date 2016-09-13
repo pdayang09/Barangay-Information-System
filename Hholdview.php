@@ -11,11 +11,7 @@
 	  <?php require('Removevalidatefamily.php');?>
           <section class="wrapper site-min-height">		
 <legend ><font face = "cambria" size = 8 color = "grey"> Resident Module </font></legend>
-<div class="input-append"><div class="form-group">				
-           <div class="col-sm-3">
-
-        <input class="form-control input-group-lg reg_name" name="search" id="search" placeholder = "Input Last Name"/></div><button class="btn btn-info" onclick = "Search();" name = "s1">Search</button>
-</div></div><br>
+<br>
 
 					<div class="btn-group" role="group">
 					<button  class="btn btn-info" onclick = "window.location.href='AddHhold.php'">Create New Household</button>
@@ -28,13 +24,14 @@
 
 	<form method = POST><center>
 	<div class = "showback" id = "tableHousehold">
-<table  class="table table-striped table-bordered table-hover"  border = '2' style = 'width:95%'>
+<table  class="table table-striped table-bordered table-hover" id = "dataTable"  border = '2' style = 'width:95%'>
+<thead>
 <tr>
 <th>Household Name</th>
 <th>Address</th>
 <th>Residence Status</th>
 <th>Action</th>
-</tr>
+</tr></thead></tbody>
 <?php
 					require('connection.php');
 				$sql = "SELECT strHouseholdLname, concat(strBuildingNo,' ',strStreetName,' ',strPurok) as 'Address',strResidence , intHouseholdNo FROM `tblhousehold` inner join `tblstreet` on intStreetId = intForeignStreetId where !(strStatus = 'Disabled') ";
@@ -75,7 +72,7 @@
 					echo "<script>window.location = 'TransferHhold.php'</script>";
 				}		
 				?>
-
+</tbody>
 </table>
 </form>
                  </center>      
@@ -96,14 +93,21 @@
     <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
     <script src="assets/js/jquery.scrollTo.min.js"></script>
     <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
-
-
+	<script src="dataTables/jquery.dataTables.js"></script>
+	<script src="dataTables/dataTables.bootstrap.js"></script>	
     <!--common script for all pages-->
     <script src="assets/js/common-scripts.js"></script>
 
     <!--script for this page-->
     
   <script>
+  
+  
+												$(document).ready(function() {
+		  
+												$('#dataTable').dataTable();		  
+												
+															});
   function Del(val){
       										//alert(val);
       											$.ajax({
@@ -117,19 +121,7 @@
       									});
       								}
       //custom select box
-	function Search(){
-		var b = document.getElementById('search').value;
-		//alert(b);
-		$.ajax({
-		type: "POST",
-		url: "gettable2.php",
-		data: 'sid=' + b,
-		success: function(data){
-			//alert(data);
-			$("#tableHousehold").html(data);
-		}
-		});
-	}
+	
       $(function(){
           $('select.styled').customSelect();
       });
