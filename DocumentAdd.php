@@ -5,83 +5,137 @@
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
       <!--main content start-->
-      <section id="main-content">
-         <br>
-          <section class="wrapper site-min-height">
- 
-<legend ><font size = 8 color = "grey"> Add Document Details </font></legend>
-		<button  class="btn btn-info" onclick="window.location.href='DocumentMaintenance.php'">  <i class="glyphicon glyphicon-hand-left" aria-hidden="true"></i>&nbsp;Back to the Previous Page</button><br><br>
-<div class="col-sm-9 col-md-6 col-lg-6">
-	<div class = "showback">
-		<form method = POST>
-			<p><font face = "cambria" size = 5 color = "grey"> Document Name </font></p>
-					<div class = "form-group">
-						<div class="col-sm-12">		   
-							<input id="DocumentN1"  name="DocumentN1" class="form-control input-group-lg reg_name" type="text" title="Enter Document name" maxlength = 40 required>					 
-						</div>
-					</div><br><br>		
-					
-					<font face = "cambria" size = 5 color = "grey">Price </font></p>
+<section id="main-content">
+         
+<section class="wrapper site-min-height">
+<legend ><font face = "cambria" size = 8 color = "grey"> Add Document Details</font></legend>
+<button  class="btn btn-info" onclick="window.location.href='DocumentMaintenance.php'"><i class="glyphicon glyphicon-hand-left" aria-hidden="true"></i>&nbsp;Back to the Previous Page</button>
+
+<br><br>
+<form method = POST  enctype='multipart/form-data'>
+	<div class="col-sm-9 col-md-6 col-lg-6">
+		<div class = "showback">
+				<p><font face = "cambria" size = 5 color = "grey"> Document Name </font></p>
+				<div class = "form-group">
+					<div class="col-sm-12">
+						<input id="controlno" name = "controlno" class="form-control input-group-lg reg_name" type="text"  required>			 
+				   </div>
+				</div><br><br><br>			
+				
+		  <font face = "cambria" size = 5 color = "grey">Price </font></p>
 					<div class = "form-group">
 						<div class="col-sm-12">		   
 						<input id="Price"  name="Price" class="form-control input-group-lg reg_name" type= number step = any title="Enter Document name" value = '0'min = 0 required>					 
 						</div>
 					</div><br><br><br><br><br>					
 		  
-						<center> <input type="submit" class="btn btn-info" name = "btnAdd" id = "btnAdd"  value = "Save Record"  > 
-					
-					<?php
-						if (isset($_POST['btnAdd'])){
-						 $strDocN = $_POST['DocumentN1'];
-						 $strPrice = (double)$_POST['Price'];
-						 if($strPrice == NULL){
-							 $strPrice = 0;
-						 }	
-						 if($strPrice == NULL ||$strDocN == NULL){
-							 echo "<script>alert('Please Complete the form');</script>";
-						 }
-						 else{
-							 require('connection.php');
-							 mysqli_query($con,"insert into tblDocument	(`strDocName`, `dblDocFee`,`strStatus`) values ('$strDocN',$strPrice,'Enabled');");
-							 echo "<script>alert('Success');
-							 window.location = 'DocumentMaintenance.php'</script>";
-					 }}
-					?>
-						</center>
-		</form>
-	</div>
-</div>
-					<!-- DIV FOR TABLE -->
-		<div class="col-sm-3 col-md-6 col-lg-6">
-			<div class = "showback">
-				<table  class="table table-striped table-bordered table-hover" >
-					<thead>
-						<th>Category Name</th>
-						<th>Price</th>
-						<th>Status</th>
-					</thead>
-					
-					<tbody>
-							<?php
-							require('connection.php');
-							$sql = "select * from tbldocument ";
-							$query = mysqli_query($con, $sql);
-							if(mysqli_num_rows($query) > 0){
-								$i = 1;
-								while($row = mysqli_fetch_object($query)){?>
-								<tr> 
-								<td><?php echo $row->strDocName?></td>
-								<td><?php echo $row->dblDocFee?></td>
-								<td><?php echo $row->strStatus?></td>
-							<?php }}?>
-					</tbody>
-				</table>
-			</div>
+						<center> <Button type="submit" class="btn btn-info" name = "btnAdd" id = "btnAdd"  value = ""  >Submit</button>
+				
 		</div>
+	</div>
+
+
+		<!-- DIV FOR TABLE -->
+		
+
+		
+				<div class="col-sm-3 col-md-6 col-lg-6">
+			<div class = "showback">
+				
+		
+			<div class="split-para"><font face = "cambria" size = 5 color = "grey"> Select Template</font></p>
+					<div class="col-sm-12">		
+					<select class="form-control input-group-lg reg_name" id = "Template" name = "Template">
+						<option>Select Category</option>
+						<?php
+									require('connection.php');
+										$sql = "select * from tbldocumenttemplate";
+										$query = mysqli_query($con, $sql);
+							
+										if(mysqli_num_rows($query) > 0){
+											$i = 1;
+											while($row = mysqli_fetch_object($query)){?>
+												<option value=<?php echo $row->intTemplate_ID ?>><?php echo $row->strTemplate_Name ?></option>
+												<?php }} ?>
+					</select>
+					</div>
+				</div>
+				
 <!-- DIV END-->
+		
+		
+
+	<?php
+		 if (isset($_POST['btnAdd'])){
+				
+					$documentName = $_POST['controlno'];
+					$strImagePath = $_POST['Template'];
+					$dblPrice = $_POST['Price'];
+					if($dblPrice == NULL){
+					 $dblPrice = 0;
+				 }
+				 
+				 if($documentName == NULL){
+				 echo "<script>alert('Please Complete the form');</script>";
+				}
+				 else {
+					 require('connection.php');
+					 mysqli_query($con, "INSERT INTO `tbldocument`(`strDocName`, `dblDocFee`, `strStatus`, `strDocTemplate`) 
+					 VALUES ('$documentName','$dblPrice','Enabled','$strImagePath');");
+					 echo "<script>alert('Success!');</script>";
+					 
+				 }			 			 		 			  
+				//make sure you have created the **upload** directory
+
+				//$filename    = $_FILES["picture"]["tmp_name"];
+				//$destination = "Images/" . $_FILES["picture"]["name"]; 
+				//move_uploaded_file($filename, $destination); //save uploaded picture in your directory
+				//$search = $_FILES["picture"]["tmp_name"];;		
+				//$_SESSION['template'] = $search;				
+				//$_SESSION['] = $destination;	
+				//echo "<script>window.location = 'DReditDocument.php'</script>";		 
+			 	
+			/* $dt = date('Ymdhis');
+			 $strcont = $_POST['controlno'];
+			 $intDisc = $_POST['disc'];
+			 $strcategory = $_POST['equip'];
+			 $intquantity = $_POST['quantity'];
+			 $fee = $_POST['fee'];
+
+			/*if($intquantity == NULL || $fee == NULL ){
+					 $intquantity = 0;
+					 $fee = 0;
+				 }
+				
+			 if($strcont == NULL ||  $strcategory == 'Select Category' ){
+				 echo "<script>alert('Please Complete the form');</script>";
+			 } */
+			/* else{
+				 require('connection.php');
+				 $info = pathinfo($_FILES['userFile']['name']);
+	 		 	 	 $ext = $info['extension']; // get the extension of the file(filename)
+			     	 $newname = "$dt.".$ext;
+					 $target = 'Images/EquipmentUpload/'.$newname;
 			
-	</section><! --/wrapper -->
-</section><!-- /MAIN CONTENT -->
+				mysqli_query($con,"INSERT INTO `tblequipment`(`strEquipName`, `strEquipCategory`, `intEquipQuantity`, `dblEquipFee`, `dblEquipNResidentCharge`, `imageUpload`,`strStatus`) 
+					VALUES ('$strcont', '$strcategory', '$intquantity', '$fee', '$intDisc', '$newname', 'Enabled');");
+					
+					$b= 'INSERT INTO `tblequipment`(`strEquipName`, `strEquipCategory`, `intEquipQuantity`, `dblEquipFee`, `dblEquipNResidentCharge`, `imageUpload`,`strStatus`) 
+					VALUES ("$strcont","$strcategory","$intquantity","$fee","$intDisc","$newname","Enabled")';
+					move_uploaded_file( $_FILES['userFile']['tmp_name'], $target);
+					
+					/* echo "INSERT INTO `tblequipment`(`strEquipName`, `strEquipCategory`, `intEquipQuantity`, `dblEquipFee`, `dblEquipNResidentCharge`, `strStatus`) 
+					//VALUES ('$strcont','$strcategory','$intquantity','$fee','$intDisc','Enabled')";
+					 echo "<script>alert('Success');
+					 
+					 </script>";
+			 }*/
+	}
+		?><br><br></center>
+                    
+	</form>		
+		</section><!--/wrapper -->
+      </section><!-- /MAIN CONTENT -->
 
       <!--main content end-->
      
@@ -108,6 +162,12 @@
       $(function(){
           $('select.styled').customSelect();
       });
+	  
+	  
+	   var loadFile = function(event) {
+		var output = document.getElementById('output');
+		output.src = URL.createObjectURL(event.target.files[0]);
+	  };
 
   </script>
 

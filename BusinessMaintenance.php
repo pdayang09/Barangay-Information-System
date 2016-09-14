@@ -2,6 +2,8 @@
 <!DOCTYPE html>
     <?php require('header.php');?>
     <?php require('sidebar.php');?>
+	
+<link href="dataTables/dataTables.bootstrap.css" rel="stylesheet" />
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
@@ -12,39 +14,39 @@
 			<legend ><font face = "cambria" size = 8 color = "grey"> Maintenance </font></legend>
 				<h2>Business</h2><br>
 			
-				<p align="right">
+				<!-- p align="right">
 				<button  type="button" class="btn btn-info" name = "btnEdit1" id = "btnEdit1" onclick = "window.location.href='BusinessAdd.php'" ><i class="fa fa-plus"></i> Add New </button><br>
-				</p>
+				</p -->
 			
 			<form method = POST>
-				<center> 
+				
 				<div class="showback">
-					<table  class="table table-striped table-bordered table-hover" id="tableView" border = '2' style = 'width:95%'>
+					<table  class="table table-striped table-bordered table-hover" id="dataTable" border = '2' >
 						
 						<thead>
 							<tr>
-								<th># Business ID</th>
-								<th><i class="fa fa-bullhorn"></i> Business Name</th>
-								<th><i class="fa fa-bullhorn"></i> Business Description</th>
-								<th><i class="fa fa-bookmark"></i> Business Category</th>
-								<th><i class="fa fa-cog"></i> Contact Person</th>
-								<th><i class="fa fa-cog"></i> Contact Number</th>
-								<th><i class="fa fa-bookmark"></i> Location</th>
-								<th><i class="fa fa-cog"></i> Status</th>
-								<th><i class="fa fa-edit"></i> Action</th>
+								<th>Business ID</th>
+								<th>Business Name</th>
+						
+								<th>Business Category</th>
+								<th>Contact Person</th>
+								<th>Contact Number</th>
+								<th>Location</th>
+								<th>Status</th>
+								<th>Action</th>
 							</tr>
 						</thead>
 						<tfoot>
 							<tr>
-								<th># Business ID</th>
-								<th><i class="fa fa-bullhorn"></i> Business Name</th>
-								<th><i class="fa fa-bullhorn"></i> Business Description</th>
-								<th><i class="fa fa-bookmark"></i> Business Category</th>
-								<th><i class="fa fa-cog"></i> Contact Person</th>
-								<th><i class="fa fa-cog"></i> Contact Number</th>
-								<th><i class="fa fa-bookmark"></i> Location</th>
-								<th><i class="fa fa-cog"></i> Status</th>
-								<th><i class="fa fa-edit"></i> Action</th>
+								<th>Business ID</th>
+								<th>Business Name</th>
+						
+								<th>Business Category</th>
+								<th>Contact Person</th>
+								<th>Contact Number</th>
+								<th>Location</th>
+								<th>Status</th>
+								<th>Action</th>
 							</tr>
 						</tfoot>
 						
@@ -62,7 +64,7 @@
 							<tr> 
 								<td><?php echo $row->strBusinessID?></td>
 								<td><?php echo $row->strBusinessName?></td>
-								<td><?php echo $row->strBusinessDesc?></td>
+								
 								<td><?php 
 										$id = $row->strBusinessID;
 										$sql1 = "SELECT `strBusCateName`FROM tblbusinesscate as a INNER JOIN tblbusiness as b ON b.strBusinessCateID = a.strBusCatergory where strBusinessID ='$id' ";
@@ -108,7 +110,7 @@
 						<?php }}   ?>
 						</tbody>
 					</table>
-							<br><br>
+							
 							
 							<?php
 								if(isset($_POST['btnEdit'])){
@@ -144,7 +146,7 @@
 								echo "<script>alert('Successfully Updated');
 									window.location = 'BusinessMaintenance.php'; </script>";
 							}?>
-				</center>
+				
 				</div>
 				
 		</form>        
@@ -164,6 +166,23 @@
     <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
     <script src="assets/js/jquery.scrollTo.min.js"></script>
     <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+	
+	
+<!--DATA TABLES-->
+	<script src="dataTables/jquery.dataTables.js"></script>
+    
+	<script src="dataTables/dataTables.bootstrap.js"></script>	
+
+	<script>
+	  
+		$(document).ready(function() {
+		  
+		$('#dataTable').dataTable();		  
+	  
+		});
+
+	</script>
+	
 
 
     <!--common script for all pages-->

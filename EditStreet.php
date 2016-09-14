@@ -7,20 +7,11 @@
 	$sql = mysqli_query($con,$query);
 	$row = mysqli_fetch_object($sql);
 	$StreetName = $row->strStreetName;
-	$zoneid = $row->intForeignZoneId;
+	$zoneid = $row->strPurok;
 	
 
 	?>
-	<script>
-	function search(){
-		var zone = '<?php echo $zoneid;?>';
-		  var selectobject = document.getElementById("PurokN");
-			 for (var i=0; i<selectobject.length; i++){
-if(selectobject.options[i].value == zone){
 	
-	document.getElementById("PurokN").value = selectobject.options[i].value;}
-	}}
-	</script>
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
@@ -44,19 +35,9 @@ if(selectobject.options[i].value == zone){
 		
 		<div class="split-para"><font face = "cambria" size = 5 color = "grey"> Purok Name</font></p>
 			<div class="col-sm-5">		
-			<select class="form-control input-group-lg reg_name" id = "PurokN" name = "Purok">
-                
-				<?php
-							require('connection.php');
-								$sql = "select * from tblZone";
-								$query = mysqli_query($con, $sql);
-					
-								if(mysqli_num_rows($query) > 0){
-									$i = 1;
-									while($row = mysqli_fetch_object($query)){?>
-										<option value=<?php echo $row->intZoneId ?>><?php echo $row->strZoneName ?></option>
-										<?php }} ?>
-			</select>
+				<div class="col-sm-5">
+				<input id="controlno" name = "Purok" class="form-control input-group-lg reg_name" type="text"  <?php echo "value = '".$zoneid."'"?>>			 
+           </div>
 			</div>
 		</div>
 	<br><br><br>	
@@ -76,8 +57,11 @@ echo "<script> search(); </script>";}?>
 			 }
 			 else{
 				 require('connection.php');
-			
-				mysqli_query($con,"Update tblStreet set strStreetName = '$strStreet', intForeignZoneId = '$strPurok' where intStreetId = $street");
+	
+				
+				 mysqli_query($con,"Set @a = 2;");
+				mysqli_query($con,"Update tblStreet set strStreetName = '$strStreet', strPurok = '$strPurok' where intStreetId = $street");
+				
 					 echo "<script>alert('Success');
 					 window.location = 'StreetMaintenance.php';</script>";
 			 }

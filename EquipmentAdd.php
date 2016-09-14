@@ -12,8 +12,8 @@
 <button  class="btn btn-info" onclick="window.location.href='EquipmentMaintenance.php'"><i class="glyphicon glyphicon-hand-left" aria-hidden="true"></i>&nbsp;Back to the Previous Page</button>
 
 <br><br>
-		
-<form method = POST>
+<form method = POST  enctype='multipart/form-data'>
+
 	<div class="col-sm-9 col-md-6 col-lg-6">
 		<div class = "showback">
 				<p><font face = "cambria" size = 5 color = "grey"> Equipment Name </font></p>
@@ -64,14 +64,17 @@
 					</div>
 				</div><br><br><br>	
 		  
-				<center> <input type="submit" class="btn btn-info" name = "btnAdd" id = "btnAdd"  value = "Save Record"  > 
-				<br><br></center>
-			</div>
+				<center> <button  class="btn btn-info" name = "btnAdd" id = "btnAdd"  value = "Save Record"  >Save Record </button>
+				
 		</div>
 	</div>
-</form>
+		
+		
+		
+
+
 		<!-- DIV FOR TABLE -->
-<form method="POST">	
+	
 	<div class="col-sm-3 col-md-6 col-lg-6">
 		<div class = "showback">
 				<table  class="table table-striped table-bordered table-hover" >
@@ -103,32 +106,65 @@
 				</table>
 			</div>
 		</div>
+		
+		<div class="col-sm-3 col-md-6 col-lg-6">
+			<div class = "showback">
+				<br>
+					<input type='file' name='userFile' id = 'userFile' accept="image/*" onchange="loadFile(event)"><br>
+					<img id="output" width="100%" height="150%" />
+					<?php 
+					
+					
+					?>
 <!-- DIV END-->
-		<?php
+		
+		</form>
+
+	<?php
 		 if (isset($_POST['btnAdd'])){
+			 $dt = date('Ymdhis');
 			 $strcont = $_POST['controlno'];
 			 $intDisc = $_POST['disc'];
 			 $strcategory = $_POST['equip'];
 			 $intquantity = $_POST['quantity'];
 			 $fee = $_POST['fee'];
-				 
+			
+			if($intquantity == NULL || $fee == NULL ){
+					 $intquantity = 0;
+					 $fee = 0;
+				 }
+
+				
 			 if($strcont == NULL ||  $strcategory == 'Select Category' ){
 				 echo "<script>alert('Please Complete the form');</script>";
 			 }
 			 else{
 				 require('connection.php');
-				mysqli_query($con,"INSERT INTO `tblequipment`(`strEquipName`, `strEquipCategory`, `intEquipQuantity`, `dblEquipFee`, `dblEquipNResidentCharge`, `strStatus`) 
-							VALUES ('$strcont', '$strcategory', '$intquantity', '$fee', '$intDisc', 'Enabled');");
+				 $info = pathinfo($_FILES['userFile']['name']);
+	 		 	 	 $ext = $info['extension']; // get the extension of the file(filename)
+			     	 $newname = "$dt.".$ext;
+					 $target = 'Images/EquipmentUpload/'.$newname;
+				 
+					
+				mysqli_query($con,"Set @a = 2;");
+				mysqli_query($con,"INSERT INTO `tblequipment`(`strEquipName`, `strEquipCategory`, `intEquipQuantity`, `dblEquipFee`, `dblEquipNResidentCharge`, `imageUpload`,`strStatus`) 
+					VALUES ('$strcont', '$strcategory', '$intquantity', '$fee', '$intDisc', '$newname', 'Enabled');");
+					
+				//	$b= 'INSERT INTO `tblequipment`(`strEquipName`, `strEquipCategory`, `intEquipQuantity`, `dblEquipFee`, `dblEquipNResidentCharge`, `imageUpload`,`strStatus`) 
+					//VALUES ("$strcont","$strcategory","$intquantity","$fee","$intDisc","$newname","Enabled")';
+					move_uploaded_file( $_FILES['userFile']['tmp_name'], $target);
+					
 					// echo "INSERT INTO `tblequipment`(`strEquipName`, `strEquipCategory`, `intEquipQuantity`, `dblEquipFee`, `dblEquipNResidentCharge`, `strStatus`) 
 					//VALUES ('$strcont','$strcategory','$intquantity','$fee','$intDisc','Enabled')";
-					 echo "<script>alert('Success');
-					 
+					
+
+					echo "<script>alert('Success');
+					 window.location = 'EquipmentAdd.php';
 					 </script>";
 			 }
 		}
-		?>
-</form>
-                    </div>
+		?><br><br></center>
+                    
 			
 		</section><!--/wrapper -->
       </section><!-- /MAIN CONTENT -->
@@ -158,6 +194,11 @@
       $(function(){
           $('select.styled').customSelect();
       });
+	  
+	  var loadFile = function(event) {
+		var output = document.getElementById('output');
+		output.src = URL.createObjectURL(event.target.files[0]);
+	  };
 
   </script>
 

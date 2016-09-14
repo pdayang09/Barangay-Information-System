@@ -204,28 +204,34 @@
       <!--main content start-->
       <section id="main-content">
         <section class="wrapper site-min-height">
-        
+       <FORM method="POST"> 
             <div class="form-group">
                 <div class="col-sm-5">
                     
                     <p><font face="cambria" size=4 color="grey"> Datatime </font></p>
                     <input type="text" id="datetimepicker" class="form-control input-group-lg reg_name, some_class" value="<?php if(isset($_POST['resId'])){echo $_POST['From'];}else{}?>" name = "From"/>
                 </div><br><br><br><br><br>
-                
-                <div class="col-sm-5">
-                    <button type="submit" class="btn btn-outline btn-success" name = "btnCheck"> CHECK </button>    
-                </div>  
             </div><br><br><br><br><!-- /#form-group -->     
 
-            <center> <input type="submit" class="btn btn-outline btn-success" name="btnSubmit" value="Submit"/>
-                <input type="submit" class="btn btn-outline btn-success" name="btnCancel" value="Cancel"/>
+            <center> <input type="submit" class="btn btn-outline btn-success" name="btnSubmit" value="Add Date"/>
             </center>
+
+
+            <?php 
+            $datearray[] = array();
+            $datearray = $_SESSION['datearray'];             
             
-            <?php             
+
             if(isset($_POST['btnSubmit'])){
-                              
-                $resfrom = $_POST['From'];
-                $resto = $_POST['To'];      
+                $datetemp = $_POST['From'];
+
+                $datetemp = str_replace('/','-', $datetemp);
+                $datetemp = str_replace('/','.', $datetemp);
+                $datetemp = date('d.m.Y', strtotime($datetemp));
+               array_push($datearray, $datetemp);  
+               print_r($datearray);   
+
+               $_SESSION['datearray'] = $datearray; 
                  
                 }
             ?>   
@@ -235,7 +241,8 @@
             </div><!-- /#container-fluid -->
         </div><!-- /#page-content-wrapper -->
     </div><!-- /#wrapper -->
-    <script src="./jquery.js"></script>
+
+<script src="./jquery.js"></script>
 <script src="build/jquery.datetimepicker.full.js"></script>
 <script>/*
 window.onerror = function(errorMsg) {
@@ -254,16 +261,18 @@ $("#datetimepicker_format_locale").on("change", function(e){
     $.datetimepicker.setLocale($(e.currentTarget).val());
 });
 
+var datearray = <?php echo json_encode($datearray); ?>;
+
 $('#datetimepicker').datetimepicker({
 dayOfWeekStart : 0,
 lang:'en',
+formatDate: 'dd.mm.Y',
 //dateToDisable: ['09.05.2016'],
-startDate: '+1968/01/5',
-//defaultDate: new Date(),
-//defaultTime: '08:00',
-minDate: '-1970/12/5',
-value: new Date(),
-
+disabledDates: datearray,
+startDate:  0,
+defaultDate: new Date(),
+defaultTime: '08:00',
+minDate: new Date(),
 datepicker:true,
     allowTimes:['4:30','5:00','5:30','6:00','6:30','7:00','7:30','8:00','8:30','9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00','20:30','21:00','21:30','22:00','22:30','23:00'],
     step:5

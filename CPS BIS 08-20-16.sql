@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 19, 2016 at 05:04 AM
+-- Generation Time: Sep 01, 2016 at 12:54 AM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.5.30
 
@@ -27,21 +27,27 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `tblaccount` (
-  `strOfficerID` varchar(25) NOT NULL,
+  `strOfficerID` int(25) NOT NULL,
+  `intForeignMemberNo` int(11) NOT NULL,
   `strUsername` varchar(45) NOT NULL,
   `strPassword` varchar(45) NOT NULL,
-  `strOfficerFName` varchar(45) NOT NULL,
-  `strOfficerMName` varchar(45) NOT NULL,
-  `strOfficerLName` varchar(45) NOT NULL,
-  `dtmBirthdate` date NOT NULL
+  `intForeignPositionId` int(11) NOT NULL,
+  `strEmailAdd` varchar(25) NOT NULL,
+  `dtStart` date NOT NULL,
+  `dtEnd` date NOT NULL,
+  `strStatus` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tblaccount`
 --
 
-INSERT INTO `tblaccount` (`strOfficerID`, `strUsername`, `strPassword`, `strOfficerFName`, `strOfficerMName`, `strOfficerLName`, `dtmBirthdate`) VALUES
-('001', 'admin', 'admin', '', '', '', '0000-00-00');
+INSERT INTO `tblaccount` (`strOfficerID`, `intForeignMemberNo`, `strUsername`, `strPassword`, `intForeignPositionId`, `strEmailAdd`, `dtStart`, `dtEnd`, `strStatus`) VALUES
+(1, 1, 'dayang_paul', 'pauldayang', 1, ' ', '2016-08-29', '2018-08-29', 'Enabled'),
+(2, 10, 'wu_jenny', 'jennywu', 2, 'JennyWu@yahoo.com', '2016-08-29', '2018-08-29', 'Enabled'),
+(3, 21, 'ara_mary', 'maryara', 4, 'MariaAra@gmail.com', '2016-08-29', '2018-08-29', 'Enabled'),
+(4, 2, 'perez_paula', 'paulaperez', 4, '', '2016-08-30', '2018-08-30', 'Enabled'),
+(5, 3, 'perez_matteo', '12345', 4, '', '2016-08-30', '2018-08-30', 'Enabled');
 
 -- --------------------------------------------------------
 
@@ -91,8 +97,21 @@ CREATE TABLE `tblbrgyofficial` (
 --
 
 CREATE TABLE `tblbrgyposition` (
-  `strPositionnName` varchar(45) NOT NULL
+  `intPositionId` int(11) NOT NULL,
+  `strPositionName` varchar(45) NOT NULL,
+  `strView` varchar(25) NOT NULL,
+  `intNumber` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tblbrgyposition`
+--
+
+INSERT INTO `tblbrgyposition` (`intPositionId`, `strPositionName`, `strView`, `intNumber`) VALUES
+(1, 'Secretary', 'Sec', 1),
+(2, 'Barangay Captain', 'Kap', 1),
+(3, 'Liason', 'Liason', 1),
+(4, 'Administrator', 'Admin', 3);
 
 -- --------------------------------------------------------
 
@@ -101,7 +120,7 @@ CREATE TABLE `tblbrgyposition` (
 --
 
 CREATE TABLE `tblbusiness` (
-  `strBusinessID` int(25) NOT NULL,
+  `strBusinessID` int(11) NOT NULL,
   `strBusinessName` varchar(45) NOT NULL,
   `strBusinessCateID` varchar(25) NOT NULL,
   `strBusinessDesc` varchar(45) NOT NULL,
@@ -123,7 +142,14 @@ INSERT INTO `tblbusiness` (`strBusinessID`, `strBusinessName`, `strBusinessCateI
 (8, 'Ala II Hardware ', '1', '', '', 'Ala', '124', '', 0),
 (9, 'Ala Hardware', '1', '', 'New Yorkshire Street 672 jads aada,  ', 'Ala', '7906', '', 0),
 (10, 'Ala Hardware', '1', '', 'J Street New New City,  ', 'Ala', '124', '', 0),
-(11, 'Ala Hardware 123', '1', '', 'J Street New New City,  ', 'Ala', '124', '', 0);
+(11, 'Ala Hardware 123', '1', '', 'J Street New New City,  ', 'Ala', '124', '', 0),
+(15, 'Ala Restaurant', '4', '', 'Carolina Street, Dies', 'Jan Ala', '9065', '', 0),
+(16, 'Ala Restaurant', '4', '', 'Carolina Street, Dies', 'Jan Ala', '9065', '', 0),
+(17, 'Ala Restaurant', '6', '', 'Carolina Street, Dies', 'Jan Ala', '7906', '', 0),
+(18, 'Ala Restaurant', '6', '', 'Carolina Street, Dies', 'Jan Ala', '870876', '', 0),
+(19, 'Ala Restaurant', '6', '', 'Carolina Street, Dies', 'Jan Ala', '870876', '', 0),
+(20, 'Ala Restaurant', '6', '', 'Carolina Street, Dies', 'Jan Ala', '870876', 'Single-faced', 20);
+
 -- --------------------------------------------------------
 
 --
@@ -144,8 +170,28 @@ CREATE TABLE `tblbusinesscate` (
 INSERT INTO `tblbusinesscate` (`strBusCatergory`, `strBusCateName`, `dblAmount`, `strStatus`) VALUES
 (1, 'Hardware', 1000, 'Enabled'),
 (3, 'Pet Shop', 1000, 'Enabled'),
-(4, 'Restaurant', 390.5, 'Enabled'),
-(5, 'Clean', 800.05, 'Enabled');
+(5, 'Clean', 800.05, 'Disabled'),
+(6, 'Restaurant', 999.95, 'Enable');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tblbusinesssignage`
+--
+
+CREATE TABLE `tblbusinesssignage` (
+  `ID` int(11) NOT NULL,
+  `strSignageType` varchar(20) NOT NULL,
+  `strSignagePrice` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tblbusinesssignage`
+--
+
+INSERT INTO `tblbusinesssignage` (`ID`, `strSignageType`, `strSignagePrice`) VALUES
+(1, 'Single-faced', 30),
+(2, 'Double-faced', 50);
 
 -- --------------------------------------------------------
 
@@ -158,20 +204,27 @@ CREATE TABLE `tblbusinessstat` (
   `strBusinessID` int(11) NOT NULL,
   `strBusOwnerID` int(11) NOT NULL,
   `strBSbusinessStat` varchar(45) NOT NULL,
-  `datBCStat` date NOT NULL
+  `datBCStat` date NOT NULL,
+  `strClearanceStat` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tblbusinessstat`
 --
 
-INSERT INTO `tblbusinessstat` (`strBusStatID`, `strBusinessID`, `strBusOwnerID`, `strBSbusinessStat`, `datBCStat`) VALUES
-(1, 1, 0, 'New', '2016-08-10'),
-(2, 7, 1, 'New', '2016-08-19'),
-(3, 8, 10, 'New', '2016-08-19'),
-(4, 9, 11, 'New', '2016-08-19'),
-(5, 10, 2, 'New', '2016-08-19'),
-(6, 11, 2, 'New', '2016-08-19');
+INSERT INTO `tblbusinessstat` (`strBusStatID`, `strBusinessID`, `strBusOwnerID`, `strBSbusinessStat`, `datBCStat`, `strClearanceStat`) VALUES
+(1, 1, 0, 'New', '2016-08-10', ''),
+(2, 7, 1, 'New', '2016-08-19', ''),
+(3, 8, 10, 'New', '2016-08-19', ''),
+(4, 9, 11, 'New', '2016-08-19', ''),
+(5, 10, 2, 'New', '2016-08-19', ''),
+(6, 11, 2, 'New', '2016-08-19', ''),
+(10, 15, 1, 'New', '2016-08-24', 'Unpaid'),
+(11, 16, 1, 'New', '2016-08-24', 'Unpaid'),
+(12, 17, 3, 'New', '2016-08-24', 'Unpaid'),
+(13, 18, 3, 'New', '2016-08-24', 'Unpaid'),
+(14, 19, 3, 'New', '2016-08-24', 'Unpaid'),
+(15, 20, 3, 'New', '2016-08-24', 'Unpaid');
 
 -- --------------------------------------------------------
 
@@ -235,42 +288,6 @@ CREATE TABLE `tbldeceased` (
 INSERT INTO `tbldeceased` (`intDeceasedNo`, `strFirstName`, `strMiddleName`, `strLastName`, `strNameExtension`, `charGender`, `dtBirthdate`, `dtDied`) VALUES
 (1, 'Jenny', '', 'Santos', '', 'F', '1996-08-16', '2009-01-01');
 
-
--- --------------------------------------------------------
---
--- Table structure for table `tblrequirements`
---
-
-CREATE TABLE `tblrequirements` (
-  `intReqID` int(11) NOT NULL,
-  `strRequirementName` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tblrequirements`
---
-
-INSERT INTO `tblrequirements` (`intReqID`, `strRequirementName`) VALUES
-(1, 'DTI/SEC Registration'),
-(2, 'Lease of Contract'),
-(3, 'Land Title'),
-(4, 'Certification from TODA Evaluation'),
-(5, 'Valid ID'),
-(6, 'No existing case'),
-(7, 'Secure Authorization Endorsement Letter'),
-(8, 'NBI/Police Clearance'),
-(9, 'Letter Request from the owner'),
-(10, 'Copy of Land Title'),
-(11, 'Lay-out plan/Blueprint'),
-(12, 'ID of Project Engineer'),
-(13, 'Old Photocopy of Business Permit (BPLO)'),
-(14, 'Photocopy of Business Permit (MDAD)'),
-(15, 'Old Photocopy of Barangay Clearance'),
-(16, 'Market Master''s Certification'),
-(17, 'LTO Official Receipt'),
-(18, 'Deed of Sale (if not the registered owner)'),
-(19, 'Photocopy of operator/Driver''s License');
-
 -- --------------------------------------------------------
 
 --
@@ -317,23 +334,24 @@ INSERT INTO `tbldocrequirements` (`strDocID`, `strReqID`) VALUES
 CREATE TABLE `tbldocument` (
   `intDocCode` int(11) NOT NULL,
   `strDocName` varchar(45) NOT NULL,
-  `strDocFee` double NOT NULL,
-  `strStatus` varchar(45) NOT NULL
+  `dblDocFee` double NOT NULL,
+  `strStatus` varchar(45) NOT NULL,
+  `strDocTemplate` blob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tbldocument`
 --
 
-INSERT INTO `tbldocument` (`intDocCode`, `strDocName`, `strDocFee`, `strStatus`) VALUES
-(2, 'Certification', 10, 'Enable'),
-(3, 'Business Clearance New', 100, 'Enable'),
-(4, 'Indigency', 95.95, 'Enable'),
-(5, 'Excavation', 0, 'Enabe'),
-(6, 'Street Permit', 0, 'Enable'),
-(7, 'Business Clearance Renewal', 0, 'Enable'),
-(8, 'TRU Clearance', 0, 'Enable'),
-(9, 'Utility Clearance', 0, 'Enable');
+INSERT INTO `tbldocument` (`intDocCode`, `strDocName`, `dblDocFee`, `strStatus`, `strDocTemplate`) VALUES
+(2, 'Certification', 10, 'Enabled', ''),
+(3, 'Business Clearance New', 100, 'Enabled', ''),
+(4, 'Indigency', 95.95, 'Enabled', ''),
+(5, 'Excavation', 1500, 'Enabed', ''),
+(6, 'Street Permit', 0, 'Enabled', ''),
+(7, 'Business Clearance Renewal', 0, 'Enabled', ''),
+(8, 'TRU Clearance', 100, 'Enabled', ''),
+(9, 'Utility Clearance', 100, 'Enabled', '');
 
 -- --------------------------------------------------------
 
@@ -342,7 +360,7 @@ INSERT INTO `tbldocument` (`intDocCode`, `strDocName`, `strDocFee`, `strStatus`)
 --
 
 CREATE TABLE `tbldocumentpurpose` (
-  `strDocPurposeID` int(11) NOT NULL,
+  `intDocPurposeID` int(11) NOT NULL,
   `strPurposeName` varchar(30) NOT NULL,
   `dblPrice` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -351,11 +369,12 @@ CREATE TABLE `tbldocumentpurpose` (
 -- Dumping data for table `tbldocumentpurpose`
 --
 
-INSERT INTO `tbldocumentpurpose` (`strDocPurposeID`, `strPurposeName`, `dblPrice`) VALUES
-(1, 'Funeral', 0),
-(2, 'Local Employment', 50),
-(3, 'Scholarship', 0),
-(4, 'PAO', 150);
+INSERT INTO `tbldocumentpurpose` (`intDocPurposeID`, `strPurposeName`, `dblPrice`) VALUES
+(1, 'for whatever purpose', 0),
+(2, 'Funeral', 0),
+(3, 'Local Employment', 50),
+(4, 'Scholarship', 0),
+(5, 'PAO', 150);
 
 -- --------------------------------------------------------
 
@@ -369,6 +388,7 @@ CREATE TABLE `tbldocumentrequest` (
   `strDRapplicantID` varchar(25) NOT NULL,
   `strDRapprovedBy` varchar(25) NOT NULL,
   `datDRdateRequested` date NOT NULL,
+  `strDocReqStat` varchar(25) NOT NULL,
   `strPurpose` varchar(40) NOT NULL,
   `strRequestOf` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -377,62 +397,37 @@ CREATE TABLE `tbldocumentrequest` (
 -- Dumping data for table `tbldocumentrequest`
 --
 
-INSERT INTO `tbldocumentrequest` (`strDocRequestID`, `strDRdocCode`, `strDRapplicantID`, `strDRapprovedBy`, `datDRdateRequested`, `strPurpose`, `strRequestOf`) VALUES
-(1, '1', '11', '3', '2016-07-23', '', ''),
-(2, '1', '4', '1', '2016-07-23', '', ''),
-(3, '1', '2', '1', '2016-07-23', '', ''),
-(4, '2', '1', '1', '2016-08-10', 'Local Employment', ''),
-(5, '2', '1', '1', '2016-08-10', 'Local Employment', ''),
-(6, '2', '1', '1', '2016-08-10', '', ''),
-(7, '2', '1', '1', '2016-08-10', 'Local Employment', 'Ala'),
-(8, '2', '1', '1', '2016-08-10', 'Funeral', 'Ala'),
-(9, '2', '1', '1', '2016-08-10', 'Funeral', 'Ala'),
-(10, '2', '1', '1', '2016-08-10', 'PAO', 'Ala'),
-(11, '2', '1', '1', '2016-08-10', 'PAO', 'Ala'),
-(12, '2', '1', '1', '2016-08-10', 'PAO', 'Ala'),
-(13, '2', '1', '1', '2016-08-10', 'PAO', 'Ala'),
-(26, '2', '1', '1', '2016-08-19', 'PAO', 'Ala Jr.'),
-(27, '2', '1', '1', '2016-08-19', 'PAO', 'Ala Jr.'),
-(28, '2', '1', '1', '2016-08-19', 'PAO', 'Ala Jr.'),
-(29, '2', '1', '1', '2016-08-19', 'PAO', 'Ala Jr.'),
-(30, '2', '1', '1', '2016-08-19', 'Local Employment', 'Ala Jr.'),
-(31, '2', '1', '1', '2016-08-19', 'Local Employment', 'Ala II'),
-(32, '2', '1', '1', '2016-08-19', 'Local Employment', 'Ala Jr.'),
-(33, '2', '1', '1', '2016-08-19', 'Local Employment', 'Ala II'),
-(34, '2', '1', '1', '2016-08-19', 'Funeral', ''),
-(35, '2', '1', '1', '2016-08-19', 'PAO', ''),
-(36, '', '1', '1', '2016-08-19', 'PhilHealtyh', 'Family');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tblstreetpermit`
---
-
-CREATE TABLE `tblstreetpermit` (
-  `strSPdocReqID` varchar(25) NOT NULL,
-  `strSPstreet` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbltoda`
---
-
-CREATE TABLE `tbltoda` (
-  `intTODAID` int(11) NOT NULL,
-  `strTODAName` varchar(30) NOT NULL,
-  `strTODADesc` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tbltoda`
---
-
-INSERT INTO `tbltoda` (`intTODAID`, `strTODAName`, `strTODADesc`) VALUES
-(1, 'VISAYAN TODA', ''),
-(2, 'SLRTODA', 'San Lorenzo Ruiz TODA');
+INSERT INTO `tbldocumentrequest` (`strDocRequestID`, `strDRdocCode`, `strDRapplicantID`, `strDRapprovedBy`, `datDRdateRequested`, `strDocReqStat`, `strPurpose`, `strRequestOf`) VALUES
+(1, '1', '11', '3', '2016-07-23', '', '', ''),
+(2, '1', '4', '1', '2016-07-23', '', '', ''),
+(3, '1', '2', '1', '2016-07-23', '', '', ''),
+(4, '2', '1', '1', '2016-08-10', 'Unpaid', 'Local Employment', ''),
+(5, '2', '1', '1', '2016-08-10', 'Unpaid', 'Local Employment', ''),
+(6, '2', '1', '1', '2016-08-10', '', '', ''),
+(7, '2', '1', '1', '2016-08-10', 'Unpaid', 'Local Employment', 'Ala'),
+(8, '2', '1', '1', '2016-08-10', '', 'Funeral', 'Ala'),
+(9, '2', '1', '1', '2016-08-10', '', 'Funeral', 'Ala'),
+(13, '2', '1', '1', '2016-08-10', 'Unpaid', 'PAO', 'Ala'),
+(26, '2', '1', '1', '2016-08-19', 'For Approval', 'PAO', 'Ala Jr.'),
+(27, '2', '1', '1', '2016-08-19', '', 'PAO', 'Ala Jr.'),
+(28, '2', '1', '1', '2016-08-19', '', 'PAO', 'Ala Jr.'),
+(29, '2', '1', '1', '2016-08-19', '', 'PAO', 'Ala Jr.'),
+(30, '2', '1', '1', '2016-08-19', 'For Approval', 'Local Employment', 'Ala Jr.'),
+(31, '2', '1', '1', '2016-08-19', 'For Approval', 'Local Employment', 'Ala II'),
+(32, '2', '1', '1', '2016-08-19', 'For Approval', 'Local Employment', 'Ala Jr.'),
+(33, '2', '1', '1', '2016-08-19', 'Unpaid', 'Local Employment', 'Ala II'),
+(34, '2', '1', '1', '2016-08-19', '', 'Funeral', ''),
+(35, '2', '1', '1', '2016-08-19', 'Unpaid', 'PAO', ''),
+(36, '', '1', '1', '2016-08-19', '', 'PhilHealtyh', 'Family'),
+(37, '2', '1', '1', '2016-08-22', 'Unpaid', 'Local Employment', ''),
+(38, '0', '1', '1', '2016-08-23', '', 'Birthday', ''),
+(39, '2', '1', '1', '2016-08-23', 'Unpaid', 'Local Employment', 'Ala Jr.'),
+(40, '2', '8', '1', '2016-08-23', 'For approval', 'for whatever purpose', ''),
+(41, '2', '8', '1', '2016-08-23', 'For approval', 'for whatever purpose', ''),
+(42, '', '1', '1', '2016-08-24', 'Unpaid', 'building', ''),
+(43, '0', '1', '1', '2016-08-24', 'For approval', 'Birthday', ''),
+(45, '5', '1', '1', '2016-08-24', 'Unpaid', 'Digging lot', ''),
+(46, '2', '3', '1', '2016-08-24', 'Unpaid', 'Local Employment', '');
 
 -- --------------------------------------------------------
 
@@ -446,7 +441,7 @@ CREATE TABLE `tblequipment` (
   `strEquipCategory` varchar(25) NOT NULL,
   `intEquipQuantity` int(11) NOT NULL,
   `dblEquipFee` double NOT NULL,
-  `dblEquipDiscount` double NOT NULL,
+  `dblEquipNResidentCharge` double NOT NULL,
   `strStatus` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -454,7 +449,7 @@ CREATE TABLE `tblequipment` (
 -- Dumping data for table `tblequipment`
 --
 
-INSERT INTO `tblequipment` (`strEquipNo`, `strEquipName`, `strEquipCategory`, `intEquipQuantity`, `dblEquipFee`, `dblEquipDiscount`, `strStatus`) VALUES
+INSERT INTO `tblequipment` (`strEquipNo`, `strEquipName`, `strEquipCategory`, `intEquipQuantity`, `dblEquipFee`, `dblEquipNResidentCharge`, `strStatus`) VALUES
 (1, 'Basketball', '8', 13, 50.51, 10, 'Enabled'),
 (2, 'Volleyball', '8', 10, 50, 0, 'Enabled'),
 (3, 'Tennis Ball', '8', 10, 50, 0, 'Enabled'),
@@ -477,14 +472,14 @@ CREATE TABLE `tblfacility` (
   `strFaciStatus` varchar(45) NOT NULL,
   `dblFaciDayCharge` double DEFAULT NULL,
   `dblFaciNightCharge` double DEFAULT NULL,
-  `dblFaciDiscount` double DEFAULT NULL
+  `dblFaciNResidentCharge` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tblfacility`
 --
 
-INSERT INTO `tblfacility` (`strFaciNo`, `strFaciName`, `strFaciCategory`, `strFaciStatus`, `dblFaciDayCharge`, `dblFaciNightCharge`, `dblFaciDiscount`) VALUES
+INSERT INTO `tblfacility` (`strFaciNo`, `strFaciName`, `strFaciCategory`, `strFaciStatus`, `dblFaciDayCharge`, `dblFaciNightCharge`, `dblFaciNResidentCharge`) VALUES
 (1, 'Basketball Court', '1', 'Good Condition', 250, 300, 500),
 (2, 'Badminton Court', '1', 'Good Condition', 250, 300, 500),
 (3, 'Tennis Court', '1', 'Good Condition', 250, 300, 500),
@@ -594,7 +589,7 @@ CREATE TABLE `tblpaymentdetail` (
   `intNum` int(10) UNSIGNED NOT NULL,
   `strRequestID` varchar(25) NOT NULL,
   `dblReqPayment` double NOT NULL,
-  `intRequestORNo` int(11) NOT NULL
+  `intRequestORNo` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -602,17 +597,26 @@ CREATE TABLE `tblpaymentdetail` (
 --
 
 INSERT INTO `tblpaymentdetail` (`intNum`, `strRequestID`, `dblReqPayment`, `intRequestORNo`) VALUES
-(1, '001', 250, 0),
-(2, '002', 100, 0),
-(3, '003', 600, 0),
-(4, '004', 566.02, 0),
-(5, '005', 1500, 0),
-(6, '006', 625, 0),
-(7, '007', 1650, 0),
-(8, '008', 600, 0),
-(9, '009', 1200, 0),
-(10, '010', 1500, 0),
-(11, '010', 1250, 0);
+(1, '001', 250, '0'),
+(2, '002', 100, '0'),
+(3, '003', 600, '0'),
+(4, '004', 566.02, '0'),
+(5, '005', 1500, '0'),
+(6, '006', 625, '0'),
+(7, '007', 1650, '0'),
+(8, '008', 600, '0'),
+(9, '009', 1200, '0'),
+(10, '010', 1500, '0'),
+(11, '010', 1250, '0'),
+(12, '37', 50, '1'),
+(13, '39', 50, '1'),
+(17, '45', 1500, '0'),
+(18, 'RTU 123', 100, '1'),
+(19, '46', 50, '1'),
+(20, 'UTI 009', 100, '1'),
+(27, '19', 999.95, '0'),
+(28, '20', 1599.95, '0'),
+(29, 'UTI 367', 100, '1');
 
 -- --------------------------------------------------------
 
@@ -621,7 +625,7 @@ INSERT INTO `tblpaymentdetail` (`intNum`, `strRequestID`, `dblReqPayment`, `intR
 --
 
 CREATE TABLE `tblpaymenttrans` (
-  `intORNo` int(11) NOT NULL,
+  `intORNo` varchar(11) NOT NULL,
   `dtmPaymentDate` date NOT NULL,
   `dblPaymentAmount` double NOT NULL,
   `dblPaidAmount` double NOT NULL,
@@ -633,10 +637,45 @@ CREATE TABLE `tblpaymenttrans` (
 --
 
 INSERT INTO `tblpaymenttrans` (`intORNo`, `dtmPaymentDate`, `dblPaymentAmount`, `dblPaidAmount`, `dblRemaining`) VALUES
-(0, '0000-00-00', 0, 0, 0),
-(1, '2016-07-23', 250, 500, 0),
-(2, '2016-07-23', 250, 500, 0);
+('0', '0000-00-00', 0, 0, 0),
+('1', '2016-07-23', 250, 500, 0),
+('2', '2016-07-23', 250, 500, 0);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tblrequirements`
+--
+
+CREATE TABLE `tblrequirements` (
+  `intReqID` int(11) NOT NULL,
+  `strRequirementName` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tblrequirements`
+--
+
+INSERT INTO `tblrequirements` (`intReqID`, `strRequirementName`) VALUES
+(1, 'DTI/SEC Registration'),
+(2, 'Lease of Contract'),
+(3, 'Land Title'),
+(4, 'Certification from TODA Evaluation'),
+(5, 'Valid ID'),
+(6, 'No existing case'),
+(7, 'Secure Authorization Endorsement Letter'),
+(8, 'NBI/Police Clearance'),
+(9, 'Letter Request from the owner'),
+(10, 'Copy of Land Title'),
+(11, 'Lay-out plan/Blueprint'),
+(12, 'ID of Project Engineer'),
+(13, 'Old Photocopy of Business Permit (BPLO)'),
+(14, 'Photocopy of Business Permit (MDAD)'),
+(15, 'Old Photocopy of Barangay Clearance'),
+(16, 'Market Master''s Certification'),
+(17, 'LTO Official Receipt'),
+(18, 'Deed of Sale (if not the registered owner)'),
+(19, 'Photocopy of operator/Driver''s License');
 
 -- --------------------------------------------------------
 
@@ -776,11 +815,37 @@ INSERT INTO `tblstreet` (`intStreetId`, `intForeignZoneId`, `strStreetName`) VAL
 --
 
 CREATE TABLE `tblstreetpermit` (
-  `strSPdocReqID` varchar(25) NOT NULL,
-  `strSPstreet` varchar(45) NOT NULL,
-  `dtmSPend` date NOT NULL,
-  `dtmSPstart` date NOT NULL
+  `strSPdocReqID` int(25) NOT NULL,
+  `strSPstreet` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tblstreetpermit`
+--
+
+INSERT INTO `tblstreetpermit` (`strSPdocReqID`, `strSPstreet`) VALUES
+(38, '1'),
+(43, '1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbltoda`
+--
+
+CREATE TABLE `tbltoda` (
+  `intTODAID` int(11) NOT NULL,
+  `strTODAName` varchar(30) NOT NULL,
+  `strTODADesc` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbltoda`
+--
+
+INSERT INTO `tbltoda` (`intTODAID`, `strTODAName`, `strTODADesc`) VALUES
+(1, 'VISAYAN TODA', ''),
+(2, 'SLRTODA', 'San Lorenzo Ruiz TODA');
 
 -- --------------------------------------------------------
 
@@ -790,8 +855,18 @@ CREATE TABLE `tblstreetpermit` (
 
 CREATE TABLE `tbltru` (
   `strTRUplateNo` varchar(25) NOT NULL,
-  `strTODA` varchar(25) NOT NULL
+  `intTODA` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbltru`
+--
+
+INSERT INTO `tbltru` (`strTRUplateNo`, `intTODA`) VALUES
+('QWS 123', 1),
+('RTU 121', 1),
+('RTU 123', 1),
+('TW7777', 2);
 
 -- --------------------------------------------------------
 
@@ -807,6 +882,7 @@ CREATE TABLE `tblvehicle` (
   `strMotorNo` varchar(45) NOT NULL,
   `strChassisNo` varchar(45) NOT NULL,
   `strVehicleNo` varchar(45) NOT NULL,
+  `intVehicleType` int(1) NOT NULL,
   `strVehicleStat` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -814,31 +890,41 @@ CREATE TABLE `tblvehicle` (
 -- Dumping data for table `tblvehicle`
 --
 
-INSERT INTO `tblvehicle` (`strVplateNo`, `strOperatorName`, `strOwnerName`, `strVehicleModel`, `strMotorNo`, `strChassisNo`, `strVehicleNo`, `strVehicleStat`) VALUES
-('QWS 123', 'Jan Ala', '', 'Honda 567', 'KMYH 2134', 'KMYH 2134', '098YELLOW', 'Active'),
-('TW7777', 'Ala', 'Paul Aquino Dayang', 'Kawasaki', 'KC125EEE', 'KC125EEE', '078 / YELLOW', 'Active');
+INSERT INTO `tblvehicle` (`strVplateNo`, `strOperatorName`, `strOwnerName`, `strVehicleModel`, `strMotorNo`, `strChassisNo`, `strVehicleNo`, `intVehicleType`, `strVehicleStat`) VALUES
+('QWS 123', 'Jan Ala', '', 'Honda 567', 'KMYH 2134', 'KMYH 2134', '098YELLOW', 1, 'Active'),
+('RTU 121', 'Jan Ala', 'Dayang, Paul Aquino ', 'Hyundai 567', 'KMYH 2134', 'KMYH 2134', '098YELLOW', 1, 'Active'),
+('RTU 123', 'Jan Ala', 'Perez, Matteo Ting Jr', 'Hyundai 567', 'KMYH 2134', 'KMYH 2134', '098YELLOW', 1, 'Active'),
+('TW7777', 'Ala', 'Paul Aquino Dayang', 'Kawasaki', 'KC125EEE', 'KC125EEE', '078 / YELLOW', 1, 'Active'),
+('UTI 123', '', 'JAN PHILIP ALA', 'Honda', 'UTI125EEE', 'UTI125EEE', '09', 0, 'Active'),
+('UTI 367', 'Jan Ala', 'Perez, Matteo Ting Jr', 'Hyundai 567', 'KMYH 2134', 'KMYH 2134', '098', 0, 'Active');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tblvehihcleclearance`
+-- Table structure for table `tblvehicleclearance`
 --
 
 CREATE TABLE `tblvehicleclearance` (
+  `intID` int(11) NOT NULL,
   `strVCplateNo` varchar(25) NOT NULL,
-  `strVCvehicleStat` varchar(45) DEFAULT NULL,
+  `strVCvehicleStat` varchar(25) NOT NULL,
   `datVCStat` date NOT NULL,
-  `strApplicantID` varchar(25) NOT NULL,
-  `strResidentID` varchar(25) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `strClearanceStat` varchar(25) NOT NULL,
+  `strResidentID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tblvehicleclearance`
 --
 
-INSERT INTO `tblvehicleclearance` (`strVCplateNo`, `strVCvehicleStat`, `datVCStat`, `strApplicantID`, `strResidentID`) VALUES
-('TW7777', 'New', '2016-08-18', '', '1'),
-('QWS 123', 'New', '2016-08-19', '', '1');
+INSERT INTO `tblvehicleclearance` (`intID`, `strVCplateNo`, `strVCvehicleStat`, `datVCStat`, `strClearanceStat`, `strResidentID`) VALUES
+(1, 'TW7777', '0', '2016-08-18', '', 1),
+(2, 'QWS 123', '0', '2016-08-19', '', 1),
+(3, 'UTI 098', '0', '2016-08-21', '', 1),
+(4, 'UTI 123', '0', '2016-08-21', '', 1),
+(5, 'RTU 123', 'New', '2016-08-24', 'Unpaid', 3),
+(6, 'UTI 367', 'New', '2016-08-24', 'Unpaid', 3);
+
 -- --------------------------------------------------------
 
 --
@@ -885,7 +971,7 @@ ALTER TABLE `tblbrgyofficial`
 -- Indexes for table `tblbrgyposition`
 --
 ALTER TABLE `tblbrgyposition`
-  ADD PRIMARY KEY (`strPositionnName`);
+  ADD PRIMARY KEY (`intPositionId`);
 
 --
 -- Indexes for table `tblbusiness`
@@ -895,51 +981,22 @@ ALTER TABLE `tblbusiness`
   ADD KEY `strBusinessCate_idx` (`strBusinessCateID`);
 
 --
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `tblbusiness`
---
-ALTER TABLE `tblbusiness`
-  MODIFY `strBusinessID` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
---
 -- Indexes for table `tblbusinesscate`
 --
 ALTER TABLE `tblbusinesscate`
   ADD PRIMARY KEY (`strBusCatergory`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- Indexes for table `tblbusinesssignage`
 --
-
---
--- AUTO_INCREMENT for table `tblbusinesscate`
---
-ALTER TABLE `tblbusinesscate`
-  MODIFY `strBusCatergory` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+ALTER TABLE `tblbusinesssignage`
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indexes for table `tblbusinessstat`
 --
 ALTER TABLE `tblbusinessstat`
-  ADD PRIMARY KEY (`strBSbusinessID`);
-
---
--- AUTO_INCREMENT for table `tblbusinessstat`
---
-ALTER TABLE `tblbusinessstat`
-  MODIFY `strBusStatID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+  ADD PRIMARY KEY (`strBusStatID`);
 
 --
 -- Indexes for table `tblcategory`
@@ -972,17 +1029,12 @@ ALTER TABLE `tbldocrequirements`
 ALTER TABLE `tbldocument`
   ADD PRIMARY KEY (`intDocCode`);
 
- --
--- Indexes for table `tblstreetpermit`
 --
-ALTER TABLE `tblstreetpermit`
-  ADD PRIMARY KEY (`strSPdocReqID`);
+-- Indexes for table `tbldocumentpurpose`
+--
+ALTER TABLE `tbldocumentpurpose`
+  ADD PRIMARY KEY (`intDocPurposeID`);
 
- --
--- AUTO_INCREMENT for table `tbldocument`
---
-ALTER TABLE `tbldocument`
-  MODIFY `intDocCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- Indexes for table `tbldocumentrequest`
 --
@@ -992,31 +1044,6 @@ ALTER TABLE `tbldocumentrequest`
   ADD KEY `strDRapprovedBy_idx` (`strDRapprovedBy`),
   ADD KEY `strDRdocCode_idx` (`strDRdocCode`);
 
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `tbldocumentrequest`
---
-ALTER TABLE `tbldocumentrequest`
-  MODIFY `strDocRequestID` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
- 
- --
--- Indexes for table `tbltoda`
---
-ALTER TABLE `tbltoda`
-  ADD PRIMARY KEY (`intTODAID`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `tbltoda`
---
-ALTER TABLE `tbltoda`
-  MODIFY `intTODAID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Indexes for table `tblequipment`
 --
@@ -1111,6 +1138,12 @@ ALTER TABLE `tblstreetpermit`
   ADD PRIMARY KEY (`strSPdocReqID`);
 
 --
+-- Indexes for table `tbltoda`
+--
+ALTER TABLE `tbltoda`
+  ADD PRIMARY KEY (`intTODAID`);
+
+--
 -- Indexes for table `tbltru`
 --
 ALTER TABLE `tbltru`
@@ -1124,16 +1157,11 @@ ALTER TABLE `tblvehicle`
   ADD PRIMARY KEY (`strVplateNo`);
 
 --
--- Indexes for table `tblvehihcleclearance`
---
-ALTER TABLE `tblvehihcleclearance`
-  ADD KEY `strVCplateNo_idx` (`strVCplateNo`);
-
- --
 -- Indexes for table `tblvehicleclearance`
 --
 ALTER TABLE `tblvehicleclearance`
-  ADD KEY `strVCplateNo_idx` (`strVCplateNo`);
+  ADD PRIMARY KEY (`intID`,`strVCplateNo`);
+
 --
 -- Indexes for table `tblzone`
 --
@@ -1145,15 +1173,35 @@ ALTER TABLE `tblzone`
 --
 
 --
+-- AUTO_INCREMENT for table `tblaccount`
+--
+ALTER TABLE `tblaccount`
+  MODIFY `strOfficerID` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `tblbrgyposition`
+--
+ALTER TABLE `tblbrgyposition`
+  MODIFY `intPositionId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
 -- AUTO_INCREMENT for table `tblbusiness`
 --
 ALTER TABLE `tblbusiness`
-  MODIFY `strBusinessID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `strBusinessID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `tblbusinesscate`
 --
 ALTER TABLE `tblbusinesscate`
-  MODIFY `strBusCatergory` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `strBusCatergory` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `tblbusinesssignage`
+--
+ALTER TABLE `tblbusinesssignage`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `tblbusinessstat`
+--
+ALTER TABLE `tblbusinessstat`
+  MODIFY `strBusStatID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `tblcategory`
 --
@@ -1168,24 +1216,17 @@ ALTER TABLE `tbldeceased`
 -- AUTO_INCREMENT for table `tbldocument`
 --
 ALTER TABLE `tbldocument`
-  MODIFY `intDocCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-  
+  MODIFY `intDocCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
--- Indexes for table `tblrequirements`
+-- AUTO_INCREMENT for table `tbldocumentpurpose`
 --
-ALTER TABLE `tblrequirements`
-  ADD PRIMARY KEY (`intReqID`);
-
+ALTER TABLE `tbldocumentpurpose`
+  MODIFY `intDocPurposeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT for table `tbldocumentrequest`
 --
-
---
--- AUTO_INCREMENT for table `tblrequirements`
---
-ALTER TABLE `tblrequirements`
-  MODIFY `intReqID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
- 
+ALTER TABLE `tbldocumentrequest`
+  MODIFY `strDocRequestID` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 --
 -- AUTO_INCREMENT for table `tblequipment`
 --
@@ -1200,7 +1241,7 @@ ALTER TABLE `tblfacility`
 -- AUTO_INCREMENT for table `tblhousehold`
 --
 ALTER TABLE `tblhousehold`
-  MODIFY `intHouseholdNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `intHouseholdNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `tblhousemember`
 --
@@ -1210,12 +1251,12 @@ ALTER TABLE `tblhousemember`
 -- AUTO_INCREMENT for table `tblpaymentdetail`
 --
 ALTER TABLE `tblpaymentdetail`
-  MODIFY `intNum` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `intNum` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 --
 -- AUTO_INCREMENT for table `tblrequirements`
 --
 ALTER TABLE `tblrequirements`
-  MODIFY `intReqID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `intReqID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `tblreserveequip`
 --
@@ -1237,26 +1278,20 @@ ALTER TABLE `tblreturnequip`
 ALTER TABLE `tblstreet`
   MODIFY `intStreetId` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
+-- AUTO_INCREMENT for table `tbltoda`
+--
+ALTER TABLE `tbltoda`
+  MODIFY `intTODAID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `tblvehicleclearance`
+--
+ALTER TABLE `tblvehicleclearance`
+  MODIFY `intID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
 -- AUTO_INCREMENT for table `tblzone`
 --
 ALTER TABLE `tblzone`
   MODIFY `intZoneId` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `tblbrgyofficial`
---
-ALTER TABLE `tblbrgyofficial`
-  ADD CONSTRAINT `strbrgyofficial` FOREIGN KEY (`strOfficerID`) REFERENCES `tblaccount` (`strOfficerID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `tblctc`
---
-ALTER TABLE `tblctc`
-  ADD CONSTRAINT `strDocRequestID` FOREIGN KEY (`strDocRequestID`) REFERENCES `tbldocumentrequest` (`strDocRequestID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

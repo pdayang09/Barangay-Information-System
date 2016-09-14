@@ -25,22 +25,15 @@
 		</div><br><br><br>
 		
 		<div class="split-para"><font face = "cambria" size = 5 color = "grey"> Purok Name</font></p>
-			<div class="col-sm-10">		
-			<select class="form-control input-group-lg reg_name" id = "Purok" name = "Purok">
+		
+			
                 
-				<?php
-							require('connection.php');
-								$sql = "select * from tblZone";
-								$query = mysqli_query($con, $sql);
-					
-								if(mysqli_num_rows($query) > 0){
-									$i = 1;
-									while($row = mysqli_fetch_object($query)){?>
-										<option value=<?php echo $row->intZoneId ?>><?php echo $row->strZoneName ?></option>
-										<?php }} ?>
-			</select>
-			</div>
-		</div><a class="btn btn-info btn-success btn-xs" href="EquipmentCat.php"><label>Add Purok</label></a><br><br><br>
+			<div class="col-sm-12">
+				<input id="controlno" name = "Purok" class="form-control input-group-lg reg_name" value = " " type="text" >			 
+           </div>
+
+			
+		</div><br><br><br>
 	<br><br><br>	
   
 		<center> <input type="submit" class="btn btn-info" name = "btnAdd" id = "btnAdd"  value = "Save Record"  > </div>
@@ -57,7 +50,7 @@
 		<tbody>
 							<?php
 					require('connection.php');
-						$sql = "select intStreetId , strStreetName, strZoneName from tblStreet inner join tblZone on intForeignZoneId = intZoneId order by intForeignZoneId , intStreetId desc";
+						$sql = "select intStreetId , strStreetName, strPurok from tblStreet order by intStreetId asc";
 						$query = mysqli_query($con, $sql);
 				
 						if(mysqli_num_rows($query) > 0){
@@ -66,7 +59,7 @@
 							while($row = mysqli_fetch_object($query)){?>
 								<tr>
 									<td><?php echo $row->strStreetName?>				</td>
-									<td><?php echo $row->strZoneName?></td>
+									<td><?php echo $row->strPurok?></td>
 									
 								</tr>
 		<?php }} ?></tbody>
@@ -82,8 +75,11 @@
 			 }
 			 else{
 				 require('connection.php');
+				 mysqli_query($con,"Set @a = 2;");
+				
 			
-				mysqli_query($con,"INSERT INTO `tblStreet`(`strStreetName`, `intForeignZoneId`) VALUES ('$strStreet','$strPurok');");
+				mysqli_query($con,"INSERT INTO `tblStreet`(`strStreetName`, `strPurok`) VALUES ('$strStreet','$strPurok');");
+				
 					 echo "<script>alert('Success');
 					 window.location = 'StreetMaintenance.php';</script>";
 			 }

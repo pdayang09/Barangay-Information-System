@@ -1,172 +1,269 @@
 <!DOCTYPE html>
-          <?php session_start();
-		  require('header.php');?>
-    <?php require('sidebar.php');?>
-      <!-- **********************************************************************************************************************************************************
-      MAIN CONTENT
-      *********************************************************************************************************************************************************** -->
-      <!--main content start-->
+<?php session_start();
+require('connection.php');
 
-      <section id="main-content">
-	  <br>
-          <section class="wrapper site-min-height">
- <button class="btn btn-theme" onclick="window.location.href='AccountMaintenance.php'">Back to the Previous Page</button>
- 	                     <form method = POST>
-                    <legend ><font face = "cambria" size = 8 color = "grey"> Edit Account </font></legend><br>
-                       <p><font face = "cambria" size = 5 color = "grey"> Account ID </font></p>
-	<div class = "form-group">
-		   <div class="col-sm-5">
-		   
-             <input id="Aid" name ="Aid" class="form-control input-group-lg reg_name" type="text"  placeholder=" ID" maxlength = 10 readonly <?php if(isset($_SESSION['ID']))
-			 {echo "value =".$_SESSION['ID'];}?> readonly>
-			 
-           </div>
-	</div><br><br><br>
-	<p><font face = "cambria" size = 5 color = "grey"> Name </font></p>
-	<div class="form-group">				
-           <div class="col-sm-3">
+$id = $_SESSION['ID'];
 
-             <input id="RFName1" class="form-control input-group-lg reg_name" type="text" name="AFName" title="Enter first name" placeholder="First name" <?php if(isset($_SESSION['ID'])){
-				 echo "value =". $_SESSION['Fname'];}?> required>
-           </div> 
-		   <div class="col-sm-3">
-             <input id="RMName1" class="form-control input-group-lg reg_name" type="text" name= "AMName" title="Enter middle name" placeholder="Middle name" <?php if(isset($_SESSION['ID'])){
-				 echo "value =".$_SESSION['Mname'];}?>>
-			 
-           </div>
-           <div class="col-sm-3">
-             <input id="RLName1" class="form-control input-group-lg reg_name" type="text" name= "ALName" title="Enter last name" placeholder="Last name" <?php if(isset($_SESSION['ID'])){
-				 echo "value =".$_SESSION['Lname'];}?> required> 
-           </div>
-		   
-		   
-	</div><br><br><br>
-	<p><font face = "cambria" size = 5 color = "grey"> Birthday </font></p>
-	<div class="form-group">				
-           <div class="col-sm-3">
+$sql = "SELECT `strSign`,`strOfficerID`,`strUsername`,`strPassword`,`intForeignPositionId` ,`strEmailAdd`, concat(strLastName,',',strFirstName,' ',strMiddleName) as 'Name',concat(strBuildingNo,' , ',strStreetName,' ',strPurok) as 'Street', `dtStart`,`dtEnd` 
+FROM `tblaccount` as a inner join `tblhousemember` as b on b.intMemberNo = a.intForeignMemberNo inner join tblhousehold as d on b.intForeignHouseholdNo = d.intHouseholdNo inner join tblstreet as c on d.intForeignStreetId = c.intStreetId where strOfficerID = $id";
+$query = mysqli_query($con,$sql);
+$row = mysqli_fetch_object($query);
+require('header.php');?>
+<?php require('sidebar.php');?>
+<!-- **********************************************************************************************************************************************************
+MAIN CONTENT
+*********************************************************************************************************************************************************** -->
+<!--main content start-->
 
-             <input id="RFName1" class="form-control input-group-lg reg_name" type="text" name="ABirthday" title="Enter first name" placeholder="YYYY-MM-DD" readonly <?php if(isset($_SESSION['ID'])){
-				 echo "value =".$_SESSION['bday'];}?> required>
-           </div> 
-		  
-		   
-		   
-	</div><br><br><br>
-	<p><font face = "cambria" size = 5 color = "grey"> Username </font></p>
-	<div class = "form-group">
-		   <div class="col-sm-5">
-		   
-             <input id="dat" name ="Auser" class="form-control input-group-lg reg_name" type="text"   maxlength = 10  <?php if(isset($_SESSION['ID'])){
-				 echo "value =".$_SESSION['User'];}?> required>
-			 
-           </div>
-	</div><br><br><br>
-	<p><font face = "cambria" size = 5 color = "grey"> Password </font></p>
-	<div class = "form-group">
-		   <div class="col-sm-5">
-		   
-             <input id="dat" name ="Apass" class="form-control input-group-lg reg_name" type= password  maxlength = 10 <?php if(isset($_SESSION['ID'])){
-				 echo "value =".$_SESSION['Pass'];}?> required>
-			 
-           </div>
-	</div><br><br><br>
-	
-	
-	
-	<br><br><br>
-  
-  	<center>
-			 <input type="submit" class="btn btn-info" name = "btnEdit" id = "btnEdit" value = "Save Record" >
-			 <?php
-		require('connection.php');
+<section id="main-content">
+	<br>
+	<section class="wrapper site-min-height">
+		<button class="btn btn-theme" onclick="window.location.href='AccountMaintenance.php'">Back to the Previous Page</button>
+		<form method = POST enctype = "multipart/form-data">
+			<legend ><font face = "cambria" size = 8 color = "grey"> Edit Account </font></legend><br>
+			<div class = "showback" >
 				
-				if(isset($_POST['btnEdit'])){
-					 $strAccountid = $_POST['Aid'];
-				 $strFname = $_POST['AFName'];
-				  $strMname = $_POST['AMName'];
-				   $strLname = $_POST['ALName'];
-					 $strUser = $_POST['Auser'];
-					  $strPass = $_POST['Apass'];
-				$a =0;
-				$b =0;
-						if (preg_match('/[\^£$%&*()}{@#~?><>,|=_+¬-]/', $strLname)){
-							$b = 1;}
-						if (preg_match('/[\']/', $strLname)||preg_match('/[\']/', $strMname)||preg_match('/[\']/', $strFname)){
-								$a = 1;
-							}
-						if($a == 1){
-						$_Lname = mysqli_real_escape_string($con,$strLname);
-							$_Fname = mysqli_real_escape_string($con,$strFname);
-							$_Mname = mysqli_real_escape_string($con,$strMname);
-						}
+				
+				<div class = "form-group">
+
+
+
+					<div class="col-sm-5"><div class="form-group" id = "occup-div">	<p><font face = "cambria" size = 4 color = "grey"> Resident's Full Name: </font></p>			
+						<div class="col-sm-10">
+							<input id="controlno" name = "StreetName" class="form-control input-group-lg reg_name" type="text"  value = "<?php echo $row->Name?>" readonly>		
+						</div> </div>
 						
-				if($strFname == NULL  ||$strLname  == NULL ||$strUser  == NULL ||$strPass == NULL ){
-					 echo "<script>alert('Please Complete the form');</script>";
-				 }
-				  else if ($b == 1){
-					 echo "<script>alert('Characters like /[\^£$%&*()}{@#~?><>,|=_+¬-]/ is not allowed');</script>";
-				 }
-				  else{
-					 
-					 if($a==1){
-						mysqli_query($con,"Update tblaccount Set strOfficerFname = '$_Fname', strOfficerLname = '$_Lname', strOfficerMname = '$_Mname',strUsername = '$strUser',strPassword = '$strPass' where strOfficerID = '$strAccountid';");
-					
-					 echo "<script>alert('Success');</script>";
-					 					session_destroy();
-					 echo "<script>window.location = 'AccountMaintenance.php'</script>
-					 ";
-					}
-					else{
-					}
-					 mysqli_query($con,"Update tblaccount Set strOfficerFname = '$strFname', strOfficerLname = '$strLname', strOfficerMname = '$strMname',strUsername = '$strUser',strPassword = '$strPass' where strOfficerID = '$strAccountid';");
-					 echo "<script>alert('Success');</script>";
-					 					session_destroy();
-					 echo "<script>window.location = 'AccountMaintenance.php'</script>
-					 ";
-			 }}
-			 
-			
-			 if(isset($_POST['btnCancel'])){
-					session_destroy();
-					 echo "<script>window.location = 'AccountMaintenance.php'</script>
-					 ";
-			 }
-			
-			 ?>
-    </center><br><br>
-                               <!-- /#page-content-wrapper -->
-</form>
-			
-		</section><! --/wrapper -->
-      </section><!-- /MAIN CONTENT -->
-
-      <!--main content end-->
-  
-  </section>
-
-    <!-- js placed at the end of the document so the pages load faster -->
-    <script src="assets/js/jquery.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/jquery-ui-1.9.2.custom.min.js"></script>
-    <script src="assets/js/jquery.ui.touch-punch.min.js"></script>
-    <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
-    <script src="assets/js/jquery.scrollTo.min.js"></script>
-    <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+						
+						
+					</div>
 
 
-    <!--common script for all pages-->
-    <script src="assets/js/common-scripts.js"></script>
 
-    <!--script for this page-->
-    
-  <script>
-      //custom select box
 
-      $(function(){
-          $('select.styled').customSelect();
-      });
+					<div class="form-group" id = "SSS-div">				
+						<div class="col-sm-5">
+							<p><font face = "cambria" size = 4 color = "grey"> Username </font></p>
 
-  </script>
+							<input id="controlno" name = "UserN" class="form-control input-group-lg reg_name" value = "<?php echo $row->strUsername?>"  type="text"  readonly>	
+						</div> </div> <br><br><br><br><br></div>			 
+						
+						
+						
+						<div class = "form-group">
 
-  </body>
+
+
+							<div class="col-sm-5"><div class="form-group" id = "occup-div">	<p><font face = "cambria" size = 4 color = "grey"> Password: </font></p>			
+								<div class="col-sm-10">
+									<input id="Pass1" name = "Pass" class="form-control input-group-lg reg_name" type="password" value = '<?php echo $row->strPassword?>'>		
+								</div> </div>
+								
+								
+								
+							</div>
+
+
+
+
+							<div class="form-group" id = "SSS-div">				
+								<div class="col-sm-5">
+									<p><font face = "cambria" size = 4 color = "grey"> Confirm Password </font></p>
+
+									<input id="Pass2" name = "StreetName" class="form-control input-group-lg reg_name" type="password" required >		
+								</div> </div> <br><br><br><br><br></div>			
+								
+								
+								
+								<div class = "form-group">
+
+
+
+									<div class="col-sm-5"><div class="form-group" id = "occup-div">	<p><font face = "cambria" size = 4 color = "grey">Position: </font></p>			
+										<div class="col-sm-10">
+											<select class ="form-control input-group-lg reg_name" name = "Position">
+												<?php
+												$sql1 = mysqli_query($con,"Select intPositionId,strPositionName from tblbrgyposition");
+												while($row1 = mysqli_fetch_object($sql1)){
+												$sql2 = mysqli_query($con,"select intNumber,count(intForeignPositionId) as num from tblaccount as a INNER join tblbrgyposition as b on a.intForeignPositionId = b.intPositionId where intForeignPositionId = ".$row1->intPositionId." AND strStatus != 'Disabled' ;");
+												$row2 = mysqli_fetch_object($sql2);
+												if(($row2->intNumber != $row2->num)||($row->intForeignPositionId == $row1->intPositionId)){
+												?><option value = <?php echo "'".$row1->intPositionId."' ";
+												if ($row->intForeignPositionId == $row1->intPositionId){
+												echo "selected";
+											}?> ><?php echo $row1->strPositionName; ?></option><?php }
+										}
+										
+										?>
+									</select>
+								</div> </div>
+								
+								
+								
+							</div>
+
+
+
+
+							<div class="form-group" id = "SSS-div">				
+								<div class="col-sm-5">
+									<p><font face = "cambria" size = 4 color = "grey"> Email Address </font></p>
+
+									<input id="controlno" name = "Email" class="form-control input-group-lg reg_name" type="text" value = '<?php echo $row->strEmailAdd?>'  >		
+								</div> </div> <br><br><br><br><br></div>		
+								
+								
+								
+								<div class = "form-group">
+
+
+
+									<div class="col-sm-5"><div class="form-group" id = "occup-div">	<p><font face = "cambria" size = 4 color = "grey">Start Date: </font></p>			
+										<div class="col-sm-10">
+											<input id="controlno" name = "Sdate" class="form-control input-group-lg reg_name" type="date"  value = '<?php echo $row->dtStart?>' required>	
+										</div> </div>
+										
+										
+										
+									</div>
+
+
+
+
+									<div class="form-group" id = "SSS-div">				
+										<div class="col-sm-5">
+											<p><font face = "cambria" size = 4 color = "grey"> End Date </font></p>
+
+											<input id="controlno" name = "Edate" class="form-control input-group-lg reg_name" type="date"  value = '<?php echo $row->dtEnd?>' min = <?php echo date('Y-m-d');?> required>			
+										</div> </div> <br><br><br><br><br></div>			
+										<p><p><font face = "cambria" size = 4 color = "grey"> Upload Signature: </font></p>			
+										<input type = "file" name = "image" id="imgInp">
+										<img id="blah" height = 75 width = 250 src='<?php echo $row->strSign?>' alt="your image" />
+										<br><br><br><br>
+
+										
+										
+										
+										
+										
+										
+										
+										
+										
+										<center> <input type="submit" class="btn btn-info" name = "btnAdd" id = "btnAdd"  value = "Save Record" onclick = "return check();" > </div>
+											
+											<?php
+											if(isset($_POST['btnAdd'])){
+											$password = $_POST['Pass'];
+											$position = $_POST['Position'];
+											$username = $_POST['UserN'];
+											$Email = $_POST['Email'];
+											$start = $_POST['Sdate'];
+											$end = $_POST['Edate'];
+											$_pass = mysqli_real_escape_string($con,$password);
+											$_User = mysqli_real_escape_string($con,$username);
+											
+											
+											$dt = $_User;
+											$dt = stripslashes($dt);
+											$dt = str_replace("'", '', $dt);
+											
+											if(getimagesize($_FILES['image']['tmp_name']) == FALSE){
+		
+												mysqli_query($con,"Set @a = 2;");	
+											mysqli_query($con,"Update tblaccount set strPassword = '$_pass', intForeignPositionId = '$position', strEmailAdd = '$Email', dtStart = '$start', dtEnd = ' $end' where strOfficerID = $id");
+											
+											echo "<script>alert('Successfully Inserted!');
+											window.location = 'AccountMaintenance.php';</script>";
+											
+										}
+
+										else{
+										$info = pathinfo($_FILES['image']['name']);
+										$ext = $info['extension']; // get the extension of the file(filename)
+										$newname = "$dt.".$ext;
+										$target = 'Images/OfficerSign/'.$newname;
+											mysqli_query($con,"Set @a = 2;");
+										mysqli_query($con,"Update tblaccount set strPassword = '$_pass', intForeignPositionId = '$position', strEmailAdd = '$Email', dtStart = '$start', dtEnd = ' $end',`strSign` = '$target' where strOfficerID = $id");
+										unlink($target);
+										move_uploaded_file( $_FILES['image']['tmp_name'], $target);
+									
+										echo "<script>alert('Successfully Inserted!');
+										window.location = 'AccountMaintenance.php';</script>";
+									}
+									
+								}?>
+								
+								
+							</center><br><br>
+							<!-- /#page-content-wrapper -->
+						</form>
+
+					</section><! --/wrapper -->
+				</section><!-- /MAIN CONTENT -->
+
+				<!--main content end-->
+
+			</section>
+
+			<!-- js placed at the end of the document so the pages load faster -->
+			<script src="assets/js/jquery.js"></script>
+			<script src="assets/js/bootstrap.min.js"></script>
+			<script src="assets/js/jquery-ui-1.9.2.custom.min.js"></script>
+			<script src="assets/js/jquery.ui.touch-punch.min.js"></script>
+			<script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
+			<script src="assets/js/jquery.scrollTo.min.js"></script>
+			<script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+
+
+			<!--common script for all pages-->
+			<script src="assets/js/common-scripts.js"></script>
+
+			<!--script for this page-->
+
+			<script>
+//custom select box
+
+
+function readURL(input) {
+	if (input.files && input.files[0]) {
+		var reader = new FileReader();
+		
+		reader.onload = function (e) {
+			$('#blah').attr('src', e.target.result);
+		}
+		
+		reader.readAsDataURL(input.files[0]);
+	}
+}
+
+$("#imgInp").change(function(){
+	readURL(this);
+});
+
+
+
+function check(){
+	var x = document.getElementById('Pass1').value;
+	var y = document.getElementById('Pass2').value;
+	if(x != y){
+		alert("Password doesn't match");
+		return false;
+	}
+	else{
+		var conf = confirm("Are you sure with the changes you made?");
+		if(conf == true){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+}
+$(function(){
+	$('select.styled').customSelect();
+});
+
+</script>
+
+</body>
 </html>

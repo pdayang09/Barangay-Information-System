@@ -53,24 +53,5 @@ else{$Gender = 'Female';}
 	</div>
 		
 </div><br><br><br>
-<?php
-$query = "Select * from tblhousemember where intForeignHouseholdNo = '$houseno' && strStatus Like 'Spouse'";
-//CODES HERE
-$sql = mysqli_query($con,$query);
-if(mysqli_num_rows($sql)>0){
-$query = "Select intMemberNo,concat(strLastName,', ',strFirstName,' ',strMiddleName,' ',strNameExtension) as Name, strStatus from tblHousemember where intForeignHouseholdNo = '$houseno' && TIMESTAMPDIFF(YEAR,dtBirthdate,curdate())>18 && strStatus Like 'Spouse'";}
-else{
-	$query = "Select intMemberNo,concat(strLastName,', ',strFirstName,' ',strMiddleName,' ',strNameExtension) as Name, strStatus from tblHousemember where intForeignHouseholdNo = '$houseno' && TIMESTAMPDIFF(YEAR,dtBirthdate,curdate())>18 && !((strStatus Like 'Tenant')||(strStatus Like 'Head')||(strStatus Like 'Spouse'))";
-}
-$sql = mysqli_query($con,$query);
-?>
-<div class="form-group" id = "contact-div">				<p><font face = "cambria" size = 4 color = "grey"> New Household Head: </font></p>
-<div class="col-sm-9">
-<select class = "form-control" name = "NewHead" required>
-<?php
-while($row = mysqli_fetch_object($sql)){?>
-<option value = <?php echo $row->intMemberNo?>><?php echo $row->Name." - ".$row->strStatus;?></option>
-<?php
-}?></select><br><input type = checkbox value = '<?php echo $houseno;?>'  name = "question"> Replace the household lastname with the new head?</input></div></div><br><br><br><br><br>
 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 <button type="submit" class="btn btn-default"  value = <?php echo $id?> name = "Headdec" onclick = "return checkdied()">Submit</button>

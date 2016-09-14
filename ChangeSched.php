@@ -214,8 +214,9 @@
         $respurpose = $_SESSION['resPurpose'];
         $resdate = $_SESSION['resDate'];
 
-        $From = "";
-        $TO = "";
+        $From = $_SESSION['resFrom'];
+        $To = $_SESSION['resTo'];
+        $facino = $_SESSION['facino'];
 
         //Gets Today's Date
         $today = date("Y-m-d"); // displays date today
@@ -230,7 +231,6 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                    <FORM method="POST">
                     
             <legend ><font face = "cambria" size = 8 color = "grey">Change Schedule</font></legend>
              
@@ -247,82 +247,120 @@
                     <p><font face="cambria" size=4 color="grey"> NAME: <?php echo $name;?></font></p> 
                     <p><font face="cambria" size=4 color="grey"> CONTACT NO: <?php echo $contactno;?> </font></p> 
                     <p><font face="cambria" size=4 color="grey"> PURPOSE: <?php echo $respurpose;?> </font></p> 
-                    <p><font face="cambria" size=4 color="grey"> NO OF PEOPLE: -- </font></p> 
-                    <p><font face="cambria" size=4 color="grey"> RESERVED DATE: <?php echo $resdate;?> </font></p> 
 
                     </div><br><br><br><br>                          
                  </div>
             </div>
 
-            <div class = "col-sm-4">    
-                <div class="form-group">
-                    <div class = "showback">                                                
-                     <font face = "cambria" size = 5 color = "grey"> Change Date </font><br><br>  
-                     <p><font face="cambria" size=4 color="grey"> From </font></p>
-                    <input type="text" id="datetimepicker5" class="form-control input-group-lg reg_name, some_class" value="<?php if(isset($_POST['From'])){echo $_POST['From'];}else{}?>" name = "From"/>
-                     <p><font face="cambria" size=4 color="grey"> To </font></p>
-                    <input type="text" id="datetimepicker5" class="form-control input-group-lg reg_name, some_class" value="<?php if(isset($_POST['To'])){echo $_POST['To'];}else{}?>" name = "To"/><br><br>
-                    <center>
-                    <button type="submit" class="btn btn-outline btn-success" name="btnCheck" value="<?php echo $resId; ?>"/> Check Selected Date </button>
-                    <font face = "cambria" size = 5 color = "grey" > ............................................                    
-                    <button type="submit" class="btn btn-outline btn-warning" name="btnChange" value="<?php echo $resId; ?>"/> Change </button>
-                    <button type="submit" class="btn btn-outline btn-danger" name="btnForfeit" value="<?php echo $resId; ?>"/> Forfeit </button>
-                    </center>
+            <div id="AvailabilityCheck" class = "col-sm-5">    
+                    <div class="form-group">
+                        <div class = "showback">
 
-                    </div>                      
-                </div>
-            </div>
-   </form>   
+                        <font face = "cambria" size = 5 color = "grey"> Check Availability </font><br><br>
 
-            
-    <?php 
-            if(isset($_POST['btnCheck'])){
-                include("vCheck.php");
-            }else if(isset($_POST['btnChange'])){
-                $resFrom = $_POST['From'];
-                $resTo = $_POST['To'];
+                        <p><font face="cambria" size=4 color="grey"> From </font></p>
+                        <input name = "From" type="text" id="datetimepicker" class="form-control input-group-lg reg_name, some_class" value="<?php if(isset($_POST['From'])){echo $_POST['From'];}else{ echo $From;}?>" >                  
+                        <p><font face="cambria" size=4 color="grey"> To </font></p>
+                        <input name = "To" type="text" id="datetimepicker003" class="form-control input-group-lg reg_name, some_class" value="<?php if(isset($_POST['To'])){echo $_POST['To'];}else{ echo $To;}?>" > <br><br>
 
-                if(!empty($resFrom) AND !empty($resTo)){
+                       <center><button class="btn btn-outline btn-success" type="button" onclick="Check(this.value)" value="<?php echo $facino;?>"> Check </button></center>
 
-                    require("connection.php");
-                     mysqli_query($con, "UPDATE `tblreservationrequest` SET `datRSReserved`='$resFrom',`dtmFrom`= UNIX_TIMESTAMP('$resFrom')*1000,`dtmTo`= UNIX_TIMESTAMP('$resTo')*1000 WHERE `strReservationID`= '$resId'");
+                       <p id="showCheck"></p> 
 
-                     mysqli_query($con, "UPDATE `tblreservefaci` SET `dtmREFrom`='$resFrom',`dtmRETo`='$resTo' WHERE `strReservationID` = $resId");                     
+            <div id="viewCheck" class="panel panel-panel">
+                <ul id="sortable" class="task-list">
+                    <li class="list-primary">
+                        <div class="task-title">    
+                        
+            <?php                       
+                require("connection.php");
+                $query = mysqli_query($con,"SELECT f.`strFaciNo`, f.`strFaciName`, TIME(r.`dtmREFrom`), TIME(r.`dtmRETo`) FROM tblreservefaci r INNER JOIN tblfacility f ON f.`strFaciNo` = r.`strREFaciCode` WHERE (r.`strREFaciCode`='$facino') AND (r.`dtmREFrom` BETWEEN '$From' AND '$To' OR r.`dtmRETo` BETWEEN '$From' AND '$To')");
 
-                     mysqli_query($con, "UPDATE `tblreserveequip` SET `dtmREFrom`='$resFrom',`dtmRETo`='$resTo' WHERE `strReservationID` = $resId");
-
-                     echo "<script> alert('Successfully rescheduled an event');</script>";
-                }
-            }else if(isset($_POST['btnForfeit'])){
-                $resFrom = $_POST['From'];
-                $resTo = $_POST['To'];
-
-                if(!empty($resFrom) AND !empty($resTo)){
-
-                    require("connection.php");
-                    mysqli_query($con, "UPDATE `tblreservationrequest` SET `strRSapprovalStatus`='Forfeited' WHERE `strReservationID`= '$resId'");
-
-                     mysqli_query($con, "DELETE FROM `tblreservefaci` WHERE `strReservationID` = $resId");                     
-
-                     mysqli_query($con, "DELETE FROM `tblreserveequip` WHERE `strReservationID` = $resId");
-
-                    mysqli_query($con, "DELETE FROM `tblpaymentdetail` WHERE `strRequestID` = $resId");
-
-                    mysqli_query($con, "DELETE FROM `tblreturnequip` WHERE `strReservationID` = $resId");
-
-                     echo "<script> alert('Event Successfully Cancelled');</script>";
-                }
-
-            }
-
-    ?>
+                if(mysqli_num_rows($query) > 0){
                 
+                $i = 1;
+                 while($row = mysqli_fetch_row($query)){
+
+                    $facino = $row[0];
+                    $facitemp = $row[1];
+                    $facifrom = $row[2];
+                    $facito = $row[3];                    
+                  }
+                }else{
+                    
+                }
+
+            ?>        
+    
+            </div>
+        </li>
+    </ul>
+</div>
+
+<FORM method="POST"> 
+
+            <center>
+                <font face = "cambria" size = 5 color = "grey" > ............................................<br>               
+                <button id="btnChange" class="btn btn-outline btn-warning" name="btnChange" value="<?php echo $resId; ?>" onclick="Check(01)"/> Change </button>
+                <button id="btnForfeit" class="btn btn-outline btn-danger" name="btnForfeit" value="<?php echo $resId; ?>" onclick="Check(02)"/> Forfeit </button>
+            </center> 
+
+        </div>                      
+    </div>
+</div>
+          
+</FORM>       
                     </div><!-- /#col-lg-12 -->
                 </div><!-- /#row -->
             </div><!-- /#container-fluid -->
         </div><!-- /#page-content-wrapper -->
     </div><!-- /#wrapper -->
     
+<script>
+function Check(val){
+
+    var a = document.getElementsByName("From")[0].value;
+    var b = document.getElementsByName("To")[0].value;
+    var c = document.getElementsByName("btnChange")[0].value;
+    var d = document.getElementsByName("btnForfeit")[0].value;
+
+    if(val==01 || val==02){
+        if (confirm("Do you really want to continue?")) {
+            
+            //Make ajax call
+            $.ajax({
+                type: "POST",
+                url: "vCheck1.php",
+                data: 'resfrom='+a+'&resto='+b+'&val='+val+'&resIdC='+c+'&resIdF='+d,
+                success: function(data){
+                $("#viewCheck").html(data);
+                }          
+            });
+
+        }
+
+        window.location='view_kapitan.php';
+        document.getElementById("btnChange").setAttribute("disabled","disabled");
+        document.getElementById("btnForfeit").setAttribute("disabled","disabled");
+    }else{
+        //Make ajax call
+            $.ajax({
+                type: "POST",
+                url: "vCheck1.php",
+                data: 'resfrom='+a+'&resto='+b+'&val='+val+'&resIdC='+c+'&resIdF='+d,
+                success: function(data){
+                $("#viewCheck").html(data);
+                }          
+            });          
+    }          
+}
+
+      $(function(){
+          $('select.styled').customSelect();
+      });  
+
+</script>
+
 <script src="./jquery.js"></script>
 <script src="build/jquery.datetimepicker.full.js"></script>
 <script>/*
@@ -342,13 +380,36 @@ $("#datetimepicker_format_locale").on("change", function(e){
     $.datetimepicker.setLocale($(e.currentTarget).val());
 });
 
-$('#datetimepicker').datetimepicker({
-dayOfWeekStart : 1,
-lang:'en',
-disabledDates:['1986/01/08','1986/01/09','1986/01/10'],
-startDate:  '1986/01/05'
+$("#datetimepicker_format_locale").on("change", function(e){
+    $.datetimepicker.setLocale($(e.currentTarget).val());
 });
-$('#datetimepicker').datetimepicker({value:'2015/04/15 05:03',step:10});
+
+$('#datetimepicker').datetimepicker({
+dayOfWeekStart : 0,
+lang:'en',
+//dateToDisable: ['09.05.2016'],
+startDate:  0,
+defaultDate: new Date(),
+defaultTime: '08:00',
+minDate: +new Date(),
+
+datepicker:true,
+    allowTimes:['4:30','5:00','5:30','6:00','6:30','7:00','7:30','8:00','8:30','9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00','20:30','21:00','21:30','22:00','22:30','23:00'],
+    step:5
+});
+$('#datetimepicker003').datetimepicker({
+dayOfWeekStart : 0,
+lang:'en',
+//dateToDisable: ['09.05.2016'],
+startDate:  0,
+defaultDate: new Date(),
+defaultTime: '08:00',
+minDate: +new Date(),
+
+datepicker:true,
+    allowTimes:['4:30','5:00','5:30','6:00','6:30','7:00','7:30','8:00','8:30','9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00','20:30','21:00','21:30','22:00','22:30','23:00'],
+    step:5
+});
 
 $('.some_class').datetimepicker({   
     formatTime:'H:i',

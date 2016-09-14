@@ -1,7 +1,9 @@
  <?php session_start();?>
 <!DOCTYPE html>
-          <?php require('header.php');?>
+    <?php require('header.php');?>
     <?php require('sidebar.php');?>
+
+<link href="dataTables/dataTables.bootstrap.css" rel="stylesheet" />
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
@@ -18,9 +20,8 @@
 
 								<form method = POST><br>
 								<div class= 'showback' id = 'tblview'>
-                            
-                                <center>
-								<table   class="table table-striped table-bordered table-hover"   border = '2' style = 'width:95%'>
+                         
+								<table   class="table table-striped table-bordered table-hover"   border = '2'  id="dataTable">
 								<thead>
 								<tr>
 									<th><i class="fa fa-bullhorn"></i> Document Name</th>
@@ -56,6 +57,7 @@
 										<div class="btn-group " role="group">	
 											<button  class="btn btn-primary btn-xs" type = submit name = "btnEdit" value = <?php echo $row->intDocCode; ?> ><i class="fa fa-pencil"></i></button>	
 											<button  class="btn btn-danger btn-xs" type = submit name = "btnDelete" onclick = "return confirm('Do you really want to continue?');" value = <?php echo $row->intDocCode; ?> >Disable</button>
+											<button  class="btn btn-primary btn-xs" type = submit name = "Proceed" value = <?php echo $row->intDocCode; ?> >Document</button>	
 										</div>
 									</div>
 									</td>
@@ -67,10 +69,16 @@
 							</tbody>
 								</table>
 							
-								</center>
+								
                        </form>
                        
                     </div>
+					
+			<?php 
+				
+							
+			?>
+					
 			<?php 		if(isset($_POST['btnEdit'])){
 								$search = $_POST['btnEdit'];
 								$query= mysqli_query($con,"Select * from tbldocument where intDocCode = '$search'");
@@ -79,9 +87,24 @@
 									$_SESSION['id'] = $row->intDocCode;
 									$_SESSION['name'] = $row->strDocName;
 									$_SESSION['price'] = $row->dblDocFee;
+									$_SESSION['path'] = $row->strDocTemplate;
 									//echo "<script>alert('". $row->strDocName."');</script>";
 									echo "<script> window.location= 'DocumentEdit.php';</script>";
 							}
+							
+						if(isset($_POST['Proceed'])){
+							$search = $_POST['Proceed'];
+							$query= mysqli_query($con,"Select * from tbldocument where intDocCode = '$search'");
+							if(mysqli_num_rows($query)>0)
+								$row = mysqli_fetch_object($query);
+									$_SESSION['id'] = $row->intDocCode;
+									$_SESSION['name'] = $row->strDocName;
+									$_SESSION['price'] = $row->dblDocFee;
+									$_SESSION['path'] = $row->strDocTemplate;
+									//echo "<script>alert('". $row->strDocName."');</script>";
+									echo "<script> window.location= 'DReditDocument.php';</script>";
+							}
+						
 							
 							if(isset($_POST['btnDelete'])){
 								$a = $_POST['btnDelete'];
@@ -110,6 +133,21 @@
     <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
     <script src="assets/js/jquery.scrollTo.min.js"></script>
     <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+	
+	<!--DATA TABLES-->
+	<script src="dataTables/jquery.dataTables.js"></script>
+    
+	<script src="dataTables/dataTables.bootstrap.js"></script>	
+
+	<script>
+	  
+		$(document).ready(function() {
+		  
+		$('#dataTable').dataTable();		  
+	  
+		});
+
+	</script>
 
 
     <!--common script for all pages-->

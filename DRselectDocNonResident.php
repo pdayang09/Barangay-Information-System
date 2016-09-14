@@ -1,26 +1,37 @@
  <?php session_start();?>
 <!DOCTYPE html>
     <?php require('header.php');?>
-    <?php require('sidebar.php');?>-->
+    <?php require('sidebar.php');?>
       
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
+	  	<?php 
+		
+		$appId  = $_SESSION['clientID'];
+		$add = $_SESSION['place'];
+		$resid = $_SESSION['clientID'];
+		$contactno = $_SESSION['contactno'];
+		$name = $_SESSION['name'];
+		//$doc = $_SESSION['document'];
+		
+		//All Documents
+		$certi = "Certification";
+		$busClear = "Business Clearance";
+		$CTC = "Community Tax Certificate";
+		$excav = "Excavation";
+		$indig = "Certification of Indigency";
+		$streetPer = "Street Permit";
+		$TRU = "TRU Clearance";
+	?>	  
+	  
       <!--main content start-->
       <section id="main-content">
         <section class="wrapper site-min-height">
-		
-		<?php //Initialize variables
-	
-			//Gets Today's Date
-			$today = date("F j, Y, g:i a"); // displays date today
-			
 
-		?>
-
-	<form method="post"
-    <div id="wrapper">
-    <!--?php include('Nav.php')?>
+		<form method="post">
+		<div id="wrapper">
+		<!--?php include('Nav.php')?>
 
         <!-- Page Content -->
         <div id="page-content-wrapper">
@@ -32,41 +43,60 @@
 							<div class = "bodybody">	
 								<div class="panel-body">
 		
-		<legend ><font face = "cambria" size = 10 color = "grey"> Select Document </font></legend><br><br><br>
-		
-		
-		<button type="submit" class="btn btn-danger btn-lg btn-block" name="btnBusClearance">
-			<font face="cambria" size=5 color="white"><b>Barangay Business Clearance</b></font>	
-			<span class="glyphicon glyphicon-chevron-right pull-right"></span></button><br>
-			<?php
+		<form method = "POST">
+		<legend><font face = "cambria" size = 10 color = "grey"> Select Document</font></legend><br><br><br>
+
+		   
+			
+			<!--<button type="button" class="showback col-xs-5" name='btnBusClearance'>
+						  <img src="images/docicon.ico" style="height:60px;" class="pull-left">
+						<font face='cambria' size=5 color='black'><b><?php //echo"$busClear";?></b></font>	
+						<span class='glyphicon glyphicon-chevron-right pull-right'></span>
+						  
+						  
+						  </button>
+						  <button type="button" class="btn btn-theme03 dropdown-toggle" data-toggle="dropdown">
+						    <span class="caret"></span>
+						    <span class="sr-only">Toggle Dropdown</span>
+						  </button>
+						  <ul class="dropdown-menu" role="menu">
+						    <li><a href="#">Something else here</a></li>
+						    <li class="divider"></li>
+						    <li><a href="#">Separated link</a></li>
+						  </ul>
+						  -->
+			
+			
+			
+			<button type='submit' class='showback col-xs-5' name='btnBusClearance'>
+			<img src="images/docicon.ico" style="height:60px;" class="pull-left">
+			<font face='cambria' size=5 color='black'><b><?php echo"$busClear";?></b></font>	
+			<span class='glyphicon glyphicon-chevron-right pull-right'></span></button><br>
+			
+		<?php
 				if(isset($_POST['btnBusClearance']))
 				{
+					$appId  = $_SESSION['clientID'];
+					$add = $_SESSION['place'];
+					$resId = $_SESSION['clientID'];
+					$contactno = $_SESSION['contactno'];		
+					$name = $_SESSION['name'];
+					$doc = $_SESSION['document'];
+					
 					$_SESSION['document'] = $busClear;
-					$_SESSION['resId'] = $resId;
-					$_SESSION['appId'] = $appId;
+					$_SESSION['clientID'] = $appId;
+					$_SESSION['clientID'] = $resid;
 					$_SESSION['name'] = $name;
 					$_SESSION['contactno'] = $contactno;
-					$_SESSION['place'] = $place;
-					
-				echo "<script> window.location = 'DRformBusClearanceNEW.php';</script>";
-			}
-			?>			
-		<button type="button" class="btn btn-success btn-lg btn-block" name="btnCTC">
-			<font face="cambria" size=5 color="white"><b>Community Tax Certificate</b></font>	
-			<span class="glyphicon glyphicon-chevron-right pull-right"></span></button><br>
-			<?php
-				if(isset($_POST['btnCTC']))
-				{
-					$_SESSION['document'] = $CTC;
-					$_SESSION['resId'] = $resId;
-					$_SESSION['appId'] = $appId;
-					$_SESSION['name'] = $name;
-					$_SESSION['contactno'] = $contactno;
-					$_SESSION['place'] = $place;
-					
-					echo "<script> window.location = 'DRformCTC.php';</script>";
+					$_SESSION['place'] = "";
+					echo"<script> alert('$resId')</script>";
+					echo "<script> window.location = 'DRBusinessTable.php';</script>";
 				}
 			?>
+		
+	</form>
+			
+			
 								</div> <!-- panel-body -->
 							</div> <!-- bodybody -->			
 						</div> <!-- col-lg-12 -->
@@ -74,21 +104,9 @@
 				</div> <!-- container-fluid -->
 			</div> <!-- page-content-wrapper -->
 		</div> <!-- wrapper -->
-			
-		</section><!--/wrapper -->
+			</form>
+		</section> <! --/wrapper -->
       </section><!-- /MAIN CONTENT -->
-
-      <!--main content end-->
-      <!--footer start-->
-      <footer class="site-footer">
-          <div class="text-center">
-              2016 - TEAM BARANGAY
-              <a href="blank.html#" class="go-top">
-                  <i class="fa fa-angle-up"></i>
-              </a>
-          </div>
-      </footer>
-      <!--footer end-->
   </section>
 
     <!-- js placed at the end of the document so the pages load faster -->

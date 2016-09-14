@@ -17,12 +17,12 @@
 		  $contactno = $_SESSION['contactno'];
 		  $name = $_SESSION['name'];		  
 		  $doc = $_SESSION['document'];//Type of document	
-
+			$_POST['DRdocReqby'] = $name;
 		  //Date Today
 		  $today = date("Y-m-d"); 
 		  		  
 		  //for retrieving docID and name
-		  $certiDocNameSQL = "SELECT strDocCode, strDocName FROM `tbldocument` WHERE `strDocName` LIKE '%Certification%'";
+		  $certiDocNameSQL = "SELECT strDocCode, strDocName FROM `tbldocument` WHERE `strDocName` LIKE '%Indigency%'";
 		  $certiDocName = mysqli_query($con, $certiDocNameSQL);
 		  $docCode = $purposePrice = "";
 		  while($row = mysqli_fetch_row($certiDocName))
@@ -48,10 +48,14 @@
 					<?php echo "<legend><font face = 'cambria' size = 10 color = 'grey'> $doc </font></legend><br>";?>		
 					<br>
 					<div class="showback">
-						<form method="POST" id="Form1">
+						<form method="POST">
 						<div class = "form-group">							
 							
 							<font face="cambria" size=5 color="grey"><center><b>Requirements</b></center></font><br>
+							<label><input type="checkbox" value="" id= "requirements" onclick="sample2(this.checked, 'DRpurpose', 'DRdocReq', 'btnSubmit')">
+							<font face="cambria" size=4.5 color="red"><?php echo " Select All"?></label>
+							<form method="POST">
+							<div class = "form-group" id = "Form1">
 							<?php
 
 								$query = mysqli_query($con, "Select strRequirementName,intReqID from tbldocRequirements as a, tblrequirements as b,tblDocument where strReqId = intReqId and strDocName = 'Indigency' and strDocId = intDocCode;");
@@ -60,14 +64,14 @@
 								
 								<div class="checkbox">
 								<label><input type="checkbox" value="" name = "requirement" onclick="sample(this.checked, 'DRpurpose', 'DRdocReq', 'btnSubmit')">
-								<font face="cambria" size=5 color="black"><?php echo "$row->strRequirementName"?></label>
+								<font face="cambria" size=4.5 color="black"><?php echo "$row->strRequirementName"?></label>
 								</div>
 								<?php
 								 }
 							?>					
 							
 						</div>
-						</form>
+						</form></div>
 					</div>
 					<br>
 					<div class="showback">
@@ -75,44 +79,40 @@
 						<div class = "form-group">							
 							
 							<font face="cambria" size=5 color="grey"><center><b>Details</b></center></font><br>
-							<div class="col-sm-3">
+							<div class="col-sm-4">
 								<p><font face="cambria" size=5 color="grey"> Date Requested </font></p>						
 								<input id='DRdatereq' class='form-control input-group-lg reg_name' type='date' name="DRdtereq" title='system-generated' 
 								value = "<?php echo"$today"; ?>" disabled>						
 							</div>
-							<div class="col-sm-5">
-									<p><font face="cambria" size=5 color="grey"> Requested For </font></p>			
-									<input class="form-control input-group-lg reg_name" type="text" name="DRdocReq" title="system-generated" id='DRdocReq' disabled value="Family"><br><br>
+							<div class="col-sm-4">
+									<p><font face="cambria" size=5 color="grey"> Requested By </font></p>			
+									<input class="form-control input-group-lg reg_name" type="text" name="DRdocReqby" title="system-generated" id='DRdocReqby'  placeholder = "Family" value="<?php if(isset($_POST['DRdocReqby'])){echo $_POST['DRdocReqby'];}else{} ?>" disabled>
 							</div>
-							<div class='col-sm-4'>
-								<p><font face='cambria' size=5 color='grey'> Document Purpose </font></p>								
-								<select class='form-control' id='DRpurpose' name="DRpurpose" disabled>
-									<option selected='selected' value='0' disabled>Choose Document Purpose</option>							
-								<?php							
-									while($row = mysqli_fetch_array($certiPurpose))
-									{
-								?>		<option value='<?php echo "$row[1]";?>'><?php echo"$row[1]"; ?> </option>
-								<?php	}?>
-								</select>
-								<p><input type="checkbox" value="$add" onclick="enableDisable(this.checked, 'DRotherPurpose', 'DRpurpose')"><font face="cambria" size=4.5 color="grey"> Other: 
+							<div class="col-sm-4">
+									<p><font face="cambria" size=5 color="grey"> Requested For </font></p>			
+									<input class="form-control input-group-lg reg_name" type="text" name="DRdocReq" title="system-generated" id='DRdocReq'  placeholder = "Family" value="<?php if(isset($_POST['DRdocReq'])){echo $_POST['DRdocReq'];}else{} ?>" disabled>
+									
+							</div>
+							<div class="col-sm-6">
+									<p><font face="cambria" size=5 color="grey"> Address</font></p>			
+									<input class="form-control input-group-lg reg_name" type="text" name="DRdocReq" title="system-generated" id=''  placeholder = "Family" value="<?php echo "$add";?>" disabled>
+									
+							</div>
+							<div class='col-sm-6'>
+								<p><font face='cambria' size=5 color='grey'>Purpose </font></p>
 							</font>					
-								<input id='DRotherPurpose' class='form-control input-group-lg reg_name' type='text' name="DRpurpose" title='system-generated' 
-								value = "" disabled>
+								<input id='DRpurpose' class='form-control input-group-lg reg_name' type='text' name="DRpurpose" title='system-generated' 
+								value = "" placeholder = "Purpose" disabled required>
 							 </p>
 							</div>	
-							<br>
+							<br><br><br><br><br><br><br><br>
 							
 							
-							<center><input type="submit" class="btn btn-success" name = "btnSubmit" id="btnSubmit" value = "Submit" disabled></center>
+							
 						
 						
 						<script language="javascript">
-						function enableDisable(bEnable, DRotherPurpose, DRpurpose)
-							{
-								document.getElementById(DRotherPurpose).disabled = !bEnable;
-								document.getElementById(DRpurpose).disabled = bEnable;
-								
-							}
+						
 						
 						function sample(bEnable,DRpurpose,DRdocReq, btnSubmit){
 								var isSelected = 0;
@@ -136,13 +136,42 @@
 									document.getElementById(btnSubmit).disabled = true;
 								}
 							}
+							function sample2(bEnable,DRpurpose,DRdocReq, btnSubmit){
+								var o = document.getElementById("Form1").getElementsByTagName("input");
+								var max = o.length;
+								if(bEnable){
+									var allischecked = (function(){
+								  for(var i=0,l=o.length;i<l;i++){
+								    if((o[i].type == "checkbox" && o[i].name == "requirement" && !o[i].checked)) {
+								    	o[i].checked = true;
+								  	}
+								  }
+								  	document.getElementById(DRpurpose).disabled = !bEnable;
+									document.getElementById(DRdocReq).disabled = !bEnable;
+									document.getElementById(btnSubmit).disabled = !bEnable;
+								})();
+
+								}else{
+									var allischecked = (function(){
+								  for(var i=0,l=o.length;i<l;i++){
+								    if((o[i].type == "checkbox" && o[i].name == "requirement" && o[i].checked)) {
+								    	o[i].checked = false;
+								  	}
+								  }
+								})();
+
+									document.getElementById(DRpurpose).disabled = true;
+									document.getElementById(DRdocReq).disabled = true;
+									document.getElementById(btnSubmit).disabled = true;	
+								}
+							}
 						</script>
 						</div>
-						
+						<center><input type="submit" class="btn btn-success" name = "btnSubmit" onclick = "return confirm('Do you want to save?')" id="btnSubmit" value = "Submit" disabled></center>
 						
 						</form>
 					</div>
-				</div>
+				
 			</div>
 			
 	
@@ -164,41 +193,31 @@
 						echo "<script>alert('Characters like /[\^£$%&*()}{@#~?><>,|=_+¬-]/ is not allowed');</script>";
 				}else{
 					
-					$saveCertiSQL = "INSERT INTO `tbldocumentrequest` (`strDRdocCode`, `strDRapplicantID`, `strDRapprovedBy`,`datDRdateRequested`, `strPurpose`, `strRequestOf`) VALUES ('$docCode', '$appId', NOW(), '$docPurpose', '$DRdocReq');";					
+					$docStat = "For approval";
+					$saveCertiSQL = "INSERT INTO `tbldocumentrequest` (`strDocRequestID`, `strDRdocCode`, `strDRapplicantID`, `strDRapprovedBy`, `datDRdateRequested`, `strDocReqStat`, `strPurpose`, `strRequestOf`) VALUES (NULL, '$docCode', '$appId', '1', NOW(), '$docStat', '$docPurpose', '$DRdocReq');";				
 					
 					require('connection.php');
 					$save = mysqli_query($con, $saveCertiSQL);
-					if($save == true){
+					if($save == true)
+					{
+						echo"<script> alert('Request Saved.')</script>";						
+						$_SESSION['clientID'] = $resid;
+						$_SESSION['name'] = $name;
+						$_SESSION['place'] = $add;
+						$_SESSION['contactno'] = $contactno;
+						$_SESSION['place'] = $add;
+						$_SESSION['document']  = $doc;//Type of document
+						$_SESSION['docPurpose']  = $docPurpose;
+						$_SESSION['DRdocReq']  = $DRdocReq;
+						$_SESSION['purposePrice']  = $purposePrice;
+					
 						echo"<script> alert('Request Saved.')</script>";
+						
+						echo "<script> window.location = 'DRformSummary.php';</script>";
 					}
 					else
 						echo "<script>alert('".mysqli_error($con)."');</script>";
 					
-					//tblpaymentdetail`
-					$lastID = mysqli_query($con, "SELECT strDocRequestID FROM `tbldocumentrequest` WHERE 1 ORDER BY `strDocRequestID` DESC LIMIT 1");
-					while($row = mysqli_fetch_row($lastID))
-					{
-						$docIDPayment = $row[0];
-					}
-					
-					mysqli_query($con, "INSERT INTO `tblpaymentdetail`(`strRequestID`, `dblReqPayment`, `intRequestORNo`) VALUES ('$docIDPayment','$purposePrice','0');");
-					
-					
-					
-					$_SESSION['clientID'] = $resid;
-					$_SESSION['name'] = $name;
-					$_SESSION['contactno'] = $contactno;
-					$_SESSION['place'] = $add;
-					$_SESSION['document']  = $doc;//Type of document
-					
-				if($purposePrice >= 0)
-				{
-					//echo Assess request module
-				}else
-				{
-					echo "<script>alert('succ');</script>";
-					echo "<script> window.location = 'DocumentRequestL.php';</script>";
-				}
 				}
 					
 					
