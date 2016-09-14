@@ -100,14 +100,22 @@
 		//Conversion of Time
 		$time1 = StrToTime ($resFrom);
 		$time2 = StrToTime ($resTo);
-		$time3 = StrToTime ('2016-09-14 18:00:00');
+
+		$createDate = new DateTime($resFrom);
+		$todayTemp = $createDate->format('Y-m-d');
+		$todayTemp = $todayTemp." "."18:00";
+
+		$time3 = StrToTime ($todayTemp);
+
 		$diff = $time1 - $time2;
 		$hours = $diff / ( 60 * 60 );
 		$hours = -1 * $hours;
 
 		$diff = $time3 - $time2;
 		$hours1 = $diff / ( 60 * 60 );
-		$hours1 = -1 * $hours1;		
+		$hours1 = -1 * $hours1;			
+
+		echo"<script> alert('$todayTemp');</script>";	
 		
 		//Gets Today's Date
 		$today = date("Y-m-d"); // displays date today
