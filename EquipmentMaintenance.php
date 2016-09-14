@@ -3,7 +3,7 @@
     <?php require('header.php');?>
     <?php require('sidebar.php');?>
 	
-<link href="datTables/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="dataTables/dataTables.bootstrap.css" rel="stylesheet" />
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
@@ -17,10 +17,10 @@
 				</p>
 				
 				<input type= checkbox id = "showdisabled" onclick ="showdis()"> Show Disabled Items<br>
-										<center><br>				
+										<br>				
 <div class = "showback" id = 'tblview'>
 	<form method = POST>
-				<table class="table table-striped table-bordered table-hover"  border = '3' style = 'width:95%' id="dataTable"><!-- Table -->
+				<table class="table table-striped table-bordered table-hover"  border = '3' id="dataTable"><!-- Table -->
 					<thead>
 						<tr>
 							<th><i class="fa fa-question-circle"></i> Equipment </th>
@@ -114,7 +114,7 @@ if(isset		($_POST['btnEnable'])){
 					window.location ='EquipmentMaintenance.php';</script>";
 				}						?>
 
-                  </center>
+                
 			
 		</section><! --/wrapper -->
       </section><!-- /MAIN CONTENT -->

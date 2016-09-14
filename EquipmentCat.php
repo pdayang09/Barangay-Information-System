@@ -3,7 +3,7 @@
     <?php require('header.php');?>
     <?php require('sidebar.php');?>
 	
-<link href="datTables/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="dataTables/dataTables.bootstrap.css" rel="stylesheet" />
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
@@ -17,9 +17,9 @@
 	 <p align="right">
 	 <button type="button" class="btn btn-info" name = "btnEdit1" id = "btnEdit1"  onclick = "window.location = 'EquipmentCateAdd.php'" ><i class="fa fa-plus"></i> Add New</button>
 	 <p>                                                 
-<center>
+
 <br><div class = "showback">
-					<table   class="table table-striped table-bordered table-hover"  border = '2' style = 'width:95%' id="dataTable">
+					<table   class="table table-striped table-bordered table-hover"  border = '2'  id="dataTable">
 						<thead>
 							<tr>
 								<th># Category ID</th>
@@ -72,7 +72,7 @@
 				}				?></tbody>
 				</table>
 				
-</center>
+
 </form>
                     </div>
 			

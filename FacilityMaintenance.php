@@ -3,7 +3,7 @@
   <?php require('header.php');?>
   <?php require('sidebar.php');?>
  
- <link href="datTables/dataTables.bootstrap.css" rel="stylesheet" />
+ <link href="dataTables/dataTables.bootstrap.css" rel="stylesheet" />
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
@@ -26,8 +26,8 @@
 							   <div class = "showback" id = "tblview">
 
 							   
-<center> 
-						<table class="table table-striped table-bordered table-hover" border = '3' style = 'width:95%' id="dataTable">
+
+						<table class="table table-striped table-bordered table-hover" border = '3'  id="dataTable">
 							<thead>
 								<tr>
 									
@@ -111,7 +111,7 @@
 								echo "<script> window.location = 'FacilityEdit.php';</script>";
 							}
 							}?></tbody>
-						</table></center>    
+						</table>
                        
                     </div>
 			
@@ -135,13 +135,9 @@
 	<script src="dataTables/jquery.dataTables.js"></script>
     
 	<script src="dataTables/dataTables.bootstrap.js"></script>	
-
 	<script>
-	  
 		$(document).ready(function() {
-		  
-		$('#dataTable').dataTable();		  
-	  
+		$('#dataTable').dataTable();	
 		});
 
 	</script>

@@ -3,7 +3,7 @@
     <?php require('header.php');?>
     <?php require('sidebar.php');?>
 
-<link href="datTables/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="dataTables/dataTables.bootstrap.css" rel="stylesheet" />
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
@@ -20,9 +20,8 @@
 
 								<form method = POST><br>
 								<div class= 'showback' id = 'tblview'>
-                            
-                                <center>
-								<table   class="table table-striped table-bordered table-hover"   border = '2' style = 'width:95%' id="dataTable">
+                         
+								<table   class="table table-striped table-bordered table-hover"   border = '2'  id="dataTable">
 								<thead>
 								<tr>
 									<th><i class="fa fa-bullhorn"></i> Document Name</th>
@@ -70,7 +69,7 @@
 							</tbody>
 								</table>
 							
-								</center>
+								
                        </form>
                        
                     </div>

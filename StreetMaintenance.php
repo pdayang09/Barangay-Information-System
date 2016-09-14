@@ -3,7 +3,7 @@
  <?php require('header.php');?>
  <?php require('sidebar.php');?>
  
-  <link href="datTables/dataTables.bootstrap.css" rel="stylesheet" />
+  <link href="dataTables/dataTables.bootstrap.css" rel="stylesheet" />
  
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
@@ -18,10 +18,10 @@
 	<button  class="btn btn-info" onclick = "window.location.href='AddStreet.php'"><i class="fa fa-plus"></i>  Add New</button> 
 	</p>
 	
-<center><br>		          
+<br>		          
 			<form method = POST>                		
 				<div class = "showback" id = "tblview">
-					<table class="table table-striped table-bordered table-hover"  border = '3' style = 'width:95%' id="dataTable"><!-- Table -->
+					<table class="table table-striped table-bordered table-hover"  border = '3' id="dataTable"><!-- Table -->
 						<thead>
 							<tr>
 								<th># Street ID </th>
@@ -73,7 +73,7 @@
 					?>
 					
                     </form>             
-                  </center>
+                 
 		</section> <!--/wrapper -->
       </section> <!-- /MAIN CONTENT -->
 

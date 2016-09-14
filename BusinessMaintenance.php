@@ -3,7 +3,7 @@
     <?php require('header.php');?>
     <?php require('sidebar.php');?>
 	
-<link href="datTables/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="dataTables/dataTables.bootstrap.css" rel="stylesheet" />
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
@@ -19,9 +19,9 @@
 				</p -->
 			
 			<form method = POST>
-				<center> 
+				
 				<div class="showback">
-					<table  class="table table-striped table-bordered table-hover" id="dataTable" border = '2' style = 'width:95%'>
+					<table  class="table table-striped table-bordered table-hover" id="dataTable" border = '2' >
 						
 						<thead>
 							<tr>
@@ -146,7 +146,7 @@
 								echo "<script>alert('Successfully Updated');
 									window.location = 'BusinessMaintenance.php'; </script>";
 							}?>
-				</center>
+				
 				</div>
 				
 		</form>        
