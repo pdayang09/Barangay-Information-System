@@ -22,12 +22,6 @@ switch($residency){
 	break;
 	
 	default;
-	//intFixed =0;
-	//$query = mysqli_query($con, "select `dblFaciDayCharge`, `dblFaciNightCharge`, `dblFaciDiscount`, `strFaciNo` from tblFacility where `strFaciName` = '$resFacility'");
-								
-	//while($row = mysqli_fetch_row($query)){ CHANGE QUERY GET DATA FROM UTILITY
-	
-	//}
 }	
 
 	$intFixed =1;
