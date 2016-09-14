@@ -301,56 +301,14 @@
 
             <center>
                 <font face = "cambria" size = 5 color = "grey" > ............................................<br>               
-                <button type="submit" class="btn btn-outline btn-warning" name="btnChange" value="<?php echo $resId; ?>" onclick="Check(01)"/> Change </button>
-                <button type="submit" class="btn btn-outline btn-danger" name="btnForfeit" value="<?php echo $resId; ?>" onclick="Check(02)"/> Forfeit </button>
+                <button id="btnChange" class="btn btn-outline btn-warning" name="btnChange" value="<?php echo $resId; ?>" onclick="Check(01)"/> Change </button>
+                <button id="btnForfeit" class="btn btn-outline btn-danger" name="btnForfeit" value="<?php echo $resId; ?>" onclick="Check(02)"/> Forfeit </button>
             </center> 
 
         </div>                      
     </div>
 </div>
-         
-    <?php 
-        if(isset($_POST['btnChange'])){
-            $resId = $_POST['btnChange'];            
-
-            $resfrom = $_POST['From'];
-            $resTo = $_POST['To'];
-
-            if($resfrom!="" AND $resto!=""){
-
-            require("connection.php");
-                mysqli_query($con, "UPDATE `tblreservationrequest` SET `datRSReserved`='$resfrom',`dtmFrom`= UNIX_TIMESTAMP('$resfrom')*1000,`dtmTo`= UNIX_TIMESTAMP('$resto')*1000 WHERE `strReservationID`= '$resId'");
-
-                mysqli_query($con, "UPDATE `tblreservefaci` SET `dtmREFrom`='$resfrom',`dtmRETo`='$resto' WHERE `strReservationID` = $resId");                    
-                mysqli_query($con, "UPDATE `tblreserveequip` SET `dtmREFrom`='$resfrom',`dtmRETo`='$resto' WHERE `strReservationID` = $resId");
-
-                echo "<script> alert('Successfully rescheduled an event');</script>";
-                echo"<script>window.location='reservation_kapitanl.php';</script>";
-            }
-
-        }else if(isset($_POST['btnForfeit'])){
-            $resId = $_POST['btnForfeit'];
-
-            if($resfrom!="" AND $resto!=""){
-
-            require("connection.php");
-            mysqli_query($con, "UPDATE `tblreservationrequest` SET `strRSapprovalStatus`='Forfeited' WHERE `strReservationID`= '$resId'");
-
-            mysqli_query($con, "DELETE FROM `tblreservefaci` WHERE `strReservationID` = $resId");                     
-
-            mysqli_query($con, "DELETE FROM `tblreserveequip` WHERE `strReservationID` = $resId");
-
-            mysqli_query($con, "DELETE FROM `tblpaymentdetail` WHERE `strRequestID` = resId");
-
-            mysqli_query($con, "DELETE FROM `tblreturnequip` WHERE `strReservationID` = $resId");
-
-            echo "<script> alert('Event Successfully Cancelled');</script>";
-            echo"<script>window.location='reservation_kapitanl.php';</script>";
-            }
-        }
-    
-
-    ?>
+          
 </FORM>       
                     </div><!-- /#col-lg-12 -->
                 </div><!-- /#row -->
@@ -367,28 +325,36 @@ function Check(val){
     var d = document.getElementsByName("btnForfeit")[0].value;
 
     if(val==01 || val==02){
-        confirm("Do you really want to continue?");
+        if (confirm("Do you really want to continue?")) {
+            
+            //Make ajax call
+            $.ajax({
+                type: "POST",
+                url: "vCheck1.php",
+                data: 'resfrom='+a+'&resto='+b+'&val='+val+'&resIdC='+c+'&resIdF='+d,
+                success: function(data){
+                $("#viewCheck").html(data);
+                }          
+            });
 
-        $.ajax({
-            type: "POST",
-            url: "vCheck1.php",
-            data: 'resfrom='+a+'&resto='+b+'&val='+val+'&resIdC='+c+'&resIdF='+d,
-            success: function(data){
-            $("#viewCheck").html(data);
-            }       
-        });  
+        }
+
+        window.location='view_kapitan.php';
+        document.getElementById("btnChange").setAttribute("disabled","disabled");
+        document.getElementById("btnForfeit").setAttribute("disabled","disabled");
     }else{
-        $.ajax({
-            type: "POST",
-            url: "vCheck1.php",
-            data: 'resfrom='+a+'&resto='+b+'&val='+val+'&resIdC='+c+'&resIdF='+d,
-            success: function(data){
-            $("#viewCheck").html(data);
-            }       
-        });  
+        //Make ajax call
+            $.ajax({
+                type: "POST",
+                url: "vCheck1.php",
+                data: 'resfrom='+a+'&resto='+b+'&val='+val+'&resIdC='+c+'&resIdF='+d,
+                success: function(data){
+                $("#viewCheck").html(data);
+                }          
+            });          
     }          
-
 }
+
       $(function(){
           $('select.styled').customSelect();
       });  

@@ -237,7 +237,7 @@
 							<div class="form-group">
 								<div class="col-sm-7">
 									<a href="validityCheck.php"><input type="button" class="btn btn-outline btn-success" name = "btnGoBack" value = "Reserve Again"></a>
-									<input type="submit" class="btn btn-outline btn-success" name = "btnNote" value = "Assess Payment">
+									<input type="submit" class="btn btn-outline btn-success" id="btnNote" name = "btnNote" value = "Assess Payment">
 									<a href="facilityequipmentL.php"><input type="button" class="btn btn-outline btn-success" name = "btnView" value = "View Reservation"></a>
 								</div>
 							</div></center>
@@ -246,6 +246,7 @@
 			<?php
 				if(isset($_POST['btnNote'])){
 					include("saveReservation1.php");
+					echo '<script> document.getElementById("btnNote").setAttribute("disabled","disabled"); </script>';
 			}?>
 								
 						</form> <!-- /#form method -->									
@@ -261,5 +262,7 @@
 				
 		</section><! --/wrapper -->
       </section><!-- /MAIN CONTENT -->
+
+
 
 <?php require("footer.php");?>

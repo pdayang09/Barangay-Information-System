@@ -37,7 +37,7 @@ if($balance ==0){
 }
 
 	echo'<script> alert(" Your Payment has been collected ")</script>';
-	echo'<script> window.location = "reservation_paymentl.php";</script>';
+	echo'<script> window.location = "view_treasurer.php";</script>';
 }else{
 
 	$change = 0;

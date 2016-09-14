@@ -4,8 +4,7 @@
 	$resfrom = $_POST["fid"];
 	$resto = $_POST["tid"];
 	$resFacility = $_POST["rid"];
-    $go = $_POST['value'];
-
+    $go = 2;
 ?>
 	   
             <div id="viewCheck" class="panel panel-panel">

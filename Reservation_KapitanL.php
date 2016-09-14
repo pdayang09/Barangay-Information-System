@@ -1,8 +1,7 @@
 
 <?php 
 	require("connection.php");	
-	//Initialize variables		
-			
+
 	//Gets Today's Date
 	$today = date("F j, Y, g:i a"); // displays date today
 	
@@ -23,7 +22,22 @@
 	$returned =0;
 	$unreturned =0;
 ?>
-				
+
+    <div id="wrapper">
+    <!--?php include('Nav.php')?>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+			
+                <div class="row">
+                    <div class="col-lg-12">
+					
+							<div class = "bodybody">	
+								<div class="panel-body">
+		
+		<legend ><font face = "cambria" size = 10 color = "grey"> Request List </font></legend>
+		
 		<!-- Search Section-->
 		<div class="form-group">
 			<div class="col-sm-3">
@@ -132,19 +146,18 @@
 					require("connection.php");
 					$statement = "SELECT `dblReqPayment` FROM `tblpaymentdetail` WHERE `strRequestID` = $reservation";
 
-					$query = mysqli_query($con,$statement);
+					require("connection.php");
+					$query = mysqli_query($con, $statement);
+										
 					while($row = mysqli_fetch_array($query)){
 						$payment = $row[0];
 
+						mysqli_query($con, "UPDATE tblreservationrequest SET `strRSapprovalStatus` = 'Approved' WHERE `strReservationID` = $reservation");
+						mysqli_query($con, "INSERT INTO `tblpaymenttrans`(`intORNo`, `dtmPaymentDate`, `dblPaymentAmount`, `dblPaidAmount`, `dblRemaining`) VALUES ('$reservation','','$payment','0','$payment')");	
 					}
+				}
 
-					mysqli_query($con, "UPDATE tblreservationrequest SET `strRSapprovalStatus` = 'Approved' WHERE `strReservationID` = $reservation");
-
-					mysqli_query($con, "INSERT INTO `tblpaymenttrans`(`intORNo`, `dtmPaymentDate`, `dblPaymentAmount`, `dblPaidAmount`, `dblRemaining`) VALUES ('$reservation','','$payment','0','$payment')");					
-					}
-
-					unset($approve);
-				
+					unset($approve);				
 				}else{
 					
 				} 
@@ -163,35 +176,8 @@
 					
 				}
 				
-				if(!empty($_POST['Dapprove'])){					
-					$Dapprove = $_POST['Dapprove'];	
-					
-					for($intCtr = 0; $intCtr < sizeof($Dapprove); $intCtr++){ 		
-					$reservation = $Dapprove[$intCtr];
-										
-					mysqli_query($con, "UPDATE tblreservationrequest SET `strRSapprovalStatus` = 'Approved' WHERE `strReservationID` = '$reservation'");
-					}
-					
-					unset($Dapprove);
-				}else{
-					
-				}
-				
-				if(!empty($_POST['Ddisapprove'])){					
-					$Ddisapprove = $_POST['Ddisapprove'];	
-					
-					for($intCtr = 0; $intCtr < sizeof($Ddisapprove); $intCtr++){ 		
-					$reservation = $Ddisapprove[$intCtr];
-										
-					mysqli_query($con, "UPDATE tblreservationrequest SET `strRSapprovalStatus` = 'For Approval' WHERE `strReservationID` = '$reservation'");
-					}
-					
-					unset($Ddisapprove);
-				}else{
-					
-				}
+				echo"<script> window.location='view_kapitan.php';</script>";
 
-				echo "<meta http-equiv=\"refresh\" content=\"0;URL=view_kapitan.php\">";
 			}else if(isset($_POST['btnDisapprove'])){
 				$reservation = $_POST['btnDisapprove'];
 

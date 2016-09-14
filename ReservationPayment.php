@@ -95,7 +95,7 @@
 									<center>
 									<font face = "cambria" size = 5 color = "grey" > ......................................
 									
-									<button class="btn btn-outline btn-success" name = "btnPay" onclick="showBal()" value = '<?php echo $resId;?>'> Render Payment </button></center></font>
+									<button id="sRequest" type="submit" class="btn btn-outline btn-success" name = "btnPay" onclick="showBal()" value = '<?php echo $resId;?>'> Render Payment </button></center></font>
 
 									</div><br><br><br><br>							
 							</div>
@@ -146,6 +146,8 @@ function showBal(){
       $(function(){
           $('select.styled').customSelect();
       });
+
+      $("input[type=submit]").attr("disabled", "disabled");
 
   </script>
 

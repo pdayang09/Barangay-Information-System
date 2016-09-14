@@ -59,8 +59,9 @@
                 mysqli_query($con, "UPDATE `tblreservefaci` SET `dtmREFrom`='$resfrom',`dtmRETo`='$resto' WHERE `strReservationID` = $resId");                    
                 mysqli_query($con, "UPDATE `tblreserveequip` SET `dtmREFrom`='$resfrom',`dtmRETo`='$resto' WHERE `strReservationID` = $resId");
 
+                mysqli_query($con, "UPDATE `tblreturnequip` SET `datRTDate`= '$resto' WHERE `strReservationID`= $resId");               
+
                 echo "<script> alert('Successfully rescheduled an event');</script>";
-                echo"<script>window.location='reservation_kapitanl.php';</script>";
                 }
 
         }else if($_POST['val']==02){
@@ -80,7 +81,6 @@
             mysqli_query($con, "DELETE FROM `tblreturnequip` WHERE `strReservationID` = $resId");
 
             echo "<script> alert('Event Successfully Cancelled');</script>";
-            echo"<script>window.location='reservation_kapitanl.php';</script>";
         }
 
     }

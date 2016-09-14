@@ -140,7 +140,7 @@
 			
 				<tbody>
 				<?php
-				$query = mysqli_query($con,"SELECT `strRTEquipCode`, `intReturned` + `intUnreturned`, `intReturned`, `intUnreturned` FROM tblreturnequip WHERE `strReservationID` = $return;");
+				$query = mysqli_query($con,"SELECT `strRTEquipCode`, `intReturned` + `intUnreturned`, `intReturned`, `intUnreturned` FROM tblreturnequip WHERE `strReservationID` = $return");
 				
 				while($row = mysqli_fetch_array($query)){
 							

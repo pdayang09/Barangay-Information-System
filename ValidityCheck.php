@@ -33,7 +33,7 @@
 	$unreturned =0;
 	
 	$searchtemp =0;
-	$preApp = $_SESSION['preApp'];
+	$preApp = "app-";
 ?>
 
     <div id="wrapper">
