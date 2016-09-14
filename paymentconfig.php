@@ -22,25 +22,24 @@ switch($residency){
 	break;
 	
 	default;
-}	
+}
 
-	$intFixed =1;
-	
-	switch($intFixed){
-		case 1:
-			$resfee = $resfee;
-			$hours = $hours;
-			
-		break;
-		
-		case 2:
-			$resfee = $resfee + 50.00;
-			$hours = $hours;
-			
-		break;
-		
-		default;
-	}	
-	
+
+if($hours1 <= 0){
+	$resfeeTemp = $resfee;	
+	$resfee = $resfee * $hours;
+
+	$diffTemp = $hours;
+	$hours1 =0;
+
+}else if($hours1 > 0){
+	$resfeeTemp = $resfee;
+	$resfee  = $resfee * $hours;
+	$resfee = $resfee + $_SESSION['nightresfee']*$hours1;
+
+	$diffTemp = $hours-$hours1;
+}
+
+//echo"<script> alert('$resfee');</script>";
 					
 ?>

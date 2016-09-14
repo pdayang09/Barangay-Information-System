@@ -52,8 +52,16 @@
 			foreach($equipment as $a){
 				if(!empty($a)){
 					
+					if($residency==1){
+
+						$statement = "select `dblEquipFee` from tblequipment where strequipname = '$a'";
+					}else if($residency==2){
+						
+						$statement = "select `dblEquipNResidentCharge`+`dblEquipFee` from tblequipment where strequipname = '$a'";
+					}
+
 					require("connection.php");
-					$query = mysqli_query($con, "select dblequipfee from tblequipment where strequipname = '$a'");
+					$query = mysqli_query($con, $statement);
 					
 					//echo $a;
 
@@ -92,9 +100,14 @@
 		//Conversion of Time
 		$time1 = StrToTime ($resFrom);
 		$time2 = StrToTime ($resTo);
+		$time3 = StrToTime ('2016-09-14 18:00:00');
 		$diff = $time1 - $time2;
 		$hours = $diff / ( 60 * 60 );
 		$hours = -1 * $hours;
+
+		$diff = $time3 - $time2;
+		$hours1 = $diff / ( 60 * 60 );
+		$hours1 = -1 * $hours1;		
 		
 		//Gets Today's Date
 		$today = date("Y-m-d"); // displays date today
@@ -140,12 +153,12 @@
 											
 											?>
 												<tr><td> <?php echo" $resFacName";?> </td>
-													<td> <?php echo" $resfee";?> </td>
-													<td> <?php echo" $hours";?></td>
+													<td> <?php echo" $resfeeTemp";?> </td>
+													<td> <?php echo" Day: $diffTemp hr/s Night: $hours1 hr/s ";?></td>
 												</tr>
 											<?php
 
-												$total = $total + $resfee * $hours;
+												$total = $total + $resfee;
 
 											}else if($facilityF == 0){ ?>
 
