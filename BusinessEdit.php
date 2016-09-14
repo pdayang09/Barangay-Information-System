@@ -19,7 +19,7 @@
 	<div class = "form-group">
 		   <div class="col-sm-8">
 		   
-             <input id="busId" name="busId" class="form-control input-group-lg reg_name" type="text" value = <?php if (isset($_SESSION['bid'])){ echo $_SESSION['bid'];}?> title="generated brgyId" placeholder=" XXXXXX" maxlength  =10 readonly>
+             <input id="busId" name="busId" class="form-control input-group-lg reg_name" type="text" value = '<?php if (isset($_SESSION['bid'])){ echo $_SESSION['bid'];}?>' title="generated brgyId" placeholder=" XXXXXX" maxlength  =10 readonly>
 			 
            </div>
 	</div><br><br>
@@ -28,34 +28,47 @@
 				
            <div class="col-sm-8">
 
-             <input id="busName"  name="busName" class="form-control input-group-lg reg_name" type="text" title="Enter first name" placeholder="Business name" value = <?php if (isset($_SESSION['bid'])){ echo $_SESSION['bn'];}?> required >
+             <input id="busName"  name="busName" class="form-control input-group-lg reg_name" type="text" title="Enter first name" placeholder="Business name" value = '<?php if (isset($_SESSION['bid'])){ echo $_SESSION['bn'];}?>' required >
            </div> <br><br>
 		  	 <p><font face = "cambria" size = 5 color = "grey"> Business Description </font></p>
            <div class="col-sm-8">
-              <input id="busDesc" name="busDesc" class="form-control input-group-lg reg_name" type="text"  title="Enter Adress" placeholder="Description" value = <?php if (isset($_SESSION['bid'])){ echo $_SESSION['bd'];}?> required >
+              <input id="busDesc" name="busDesc" class="form-control input-group-lg reg_name" type="text"  title="Enter Adress" placeholder="Description" value = '<?php if (isset($_SESSION['bid'])){ echo $_SESSION['bd'];}?>' required >
            </div><br><br><br>
 		   <p><font face = "cambria" size = 5 color = "grey"> Business Category</font></p>
 		   <div class="col-sm-8">
-             <input id="busCategory" class="form-control input-group-lg reg_name" type="text" name="busCategory" title="Enter middle name" placeholder="Category" value = <?php if (isset($_SESSION['bid'])){ echo $_SESSION['bc'];}?> required >
+            <select class = form-control name = "busCategory" >
+			<?php
+			require('connection.php');
+			$sql = mysqli_query($con,'Select * from tblbusinesscate');
+			while($row = mysqli_fetch_object($sql)){
+			?>
+			<option value = <?php echo "'".$row->strBusCatergory."'";
+			if($_SESSION['bc'] == $row->strBusCatergory){
+				echo "selected";
+			}?>><?php echo $row->strBusCateName; ?></option>
+			<?php
+			}
+			?>
+			</select>
 			 
            </div>
 	<br><br>
 	
 	  <p><font face = "cambria" size = 5 color = "grey"> Contact Person</font></p>
 		   <div class="col-sm-8">
-             <input id="contactperson" class="form-control input-group-lg reg_name" type="text" name="contactperson" title="Enter middle name" placeholder="Full Name" value = <?php if (isset($_SESSION['bid'])){ echo $_SESSION['bcp'];}?> required>
+             <input id="contactperson" class="form-control input-group-lg reg_name" type="text" name="contactperson" title="Enter middle name" placeholder="Full Name" value = '<?php if (isset($_SESSION['bid'])){ echo $_SESSION['bcp'];}?>' required>
 			 
            </div><br><br>
 		    <p><font face = "cambria" size = 5 color = "grey"> Contact Number</font></p>
 		   <div class="col-sm-8">
-             <input id="contactperson" class="form-control input-group-lg reg_name" type="text" name="contactn" title="Enter middle name" placeholder="Full Name" value = <?php if (isset($_SESSION['bid'])){ echo $_SESSION['bcn'];}?> required>
+             <input id="contactperson" class="form-control input-group-lg reg_name" type="text" name="contactn" title="Enter middle name" placeholder="Full Name" value = '<?php if (isset($_SESSION['bid'])){ echo $_SESSION['bcn'];}?>' required>
 			 
            </div><br><br>
 	
 	
 	  <p><font face = "cambria" size = 5 color = "grey"> Location</font></p>
 		   <div class="col-sm-8">
-             <input id="Location" class="form-control input-group-lg reg_name" type="text" name="Location" title="Enter middle name" placeholder="Location" value = <?php if (isset($_SESSION['bid'])){ echo $_SESSION['bl'];}?>required >
+             <input id="Location" class="form-control input-group-lg reg_name" type="text" name="Location" title="Enter middle name" placeholder="Location" value = '<?php if (isset($_SESSION['bid'])){ echo $_SESSION['bl'];}?>' required >
 			 
            </div><br><br><br><br>
 
@@ -85,8 +98,7 @@
 					 $_busname = mysqli_real_escape_string($con,$strbusname);
 							$_busdesc = mysqli_real_escape_string($con,$strbusdesc);
 							$_location = mysqli_real_escape_string($con,$strlocation);
-					 mysqli_query($con,"Update tblbusiness Set strBusinessName = '$_busname' , strBusinessDescription = '$_busdesc',
-					 strCategory = '$strbuscategory', strContactPerson = '$strcontact' , strLocation = '$_location', strContactNo = '$strcontactn'   where strBusinessID = '$strbuscode';");
+					 mysqli_query($con,"Update tblbusiness Set strBusinessName = '$_busname' , strBusinessDesc = '$_busdesc', strBusinessCateID = '$strbuscategory', strBusinessContactPerson = '$strcontact' , strBusinessLocation = '$_location', strContactNum = '$strcontactn' where strBusinessID = '$strbuscode';");
 					 echo "<script>alert('Success');</script>";
 					 session_destroy();
 					 echo "<script>

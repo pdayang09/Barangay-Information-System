@@ -2,8 +2,6 @@
 <!DOCTYPE html>
     <?php require('header.php');?>
     <?php require('sidebar.php');?>
-	
-<link href="dataTables/dataTables.bootstrap.css" rel="stylesheet" />
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
@@ -19,9 +17,9 @@
 				</p -->
 			
 			<form method = POST>
-				
+				<center> 
 				<div class="showback">
-					<table  class="table table-striped table-bordered table-hover" id="dataTable" border = '2' >
+					<table  class="table table-striped table-bordered table-hover" id="tableView" border = '2' style = 'width:95%'>
 						
 						<thead>
 							<tr>
@@ -123,7 +121,7 @@
 									$_SESSION['bid'] = 	$search;
 									$_SESSION['bn'] = 	$row->strBusinessName;
 									$_SESSION['bd'] = 	$row->strBusinessDesc;
-									$_SESSION['bc'] = 	$row->strBusCateName;
+									$_SESSION['bc'] = 	$row->strBusinessCateID;
 									$_SESSION['bcp'] = 	$row->strBusinessContactPerson;
 									$_SESSION['bcn'] = 	$row->strContactNum;
 									$_SESSION['bl'] = 	$row->strBusinessLocation;
@@ -146,7 +144,7 @@
 								echo "<script>alert('Successfully Updated');
 									window.location = 'BusinessMaintenance.php'; </script>";
 							}?>
-				
+				</center>
 				</div>
 				
 		</form>        
@@ -166,23 +164,6 @@
     <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
     <script src="assets/js/jquery.scrollTo.min.js"></script>
     <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
-	
-	
-<!--DATA TABLES-->
-	<script src="dataTables/jquery.dataTables.js"></script>
-    
-	<script src="dataTables/dataTables.bootstrap.js"></script>	
-
-	<script>
-	  
-		$(document).ready(function() {
-		  
-		$('#dataTable').dataTable();		  
-	  
-		});
-
-	</script>
-	
 
 
     <!--common script for all pages-->
