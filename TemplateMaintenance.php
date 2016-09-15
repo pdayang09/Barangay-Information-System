@@ -64,17 +64,10 @@
 								<tr> 
 								<td><?php echo $row->intTemplate_ID?></td>
 								<td><?php echo $row->strTemplate_Name?></td>
-								<td><?php 
-								require('connection.php');
-						$sql = "select strTemplate_Path from tbldocumenttemplate";
-						$query = mysqli_query($con, $sql);
-						if(mysqli_num_rows($query) > 0){
-						$i = 1;
-						while($row = mysqli_fetch_assoc($query)){
-							?>
+								<td>
 				
-							<img src="Images/TemplateUpload/<?php echo $row['strTemplate_Path']; ?>" width="200px" height="200px">
-						<?php  }}?>
+							<img src="Images/TemplateUpload/<?php echo $row->strTemplate_Path; ?>" width="200px" height="200px">
+						
 								
 								</td>
 								</tr>

@@ -35,9 +35,7 @@
 					
 							<div class = "bodybody">	
 								<div class="panel-body">
-		
-		<legend ><font face = "cambria" size = 10 color = "grey"> Request List </font></legend>
-		
+				
 		<!-- Search Section-->
 		<div class="form-group">
 			<div class="col-sm-3">
@@ -144,7 +142,7 @@
 					$reservation = $approve[$intCtr];
 					
 					require("connection.php");
-					$statement = "SELECT `dblReqPayment` FROM `tblpaymentdetail` WHERE `strRequestID` = $reservation";
+					$statement = "SELECT `dblReqPayment` FROM `tblpaymentdetail` WHERE `strRequestID` = '$reservation'";
 
 					require("connection.php");
 					$query = mysqli_query($con, $statement);
@@ -152,7 +150,7 @@
 					while($row = mysqli_fetch_array($query)){
 						$payment = $row[0];
 
-						mysqli_query($con, "UPDATE tblreservationrequest SET `strRSapprovalStatus` = 'Approved' WHERE `strReservationID` = $reservation");
+						mysqli_query($con, "UPDATE tblreservationrequest SET `strRSapprovalStatus` = 'Approved' WHERE `strReservationID` = '$reservation'");
 						mysqli_query($con, "INSERT INTO `tblpaymenttrans`(`intORNo`, `dtmPaymentDate`, `dblPaymentAmount`, `dblPaidAmount`, `dblRemaining`) VALUES ('$reservation','','$payment','0','$payment')");	
 					}
 				}
@@ -181,7 +179,7 @@
 			}else if(isset($_POST['btnDisapprove'])){
 				$reservation = $_POST['btnDisapprove'];
 
-				$statement = "SELECT eq.`dtmREFrom`, eq.`dtmRETo`, eq.`strREEquipCode` FROM tblreserveequip eq INNER JOIN tblreservationrequest r ON r.strReservationID = eq.strReservationID WHERE eq.`strReservationID` = $reservation UNION SELECT f.`dtmREFrom`, f.`dtmRETo`, f.`strREFaciCode` FROM tblreservefaci f INNER JOIN tblreservationrequest r ON r.strReservationID = f.`strReservationID` WHERE f.`strReservationID` = $reservation";
+				$statement = "SELECT eq.`dtmREFrom`, eq.`dtmRETo`, eq.`strREEquipCode` FROM tblreserveequip eq INNER JOIN tblreservationrequest r ON r.strReservationID = eq.strReservationID WHERE eq.`strReservationID` = '$reservation' UNION SELECT f.`dtmREFrom`, f.`dtmRETo`, f.`strREFaciCode` FROM tblreservefaci f INNER JOIN tblreservationrequest r ON r.strReservationID = f.`strReservationID` WHERE f.`strReservationID` = '$reservation'";
 
 				$query = mysqli_query($con,$statement);				
 				while($row = mysqli_fetch_array($query)){

@@ -230,7 +230,7 @@
                     <div id="my-tab-content" class="tab-content">
                         <div class="tab-pane " id="sReservation">
                             <div class="col-sm-10"><br>
-                                <h1>Request List</h1>
+                                <h1>Reservation</h1>
                                 <?php include("reservation_kapitanl.php");?>
                             </div>
                          </div>

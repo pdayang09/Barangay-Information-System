@@ -26,14 +26,14 @@ if($change >= 0){
 
 	require("connection.php");
 
-	mysqli_query($con, "UPDATE `tblpaymentdetail` SET `intRequestORNo`= '$payOR' WHERE `strRequestID`= $pay");
+	mysqli_query($con, "UPDATE `tblpaymentdetail` SET `intRequestORNo`= '$payOR' WHERE `strRequestID`= '$pay'");
 
-	mysqli_query($con, "UPDATE `tblpaymenttrans` SET `intORNo`='$payOR',`dtmPaymentDate`= NOW(),`dblPaidAmount`='$render',`dblRemaining`= '$balance' WHERE `intORNo`= $pay");
+	mysqli_query($con, "UPDATE `tblpaymenttrans` SET `intORNo`='$payOR',`dtmPaymentDate`= NOW(),`dblPaidAmount`='$render',`dblRemaining`= '$balance' WHERE `intORNo`= '$pay'");
 
 if($balance ==0){
-	mysqli_query($con, "UPDATE `tblreservationrequest` SET `strRSapprovalStatus`='Paid' WHERE `strReservationID`= $pay");
+	mysqli_query($con, "UPDATE `tblreservationrequest` SET `strRSapprovalStatus`='Paid' WHERE `strReservationID`= '$pay'");
 }else if($balance > 0){
-	mysqli_query($con, "UPDATE `tblreservationrequest` SET `strRSapprovalStatus`='Half Paid' WHERE `strReservationID`= $pay");
+	mysqli_query($con, "UPDATE `tblreservationrequest` SET `strRSapprovalStatus`='Half Paid' WHERE `strReservationID`= '$pay'");
 }
 
 	echo'<script> alert(" Your Payment has been collected ")</script>';
