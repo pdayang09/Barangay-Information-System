@@ -13,7 +13,7 @@
                         
             <?php                       
                 require("connection.php");
-                $query = mysqli_query($con,"SELECT f.`strFaciNo`, f.`strFaciName`, TIME(r.`dtmREFrom`), TIME(r.`dtmRETo`) FROM tblreservefaci r INNER JOIN tblfacility f ON f.`strFaciNo` = r.`strREFaciCode` INNER JOIN tblreservationrequest rs ON rs.`strReservationID` = r.`strReservationID` WHERE (r.`strREFaciCode`='$resFacility') AND (r.`dtmREFrom` BETWEEN '$resfrom' AND '$resto' OR r.`dtmRETo` BETWEEN '$resfrom' AND '$resto') AND (rs.`strRSapprovalStatus` = 'Paid' OR rs.`strRSapprovalStatus` = 'BARANGAY EVENT')");
+                $query = mysqli_query($con,"SELECT f.`strFaciNo`, f.`strFaciName`, TIME(r.`dtmREFrom`), TIME(r.`dtmRETo`) FROM tblreservefaci r INNER JOIN tblfacility f ON f.`strFaciNo` = r.`strREFaciCode` INNER JOIN tblreservationrequest rs ON rs.`strReservationID` = r.`strReservationID` WHERE (r.`strREFaciCode`='$resFacility') AND (r.`dtmREFrom` BETWEEN '$resfrom' AND '$resto' OR r.`dtmRETo` BETWEEN '$resfrom' AND '$resto') AND (rs.`strRSapprovalStatus` = 'Paid' OR rs.`strRSapprovalStatus` = 'Reserved' OR rs.`strRSapprovalStatus` = 'Half Paid')");
 
                 if(mysqli_num_rows($query) > 0){
                 
@@ -36,7 +36,6 @@
                 }
 
                 $_SESSION['available'] = $go;
-                echo json_encode($_SESSION['available']);
 
             ?>          </div>
                     </li>

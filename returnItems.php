@@ -71,7 +71,7 @@
 			
 			<tbody>
 			<?php
-				$statement = 'SELECT r.`strReservationID`, r.`strRSPurpose`, r.`datRSReserved`, SUM(rt.`intReturned`), SUM(rt.`intUnreturned`) FROM `tblreservationrequest` r INNER JOIN tblreturnequip rt ON rt.strReservationID = r.strReservationID WHERE r.`strRSapprovalStatus`="Paid" OR r.`strRSapprovalStatus` ="Half Paid" GROUP BY r.`strReservationID`';
+				$statement = 'SELECT r.`strReservationID`, r.`strRSPurpose`, r.`datRSReserved`, SUM(rt.`intReturned`), SUM(rt.`intUnreturned`) FROM `tblreservationrequest` r INNER JOIN tblreturnequip rt ON rt.`strReservationID` = r.`strReservationID` WHERE r.`strRSapprovalStatus`="Paid" OR r.`strRSapprovalStatus` ="Half Paid" OR r.`strRSapprovalStatus` ="Reserved" GROUP BY r.`strReservationID` ORDER BY `datRSReserved`';
 
 
 			$query = mysqli_query($con,$statement);
@@ -103,7 +103,7 @@
 				$_SESSION['return'] = $return;
 				
 					//Reservation Details
-					$query = mysqli_query($con,"SELECT r.`strReservationID`, r.`strRSPurpose`, r.`datRSReserved`, re.`strREEquipCode`, re.`dtmREFrom`, re.`dtmRETo`, re.`intREQuantity`, rt.`intReturned`, rt.`intUnreturned` FROM `tblreservationrequest` r INNER JOIN tblreserveequip re ON re.`strReservationID` = r.`strReservationID` INNER JOIN tblreturnequip rt ON rt.strReservationID = re.strReservationID WHERE rt.`strReservationID` = $return");
+					$query = mysqli_query($con,"SELECT r.`strReservationID`, r.`strRSPurpose`, r.`datRSReserved`, re.`strREEquipCode`, re.`dtmREFrom`, re.`dtmRETo`, re.`intREQuantity`, rt.`intReturned`, rt.`intUnreturned` FROM `tblreservationrequest` r INNER JOIN tblreserveequip re ON re.`strReservationID` = r.`strReservationID` INNER JOIN tblreturnequip rt ON rt.`strReservationID` = re.`strReservationID` WHERE rt.`strReservationID` = $return");
 					
 					while($row = mysqli_fetch_array($query)){
 
