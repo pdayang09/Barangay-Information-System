@@ -219,12 +219,15 @@
     }
 
     //Other
-        $resId = $count+1;
-        $resPurpose = "Barangay Event";
-        $num = "";
+    $count = $count+1;
+    $resId = "BrgyRes-".$count;
+    $resPurpose = "Barangay Event";
+    $num = "";
+    $resRepeat =1;
+    $resLimit =1;
 
     //Gets Today's Date
-        $today = date("Y-m-d"); 
+    $today = date("Y-m-d"); 
 
 ?>
  <!-- Page Content -->
@@ -250,12 +253,26 @@
         	<p><font face="cambria" size=4 color="grey"> Select Dates </font></p>
         	<input type="text" id="datetimepicker" class="form-control input-group-lg reg_name, some_class" value="<?php if(isset($_POST['addDate'])){echo $_POST['addDate'];}else{}?>" name = "addDate"/><br>
 
-            <p><font face="cambria" size=4 color="grey"> ID </font></p>
-            <input class="form-control input-group-lg reg_name" type="text" name="resId" title="input name of client" value="<?php if(isset($_POST['resId'])){echo $_POST['resId'];}else{ echo $resId;}?>"> 
-
-            <p><font face="cambria" size=4 color="grey"> Purpose </font></p>
+            <p><font face="cambria" size=4 color="grey"> Event </font></p>
             <input class="form-control input-group-lg reg_name" type="text" name="resPurpose" title="input name of client" value="<?php if(isset($_POST['resPurpose'])){echo $_POST['resPurpose'];}else{ echo $resPurpose;}?>"> <br><br>
-            <p><font face="cambria" size=3 color="grey"> Repeat Every </font></p>
+
+            <div class="col-sm-10">
+                <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                    <div class="btn-group" role="group">
+                        <p><font face="cambria" size=3 color="grey"> Repeat Every </font></p>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <input class="form-control input-group-lg reg_name" type="number" name="resRepeat" value="<?php if(isset($_POST['resRepeat'])){echo $_POST['resRepeat'];}else{ echo 1;}?>" min="1" max="12">
+                    </div>
+                    <div class="btn-group" role="group">
+                        <p><font face="cambria" size=3 color="grey"> Limit </font></p>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <input class="form-control input-group-lg reg_name" type="number" name="resLimit" value="<?php if(isset($_POST['resLimit'])){echo $_POST['resLimit'];}else{ echo 1;}?>" min="1" max="12">
+                    </div>
+                </div>
+            </div>
+
             <div class="col-sm-14">
             <div class="btn-group btn-group-justified" role="group" aria-label="...">
             <div class="btn-group" role="group">
@@ -270,41 +287,17 @@
             </div>
             </div><br>
 
-        	<p><font face="cambria" size=3 color="grey"> Disable Date Next </font></p>
-            <div class="col-sm-14">
-            <div class="btn-group btn-group-justified" role="group" aria-label="...">
-            <div class="btn-group" role="group">
-                <button type="submit" class="btn btn-normal" id = "searcht" name = "btnWeek" value = 1 >MON</button>
-            </div>
-            <div class="btn-group" role="group">
-                <button type="submit" class="btn btn-normal" id = "searcht" name = "btnWeek" value = 2 >TUE</button>
-            </div>
-            <div class="btn-group" role="group">
-                <button type="submit" class="btn btn-normal" id = "searcht" name = "btnWeek" value = 3 >WED</button>
-            </div>
-            <div class="btn-group" role="group">
-                <button type="submit" class="btn btn-normal" id = "searcht" name = "btnWeek" value = 4 >THUR</button>
-            </div>
-            <div class="btn-group" role="group">
-                <button type="submit" class="btn btn-normal" id = "searcht" name = "btnWeek" value = 5 >FRI</button>
-            </div>
-            <div class="btn-group" role="group">
-                <button type="submit" class="btn btn-normal" id = "searcht" name = "btnWeek" value = 6 >SAT</button>
-            </div>
-            <div class="btn-group" role="group">
-                <button type="submit" class="btn btn-normal" id = "searcht" name = "btnWeek" value = 0 >SUN</button>
-            </div>
-            </div>
-            </div><br><br>
-
             <center>
-            <div class="col-sm-8">
+            <div class="col-sm-10">
             <div class="btn-group btn-group" role="group" aria-label="...">
                 <div class="btn-group" role="group">
-                    <button type="submit" class="btn btn-warning" id = "searcht" name = "btnAdd" value = "1" >DISABLE DATE</button>
+                    <button type="submit" class="btn btn-warning" id = "btnAdd" name = "btnAdd" value = "1" >DISABLE DATE</button>
                 </div>
                 <div class="btn-group" role="group">
-                    <button type="submit" class="btn btn-success" id = "searcht" name = "btnAddEvent" value = "2" >ADD EVENT</button>
+                    <button type="submit" class="btn btn-success" id = "btnAddEvent" name = "btnAddEvent" value = "2" >ADD EVENT</button>
+                </div>
+                <div class="btn-group" role="group">
+                    <button type="submit" class="btn btn-success" id = "btnReset" name = "btnReset" value = "3" >RESET</button>
                 </div>
             </div>
             </div></center><br><br><br>
@@ -315,62 +308,49 @@
   
 
         <?php 
-            require_once("refHolidays.php");
+            include_once("refHolidays.php");
       		$arrDisabledDates[] = array(); 
             $arrTemp[] = array();
             //$arrDisabledDates = [''];   
             //$arrTemp = [''];
+            //$arrSave = [''];
 
             $arrTemp = $_SESSION['arrTemp'];         
             $arrDisabledDates = $_SESSION['arrDisabledDates'] ;
+            $arrSave = $_SESSION['arrSave'];
 
-            if(isset($_POST['btnAdd'])){
-                $datetemp = $_POST['addDate'];
+            if(isset($_POST['btnAdd'])){ // DISABLE DATE
+                $date = $_POST['addDate'];
+                $datetemp = $date;
+                $resPurpose = $_POST['resPurpose'];
 
                 $datetemp = str_replace('/','-', $datetemp);
                 $datetemp = str_replace('/','.', $datetemp);
                 $datetemp = date('d.m.Y', strtotime($datetemp));
 
-                array_push($arrDisabledDates, $datetemp);  
-                $arrDisabledDates = array_merge($arrDisabledDates, $arrTemp);
+                if(!empty($arrSave)){
+                    foreach ($arrSave as $a) {
+                        
+                        if(!empty($a)){
+                            mysqli_query($con, "INSERT INTO `tblspecialdate`(`Date`, `Event`, `Type`) VALUES ('$a', '$resPurpose', 'Disabled')");
+                        }                    
+                    }
+
+                    mysqli_query($con, "INSERT INTO `tblspecialdate`(`Date`, `Event`, `Type`) VALUES ('$date', '$resPurpose', 'Disabled')");
+                }else{
+
+                    mysqli_query($con, "INSERT INTO `tblspecialdate`(`Date`, `Event`, `Type`) VALUES ('$date', '$resPurpose', 'Disabled')");   
+                }
                     
                 $arrTemp = [''];
-                $_SESSION['arrTemp']= $arrTemp;    
-
-               //print_r($arrDisabledDates);   
-               //print_r($dayofweek);
+                $_SESSION['arrTemp']= $arrTemp;   
 
                 echo"<script> alert('You have successfully disabled date/s')</script>";
-              }else if(isset($_POST['btnWeek'])){
-                $nWeek = $_POST['btnWeek'];
-                $datetemp = $_POST['addDate'];
+                echo "<script> window.location = 'addDisableddates.php'; </script>";
 
-                $datetemp = str_replace('/','-', $datetemp);
-                $datetemp = str_replace('/','.', $datetemp);
-                $dayofweek = date('w', strtotime($datetemp));
-                
-                $temp = (6 - $dayofweek + 1);
-                $temp = $temp + $nWeek;  
-
-                $datetemp = date('d.m.Y', strtotime($datetemp."+$temp days"));              
-                array_push($arrTemp, $datetemp); 
-
-                print_r($datetemp);
-                print_r($temp);
-
-                echo'
-                <div>
-                    <p><font face="cambria" size=3 color="grey"> You Selected </font></p>
-                </div>';
-
-                foreach ($arrTemp as $a) {
-
-                    if(!empty($a)){
-                        echo" $a <br>";;
-                    }
-                    
-                }
-              }else if(isset($_POST['btnEvery'])){
+              }else if(isset($_POST['btnEvery'])){ // ADD REPEATING DATES
+                $resRepeat = $_POST['resRepeat'];
+                $resLimit = $_POST['resLimit'];
                 $nEvery = $_POST['btnEvery'];
                 $datetemp = $_POST['addDate'];
 
@@ -385,10 +365,12 @@
                     $count = 6;
                 }
 
+                $count = $resLimit;
+
                 $intCtr =1;
                 while($intCtr<=$count){
 
-                        $datetemp = date('d.m.Y', strtotime($datetemp."+1 $nEvery"));
+                        $datetemp = date('d.m.Y', strtotime($datetemp."+$resRepeat $nEvery"));
                         array_push($arrTemp, $datetemp);
 
                         $intCtr++; 
@@ -400,18 +382,22 @@
                     <p><font face="cambria" size=3 color="grey"> You Selected </font></p>
                 </div>';
 
+                $arrSave[] = array();
+                $arrSave = [''];
                 foreach ($arrTemp as $a) {
 
+                    $datetemp = str_replace('.','-', $a);
+                    $datetemp = date('Y-m-d', strtotime($datetemp));
+
                     if(!empty($a)){
-                        echo" $a <br>";;
+                        echo" $a <br>";
+                        array_push($arrSave, $datetemp);
                     }
                     
                 }
-              }else if(isset($_POST['btnAddEvent'])){
-                $arrEvent[] = array();
-                $arrEvent = [''];
 
-                $resId = $_POST['resId'];
+              }else if(isset($_POST['btnAddEvent'])){
+                
                 $resPurpose = $_POST['resPurpose'];
                 $datetemp = $_POST['addDate'];
                 $resFrom = $datetemp;
@@ -424,17 +410,22 @@
                 $arrTemp = [''];
                 $_SESSION['arrTemp']= $arrTemp;  
 
+              }else if(isset($_POST['btnReset'])){
+                $arrTemp = [''];
+                $_SESSION['arrTemp']= $arrTemp; 
+
               }
 
              $_SESSION['arrDisabledDates'] = $arrDisabledDates; 
              $_SESSION['arrTemp'] = $arrTemp;
-
+             $_SESSION['arrSave'] = $arrSave;
             ?> 
 
   	<div id="viewDDate" class="form-grop">
     	<div class="col-sm-6">
     		<div class="showback">
 
+            <h3> DISABLED DATES </h3>
         	<table class="table table-hover" style="height: 40%; overflow: scroll; "'>
 				<thead><tr>
 					<th>Date</th>					
@@ -443,21 +434,37 @@
 				</tr></thead>
 				<tbody>
 			<?php
-				foreach ($arrDisabledDates as $a) {
+				foreach ($arrDisabledDates as $a=>$value) {
 
-					if(!empty($a)){
-						echo"<tr><td> $a </td>";
+					if(!empty($value)){
+						echo"<tr><td> $value </td>";
 						echo"<td> </td>";
-						echo"<td> <i type='button' class='glyphicon glyphicon-remove'></i></td></tr>";
+						echo"<td> <button type='submit' name='btnRemove' value='$value'><i class='glyphicon glyphicon-remove'></i></button></td></tr>";
 					}
 					
 				}
+
+
 			?>	
 				</tbody>
 			</table>
         	</div>
         </div>
     </div> 
+
+        <?php
+            if(isset($_POST['btnRemove'])){
+                $remove = $_POST['btnRemove'];
+
+                $datetemp = str_replace('.','-', $remove);
+                $datetemp = date('Y-m-d', strtotime($datetemp));
+
+                require("connection.php");
+                mysqli_query($con, "DELETE FROM `tblspecialdate` WHERE `Date`= '$datetemp'");
+                echo "<script> window.location ='addDisableddates.php'; </script>";
+            }
+
+        ?>
 
                 </div><!-- /#col-lg-12 -->
             </div><!-- /#row -->

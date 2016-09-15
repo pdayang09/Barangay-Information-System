@@ -349,7 +349,11 @@
 
                 <div id="proceed" class = "col-sm-7">    
                     <div class="form-group">
-                        <div class = "showback">   
+                        <div class = "showback"> 
+                        <?php $go = $_SESSION['available'];
+                                echo json_encode($_SESSION['available']);
+
+                        ?>  
 
                         <font face = "cambria" size = 5 color = "grey"> Reservation Details </font><br><br>                                              
                         <font face = "cambria" size = 4 color = "grey"> Date </font><?php echo $today; ?><br>
@@ -492,9 +496,7 @@ function finReserve(val){
 
     var resId = document.getElementsByName("resId")[0].value;
     var resPurpose = document.getElementsByName("resPurpose")[0].value;
-    var num = document.getElementsByName("num")[0].value;
-
-    
+    var num = document.getElementsByName("num")[0].value;    
 
     var equipment = [];
         $.each($("input[name='equipment']:checked"), function(){            
@@ -510,18 +512,22 @@ function finReserve(val){
 
         quantity.join(quantity)        
 
+    if(a!="" && b!="" && resPurpose!=""){
+
         $.ajax({
         type: "POST",
         url: "finReservation.php",
         data: 'fid='+a+'&tid='+b+'&rid='+c+'&did='+resId+'&resPurpose='+resPurpose+'&num='+num+'&equipment='+equipment+'&quantity='+quantity,
 
-        success: function(data){
+            success: function(data){
 
-        window.location = 'ReservationPayment1.php';
-        }       
+                window.location = 'ReservationPayment1.php';
+            }       
         });
+        }else{
 
-        
+        alert("Pls fill out the required fields!");
+    }   
     }
 
       $(function(){

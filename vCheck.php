@@ -4,7 +4,6 @@
 	$resfrom = $_POST["fid"];
 	$resto = $_POST["tid"];
 	$resFacility = $_POST["rid"];
-    $go = 2;
 ?>
 	   
             <div id="viewCheck" class="panel panel-panel">
@@ -37,6 +36,7 @@
                 }
 
                 $_SESSION['available'] = $go;
+                echo json_encode($_SESSION['available']);
 
             ?>          </div>
                     </li>
