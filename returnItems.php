@@ -71,7 +71,7 @@
 			
 			<tbody>
 			<?php
-				$statement = 'SELECT r.`strReservationID`, r.`strRSPurpose`, r.`datRSReserved`, SUM(rt.`intReturned`), SUM(rt.`intUnreturned`) FROM `tblreservationrequest` r INNER JOIN tblreturnequip rt ON rt.`strReservationID` = r.`strReservationID` WHERE r.`strRSapprovalStatus`="Paid" OR r.`strRSapprovalStatus` ="Half Paid" OR r.`strRSapprovalStatus` ="Reserved" GROUP BY r.`strReservationID` ORDER BY `datRSReserved`';
+				$statement = 'SELECT r.`strReservationID`, r.`strRSPurpose`, r.`datRSReserved`, SUM(rt.`intReturned`), SUM(rt.`intUnreturned`) FROM `tblreservationrequest` r INNER JOIN tblreturnequip rt ON rt.`strReservationID` = r.`strReservationID` WHERE r.`strRSapprovalStatus`="Paid" OR r.`strRSapprovalStatus` ="Half Paid" OR r.`strRSapprovalStatus` ="Reserved" GROUP BY r.`strReservationID` ORDER BY r.`datRSReserved`';
 
 
 			$query = mysqli_query($con,$statement);
@@ -103,7 +103,7 @@
 				$_SESSION['return'] = $return;
 				
 					//Reservation Details
-					$query = mysqli_query($con,"SELECT r.`strReservationID`, r.`strRSPurpose`, r.`datRSReserved`, re.`strREEquipCode`, re.`dtmREFrom`, re.`dtmRETo`, re.`intREQuantity`, rt.`intReturned`, rt.`intUnreturned` FROM `tblreservationrequest` r INNER JOIN tblreserveequip re ON re.`strReservationID` = r.`strReservationID` INNER JOIN tblreturnequip rt ON rt.`strReservationID` = re.`strReservationID` WHERE rt.`strReservationID` = $return");
+					$query = mysqli_query($con, "SELECT r.`strReservationID`, r.`strRSPurpose`, r.`datRSReserved`, re.`strREEquipCode`, re.`dtmREFrom`, re.`dtmRETo`, re.`intREQuantity`, rt.`intReturned`, rt.`intUnreturned` FROM `tblreservationrequest` r INNER JOIN tblreserveequip re ON re.`strReservationID` = r.`strReservationID` INNER JOIN tblreturnequip rt ON rt.`strReservationID` = re.`strReservationID` WHERE rt.`strReservationID` = '$return'");
 					
 					while($row = mysqli_fetch_array($query)){
 
@@ -140,7 +140,7 @@
 			
 				<tbody>
 				<?php
-				$query = mysqli_query($con,"SELECT `strRTEquipCode`, `intReturned` + `intUnreturned`, `intReturned`, `intUnreturned` FROM tblreturnequip WHERE `strReservationID` = $return");
+				$query = mysqli_query($con,"SELECT `strRTEquipCode`, `intReturned` + `intUnreturned`, `intReturned`, `intUnreturned` FROM tblreturnequip WHERE `strReservationID` = '$return'");
 				
 				while($row = mysqli_fetch_array($query)){
 							
@@ -171,19 +171,19 @@
 			}
 						
 			//Gets Quantity of unreturned equipment first
-			$query = mysqli_query($con,"SELECT * from tblreturnequip where `strreservationid` = $return;");
+			$query = mysqli_query($con,"SELECT * from tblreturnequip where `strreservationid` = '$return'");
 														
 			$intCtr = 0;
 			while($row = mysqli_fetch_array($query)){
 								
 				$returnedTemp = $row[4];   //gets original quantity of returned items
-				$unreturnedTemp = $row[5]; //gets original quantity of unreturned items				
+				$unreturnedTemp = $row[5]; //gets original quantity of unreturned items	
 															
 				$returned = $returnedTemp + $quantity[$intCtr]; //updates quantity of returned items
 				$unreturned = $unreturnedTemp - $quantity[$intCtr]; //updates quantity of unreturned items								
 								
-				mysqli_query($con,"UPDATE `tblreturnequip` SET `intreturned`='$returned' WHERE `intreturned`= $returnedTemp and `intunreturned`= $unreturnedTemp AND `strreservationid` = $return");
-				mysqli_query($con,"UPDATE `tblreturnequip` SET `intunreturned`='$unreturned' WHERE `intreturned`= $returned and `intunreturned`= $unreturnedTemp AND `strreservationid` = $return"); //Update statement
+				mysqli_query($con,"UPDATE `tblreturnequip` SET `intreturned`='$returned' WHERE `intreturned`= '$returnedTemp' and `intunreturned`= '$unreturnedTemp' AND `strreservationid` = '$return'");
+				mysqli_query($con,"UPDATE `tblreturnequip` SET `intunreturned`='$unreturned' WHERE `intreturned`= '$returned' and `intunreturned`= '$unreturnedTemp' AND `strreservationid` = '$return'"); //Update statement
 								
 				$intCtr++;
 			}

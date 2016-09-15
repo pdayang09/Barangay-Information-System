@@ -255,7 +255,7 @@
 							<center>
 							<div class="form-group">
 								<div class="col-sm-7">
-									<a href="validityCheck.php"><input type="button" class="btn btn-outline btn-success" name = "btnGoBack" value = "Reserve Again"></a>
+									<a href="kapitan_facilityequipment.php"><input type="button" class="btn btn-outline btn-success" name = "btnGoBack" value = "Reserve Again"></a>
 									<input type="submit" class="btn btn-outline btn-success" id="btnNote" name = "btnNote" value = "Confirm Reservation">
 									<a href="facilityequipmentL.php"><input type="button" class="btn btn-outline btn-success" name = "btnView" value = "View Reservation"></a>
 								</div>

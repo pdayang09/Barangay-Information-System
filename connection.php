@@ -1,4 +1,3 @@
-
 <?php
 	if($con= mysqli_connect("localhost","root","","brgydb")){
 		

@@ -240,9 +240,8 @@
 
 <FORM method="POST"> 
 
-	<div class="alert alert-warning">
-       <strong>Disable Date</strong> You are about to disable or set a date. Such dates are non-negotiable.
-    </div>
+    <button type='button' class='showback col-xs-4' name='btnFacility' onclick="window.location.href = 'kapitan_facilityequipment.php'">
+    <font face='cambria' size=4 color='black'><b> Set a Barangay Event </b></font><span></span></button><br><br><br><br><br>
 
     <div class="form-grop">
     	<div class="col-sm-6">
