@@ -56,10 +56,10 @@
             require("connection.php");
                 mysqli_query($con, "UPDATE `tblreservationrequest` SET `datRSReserved`='$resfrom',`dtmFrom`= UNIX_TIMESTAMP('$resfrom')*1000,`dtmTo`= UNIX_TIMESTAMP('$resto')*1000 WHERE `strReservationID`= '$resId'");
 
-                mysqli_query($con, "UPDATE `tblreservefaci` SET `dtmREFrom`='$resfrom',`dtmRETo`='$resto' WHERE `strReservationID` = $resId");                    
-                mysqli_query($con, "UPDATE `tblreserveequip` SET `dtmREFrom`='$resfrom',`dtmRETo`='$resto' WHERE `strReservationID` = $resId");
+                mysqli_query($con, "UPDATE `tblreservefaci` SET `dtmREFrom`='$resfrom',`dtmRETo`='$resto' WHERE `strReservationID` = '$resId'");                    
+                mysqli_query($con, "UPDATE `tblreserveequip` SET `dtmREFrom`='$resfrom',`dtmRETo`='$resto' WHERE `strReservationID` = '$resId'");
 
-                mysqli_query($con, "UPDATE `tblreturnequip` SET `datRTDate`= '$resto' WHERE `strReservationID`= $resId");               
+                mysqli_query($con, "UPDATE `tblreturnequip` SET `datRTDate`= '$resto' WHERE `strReservationID`= '$resId'");               
 
                 echo "<script> alert('Successfully rescheduled an event');</script>";
                 }
@@ -72,13 +72,13 @@
             require("connection.php");
             mysqli_query($con, "UPDATE `tblreservationrequest` SET `strRSapprovalStatus`='Forfeited' WHERE `strReservationID`= '$resId'");
 
-            mysqli_query($con, "DELETE FROM `tblreservefaci` WHERE `strReservationID` = $resId");                     
+            mysqli_query($con, "DELETE FROM `tblreservefaci` WHERE `strReservationID` = '$resId'");                     
 
-            mysqli_query($con, "DELETE FROM `tblreserveequip` WHERE `strReservationID` = $resId");
+            mysqli_query($con, "DELETE FROM `tblreserveequip` WHERE `strReservationID` = '$resId'");
 
-            mysqli_query($con, "DELETE FROM `tblpaymentdetail` WHERE `strRequestID` = resId");
+            mysqli_query($con, "DELETE FROM `tblpaymentdetail` WHERE `strRequestID` = '$resId'");
 
-            mysqli_query($con, "DELETE FROM `tblreturnequip` WHERE `strReservationID` = $resId");
+            mysqli_query($con, "DELETE FROM `tblreturnequip` WHERE `strReservationID` = '$resId'");
 
             echo "<script> alert('Event Successfully Cancelled');</script>";
         }

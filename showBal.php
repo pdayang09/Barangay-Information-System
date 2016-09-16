@@ -8,10 +8,11 @@
 	$change = $_POST['change'];
 	$render = $_POST['render'];
 	$pay = $_POST['pay'];
+	$balanceTemp = $_POST['bt'];
 
 if($mode == 1){
 
-	$total = $balance;
+	$total = $balanceTemp;
 	$balance = 0;
 }else if($mode == 2){
 
@@ -44,12 +45,7 @@ if($balance ==0){
 }?>	
 
 <div id="showBalance">
-	<font face = "cambria" size = 5 color = "grey"> Mode of Payment </font>
-		<select class = "form-control" id = "mode" name = "mode" onchange = "showBal(this.value)">
-				<option value="<?php if($mode==1) echo 1; ?>"> Full </option>
-				<option value="<?php if($mode==1) echo 2; ?>"> Partial </option>
-		</select>
-
+	
 	<font face = "cambria" size = 5 color = "grey"> Balance</font>
 	<center>		
 	<font face = "cambria" size = 7 color = "grey" > <?php echo $total;?> </font></center><br>

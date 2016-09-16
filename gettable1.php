@@ -4,11 +4,11 @@ require('connection.php');
 if($_POST['bid']==1){ //FacilityEquipmentL
 	$sid = $_POST["sid"];
 		
-		$statement = "SELECT r.`strReservationID`, r.`strRSresidentId`, CONCAT(re.`strLastName`,' ', re.`strFirstName`,', ',re.`strMiddleName`) AS 'Name', re.`strContactNo`, r.`strRSPurpose`, r.`datRSReserved`, r.`strRSapprovalStatus`, p.intrequestorno FROM tblreservationrequest r INNER JOIN tblpaymentdetail p ON p.strrequestid = r.`strReservationID` INNER JOIN tblhousemember re ON re.`intMemberNo` = r.`strRSresidentId` WHERE re.`strLastName` LIKE ('%$sid%') UNION SELECT r.`strReservationID`, r.`strRSapplicantId`, CONCAT(a.`strApplicantLName`,' ', a.`strApplicantFName`, ', ', a.`strApplicantMName`) AS 'Name', a.`strApplicantContactNo`, r.`strRSPurpose`, r.`datRSReserved`, r.`strRSapprovalStatus`, p.intrequestorno FROM tblreservationrequest r INNER JOIN tblpaymentdetail p ON p.strrequestid = r.`strReservationID` INNER JOIN tblapplicant a ON a.`strApplicantID` = r.`strRSapplicantId` WHERE a.`strApplicantLName` LIKE ('%$sid%')";
+		$statement = "SELECT a.`intMemberNo`, CONCAT(a.`strLastName`, ', ', a.`strFirstName`, ' ', a.`strMiddleName`, ' ', a.`strNameExtension`) AS 'Name', a.`strContactNo`, CONCAT(s.`strStreetName`, ', ', s.`strPurok`) AS 'Place', YEAR(Now()) - YEAR(a.`dtBirthdate`) AS 'Age' FROM tblhousemember a INNER JOIN tblhousehold h ON h.`intHouseholdNo` = a.`intForeignHouseholdNo` INNER JOIN tblstreet s ON s.`intStreetId` = h.`intForeignStreetId` WHERE YEAR(Now()) - YEAR(a.`dtBirthdate`) >=16 AND (strVotersId != '' || MONTH(NOW()) - MONTH(a.dtEntered) >=6) AND re.`strLastName` LIKE ('%$sid%') UNION SELECT r.`strReservationID`, r.`strRSapplicantId`, CONCAT(a.`strApplicantLName`,' ', a.`strApplicantFName`, ', ', a.`strApplicantMName`) AS 'Name', a.`strApplicantContactNo`, r.`strRSPurpose`, r.`datRSReserved`, r.`strRSapprovalStatus`, p.intrequestorno FROM tblreservationrequest r INNER JOIN tblpaymentdetail p ON p.strrequestid = r.`strReservationID` INNER JOIN tblapplicant a ON a.`strApplicantID` = r.`strRSapplicantId` WHERE a.`strApplicantLName` LIKE ('%$sid%')";
 ?>
 	<center>
-		<div class="panel panel-default" id = "tablestreet"><!-- Default panel contents -->	
-			<table class="table table-hover" style="height: 40%; overflow: scroll; ">
+		<div class="panel panel-default" ><!-- Default panel contents -->	
+			<table id = "dataTable" class="table table-hover" style="height: 40%; overflow: scroll; ">
 				<thead><tr>
 					<th>Full Name</th>					
 					<th>Contact No</th>

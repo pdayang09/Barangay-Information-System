@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 15, 2016 at 02:23 AM
+-- Generation Time: Sep 16, 2016 at 06:59 PM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.5.30
 
@@ -148,7 +148,10 @@ INSERT INTO `tblaudittrail` (`intAuditNo`, `strEmployee`, `strChange`, `strTable
 (24, 'Eva Sta Maria O''Hara ', 'Update', 'tblfacility', '2016-09-14 01:53:03'),
 (25, 'Eva Sta Maria O''Hara ', 'Update', 'tblEquipment', '2016-09-14 02:15:45'),
 (26, 'Eva Sta Maria O''Hara ', 'Update', 'tblEquipment', '2016-09-14 02:16:08'),
-(27, 'Eva Sta Maria O''Hara ', 'Update', 'tblEquipment', '2016-09-14 02:16:21');
+(27, 'Eva Sta Maria O''Hara ', 'Update', 'tblEquipment', '2016-09-14 02:16:21'),
+(28, 'Eva Sta Maria O''Hara ', 'Update', 'tblStreet', '2016-09-15 11:25:56'),
+(29, 'Eva Sta Maria O''Hara ', 'Update', 'tblfacility', '2016-09-16 00:47:35'),
+(30, 'Eva Sta Maria O''Hara ', 'Update', 'tblEquipment', '2016-09-16 00:48:04');
 
 -- --------------------------------------------------------
 
@@ -619,7 +622,7 @@ INSERT INTO `tblequipment` (`strEquipNo`, `strEquipName`, `strEquipCategory`, `i
 (13, 'Basketball', '7', 4, 30, 30, 'Enabled', '20160907050809.png'),
 (14, 'Shuttlecock', '8', 10, 20, 30, 'Enabled', '20160907050836.jpeg'),
 (15, 'Tennis ball', '7', 10, 20, 30, 'Enabled', '20160907050928.jpg'),
-(16, 'Digital Score Board', '6', 2, 100, 200, 'Enabled', '20160907050952.jpg');
+(16, 'Digital Score Board', '6', 2, 100, 200, 'Disabled', '20160907050952.jpg');
 
 --
 -- Triggers `tblequipment`
@@ -673,7 +676,7 @@ CREATE TABLE `tblfacility` (
 INSERT INTO `tblfacility` (`strFaciNo`, `strFaciName`, `strFaciCategory`, `strFaciStatus`, `dblFaciDayCharge`, `dblFaciNightCharge`, `dblFaciNResidentCharge`, `imageUpload`) VALUES
 (13, 'Basketball Court', '1', 'Good Condition', 250, 100, 250, '20160907045531.jpg'),
 (14, 'Badminton Court', '1', 'Good Condition', 250, 100, 250, '20160907045602.jpg'),
-(15, 'Multi-Purpose Hall', '3', 'Good Condition', 300, 150, 300, '20160907045628.jpg'),
+(15, 'Multi-Purpose Hall', '3', 'Under Maintenance', 300, 150, 300, '20160907045628.jpg'),
 (16, 'Tennis Court', '2', 'Good Condition', 250, 100, 250, '20160907045655.jpg');
 
 --
@@ -788,8 +791,25 @@ CREATE TABLE `tblpaymentdetail` (
   `intNum` int(10) UNSIGNED NOT NULL,
   `strRequestID` varchar(25) NOT NULL,
   `dblReqPayment` double NOT NULL,
-  `intRequestORNo` varchar(11) NOT NULL
+  `intRequestORNo` varchar(11) NOT NULL,
+  `strTransType` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tblpaymentdetail`
+--
+
+INSERT INTO `tblpaymentdetail` (`intNum`, `strRequestID`, `dblReqPayment`, `intRequestORNo`, `strTransType`) VALUES
+(1, 'BRgy-res-1', 750, 'BRgy-res-1', 'Reservation'),
+(2, 'BRgy-res-2', 1025, 'BRgy-res-2', 'Reservation'),
+(4, 'res-4', 1000, 'res-4', 'Reservation'),
+(5, 'res-5', 625, 'res-5', 'Reservation'),
+(7, 'res-7', 1185, 'res-7', 'Reservation'),
+(8, 'BRgy-res-8', 1950, 'BRgy-res-8', 'Reservation'),
+(9, 'res-9', 1250, 'res-9', 'Reservation'),
+(10, 'res-10', 625, 'res-10', 'Reservation'),
+(12, 'res-12', 1680, 'res-12', 'Reservation'),
+(13, 'res-13', 3000, 'res-13', 'Reservation');
 
 -- --------------------------------------------------------
 
@@ -804,6 +824,22 @@ CREATE TABLE `tblpaymenttrans` (
   `dblPaidAmount` double NOT NULL,
   `dblRemaining` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tblpaymenttrans`
+--
+
+INSERT INTO `tblpaymenttrans` (`intORNo`, `dtmPaymentDate`, `dblPaymentAmount`, `dblPaidAmount`, `dblRemaining`) VALUES
+('BRgy-res-1', '2016-09-14', 750, 750, 0),
+('BRgy-res-2', '2016-09-14', 1025, 1025, 0),
+('BRgy-res-8', '2016-09-15', 1950, 1950, 0),
+('res-10', '2016-09-16', 625, 200, 0),
+('res-11', '2016-09-16', 60, 30, 0),
+('res-4', '2016-09-15', 1000, 500, 0),
+('res-5', '2016-09-15', 625, 650, 0),
+('res-6', '2016-09-15', 240, 240, 0),
+('res-7', '2016-09-15', 1185, 600, 0),
+('res-9', '2016-09-15', 1250, 79, 0);
 
 -- --------------------------------------------------------
 
@@ -856,8 +892,28 @@ CREATE TABLE `tblreservationrequest` (
   `dtmFrom` bigint(20) NOT NULL,
   `dtmTo` bigint(20) NOT NULL,
   `strRSapprovalStatus` varchar(45) NOT NULL,
-  `strRSPurpose` varchar(45) DEFAULT NULL
+  `strRSPurpose` varchar(45) DEFAULT NULL,
+  `intNum` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tblreservationrequest`
+--
+
+INSERT INTO `tblreservationrequest` (`strReservationID`, `strRSresidentId`, `strRSapplicantId`, `datRSIssued`, `datRSReserved`, `dtmFrom`, `dtmTo`, `strRSapprovalStatus`, `strRSPurpose`, `intNum`) VALUES
+('BRgy-res-1', '8', '', '2016-09-14', '2016-09-16', 1474038000000, 1474047000000, 'Reserved', 'Pa Bakuna', 0),
+('BRgy-res-2', '5', '', '2016-09-14', '2016-09-16', 1474043400000, 1474056000000, 'Reserved', 'Pa Tournament', 0),
+('BRgy-res-8', '9', '', '2016-09-15', '2016-09-16', 1474056000000, 1474081200000, 'Reserved', 'cnaso', 0),
+('res-10', '3', '', '2016-09-15', '2016-09-20', 1474383600000, 1474392600000, 'Paid', 'mvcsdpa', 0),
+('res-11', '9', '', '2016-09-15', '2016-09-17', 1474129800000, 1474140600000, 'Forfeited', 'vsda', 0),
+('res-12', '', 'app-1', '2016-09-15', '2016-09-23', 1474650000000, 1474660800000, 'For Approval', 'csnao', 0),
+('res-13', '9', '', '2016-09-16', '2016-09-23', 1474648200000, 1474687800000, 'For Approval', 'fnwso', 0),
+('res-3', '', 'app-2', '2016-09-14', '2016-09-16', 1474048800000, 1474054200000, 'Forfeited', 'vnsoa', 0),
+('res-4', '4', '', '2016-09-14', '2016-09-16', 1474038000000, 1474052400000, 'Paid', 'Practice', 0),
+('res-5', '9', '', '2016-09-15', '2016-09-22', 1474556400000, 1474565400000, 'Paid', 'hcfnewo', 0),
+('res-6', '', 'app-2', '2016-09-15', '2016-09-22', 1474574400000, 1474587000000, 'Forfeited', 'csnao', 0),
+('res-7', '9', '', '2016-09-15', '2016-09-21', 1474473600000, 1474489800000, 'Paid', 'cbawsio', 0),
+('res-9', '3', '', '2016-09-15', '2016-09-16', 1474038000000, 1474056000000, 'Paid', 'vno', 0);
 
 -- --------------------------------------------------------
 
@@ -874,6 +930,15 @@ CREATE TABLE `tblreserveequip` (
   `intREQuantity` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `tblreserveequip`
+--
+
+INSERT INTO `tblreserveequip` (`strReserveEquipNo`, `strReservationID`, `strREEquipCode`, `dtmREFrom`, `dtmRETo`, `intREQuantity`) VALUES
+(1, 'BRgy-res-2', 'Tennis Racket', '2016-09-16 09:30:00', '2016-09-16 13:00:00', 2),
+(4, 'res-7', 'Tennis Racket', '2016-09-21 09:00:00', '2016-09-21 13:30:00', 2),
+(6, 'res-12', 'Basketball', '2016-09-23 10:00:00', '2016-09-23 13:00:00', 3);
+
 -- --------------------------------------------------------
 
 --
@@ -887,6 +952,22 @@ CREATE TABLE `tblreservefaci` (
   `dtmREFrom` datetime NOT NULL,
   `dtmRETo` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tblreservefaci`
+--
+
+INSERT INTO `tblreservefaci` (`strReserveFaciNo`, `strReservationID`, `strREFaciCode`, `dtmREFrom`, `dtmRETo`) VALUES
+(1, 'BRgy-res-1', '15', '2016-09-16 08:00:00', '2016-09-16 10:30:00'),
+(2, 'BRgy-res-2', '13', '2016-09-16 09:30:00', '2016-09-16 13:00:00'),
+(3, 'res-4', '16', '2016-09-16 08:00:00', '2016-09-16 12:00:00'),
+(4, 'res-5', '13', '2016-09-22 08:00:00', '2016-09-22 10:30:00'),
+(5, 'res-7', '14', '2016-09-21 09:00:00', '2016-09-21 13:30:00'),
+(6, 'BRgy-res-8', '13', '2016-09-16 13:00:00', '2016-09-16 20:00:00'),
+(7, 'res-9', '14', '2016-09-16 08:00:00', '2016-09-16 13:00:00'),
+(8, 'res-10', '14', '2016-09-20 08:00:00', '2016-09-20 10:30:00'),
+(9, 'res-12', '13', '2016-09-23 10:00:00', '2016-09-23 13:00:00'),
+(10, 'res-13', '14', '2016-09-23 09:30:00', '2016-09-23 20:30:00');
 
 -- --------------------------------------------------------
 
@@ -902,6 +983,15 @@ CREATE TABLE `tblreturnequip` (
   `intReturned` int(3) NOT NULL,
   `intUnreturned` int(3) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tblreturnequip`
+--
+
+INSERT INTO `tblreturnequip` (`strReturnEquipNo`, `strReservationID`, `strRTEquipCode`, `datRTDate`, `intReturned`, `intUnreturned`) VALUES
+(1, 'BRgy-res-2', 'Tennis Racket', '2016-09-16', 5, 0),
+(4, 'res-7', 'Tennis Racket', '2016-09-21', 2, 0),
+(6, 'res-12', 'Basketball', '2016-09-23', 0, 3);
 
 -- --------------------------------------------------------
 
@@ -924,10 +1014,8 @@ INSERT INTO `tblspecialdate` (`ID`, `Date`, `Event`, `Type`) VALUES
 (121, '2016-09-30', 'Barangay Event', 'Disabled'),
 (124, '2016-09-28', 'Barangay Event', 'Disabled'),
 (127, '2016-09-28', 'Barangay Event', 'Disabled'),
-(131, '2017-09-15', 'Barangay Event', 'Disabled'),
 (132, '2018-09-15', 'Barangay Event', 'Disabled'),
-(133, '2019-09-15', 'Barangay Event', 'Disabled'),
-(134, '2016-09-15', 'Barangay Event', 'Disabled');
+(133, '2019-09-15', 'Barangay Event', 'Disabled');
 
 -- --------------------------------------------------------
 
@@ -946,7 +1034,7 @@ CREATE TABLE `tblstreet` (
 --
 
 INSERT INTO `tblstreet` (`intStreetId`, `strPurok`, `strStreetName`) VALUES
-(1, 'Purok 2', 'Carolinas Street'),
+(1, 'Purok 2', 'Carolina Street'),
 (2, 'Purok 2', 'Quezona Street'),
 (4, 'Purok 1', 'Manyaman Street'),
 (5, 'Purok 2', 'Markama Street'),
@@ -1361,7 +1449,7 @@ ALTER TABLE `tblaccount`
 -- AUTO_INCREMENT for table `tblaudittrail`
 --
 ALTER TABLE `tblaudittrail`
-  MODIFY `intAuditNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `intAuditNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 --
 -- AUTO_INCREMENT for table `tblbrgyposition`
 --
@@ -1441,7 +1529,7 @@ ALTER TABLE `tblhousemember`
 -- AUTO_INCREMENT for table `tblpaymentdetail`
 --
 ALTER TABLE `tblpaymentdetail`
-  MODIFY `intNum` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `intNum` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `tblrequirements`
 --
@@ -1451,22 +1539,22 @@ ALTER TABLE `tblrequirements`
 -- AUTO_INCREMENT for table `tblreserveequip`
 --
 ALTER TABLE `tblreserveequip`
-  MODIFY `strReserveEquipNo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `strReserveEquipNo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `tblreservefaci`
 --
 ALTER TABLE `tblreservefaci`
-  MODIFY `strReserveFaciNo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `strReserveFaciNo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `tblreturnequip`
 --
 ALTER TABLE `tblreturnequip`
-  MODIFY `strReturnEquipNo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `strReturnEquipNo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `tblspecialdate`
 --
 ALTER TABLE `tblspecialdate`
-  MODIFY `ID` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
+  MODIFY `ID` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=134;
 --
 -- AUTO_INCREMENT for table `tblstreet`
 --

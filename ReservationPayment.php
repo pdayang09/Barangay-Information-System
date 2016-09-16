@@ -18,6 +18,7 @@
 		$OR = $_SESSION['OR'];
 		$payment = $_SESSION['payment'];
 		$balance = $_SESSION['balance'];
+		$balanceTemp = $balance;
 				
 		//Gets Today's Date
 		$today = date("Y-m-d"); // displays date today
@@ -75,12 +76,14 @@
 									<font face = "cambria" size = 5 color = "grey"> OR No
 									<input id="payOR" name="payOR" class="form-control input-group-lg reg_name" type="text"  value="<?php if(isset($_POST['payOR'])){echo $_POST['payOR'];}else{echo $payOR;}?>" title="generated brgyId" required></font>
 
-								<div id="showBalance">
+								
 									<font face = "cambria" size = 5 color = "grey"> Mode of Payment </font>
 									<select id="mode" onchange="showBal(this.value)" class = "form-control">
 										<option value="1" selected="selected"> Full </option>
 										<option value="2"> Partial </option>
 									</select>
+
+								<div id="showBalance">
 									<font face = "cambria" size = 5 color = "grey"> Balance</font>
 									<center>		
 									<font id="balance" face = "cambria" size = 7 color = "grey" > <?php echo $balance;?> </font></center><br>
@@ -132,11 +135,12 @@ function showBal(){
 	var change = document.getElementsByName('change')[0].value;
 	var render = document.getElementsByName('render')[0].value;
 	var pay = document.getElementsByName('btnPay')[0].value;
+	var balanceTemp = <?php echo json_encode($balanceTemp)?>
 
 	$.ajax({
 		type: "POST",
 		url: "showBal.php",
-		data: 'mode=' + mode +'&payOR='+payOR+'&bal='+bal+'&change='+change+'&render='+render+'&pay='+pay,
+		data: 'mode=' + mode +'&payOR='+payOR+'&bal='+bal+'&change='+change+'&render='+render+'&pay='+pay+'&bt='+balanceTemp,
 		success: function(data){
 			//alert(data);
 			$("#showBalance").html(data);

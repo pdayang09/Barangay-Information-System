@@ -256,6 +256,8 @@
         $resId = $preRes.$count;
         $resPrpose = "";
         $num = "";
+
+        $_SESSION['available']="2";
     ?>    
 
     <!-- Page Content -->
@@ -287,7 +289,7 @@
                         <p><font face="cambria" size=4 color="grey"> To </font></p>
                         <input name = "To" type="text" id="datetimepicker003" class="form-control input-group-lg reg_name, some_class" value="<?php if(isset($_POST['To'])){echo $_POST['To'];}else{}?>" > <br><br>
 
-                       <center><button class="btn btn-outline btn-success" type="button" onclick="Check()" value=""> Check </button></center>
+                       <center><button class="btn btn-outline btn-success" type="button" onclick="Check(1)" value=""> Check </button></center>
 
                        <p id="showCheck"></p> 
 
@@ -350,11 +352,7 @@
                 <div id="proceed" class = "col-sm-7">    
                     <div class="form-group">
                         <div class = "showback"> 
-                        <?php $go = $_SESSION['available'];
-                                echo json_encode($_SESSION['available']);
-
-                        ?>  
-
+                       
                         <font face = "cambria" size = 5 color = "grey"> Reservation Details </font><br><br>                                              
                         <font face = "cambria" size = 4 color = "grey"> Date </font><?php echo $today; ?><br>
 
@@ -434,16 +432,33 @@
         if(flag==2){
 
             if(a!="" && b!=""){
-                document.getElementById('equipmentForm').style.display = flag === 2 ? 'block' : 'none'; 
+
+                Check(2);
+                //document.getElementById('equipmentForm').style.display = flag === 2 ? 'block' : 'none'; 
             }else{
                 alert('Pls indicate your preferred time!');
             }
         }else{
 
             document.getElementById('equipmentForm').style.display = flag === 2 ? 'none' : 'none';
+        }
+
+        if(flag==3){
+
+            if(a!="" && b!=""){
+
+                Check(3);  
+            }else{
+
+                alert('Pls indicate your preferred time!');
+            }
+                
+        }else{
+
+            document.getElementById('proceed').style.display = flag === 3 ? 'none' : 'none';
         }      
         
-        document.getElementById('proceed').style.display = flag === 3 ? 'block' : 'none'; 
+         
 
     }
 </script>
@@ -458,23 +473,34 @@
 </style>
 
 <script>
-function Check(){
+function Check(val){
 
     var a = document.getElementsByName("From")[0].value;
     var b = document.getElementsByName("To")[0].value;
     var c = $('input[name=resFacility]:checked').val();
 
-    //document.getElementById("showCheck").innerHTML = a + b + c;
-    //alert(val);
+    var equipment = [];
+        $.each($("input[name='equipment']:checked"), function(){            
+                equipment.push($(this).val());
+            });//alert("My Equipments are: " + equipment.join(" "));
 
-    if(c==""){
+        equipment.join(equipment)
+
+    var quantity = [];
+        $.each($("input[name='quantity']"), function(){            
+                quantity.push($(this).val());
+            });//alert("My quantity are: " + quantity.join(" "));
+
+        quantity.join(quantity)
+
+    if(c=="" && val==1){
         alert("Select Facility");
 
     }else{
      $.ajax({
         type: "POST",
         url: "vCheck.php",
-        data: 'fid='+a+'&tid='+b+'&rid='+c,
+        data: 'fid='+a+'&tid='+b+'&rid='+c+'&val='+val+'&equipment='+equipment,
         success: function(data){
 
         $("#viewCheck").html(data);
@@ -524,7 +550,7 @@ function finReserve(val){
                 window.location = 'ReservationPayment1.php';
             }       
         });
-        }else{
+    }else{
 
         alert("Pls fill out the required fields!");
     }   

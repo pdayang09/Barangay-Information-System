@@ -1,15 +1,20 @@
 
 
 <?php 
-	$resfrom = $_POST["fid"];
-	$resto = $_POST["tid"];
-	$resFacility = $_POST["rid"];
+    $val = $_POST['val'];
+	$resfrom = $_POST['fid'];
+	$resto = $_POST['tid'];
+	
+
+if($val == 1){  
+
+    $resFacility = $_POST['rid'];
 ?>
-	   
-            <div id="viewCheck" class="panel panel-panel">
-                <ul id="sortable" class="task-list">
-                    <li class="list-primary">
-                        <div class="task-title">    
+
+<div id="viewCheck" class="panel panel-panel">
+    <ul id="sortable" class="task-list">
+        <li class="list-primary">
+            <div class="task-title">    
                         
             <?php                       
                 require("connection.php");
@@ -31,14 +36,84 @@
                     $go = 1;
                 }else{
 
-                	echo"<center><h3><span> AVAILABLE </span><span class='label label-warning'></span></h3></center>";
+                    echo"<center><h3><span> AVAILABLE </span><span class='label label-warning'></span></h3></center>";
                     $go = 0;
                 }
 
-                $_SESSION['available'] = $go;
+            ?> </div>
+        </li>
+    </ul>
+</div>
+
+<?php
+}else if($val==3){ 
+
+    $equipment[] = array();
+    $equipment = $_POST['equipment'];
+    $resFacility = $_POST['rid'];
+?>
+
+<div id="viewCheck" class="panel panel-panel">
+    <ul id="sortable" class="task-list">
+        <li class="list-primary">
+            <div class="task-title">    
+                        
+            <?php                       
+                require("connection.php");
+                $query = mysqli_query($con,"SELECT f.`strFaciNo`, f.`strFaciName`, TIME(r.`dtmREFrom`), TIME(r.`dtmRETo`) FROM tblreservefaci r INNER JOIN tblfacility f ON f.`strFaciNo` = r.`strREFaciCode` INNER JOIN tblreservationrequest rs ON rs.`strReservationID` = r.`strReservationID` WHERE (r.`strREFaciCode`='$resFacility') AND (r.`dtmREFrom` BETWEEN '$resfrom' AND '$resto' OR r.`dtmRETo` BETWEEN '$resfrom' AND '$resto') AND (rs.`strRSapprovalStatus` = 'Paid' OR rs.`strRSapprovalStatus` = 'Reserved' OR rs.`strRSapprovalStatus` = 'Half Paid')");
+
+                if(mysqli_num_rows($query) > 0){
+                
+                 $i = 1;
+                 while($row = mysqli_fetch_row($query)){
+
+                    $facino = $row[0];
+                    $facitemp = $row[1];
+                    $facifrom = $row[2];
+                    $facito = $row[3];
+                    
+                    echo"<center><h4><span> NOT AVAILABLE</span><span class='label label-warning'> $facifrom - $facito </span></h4></center>";
+                    
+                  }
+
+                    $go = 1;
+                }else{
+
+                    echo"<center><h3><span> AVAILABLE </span><span class='label label-warning'></span></h3></center>";
+
+                    $go = 0;
+                }
+
+                if($go==0 AND $resfrom!="" AND $resto!="" AND ($resFacility!="" OR !empty($equipment))){
+
+                    echo"<script> document.getElementById('proceed').style.display = 'block'; </script>";  
+                }else{
+
+                    echo"<script> alert('Your request is invalid')</script>";
+                }
 
             ?>          </div>
-                    </li>
-                </ul>
-            </div>
+        </li>
+    </ul>
+</div>    
+
+<?php }else if($val==2){
+
+?>
+ 
+<?php
+    require("connection.php");
+
+    $query = mysqli_query($con, "SELECT DISTINCT `strEquipName`, `intEquipQuantity`-`intREQuantity` FROM tblreserveequip, tblequipment WHERE `dtmREFrom` BETWEEN '$resfrom' AND '$resto' OR `dtmRETo` BETWEEN '$resfrom' AND '$resto' AND `strREEquipCode` = `strEquipName` UNION SELECT `strEquipName`, `intEquipQuantity` FROM tblreserveequip, tblequipment WHERE `dtmREFrom` BETWEEN '$resfrom' AND '$resto' OR `dtmRETo` BETWEEN '$resfrom' AND '$resto' AND `strREEquipCode` != `strEquipName` AND `strEquipName` IN (SELECT `strEquipName` FROM tblequipment WHERE `strStatus`='Enabled')");
+
+     while($row = mysqli_fetch_row($query)){
+       
+        echo "
+        <p><font face='cambria' size=4 color='grey'><input type='checkbox' name = 'equipment' value='$row[0]'/> $row[0] </font></p>
+        <input class='form-control input-group-lg reg_name' type='number' name = 'quantity' title='Input Quantity' placeholder='Input Quantity' min='1' max='$row[1]' value=''; >";
+    
+    } 
+?>   
+
+<?php } ?>
 

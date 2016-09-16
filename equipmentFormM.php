@@ -2,10 +2,7 @@
 <?php
 	require("connection.php");
 
-	//$From = $_SESSION['From'];
-	//$To = $_SESSION['To'];
-
-	$query = mysqli_query($con, "SELECT `strEquipName`,  `intEquipQuantity`, `strStatus` from tblequipment where `intEquipQuantity` > 0 AND `strStatus` = 'Enabled'");
+	$query = mysqli_query($con, "SELECT DISTINCT `strEquipName`, `intEquipQuantity`-`intREQuantity` FROM tblreserveequip, tblequipment WHERE `dtmREFrom` BETWEEN '$resfrom' AND '$resto' OR `dtmRETo` BETWEEN '$resfrom' AND '$resto' AND `strREEquipCode` = `strEquipName` UNION SELECT `strEquipName`, `intEquipQuantity` FROM tblreserveequip, tblequipment WHERE `dtmREFrom` BETWEEN '$resfrom' AND '$resto' OR `dtmRETo` BETWEEN '$resfrom' AND '$resto' AND `strREEquipCode` != `strEquipName` AND `strEquipName` IN (SELECT `strEquipName` FROM tblequipment WHERE `strStatus`='Enabled')");
 
   	 while($row = mysqli_fetch_row($query)){
 	   

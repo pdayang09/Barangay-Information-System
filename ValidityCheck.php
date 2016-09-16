@@ -51,17 +51,7 @@
 		
 		
 		
-		<legend ><font face = "cambria" size = 10 color = "grey"> </font></legend> <!-- Insert Here -->
-		
-		<!-- Search Section-->
-		<div class="form-group">
-			<div class="col-sm-3">
-				<input id="searchr" name="search" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value= "" placeholder="Search Last Name">					
-			</div>				
-			<div class="col-sm-2">
-				<button class="btn btn-info btn-round btn-s  " id = "searchst" name = "btnSearch" value = 4 onclick = "search(this.value)"><i class = "glyphicon glyphicon-search "></i></button>
-			</div> <!-- 3 = Validity Check -->			
-		</div><br><br><br><br>		
+		<legend ><font face = "cambria" size = 10 color = "grey"> </font></legend> <!-- Insert Here -->	
 		
 		<div class="col-sm-6">
 		<div class="btn-group btn-group-justified" role="group" aria-label="...">
@@ -79,13 +69,13 @@
 		</div><br><br><br>
 		
 		<?php
-		$statement = "SELECT a.`intMemberNo`, CONCAT(a.`strLastName`, ', ', a.`strFirstName`, ' ', a.`strMiddleName`, ' ', a.`strNameExtension`) AS 'Name', a.`strContactNo`, CONCAT(s.`strStreetName`, ', ', s.`strPurok`) AS 'Place' FROM tblhousemember a INNER JOIN tblhousehold h ON h.intHouseholdNo = a.intForeignHouseholdNo INNER JOIN tblstreet s ON s.intStreetId = h.intForeignStreetId";				
+		$statement = "SELECT a.`intMemberNo`, CONCAT(a.`strLastName`, ', ', a.`strFirstName`, ' ', a.`strMiddleName`, ' ', a.`strNameExtension`) AS 'Name', a.`strContactNo`, CONCAT(s.`strStreetName`, ', ', s.`strPurok`) AS 'Place', YEAR(Now()) - YEAR(a.`dtBirthdate`) AS 'Age' FROM tblhousemember a INNER JOIN tblhousehold h ON h.`intHouseholdNo` = a.`intForeignHouseholdNo` INNER JOIN tblstreet s ON s.`intStreetId` = h.`intForeignStreetId`WHERE YEAR(Now()) - YEAR(a.`dtBirthdate`) >=16 AND (strVotersId != '' || MONTH(NOW()) - MONTH(a.dtEntered) >=6)";				
 		?>
 
 <form method="POST">		
 		<center>
 		<div class = "showback" id = "tablestreet">	
-			<table class="table table-hover" style="height: 40%; overflow: scroll; "'>
+			<table  id = "dataTable" class="table table-hover" style="height: 40%; overflow: scroll; "'>
 				<thead><tr>
 					<th>ID</th>
 					<th>Full Name</th>
@@ -205,11 +195,11 @@
 				
 		</section><! --/wrapper -->
       </section><!-- /MAIN CONTENT -->
-	  
-	<script>
-      //custom select box
+	     
+<script>
+//custom select box
 function search(val){
-	var a = document.getElementById('searchr').value;
+	var a ;
 
 	$.ajax({
 		type: "POST",
@@ -217,20 +207,21 @@ function search(val){
 		data: 'sid=' + a +'&bid='+val,
 		success: function(data){
 			//alert(data);
-			$("#tablestreet").html(data);
+			$("#dataTable").html(data);
 		}		
 	});
 }
-      $(function(){
-          $('select.styled').customSelect();
-      });
 
-  </script>
-  
- 	<script>
-      //custom select box
+$(function(){
+    $('select.styled').customSelect();
+});
+
+</script>
+   
+<script>
+//custom select box
 function select(val){
-	var a = document.getElementById('searchr').value;
+	var a ;
 
 	$.ajax({
 		type: "POST",
@@ -242,10 +233,75 @@ function select(val){
 		}		
 	});
 }
-      $(function(){
-          $('select.styled').customSelect();
-      });
+$(function(){
+   $('select.styled').customSelect();
+});
 
+</script>
+
+      <!--footer start-->
+      <footer class="site-footer">
+          <div class="text-center">
+              CPS BIS 2016
+              <a href="index.php" class="go-top">
+                  <i class="fa fa-angle-up"></i>
+              </a>
+          </div>
+      </footer>
+      <!--footer end-->
+	  
+  </section>
+
+<!-- Menu Toggle Script -->
+   <script>
+   $("#menu-toggle").click(function(e) {
+       e.preventDefault();
+       $("#wrapper").toggleClass("toggled");
+   });
+   </script>
+  
+<!-- jQuery -->
+   <script src="js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+   <script src="js/bootstrap.min.js"></script>
+  
+<!-- js placed at the end of the document so the pages load faster -->
+   <script src="assets/js/jquery.js"></script>
+   <script src="assets/js/bootstrap.min.js"></script>
+   <script src="assets/js/jquery-ui-1.9.2.custom.min.js"></script>
+   <script src="assets/js/jquery.ui.touch-punch.min.js"></script>
+   <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
+   <script src="assets/js/jquery.scrollTo.min.js"></script>
+   <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+
+<!--common script for all pages-->
+   <script src="assets/js/common-scripts.js"></script>
+
+<!--custom switch-->
+	<script src="assets/js/bootstrap-switch.js"></script>
+	
+<!--custom tagsinput-->
+	<script src="assets/js/jquery.tagsinput.js"></script>
+
+	<!-- DATA TABLE -->
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery-ui-1.9.2.custom.min.js"></script>
+    <script src="assets/js/jquery.ui.touch-punch.min.js"></script>
+    <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="assets/js/jquery.scrollTo.min.js"></script>
+    <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+
+  <script src="dataTables/jquery.dataTables.js"></script>
+  <script src="dataTables/dataTables.bootstrap.js"></script>  
+
+  <script>
+    $(document).ready(function() {
+    $('#dataTable').dataTable();
+	$('#nonResident').dataTable();	
+    });
   </script>
-
-<?php require("footer.php");?>
+	 
+   </body>
+</html>

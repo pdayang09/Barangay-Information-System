@@ -114,8 +114,6 @@
 		$diff = $time3 - $time2;
 		$hours1 = $diff / ( 60 * 60 );
 		$hours1 = -1 * $hours1;			
-
-		echo"<script> alert('$todayTemp');</script>";	
 		
 		//Gets Today's Date
 		$today = date("Y-m-d"); // displays date today

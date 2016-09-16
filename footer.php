@@ -60,6 +60,20 @@
     });
 
    </script>
+ 
+    <!--common script for all pages-->
+    <script src="assets/js/common-scripts.js"></script>
 
-</body>
+    <!--script for this page-->
+    
+  <script>
+      //custom select box
+
+      $(function(){
+          $('select.styled').customSelect();
+      });
+
+  </script>
+
+  </body>
 </html>
