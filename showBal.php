@@ -39,8 +39,9 @@ if($balance ==0){
 
 	echo'<script> alert(" Your Payment has been collected ")</script>';
 	echo'<script> window.location = "view_treasurer.php";</script>';
-}else{
+}else if($change < 0){
 
+	echo'<script> alert("Invalid Amount")</script>';
 	$change = 0;
 }?>	
 
