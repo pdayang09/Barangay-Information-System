@@ -238,7 +238,7 @@
                         <div class="tab-pane active" id="sRequest">
                             <div class="col-sm-10"><br>
                                 <h1>Document Request</h1>
-                                <?php include("DocumentRequestL.php");?>
+                                <?php include("DocumentRequestApprove.php");?>
                             </div>
                         </div>
                     </div>

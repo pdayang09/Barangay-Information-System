@@ -1,49 +1,62 @@
-<?php
-
-	
+<?php	
 	$mode = $_POST['mode'];
-	$payOR = $_POST['payOR'];
-	$balance = $_POST['bal'];
-	$total = $balance;
+	$payOR = $_POST['payOR'];	
+	$balanceTemp = $_POST['bt'];	
+	$total = $balanceTemp;	
+	$balance = $total;
 	$change = $_POST['change'];
 	$render = $_POST['render'];
 	$pay = $_POST['pay'];
-	$balanceTemp = $_POST['bt'];
+	$val = $_POST['val'];
 
-if($mode == 1){
+if($val !=4){
+	if($mode == 1){
 
-	$total = $balanceTemp;
-	$balance = 0;
-}else if($mode == 2){
+		$total = $total;
+		$balance = 0;
+	}else if($mode == 2){
 
-	$total = $total/2;
-	$balance = $total;
+		$total = $total/2;
+		$balance = $total;	
+	}
 }
 
-$change = $render-$total;	
+if($val == 4){
+	if($mode == 1){
 
-if($change >= 0){
-	
+		$total = $total;
+		$balance = 0;
+	}else if($mode == 2){
+
+		$total = $total/2;
+		$balance = $total;	
+	}
+
+	$change = $render-$total;	
+	if($change >= 0){
 
 	require("connection.php");
 
-	mysqli_query($con, "UPDATE `tblpaymentdetail` SET `intRequestORNo`= '$payOR' WHERE `strRequestID`= '$pay'");
+		mysqli_query($con, "UPDATE `tblpaymentdetail` SET `intRequestORNo`= '$payOR' WHERE `strRequestID`= '$pay'");
 
-	mysqli_query($con, "UPDATE `tblpaymenttrans` SET `intORNo`='$payOR',`dtmPaymentDate`= NOW(),`dblPaidAmount`='$render',`dblRemaining`= '$balance' WHERE `intORNo`= '$pay'");
+		mysqli_query($con, "UPDATE `tblpaymenttrans` SET `intORNo`='$payOR',`dtmPaymentDate`= NOW(),`dblPaidAmount`='$render',`dblRemaining`= '$balance' WHERE `intORNo`= '$pay'");
 
-if($balance ==0){
-	mysqli_query($con, "UPDATE `tblreservationrequest` SET `strRSapprovalStatus`='Paid' WHERE `strReservationID`= '$pay'");
-}else if($balance > 0){
-	mysqli_query($con, "UPDATE `tblreservationrequest` SET `strRSapprovalStatus`='Half Paid' WHERE `strReservationID`= '$pay'");
+	if($balance ==0){
+		mysqli_query($con, "UPDATE `tblreservationrequest` SET `strRSapprovalStatus`='Paid' WHERE `strReservationID`= '$pay'");
+	}else if($balance > 0){
+		mysqli_query($con, "UPDATE `tblreservationrequest` SET `strRSapprovalStatus`='Half Paid' WHERE `strReservationID`= '$pay'");
+	}
+
+		echo'<script> alert(" Your Payment has been collected ")</script>';
+		echo'<script> window.location = "view_treasurer.php";</script>';
+	}else if($change < 0){
+
+		echo'<script> alert("Invalid Amount")</script>';
+		$change = 0;
+	}
+
 }
-
-	echo'<script> alert(" Your Payment has been collected ")</script>';
-	echo'<script> window.location = "view_treasurer.php";</script>';
-}else if($change < 0){
-
-	echo'<script> alert("Invalid Amount")</script>';
-	$change = 0;
-}?>	
+?>	
 
 <div id="showBalance">
 	

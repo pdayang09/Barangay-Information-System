@@ -337,16 +337,8 @@
                     </div>
                 </div>
 
-                 <div id="equipmentForm" class = "col-sm-7">    
-                    <div class="form-group">
-                        <div class = "showback">                                                
-                        <font face = "cambria" size = 5 color = "grey"> Items </font><br><br>  
-
-                        <!-- gets list of facility from tblEquipment -->
-                        <?php include("equipmentFormM.php"); ?>
-                                            
-                        </div>                      
-                    </div>
+                <div id="equipmentForm" class="col-sm-7">    
+                    <!-- shows available items-->
                 </div> 
 
                 <div id="proceed" class = "col-sm-7">    
@@ -424,17 +416,15 @@
         var a = document.getElementsByName("From")[0].value;
         var b = document.getElementsByName("To")[0].value;
 
-        window.sessionStorage.setItem("$_SESSION['From']", a);
-        window.sessionStorage.setItem("$_SESSION['To']", b);
 
         document.getElementById('facilityForm').style.display = flag === 1 ? 'block': 'none'; 
 
         if(flag==2){
 
-            if(a!="" && b!=""){
+            if(a!="" && b!="" && a < b){
 
+                document.getElementById('equipmentForm').style.display = flag === 2 ? 'block' : 'none';
                 Check(2);
-                //document.getElementById('equipmentForm').style.display = flag === 2 ? 'block' : 'none'; 
             }else{
                 alert('Pls indicate your preferred time!');
             }
@@ -445,12 +435,13 @@
 
         if(flag==3){
 
-            if(a!="" && b!=""){
+            if(a!="" && b!="" && a < b){
 
                 Check(3);  
             }else{
 
                 alert('Pls indicate your preferred time!');
+                document.getElementById('proceed').style.display = flag === 2 ? 'none' : 'none';
             }
                 
         }else{
@@ -465,7 +456,7 @@
         
 <style type="text/css">
     #facilityForm {display: block}
-    #equipmentForm {display: none}
+    #equipmentForm {display: block;}
     #proceed {display: none}
     #viewCheck {display:block}
     #viewCheckEquip {display:none}
@@ -496,17 +487,28 @@ function Check(val){
     if(c=="" && val==1){
         alert("Select Facility");
 
-    }else{
+    }else if(val==2){
+        
      $.ajax({
+        type: "POST",
+        url: "vCheck.php",
+        data: 'fid='+a+'&tid='+b+'&val='+val,
+        success: function(data){
+            
+           $("#equipmentForm").html(data);              
+        }   
+    });    
+    }else{
+        $.ajax({
         type: "POST",
         url: "vCheck.php",
         data: 'fid='+a+'&tid='+b+'&rid='+c+'&val='+val+'&equipment='+equipment,
         success: function(data){
 
-        $("#viewCheck").html(data);
-        }      
-    });    
-}   
+           $("#viewCheck").html(data);              
+        }   
+    });
+    }   
 }
       $(function(){
           $('select.styled').customSelect();

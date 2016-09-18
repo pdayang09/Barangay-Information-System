@@ -241,7 +241,7 @@
 <FORM method="POST"> 
 
     <button type='button' class='showback col-xs-4' name='btnFacility' onclick="window.location.href = 'kapitan_facilityequipment.php'">
-    <font face='cambria' size=4 color='black'><b> Set a Barangay Event </b></font><span></span></button><br><br><br><br><br>
+    <font face='cambria' size=4 color='black'><b> Reserve a Barangay Event </b></font><span></span></button><br><br><br><br><br>
 
     <div class="form-grop">
     	<div class="col-sm-6">
@@ -438,7 +438,7 @@
 					if(!empty($value)){
 						echo"<tr><td> $value </td>";
 						echo"<td> </td>";
-						echo"<td> <button type='submit' name='btnRemove' value='$value'><i class='glyphicon glyphicon-remove'></i></button></td></tr>";
+						echo"<td> <button class='btn-link' type='submit' name='btnRemove' value='$value'><i class='glyphicon glyphicon-remove'></i></button></td></tr>";
 					}
 					
 				}

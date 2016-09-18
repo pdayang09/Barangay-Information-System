@@ -324,7 +324,7 @@ function Check(val){
     var c = document.getElementsByName("btnChange")[0].value;
     var d = document.getElementsByName("btnForfeit")[0].value;
 
-    if(val==01 || val==02){
+    if(val==01 || val==02 && a < b){
         if (confirm("Do you really want to continue?")) {
             
             //Make ajax call
@@ -339,10 +339,9 @@ function Check(val){
 
         }
 
-        window.location='view_kapitan.php';
         document.getElementById("btnChange").setAttribute("disabled","disabled");
         document.getElementById("btnForfeit").setAttribute("disabled","disabled");
-    }else{
+    }else if(a < b){
         //Make ajax call
             $.ajax({
                 type: "POST",
@@ -352,6 +351,8 @@ function Check(val){
                 $("#viewCheck").html(data);
                 }          
             });          
+    }else{
+        alert('Invalid Date');
     }          
 }
 

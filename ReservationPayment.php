@@ -78,7 +78,7 @@
 
 								
 									<font face = "cambria" size = 5 color = "grey"> Mode of Payment </font>
-									<select id="mode" onchange="showBal(this.value)" class = "form-control">
+									<select id="mode" onchange="showBal()" class = "form-control">
 										<option value="1" selected="selected"> Full </option>
 										<option value="2"> Partial </option>
 									</select>
@@ -98,7 +98,7 @@
 									<center>
 									<font face = "cambria" size = 5 color = "grey" > ......................................
 									
-									<button id="sRequest" type="submit" class="btn btn-outline btn-success" name = "btnPay" onclick="showBal()" value = '<?php echo $resId;?>'> Render Payment </button></center></font>
+									<button id="sRequest" type="submit" class="btn btn-outline btn-success" name = "btnPay" onclick="showBal(4)" value = '<?php echo $resId;?>'> Render Payment </button></center></font>
 
 									</div><br><br><br><br>							
 							</div>
@@ -128,7 +128,7 @@
       </section><!-- /MAIN CONTENT -->
 
 <script>	 
-function showBal(){
+function showBal(val){
 	var mode = document.getElementById('mode').value;
 	var payOR = document.getElementById('payOR').value;
 	var bal = $("font")[13].innerHTML;
@@ -140,7 +140,7 @@ function showBal(){
 	$.ajax({
 		type: "POST",
 		url: "showBal.php",
-		data: 'mode=' + mode +'&payOR='+payOR+'&bal='+bal+'&change='+change+'&render='+render+'&pay='+pay+'&bt='+balanceTemp,
+		data: 'mode=' + mode +'&payOR='+payOR+'&bal='+bal+'&change='+change+'&render='+render+'&pay='+pay+'&bt='+balanceTemp+'&val='+val,
 		success: function(data){
 			//alert(data);
 			$("#showBalance").html(data);

@@ -197,9 +197,7 @@
       <!-- **********************************************************************************************************************************************************
       MAIN SIDEBAR MENU
       *********************************************************************************************************************************************************** -->
-      <?php require("sidebar.php");
-            require("connection.php");
-            session_start();?>
+      <?php require("sidebar.php");?>
       
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
@@ -216,11 +214,11 @@
         require_once("refHolidays.php");
 
         //Personal Details
-        $residency = 1;
-        $clientID = "Barangay Official";
-        $name = "Barangay-ADMIN";
-        $contactno = "";
-        $place = "";
+        $residency = $_SESSION['residency'];
+        $clientID = $_SESSION['clientID'];
+        $name = $_SESSION['name'];
+        $contactno = $_SESSION['contactno'];
+        $place = $_SESSION['place'];
 
         $_POST['name'] = $name;
         $_POST['contactno'] = $contactno;        
@@ -252,11 +250,14 @@
 
         //Other
         $count = $count+1;
-        $preRes = "BRgy-res-";
+        $_SESSION['preRes']="res-";
+        $preRes = $_SESSION['preRes'];
 
         $resId = $preRes.$count;
         $resPrpose = "";
         $num = "";
+
+        $_SESSION['available']="2";
     ?>    
 
     <!-- Page Content -->
@@ -264,8 +265,10 @@
            <div class="container-fluid">
               <div class="row">
                   <div class="col-lg-12">
-                  <FORM method="POST"><br><br>
+                  <FORM method="POST">
                     
+                <legend ><font face = "cambria" size = 8 color = "grey">Reservation Request</font></legend><br><br>
+
                 <button type='button' class='showback col-xs-4' name='btnFacility' onclick='showForm(1)' >
                 <font face='cambria' size=4 color='black'><b> Select Facility </b></font><span></span></button>               
 
@@ -286,16 +289,8 @@
                         <p><font face="cambria" size=4 color="grey"> To </font></p>
                         <input name = "To" type="text" id="datetimepicker003" class="form-control input-group-lg reg_name, some_class" value="<?php if(isset($_POST['To'])){echo $_POST['To'];}else{}?>" > <br><br>
 
-            <div class="col-sm-8">
-            <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                <div class="btn-group" role="group">
-                       <button class="btn btn-outline btn-success" type="button" onclick="Check(1)" value=""> Check </button></center>
-                </div>
-                <div class="btn-group" role="group">
-                       <button class="btn btn-outline btn-success" type="button" onclick="showForm(4)" value=""> Repeat </button>
-                </div>
-            </div>
-            </div>
+                       <center><button class="btn btn-outline btn-success" type="button" onclick="Check(1)" value=""> Check </button></center>
+
                        <p id="showCheck"></p> 
 
             <div id="viewCheck" class="panel panel-panel">
@@ -325,6 +320,7 @@
                     </li>
                 </ul>
             </div>
+
                         </div>                      
                     </div>
                 </div> 
@@ -371,6 +367,8 @@
                     </div>
                 </div> 
 
+<FORM method="POST">
+
     <div id="viewCheckEquip" class="col-sm-3">
         <div class="showback">
             <div class="panel-heading">
@@ -404,54 +402,10 @@
     </div>
     </div><br><br><br><br>
 
-<div id="Advance" class = "col-sm-6">    
-    <div class="form-group">
-        <div class = "showback"> 
+                 
+</FORM>
 
-        <h3> Multiple Events </h3>
-    <div class="col-sm-10">
-        <div class="btn-group btn-group-justified" role="group" aria-label="...">
-            <div class="btn-group" role="group">
-                <p><font face="cambria" size=3 color="grey"> Repeat Every </font></p>
-            </div>
-            <div class="btn-group" role="group">
-               <input class="form-control input-group-lg reg_name" type="number" name="resRepeat" value="<?php if(isset($_POST['resRepeat'])){echo $_POST['resRepeat'];}else{ echo 1;}?>" min="1" max="12">
-            </div>
-            <div class="btn-group" role="group">
-                <p><font face="cambria" size=3 color="grey"> Limit </font></p>
-            </div>
-            <div class="btn-group" role="group">
-                <input class="form-control input-group-lg reg_name" type="number" name="resLimit" value="<?php if(isset($_POST['resLimit'])){echo $_POST['resLimit'];}else{ echo 1;}?>" min="1" max="12" >
-            </div>
-        </div>
-    </div>
-
-    <div class="col-sm-14">
-        <div class="btn-group btn-group-justified" role="group" aria-label="...">
-        <div class="btn-group" role="group">
-            <button type="button" class="btn btn-normal" id = "searcht" name = "btnEvery" value = "weeks" onclick="mEvent(this.value)">WEEK</button>
-        </div>
-        <div class="btn-group" role="group">
-            <button type="button" class="btn btn-normal" id = "searcht" name = "btnEvery" value = "months" onclick="mEvent(this.value)">MONTH</button>
-        </div>
-        <div class="btn-group" role="group">
-            <button type="button" class="btn btn-normal" id = "searcht" name = "btnEvery" value = "years" onclick="mEvent(this.value)">YEAR</button>
-        </div>
-        </div>
-   </div><br>
-
-    <center>
-    <div class="col-sm-10">
-        <div class="btn-group btn-group" role="group" aria-label="...">
-            <div class="btn-group" role="group">
-                <button type="button" class="btn btn-success" id = "btnReset" name = "btnReset" value = "3" onclick="mEvent(4)">RESET</button>
-            </div>
-        </div>
-    </div></center><br><br><br>
-</div>
-</div>
-</div>
-        
+         
                 </div><!-- /#col-lg-12 -->
             </div><!-- /#row -->
         </div><!-- /#container-fluid -->
@@ -462,9 +416,8 @@
         var a = document.getElementsByName("From")[0].value;
         var b = document.getElementsByName("To")[0].value;
 
-        document.getElementById('facilityForm').style.display = flag === 1 ? 'block': 'none'; 
 
-        document.getElementById('Advance').style.display = flag === 4 ? 'block': 'none'; 
+        document.getElementById('facilityForm').style.display = flag === 1 ? 'block': 'none'; 
 
         if(flag==2){
 
@@ -508,7 +461,6 @@
     #viewCheck {display:block}
     #viewCheckEquip {display:none}
     #availabilityCheck {display: block}
-    #Advance {display: none}
 </style>
 
 <script>
@@ -597,7 +549,7 @@ function finReserve(val){
 
             success: function(data){
 
-                window.location = 'kapitan_reservationassessment.php';
+                window.location = 'ol_reservationassessment.php';
             }       
         });
     }else{
@@ -610,28 +562,6 @@ function finReserve(val){
           $('select.styled').customSelect();
       });  
 
-</script>
-
-<script>
-    function mEvent(val){
-        var a = document.getElementsByName("From")[0].value;
-        var b = document.getElementsByName("To")[0].value;
-
-        var c = document.getElementsByName("resRepeat")[0].value;
-        var d = document.getElementsByName("resLimit")[0].value;
-
-        alert(val);
-        $.ajax({
-        type: "POST",
-        url: "mEvent.php",
-        data: 'from='+a+'&to='+b+'&repeat='+c+'&limit='+d+'&val='+val,
-
-            success: function(data){
-                alert(data);
-            }       
-        });
-
-    }
 </script>
 
 <script src="./jquery.js"></script>

@@ -46,7 +46,35 @@ if($val == 1){
 </div>
 
 <?php
-}else if($val==3){ 
+}else if($val==2){
+
+?>   
+<div id="equipmentForm" class = "panel panel-panel">
+    <div class="form-group">
+        <div class = "showback">                                                
+            <font face = "cambria" size = 5 color = "grey"> Items </font><br><br>  
+<?php
+
+    require("connection.php");
+    $query = mysqli_query($con, "SELECT eq.`strEquipName`, intEquipQuantity-SUM(r.`intREQuantity`) FROM tblreserveequip r INNER JOIN tblequipment eq ON eq.`strEquipName`=r.`strREEquipCode` WHERE r.`dtmREFrom` BETWEEN '$resfrom' AND '$resto' OR r.`dtmRETo` BETWEEN '$resfrom' AND '$resto' GROUP BY eq.`strEquipName` UNION SELECT e.`strEquipName`, e.`intEquipQuantity` FROM tblequipment e WHERE e.`strStatus`='Enabled' AND e.`strEquipName` NOT IN ( SELECT eq.`strEquipName` FROM tblreserveequip r INNER JOIN tblequipment eq ON eq.`strEquipName`= r.`strREEquipCode` WHERE r.`dtmREFrom` BETWEEN '$resfrom' AND '$resto' OR r.`dtmRETo` BETWEEN '$resfrom' AND '$resto' GROUP BY eq.`strEquipName`)");
+
+    
+     while($row = mysqli_fetch_row($query)){
+        if($row[1] > 0){
+            echo "<p><font face='cambria' size=4 color='grey'><input type='checkbox' name = 'equipment' value='$row[0]'/> $row[0] ($row[1]) </font></p>
+                <input class='form-control input-group-lg reg_name' type='number' name = 'quantity' title='Input Quantity' placeholder='Input Quantity' min='1' max='$row[1]' value=''>";
+        }else{
+
+        }       
+        
+    }
+    
+?>   
+        </div>
+    </div>
+</div>
+
+<?php }else if($val==3){ 
 
     $equipment[] = array();
     $equipment = $_POST['equipment'];
@@ -71,15 +99,11 @@ if($val == 1){
                     $facitemp = $row[1];
                     $facifrom = $row[2];
                     $facito = $row[3];
-                    
-                    echo"<center><h4><span> NOT AVAILABLE</span><span class='label label-warning'> $facifrom - $facito </span></h4></center>";
-                    
+                                        
                   }
 
                     $go = 1;
                 }else{
-
-                    echo"<center><h3><span> AVAILABLE </span><span class='label label-warning'></span></h3></center>";
 
                     $go = 0;
                 }
@@ -96,24 +120,6 @@ if($val == 1){
         </li>
     </ul>
 </div>    
-
-<?php }else if($val==2){
-
-?>
- 
-<?php
-    require("connection.php");
-
-    $query = mysqli_query($con, "SELECT DISTINCT `strEquipName`, `intEquipQuantity`-`intREQuantity` FROM tblreserveequip, tblequipment WHERE `dtmREFrom` BETWEEN '$resfrom' AND '$resto' OR `dtmRETo` BETWEEN '$resfrom' AND '$resto' AND `strREEquipCode` = `strEquipName` UNION SELECT `strEquipName`, `intEquipQuantity` FROM tblreserveequip, tblequipment WHERE `dtmREFrom` BETWEEN '$resfrom' AND '$resto' OR `dtmRETo` BETWEEN '$resfrom' AND '$resto' AND `strREEquipCode` != `strEquipName` AND `strEquipName` IN (SELECT `strEquipName` FROM tblequipment WHERE `strStatus`='Enabled')");
-
-     while($row = mysqli_fetch_row($query)){
-       
-        echo "
-        <p><font face='cambria' size=4 color='grey'><input type='checkbox' name = 'equipment' value='$row[0]'/> $row[0] </font></p>
-        <input class='form-control input-group-lg reg_name' type='number' name = 'quantity' title='Input Quantity' placeholder='Input Quantity' min='1' max='$row[1]' value=''; >";
-    
-    } 
-?>   
 
 <?php } ?>
 

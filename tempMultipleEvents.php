@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>  
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
@@ -27,8 +27,8 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     
-    <?php session_start(); 
-    ?>
+    <?php session_start();
+        require_once("refHolidays.php");?>
           
   </head>
 
@@ -197,9 +197,7 @@
       <!-- **********************************************************************************************************************************************************
       MAIN SIDEBAR MENU
       *********************************************************************************************************************************************************** -->
-      <?php require("sidebar.php");
-            require("connection.php");
-            session_start();?>
+      <?php require("sidebar.php");?>
       
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
@@ -208,430 +206,294 @@
       <section id="main-content">
         <section class="wrapper site-min-height">
 
-    <div id="wrapper">
-    <!--?php include('Nav.php')?>
+<?php 
 
-    <!-- Retrieve Personal Data -->
-    <?php 
-        require_once("refHolidays.php");
+    $name = "BARANGAY";
+    $contactno = "BARANGAY";
 
-        //Personal Details
-        $residency = 1;
-        $clientID = "Barangay Official";
-        $name = "Barangay-ADMIN";
-        $contactno = "";
-        $place = "";
+    require("connection.php");
+    $query = mysqli_query($con, "SELECT COUNT(*) from tblreservationrequest");
 
-        $_POST['name'] = $name;
-        $_POST['contactno'] = $contactno;        
-        
-        //Facility
-        $fromtemp = "";
-        $totemp = "";        
-        $resFacility = "";        
-        $resfrom = "";
-        $resto = "";
-        $_SESSION['resfrom'] = "";
-        $_SESSION['resto'] = "";
+    while($row = mysqli_fetch_row($query)){
+       $count = $row[0];
+    }
 
-        //DisabledDates
-        $arrDisabledDates[] = array();
-        $arrDisabledDates = $_SESSION['arrDisabledDates'];
-        
-        require("connection.php");
-        $query = mysqli_query($con, "SELECT COUNT(*) from tblreservationrequest");
+    //Other
+    $count = $count+1;
+    $resId = "BrgyRes-".$count;
+    $resPurpose = "Barangay Event";
+    $num = "";
+    $resRepeat =1;
+    $resLimit =1;
 
-        while($row = mysqli_fetch_row($query)){
+    //Gets Today's Date
+    $today = date("Y-m-d"); 
 
-            $count = $row[0];
-        }
+?>
+ <!-- Page Content -->
+ <div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
 
-        //Gets Today's Date
-        $today = date("Y-m-d"); // displays date today
-        $_POST['today'] = $today;
+        <legend ><font face = "cambria" size = 8 color = "grey"> Add Special Events</font></legend>
 
-        //Other
-        $count = $count+1;
-        $preRes = "BRgy-res-";
+<FORM method="POST"> 
 
-        $resId = $preRes.$count;
-        $resPrpose = "";
-        $num = "";
-    ?>    
+    <button type='button' class='showback col-xs-4' name='btnFacility' onclick="window.location.href = 'kapitan_facilityequipment.php'">
+    <font face='cambria' size=4 color='black'><b> Reserve a Barangay Event </b></font><span></span></button><br><br><br><br><br>
 
-    <!-- Page Content -->
-       <div id="page-content-wrapper">
-           <div class="container-fluid">
-              <div class="row">
-                  <div class="col-lg-12">
-                  <FORM method="POST"><br><br>
-                    
-                <button type='button' class='showback col-xs-4' name='btnFacility' onclick='showForm(1)' >
-                <font face='cambria' size=4 color='black'><b> Select Facility </b></font><span></span></button>               
+    <div class="form-grop">
+    	<div class="col-sm-6">
+    		<div class="showback">
 
-                <button type='button' class='showback col-xs-4' name='btnEquipment' onclick='showForm(2)'>
-                <font face='cambria' size=4 color='black'><b> Select Items </b></font><span></span></button>
+            <p><font face="cambria" size=4 color="grey"> Today is <?php echo $today;?> </font></p>
 
-                <button type='button' class='showback col-xs-4' name='btnFaciEquip' onclick='showForm(3)'>
-                <font face='cambria' size=4 color='black'><b> Proceed </b></font><span></span></button>
+        	<p><font face="cambria" size=4 color="grey"> Select Dates </font></p>
+        	<input type="text" id="datetimepicker" class="form-control input-group-lg reg_name, some_class" value="<?php if(isset($_POST['addDate'])){echo $_POST['addDate'];}else{}?>" name = "addDate"/><br>
 
-                <div id="AvailabilityCheck" class = "col-sm-5">    
-                    <div class="form-group">
-                        <div class = "showback">
+            <p><font face="cambria" size=4 color="grey"> Event </font></p>
+            <input class="form-control input-group-lg reg_name" type="text" name="resPurpose" title="input name of client" value="<?php if(isset($_POST['resPurpose'])){echo $_POST['resPurpose'];}else{ echo $resPurpose;}?>"> <br><br>
 
-                        <font face = "cambria" size = 5 color = "grey"> Check Availability </font><br><br>
+            <div class="col-sm-10">
+                <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                    <div class="btn-group" role="group">
+                        <p><font face="cambria" size=3 color="grey"> Repeat Every </font></p>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <input class="form-control input-group-lg reg_name" type="number" name="resRepeat" value="<?php if(isset($_POST['resRepeat'])){echo $_POST['resRepeat'];}else{ echo 1;}?>" min="1" max="12">
+                    </div>
+                    <div class="btn-group" role="group">
+                        <p><font face="cambria" size=3 color="grey"> Limit </font></p>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <input class="form-control input-group-lg reg_name" type="number" name="resLimit" value="<?php if(isset($_POST['resLimit'])){echo $_POST['resLimit'];}else{ echo 1;}?>" min="1" max="12">
+                    </div>
+                </div>
+            </div>
 
-                        <p><font face="cambria" size=4 color="grey"> From </font></p>
-                        <input name = "From" type="text" id="datetimepicker" class="form-control input-group-lg reg_name, some_class" value="<?php if(isset($_POST['From'])){echo $_POST['From'];}else{}?>" >                 
-                        <p><font face="cambria" size=4 color="grey"> To </font></p>
-                        <input name = "To" type="text" id="datetimepicker003" class="form-control input-group-lg reg_name, some_class" value="<?php if(isset($_POST['To'])){echo $_POST['To'];}else{}?>" > <br><br>
-
-            <div class="col-sm-8">
+            <div class="col-sm-14">
             <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                <div class="btn-group" role="group">
-                       <button class="btn btn-outline btn-success" type="button" onclick="Check(1)" value=""> Check </button></center>
-                </div>
-                <div class="btn-group" role="group">
-                       <button class="btn btn-outline btn-success" type="button" onclick="showForm(4)" value=""> Repeat </button>
-                </div>
+            <div class="btn-group" role="group">
+                <button type="submit" class="btn btn-normal" id = "searcht" name = "btnEvery" value = "weeks" >WEEK</button>
+            </div>
+            <div class="btn-group" role="group">
+                <button type="submit" class="btn btn-normal" id = "searcht" name = "btnEvery" value = "months" >MONTH</button>
+            </div>
+            <div class="btn-group" role="group">
+                <button type="submit" class="btn btn-normal" id = "searcht" name = "btnEvery" value = "years" >YEAR</button>
             </div>
             </div>
-                       <p id="showCheck"></p> 
+            </div><br>
 
-            <div id="viewCheck" class="panel panel-panel">
-                <ul id="sortable" class="task-list">
-                    <li class="list-primary">
-                        <div class="task-title">    
+            <center>
+            <div class="col-sm-10">
+            <div class="btn-group btn-group" role="group" aria-label="...">
+                <div class="btn-group" role="group">
+                    <button type="submit" class="btn btn-warning" id = "btnAdd" name = "btnAdd" value = "1" >DISABLE DATE</button>
+                </div>
+                <div class="btn-group" role="group">
+                    <button type="submit" class="btn btn-success" id = "btnAddEvent" name = "btnAddEvent" value = "2" >ADD EVENT</button>
+                </div>
+                <div class="btn-group" role="group">
+                    <button type="submit" class="btn btn-success" id = "btnReset" name = "btnReset" value = "3" >RESET</button>
+                </div>
+            </div>
+            </div></center><br><br><br>
+
+        	</div>
+        </div>
+    </div>
+  
+
+        <?php 
+            include_once("refHolidays.php");
+      		$arrDisabledDates[] = array(); 
+            $arrTemp[] = array();
+            //$arrDisabledDates = [''];   
+            //$arrTemp = [''];
+            //$arrSave = [''];
+
+            $arrTemp = $_SESSION['arrTemp'];         
+            $arrDisabledDates = $_SESSION['arrDisabledDates'] ;
+            $arrSave = $_SESSION['arrSave'];
+
+            if(isset($_POST['btnAdd'])){ // DISABLE DATE
+                $date = $_POST['addDate'];
+                $datetemp = $date;
+                $resPurpose = $_POST['resPurpose'];
+
+                $datetemp = str_replace('/','-', $datetemp);
+                $datetemp = str_replace('/','.', $datetemp);
+                $datetemp = date('d.m.Y', strtotime($datetemp));
+
+                if(!empty($arrSave)){
+                    foreach ($arrSave as $a) {
                         
-            <?php                       
-                require("connection.php");
-                $query = mysqli_query($con,"SELECT f.`strFaciNo`, f.`strFaciName`, TIME(r.`dtmREFrom`), TIME(r.`dtmRETo`) FROM tblreservefaci r INNER JOIN tblfacility f ON f.`strFaciNo` = r.`strREFaciCode` WHERE (r.`strREFaciCode`='$resFacility') AND (r.`dtmREFrom` BETWEEN '$resfrom' AND '$resto' OR r.`dtmRETo` BETWEEN '$resfrom' AND '$resto')");
+                        echo $a;
+                        if(!empty($a)){
+                            mysqli_query($con, "INSERT INTO `tblreserveequip`(`strReservationID`, `strREEquipCode`, `dtmREFrom`, `dtmRETo`, `intREQuantity`) VALUES ('res-1', 'Tennis Racket','$a','$a','2')");
+                        }                    
+                    }
 
-                if(mysqli_num_rows($query) > 0){
-                
-                $i = 1;
-                 while($row = mysqli_fetch_row($query)){
-
-                    $facino = $row[0];
-                    $facitemp = $row[1];
-                    $facifrom = $row[2];
-                    $facito = $row[3];                    
-                  }
+                    //mysqli_query($con, "INSERT INTO `tblspecialdate`(`Date`, `Event`, `Type`) VALUES ('$date', '$resPurpose', 'Disabled')");
                 }else{
+
+                    //mysqli_query($con, "INSERT INTO `tblspecialdate`(`Date`, `Event`, `Type`) VALUES ('$date', '$resPurpose', 'Disabled')");   
+                }
+                    
+                $arrTemp = [''];
+                $_SESSION['arrTemp']= $arrTemp;   
+
+                echo"<script> alert('You have successfully disabled date/s')</script>";
+                echo "<script> window.location = 'tempMultipleEvents.php'; </script>";
+
+              }else if(isset($_POST['btnEvery'])){ // ADD REPEATING DATES
+                $resRepeat = $_POST['resRepeat'];
+                $resLimit = $_POST['resLimit'];
+                $nEvery = $_POST['btnEvery'];
+                $datetemp = $_POST['addDate'];
+                $date = $datetemp;
+
+                $datetemp = str_replace('/','-', $datetemp);
+                $datetemp = str_replace('/','.', $datetemp);
+
+                if($nEvery =="weeks"){ // There are 52 weeks in a year
+                    $count = 52;
+                }else if($nEvery =="months"){ // There are 12 months in a year
+                    $count = 12;
+                }else if($nEvery =="years"){ // Setting date for the next 6 years only
+                    $count = 6;
+                }
+
+                $count = $resLimit;
+
+                $intCtr =1;
+                while($intCtr<=$count){
+
+                        $datetemp = date('Y-m-d h:i:s', strtotime($datetemp."+$resRepeat $nEvery"));
+                        array_push($arrTemp, $datetemp);
+
+                        $intCtr++; 
+                    }
+                                
+
+               echo'
+                <div>
+                    <p><font face="cambria" size=3 color="grey"> You Selected </font></p>
+                </div>';
+
+                $arrSave[] = array();
+                $arrSave = [''];
+                foreach ($arrTemp as $a) {
+
+                    $datetemp = str_replace('.','-', $a);
+                    $datetemp = date('Y-m-d h:i:s', strtotime($datetemp));
+
+                    if(!empty($a)){
+                        array_push($arrSave, $datetemp);
+                    }
                     
                 }
 
-            ?>          </div>
-                    </li>
-                </ul>
-            </div>
-                        </div>                      
-                    </div>
-                </div> 
-
-                <div id="facilityForm" class = "col-sm-7">    
-                    <div class="form-group">
-                        <div class = "showback">                                                
-                        <font face = "cambria" size = 5 color = "grey"> Facility </font><br><br>    
-                                       
-                        <!-- gets list of facility from tblfacility -->
-                        <?php include("facilityFormM.php"); ?><br><br><br>
-                                            
-                        </div>                      
-                    </div>
-                </div>
-
-                <div id="equipmentForm" class="col-sm-7">    
-                    <!-- shows available items-->
-                </div> 
-
-                <div id="proceed" class = "col-sm-7">    
-                    <div class="form-group">
-                        <div class = "showback"> 
-                       
-                        <font face = "cambria" size = 5 color = "grey"> Reservation Details </font><br><br>                                              
-                        <font face = "cambria" size = 4 color = "grey"> Date </font><?php echo $today; ?><br>
-
-                        <font face = "cambria" size = 4 color = "grey"> Name </font><?php echo $name; ?><br>
-
-                        <font face = "cambria" size = 4 color = "grey"> Contact </font><?php echo $contactno; ?><br><br>
-
-                        <p><font face="cambria" size=4 color="grey"> Reservation ID </font></p>
-                       <input class="form-control input-group-lg reg_name" type="text" name="resId" title="input name of client" value="<?php if(isset($_POST['resId'])){echo $_POST['resId'];}else{ echo $resId;}?>">
-
-                        <p><font face="cambria" size=4 color="grey"> Purpose </font></p>
-                        <input class="form-control input-group-lg reg_name" type="text" name="resPurpose" title="input name of client" value="<?php if(isset($_POST['resPurpose'])){echo $_POST['resPurpose'];}else{}?>">
-
-                        <p><font face="cambria" size=4 color="grey"> No. of People </font></p>
-                        <input class="form-control input-group-lg reg_name" type="number" name="num" title="input name of client" value="<?php if(isset($_POST['num'])){echo $_POST['num'];}else{}?>"><br><br>
-
-                       <center><button id="sRequest" class="btn btn-outline btn-success" onclick='finReserve(this.value)' value='<?php echo $_SESSION['available'];?>'> Submit Request </button></center>  
-
-                        </div>                      
-                    </div>
-                </div> 
-
-    <div id="viewCheckEquip" class="col-sm-3">
-        <div class="showback">
-            <div class="panel-heading">
-                <div class="pull-left"><h4> Reserved Equipment </h4></div><br>
-            </div>
-    
-            <div class="task-content">
-                <ul id="sortable" class="task-list">
-                    <li class="list-primary">
-                        <div class="task-title">        
-            <?php                       
-                require("connection.php");
-                $query = mysqli_query($con, "SELECT f.`strEquipName`, TIME(r.`dtmREFrom`), TIME(r.`dtmRETo`), r.`intREQuantity` FROM tblreserveequip r INNER JOIN tblequipment f ON f.`strEquipName` = r.`strREEquipCode` WHERE r.`dtmREFrom` BETWEEN '$resfrom' AND '$resto' OR r.`dtmRETo` BETWEEN '$resfrom' AND '$resto' ORDER BY r.`dtmREFrom`");
-
-                while($row = mysqli_fetch_row($query)){
-                    $facitemp = $row[0];
-                    $facifrom = $row[1];
-                    $facito = $row[2];
-                    $equipquan = $row[3];
-                    
-                    echo"<h5><span class='task-title-sp'> $facitemp</span><span class='label label-warning'> $facifrom - $facito </span><span class='label label-info'> $equipquan</span></h5>";
-                }
-
+              }else if(isset($_POST['btnAddEvent'])){
                 
-            ?>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>  
-    </div>
-    </div><br><br><br><br>
+                $resPurpose = $_POST['resPurpose'];
+                $datetemp = $_POST['addDate'];
+                $resFrom = $datetemp;
 
-<div id="Advance" class = "col-sm-6">    
-    <div class="form-group">
-        <div class = "showback"> 
+                array_push($arrEvent, $datetemp);  
+                $arrEvent = array_merge($arrEvent, $arrTemp);
+                
+                include("saveReservation2.php");
 
-        <h3> Multiple Events </h3>
-    <div class="col-sm-10">
-        <div class="btn-group btn-group-justified" role="group" aria-label="...">
-            <div class="btn-group" role="group">
-                <p><font face="cambria" size=3 color="grey"> Repeat Every </font></p>
-            </div>
-            <div class="btn-group" role="group">
-               <input class="form-control input-group-lg reg_name" type="number" name="resRepeat" value="<?php if(isset($_POST['resRepeat'])){echo $_POST['resRepeat'];}else{ echo 1;}?>" min="1" max="12">
-            </div>
-            <div class="btn-group" role="group">
-                <p><font face="cambria" size=3 color="grey"> Limit </font></p>
-            </div>
-            <div class="btn-group" role="group">
-                <input class="form-control input-group-lg reg_name" type="number" name="resLimit" value="<?php if(isset($_POST['resLimit'])){echo $_POST['resLimit'];}else{ echo 1;}?>" min="1" max="12" >
-            </div>
-        </div>
-    </div>
+                $arrTemp = [''];
+                $_SESSION['arrTemp']= $arrTemp;  
 
-    <div class="col-sm-14">
-        <div class="btn-group btn-group-justified" role="group" aria-label="...">
-        <div class="btn-group" role="group">
-            <button type="button" class="btn btn-normal" id = "searcht" name = "btnEvery" value = "weeks" onclick="mEvent(this.value)">WEEK</button>
-        </div>
-        <div class="btn-group" role="group">
-            <button type="button" class="btn btn-normal" id = "searcht" name = "btnEvery" value = "months" onclick="mEvent(this.value)">MONTH</button>
-        </div>
-        <div class="btn-group" role="group">
-            <button type="button" class="btn btn-normal" id = "searcht" name = "btnEvery" value = "years" onclick="mEvent(this.value)">YEAR</button>
-        </div>
-        </div>
-   </div><br>
+              }else if(isset($_POST['btnReset'])){
+                $arrTemp = [''];
+                $_SESSION['arrTemp']= $arrTemp; 
 
-    <center>
-    <div class="col-sm-10">
-        <div class="btn-group btn-group" role="group" aria-label="...">
-            <div class="btn-group" role="group">
-                <button type="button" class="btn btn-success" id = "btnReset" name = "btnReset" value = "3" onclick="mEvent(4)">RESET</button>
-            </div>
+              }
+
+             $_SESSION['arrDisabledDates'] = $arrDisabledDates; 
+             $_SESSION['arrTemp'] = $arrTemp;
+             $_SESSION['arrSave'] = $arrSave;
+            ?> 
+
+  	<div id="viewDDate" class="form-grop">
+    	<div class="col-sm-6">
+    		<div class="showback">
+
+            <h3> DISABLED DATES </h3>
+        	<table class="table table-hover" style="height: 40%; overflow: scroll; "'>
+				<thead><tr>
+					<th>Date</th>					
+					<th> </th>
+					<th> Action </th>
+				</tr></thead>
+				<tbody>
+			<?php
+				foreach ($arrDisabledDates as $a=>$value) {
+
+					if(!empty($value)){
+						echo"<tr><td> $value </td>";
+						echo"<td> </td>";
+						echo"<td> <button class='btn-link' type='submit' name='btnRemove' value='$value'><i class='glyphicon glyphicon-remove'></i></button></td></tr>";
+					}
+					
+				}
+
+
+			?>	
+				</tbody>
+			</table>
+        	</div>
         </div>
-    </div></center><br><br><br>
-</div>
-</div>
-</div>
-        
+    </div> 
+
+        <?php
+            if(isset($_POST['btnRemove'])){
+                $remove = $_POST['btnRemove'];
+
+                $datetemp = str_replace('.','-', $remove);
+                $datetemp = date('Y-m-d', strtotime($datetemp));
+
+                require("connection.php");
+                mysqli_query($con, "DELETE FROM `tblspecialdate` WHERE `Date`= '$datetemp'");
+                echo "<script> window.location ='tempMultipleEvents.php'; </script>";
+            }
+
+        ?>
+
                 </div><!-- /#col-lg-12 -->
             </div><!-- /#row -->
         </div><!-- /#container-fluid -->
     </div><!-- /#page-content-wrapper -->
-
-<script type="text/javascript">
-    function showForm(flag) {
-        var a = document.getElementsByName("From")[0].value;
-        var b = document.getElementsByName("To")[0].value;
-
-        document.getElementById('facilityForm').style.display = flag === 1 ? 'block': 'none'; 
-
-        document.getElementById('Advance').style.display = flag === 4 ? 'block': 'none'; 
-
-        if(flag==2){
-
-            if(a!="" && b!="" && a < b){
-
-                document.getElementById('equipmentForm').style.display = flag === 2 ? 'block' : 'none';
-                Check(2);
-            }else{
-                alert('Pls indicate your preferred time!');
-            }
-        }else{
-
-            document.getElementById('equipmentForm').style.display = flag === 2 ? 'none' : 'none';
-        }
-
-        if(flag==3){
-
-            if(a!="" && b!="" && a < b){
-
-                Check(3);  
-            }else{
-
-                alert('Pls indicate your preferred time!');
-                document.getElementById('proceed').style.display = flag === 2 ? 'none' : 'none';
-            }
-                
-        }else{
-
-            document.getElementById('proceed').style.display = flag === 3 ? 'none' : 'none';
-        }      
-        
-         
-
-    }
-</script>
-        
-<style type="text/css">
-    #facilityForm {display: block}
-    #equipmentForm {display: block;}
-    #proceed {display: none}
-    #viewCheck {display:block}
-    #viewCheckEquip {display:none}
-    #availabilityCheck {display: block}
-    #Advance {display: none}
-</style>
-
 <script>
-function Check(val){
+function showDDate(){
 
-    var a = document.getElementsByName("From")[0].value;
-    var b = document.getElementsByName("To")[0].value;
-    var c = $('input[name=resFacility]:checked').val();
+    var a = document.getElementsByName("addDate")[0].value;
+    var arr = <?php echo json_encode($arrDisabledDates); ?>;
 
-    var equipment = [];
-        $.each($("input[name='equipment']:checked"), function(){            
-                equipment.push($(this).val());
-            });//alert("My Equipments are: " + equipment.join(" "));
+    //document.getElementById("showCheck").innerHTML = a + b + c;
+    //alert(val);
 
-        equipment.join(equipment)
-
-    var quantity = [];
-        $.each($("input[name='quantity']"), function(){            
-                quantity.push($(this).val());
-            });//alert("My quantity are: " + quantity.join(" "));
-
-        quantity.join(quantity)
-
-    if(c=="" && val==1){
-        alert("Select Facility");
-
-    }else if(val==2){
-        
      $.ajax({
         type: "POST",
-        url: "vCheck.php",
-        data: 'fid='+a+'&tid='+b+'&val='+val,
+        url: "vDDate.php",
+        data: 'dDate='+a+'&arrDisabledDates='+arr,
         success: function(data){
-            
-           $("#equipmentForm").html(data);              
-        }   
+        alert(data);
+        $("#viewDDate").html(data);
+        }       
     });    
-    }else{
-        $.ajax({
-        type: "POST",
-        url: "vCheck.php",
-        data: 'fid='+a+'&tid='+b+'&rid='+c+'&val='+val+'&equipment='+equipment,
-        success: function(data){
-
-           $("#viewCheck").html(data);              
-        }   
-    });
-    }   
+ 
 }
       $(function(){
           $('select.styled').customSelect();
       });  
 
-</script>
-
-<script>
-function finReserve(val){
-    var a = document.getElementsByName("From")[0].value;
-    var b = document.getElementsByName("To")[0].value;
-    var c = $('input[name=resFacility]:checked').val();
-
-    var resId = document.getElementsByName("resId")[0].value;
-    var resPurpose = document.getElementsByName("resPurpose")[0].value;
-    var num = document.getElementsByName("num")[0].value;    
-
-    var equipment = [];
-        $.each($("input[name='equipment']:checked"), function(){            
-                equipment.push($(this).val());
-            });//alert("My Equipments are: " + equipment.join(" "));
-
-        equipment.join(equipment)
-
-    var quantity = [];
-        $.each($("input[name='quantity']"), function(){            
-                quantity.push($(this).val());
-            });//alert("My quantity are: " + quantity.join(" "));
-
-        quantity.join(quantity)        
-
-    if(a!="" && b!="" && resPurpose!=""){
-
-        $.ajax({
-        type: "POST",
-        url: "finReservation.php",
-        data: 'fid='+a+'&tid='+b+'&rid='+c+'&did='+resId+'&resPurpose='+resPurpose+'&num='+num+'&equipment='+equipment+'&quantity='+quantity,
-
-            success: function(data){
-
-                window.location = 'kapitan_reservationassessment.php';
-            }       
-        });
-    }else{
-
-        alert("Pls fill out the required fields!");
-    }   
-    }
-
-      $(function(){
-          $('select.styled').customSelect();
-      });  
-
-</script>
-
-<script>
-    function mEvent(val){
-        var a = document.getElementsByName("From")[0].value;
-        var b = document.getElementsByName("To")[0].value;
-
-        var c = document.getElementsByName("resRepeat")[0].value;
-        var d = document.getElementsByName("resLimit")[0].value;
-
-        alert(val);
-        $.ajax({
-        type: "POST",
-        url: "mEvent.php",
-        data: 'from='+a+'&to='+b+'&repeat='+c+'&limit='+d+'&val='+val,
-
-            success: function(data){
-                alert(data);
-            }       
-        });
-
-    }
 </script>
 
 <script src="./jquery.js"></script>
@@ -665,22 +527,6 @@ lang:'en',
 formatDate: 'dd.mm.Y',
 //dateToDisable: ['09.05.2016'],
 disabledDates: datearray,
-startDate:  0,
-defaultDate: new Date(),
-defaultTime: '08:00',
-minDate: new Date(),
-datepicker:true,
-    allowTimes:['4:30','5:00','5:30','6:00','6:30','7:00','7:30','8:00','8:30','9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00','20:30','21:00','21:30','22:00','22:30','23:00'],
-    step:5
-});
-
-var datearray2 = <?php echo json_encode($arrDisabledDates); ?>;
-$('#datetimepicker003').datetimepicker({
-dayOfWeekStart : 0,
-lang:'en',
-formatDate: 'dd.mm.Y',
-//dateToDisable: ['09.05.2016'],
-disabledDates: datearray2,
 startDate:  0,
 defaultDate: new Date(),
 defaultTime: '08:00',
