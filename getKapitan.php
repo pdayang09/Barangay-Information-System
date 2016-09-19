@@ -1,3 +1,5 @@
+<link href="dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+
 <?php
 
 require("connection.php");
@@ -15,7 +17,7 @@ if($_POST['bid']==2){
 ?>
 	<center>
 		<div class="panel panel-default" id = "tablestreet"><!-- Default panel contents -->	
-			<table class="table table-hover" style="height: 40%; overflow: scroll; ">
+			<table id="getKapitan" class="table table-hover" style="height: 40%; overflow: scroll; ">
 				<thead><tr>
 					<th>Full Name</th>					
 					<th>Contact No</th>
@@ -60,3 +62,22 @@ if($_POST['bid']==2){
 			</tbody>
 			</table>
 		</div></center><!-- Table-responsive -->
+
+	<!-- DATA TABLE -->
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery-ui-1.9.2.custom.min.js"></script>
+    <script src="assets/js/jquery.ui.touch-punch.min.js"></script>
+    <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="assets/js/jquery.scrollTo.min.js"></script>
+    <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+
+  <script src="dataTables/jquery.dataTables.js"></script>
+  <script src="dataTables/dataTables.bootstrap.js"></script>  
+
+  <script>
+    $(document).ready(function() {
+    $('#dataTable').dataTable();
+	$('#getKapitan').dataTable();	
+    });
+  </script>

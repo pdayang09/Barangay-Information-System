@@ -35,17 +35,7 @@
 					
 							<div class = "bodybody">	
 								<div class="panel-body">
-				
-		<!-- Search Section-->
-		<div class="form-group">
-			<div class="col-sm-3">
-				<input id="searchr" name="search" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value= "" placeholder="Search Last name">					
-			</div>				
-			<div class="col-sm-2">
-				<button class="btn btn-info btn-round btn-s  " id = "searchst" name = "btnSearch" value = 2 onclick = "search(this.value)"><i class = "glyphicon glyphicon-search"></i></button>
-			</div> <!-- 1 = Reservation_Kapitanl -->
-		</div><br><br><br><br>
-		
+						
 		<!-- Filters Resident / Applicant -->	
 		<div class="col-sm-6">
 		<div class="btn-group btn-group-justified" role="group" aria-label="...">
@@ -68,7 +58,7 @@
 		
 		<center>
 		<div class = "showback" id = "tablestreet">	
-			<table class="table table-striped table-bordered table-hover"  border = '3' style = 'width:95%'>
+			<table id="dataTable" class="table table-striped table-bordered table-hover"  border = '3' style = 'width:95%'>
 				<thead><tr>
 					<th>Full Name</th>					
 					<th>Contact No</th>

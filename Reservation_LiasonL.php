@@ -22,17 +22,7 @@
 	$returned =0;
 	$unreturned =0;
 ?>
-		
-		<!-- Search Section-->
-		<div class="form-group">
-			<div class="col-sm-3">
-				<input id="searchr" name="search" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value= "" placeholder="Search Last name">					
-			</div>				
-			<div class="col-sm-2">
-				<button class="btn btn-info btn-round btn-s  " id = "searchst" name = "btnSearch" value = 1 onclick = "search(this.value)"><i class = "glyphicon glyphicon-search "></i></button>
-			</div> <!-- 3 = Validity Check -->			
-		</div><br><br><br><br>	
-		
+				
 		<!-- Filters Resident / Applicant -->	
 		<div class="col-sm-6">
 		<div class="btn-group btn-group-justified" role="group" aria-label="...">
@@ -52,7 +42,7 @@
 		
 		<center>
 		<div class = "showback" id = "tablestreet">	
-			<table class="table table-hover" style="height: 40%; overflow: scroll; "'>
+			<table  id = "dataTable" class="table table-hover" style="height: 40%; overflow: scroll; "'>
 				<thead><tr>
 					<th>Full Name</th>					
 					<th>Contact No</th>

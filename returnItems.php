@@ -2,6 +2,8 @@
 <!DOCTYPE html>
     <?php require('header.php');?>
     <?php require('sidebar.php');?>
+
+    <link href="dataTables/dataTables.bootstrap.css" rel="stylesheet" />
       
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
@@ -48,20 +50,10 @@
 		
 		<legend ><font face = "cambria" size = 10 color = "grey"> Return Items </font></legend>
 		
-		<!-- Search Section-->
-		<div class="form-group">
-			<div class="col-sm-3">
-				<input id="searchr" name="search" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value= "" placeholder="Search Last name">					
-			</div>				
-			<div class="col-sm-2">
-				<button class="btn btn-info btn-round btn-s  " id = "searchst" name = "btnSearch" value = 1 onclick = "search(this.value)"><i class = "glyphicon glyphicon-search "></i></button>
-			</div> <!-- 4 returnItems -->			
-		</div><br><br><br><br>	
-
 <form method="POST">
 	<center>
 		<div class="panel panel-default"><!-- Default panel contents -->	
-			<table class="table table-hover" style="height: 40%; overflow: scroll; ">
+			<table id="dataTable" class="table table-hover" style="height: 40%; overflow: scroll; ">
 				<thead><tr>
 					<th>Reservation ID</th>
 					<th>Purpose</th>
@@ -204,65 +196,60 @@
 		</div>
 	</div>
 </div>
-		
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
-    <!-- Menu Toggle Script -->
-    <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-    </script>
-
-		
 		</section><! --/wrapper -->
       </section><!-- /MAIN CONTENT -->
 
-<script>
-      //custom select box
-function search(val){
-	var a = document.getElementById('searchr').value;
 
-	$.ajax({
-		type: "POST",
-		url: "gettable1.php",
-		data: 'sid=' + a +'&bid='+val,
-		success: function(data){
-			//alert(data);
-			$("#tablestreet").html(data);
-		}		
-	});
-}
-      $(function(){
-          $('select.styled').customSelect();
-      });
-
-  </script>
+<!-- Menu Toggle Script -->
+   <script>
+   $("#menu-toggle").click(function(e) {
+       e.preventDefault();
+       $("#wrapper").toggleClass("toggled");
+   });
+   </script>
   
- 	<script>
-      //custom select box
-function select(val){
-	var a = document.getElementById('searchr').value;
+<!-- jQuery -->
+   <script src="js/jquery.js"></script>
 
-	$.ajax({
-		type: "POST",
-		url: "getReturn.php",
-		data: 'sid=' + a +'&bid='+val,
-		success: function(data){
-			//alert(data);
-			$("#tablestreet").html(data);
-		}		
-	});
-}
-      $(function(){
-          $('select.styled').customSelect();
-      });
+<!-- Bootstrap Core JavaScript -->
+   <script src="js/bootstrap.min.js"></script>
+  
+<!-- js placed at the end of the document so the pages load faster -->
+   <script src="assets/js/jquery.js"></script>
+   <script src="assets/js/bootstrap.min.js"></script>
+   <script src="assets/js/jquery-ui-1.9.2.custom.min.js"></script>
+   <script src="assets/js/jquery.ui.touch-punch.min.js"></script>
+   <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
+   <script src="assets/js/jquery.scrollTo.min.js"></script>
+   <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
 
+<!--common script for all pages-->
+   <script src="assets/js/common-scripts.js"></script>
+
+<!--custom switch-->
+	<script src="assets/js/bootstrap-switch.js"></script>
+	
+<!--custom tagsinput-->
+	<script src="assets/js/jquery.tagsinput.js"></script>
+
+	<!-- DATA TABLE -->
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery-ui-1.9.2.custom.min.js"></script>
+    <script src="assets/js/jquery.ui.touch-punch.min.js"></script>
+    <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="assets/js/jquery.scrollTo.min.js"></script>
+    <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+
+  <script src="dataTables/jquery.dataTables.js"></script>
+  <script src="dataTables/dataTables.bootstrap.js"></script>  
+
+  <script>
+    $(document).ready(function() {
+    $('#dataTable').dataTable();	
+    });
   </script>
-
-<?php require("footer.php"); ?>
+	 
+   </body>
+</html>

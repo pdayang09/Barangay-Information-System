@@ -1,3 +1,5 @@
+<link href="dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+
 <?php
 
 require("connection.php");
@@ -14,8 +16,8 @@ if($_POST['bid']==1){
 		?>
 
 	<center>
-		<div class="panel panel-default" id = "tablestreet">	
-			<table class="table table-hover" style="height: 40%; overflow: scroll;">
+		<div class="panel panel-default" id="tablestreet">	
+			<table id="getTreasurer" class="table table-hover" style="height: 40%; overflow: scroll;">
 				<thead><tr>
 					<th>Reservation ID</th>				
 					<th>Payment</th>
@@ -43,3 +45,23 @@ if($_POST['bid']==1){
 			</tbody>
 			</table>
 		</div></center><br><br> <!-- Table-responsive -->
+
+
+<!-- DATA TABLE -->
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery-ui-1.9.2.custom.min.js"></script>
+    <script src="assets/js/jquery.ui.touch-punch.min.js"></script>
+    <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="assets/js/jquery.scrollTo.min.js"></script>
+    <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+
+  <script src="dataTables/jquery.dataTables.js"></script>
+  <script src="dataTables/dataTables.bootstrap.js"></script>  
+
+  <script>
+    $(document).ready(function() {
+    $('#dataTable').dataTable();
+	$('#getTreasurer').dataTable();	
+    });
+  </script>

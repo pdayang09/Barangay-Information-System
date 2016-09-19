@@ -1,5 +1,4 @@
-
-	<?php
+<?php
 	require("connection.php");	
 	//Initialize variables
 	
@@ -24,16 +23,6 @@
 	$payment = 0;
 	$balance =0;
 ?>
-	
-		<!-- Search Section-->
-		<div class="form-group">
-			<div class="col-sm-3">
-				<input id="searchr" name="search" class="form-control input-group-lg reg_name" type="text"  title="generated brgyId" value= "" placeholder="Search Last name">					
-			</div>				
-			<div class="col-sm-2">
-				<button class="btn btn-info btn-round btn-s  " id = "searchst" name = "btnSearch" value = 3 onclick = "search(this.value)"><i class = "glyphicon glyphicon-search "></i></button>
-			</div> <!-- 3 = Reservation_PaymentL -->			
-		</div><br><br><br><br>
 		
 		<!-- Filters Resident / Applicant -->	
 		<div class="col-sm-6">
@@ -54,7 +43,7 @@
 
 	<center>
 		<div class = "showback" id = "tablestreet">	
-			<table class="table table-striped table-bordered table-hover"  border = '3' style = 'width:95%'>
+			<table  id = "dataTable" class="table table-hover" style="height: 40%; overflow: scroll; "'>
 				<thead><tr>
 					<th>ID</th>				
 					<th>Payment</th>

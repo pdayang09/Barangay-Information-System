@@ -265,22 +265,7 @@
     #sReservation {display: block}
     #sRequest {display: none}
 </style>
-
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
-    <!-- Menu Toggle Script -->
-    <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-    </script>
-
-        
+       
         </section><! --/wrapper -->
       </section><!-- /MAIN CONTENT -->
 
@@ -307,7 +292,7 @@ function search(val){
     <script>
       //custom select box
 function select(val){
-    var a = document.getElementById('searchr').value;
+    var a;
 
     $.ajax({
         type: "POST",
@@ -325,4 +310,72 @@ function select(val){
 
   </script>
 
-<?php require("footer.php"); ?>
+      <!--footer start-->
+      <footer class="site-footer">
+          <div class="text-center">
+              CPS BIS 2016
+              <a href="index.php" class="go-top">
+                  <i class="fa fa-angle-up"></i>
+              </a>
+          </div>
+      </footer>
+      <!--footer end-->
+      
+  </section>
+
+<!-- Menu Toggle Script -->
+   <script>
+   $("#menu-toggle").click(function(e) {
+       e.preventDefault();
+       $("#wrapper").toggleClass("toggled");
+   });
+   </script>
+  
+<!-- jQuery -->
+   <script src="js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+   <script src="js/bootstrap.min.js"></script>
+  
+<!-- js placed at the end of the document so the pages load faster -->
+   <script src="assets/js/jquery.js"></script>
+   <script src="assets/js/bootstrap.min.js"></script>
+   <script src="assets/js/jquery-ui-1.9.2.custom.min.js"></script>
+   <script src="assets/js/jquery.ui.touch-punch.min.js"></script>
+   <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
+   <script src="assets/js/jquery.scrollTo.min.js"></script>
+   <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+
+<!--common script for all pages-->
+   <script src="assets/js/common-scripts.js"></script>
+
+<!--custom switch-->
+    <script src="assets/js/bootstrap-switch.js"></script>
+    
+<!--custom tagsinput-->
+    <script src="assets/js/jquery.tagsinput.js"></script>
+
+    <!-- DATA TABLE -->
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery-ui-1.9.2.custom.min.js"></script>
+    <script src="assets/js/jquery.ui.touch-punch.min.js"></script>
+    <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="assets/js/jquery.scrollTo.min.js"></script>
+    <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+
+  <script src="dataTables/jquery.dataTables.js"></script>
+  <script src="dataTables/dataTables.bootstrap.js"></script>  
+
+  <script>
+    $(document).ready(function() {
+    $('#dataTable').dataTable();
+    $('#getTreasurer').dataTable();  
+    });
+  </script>
+     
+   </body>
+</html>
+
+
+
